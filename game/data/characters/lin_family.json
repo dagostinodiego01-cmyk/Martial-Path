@@ -1,0 +1,327 @@
+[
+  {
+    "id": "lin_xiaodong",
+    "name": "Lin Xiaodong",
+    "region": "Sky Spill World",
+    "starting_world": true,
+    "role": "early_companion",
+    "alignment": "good",
+    "importance": "early",
+    "faction": "Lin Family",
+    "encounter_type": "ally",
+    "unlock": {
+      "realm": "Body Tempering",
+      "min_stage": 1
+    },
+    "encounter_weight": 5,
+    "personality": {
+      "traits": [
+        "loyal",
+        "energetic",
+        "plain-spoken",
+        "supportive",
+        "brave"
+      ],
+      "speech_style": "Casual, direct, and upbeat, quick with encouragement.",
+      "values": [
+        "friendship",
+        "courage",
+        "practical help"
+      ],
+      "likes": [
+        "good food",
+        "a fair fight"
+      ],
+      "dislikes": [
+        "bullies",
+        "sulking"
+      ],
+      "relationship_behavior": {
+        "hostile": "Confused and hurt, but still won't abandon you.",
+        "neutral": "Friendly and easygoing, ready to lend a hand.",
+        "friendly": "Cheerfully has your back in any scrape.",
+        "trusted": "A brother-in-arms who would take a blow for you."
+      },
+      "morality_reaction": {
+        "righteous": "Beams with pride at your good name.",
+        "neutral": "Shrugs and sticks by you regardless.",
+        "demonic": "Troubled, urging you back from the edge."
+      }
+    },
+    "gameplay_hooks": {
+      "can_talk": true,
+      "can_spar": true,
+      "can_duel": false,
+      "can_train_player": false,
+      "can_give_quest": true,
+      "can_join_player": false,
+      "enemy_id": "",
+      "quest_ids": [],
+      "teaches_skills": [],
+      "relationship_rewards": []
+    },
+    "intro_text": "A boisterous village friend who grins wide and never backs down from standing beside you.",
+    "repeat_text": "Lin Xiaodong waves you over, already talking a mile a minute.",
+    "ai_prompt_notes": "Speak as a loyal, energetic friend. Casual and upbeat, always supportive and a little reckless."
+  },
+  {
+    "id": "lin_xiaoge",
+    "name": "Lin Xiaoge",
+    "region": "Sky Spill World",
+    "starting_world": true,
+    "role": "family_anchor",
+    "alignment": "good",
+    "importance": "early",
+    "faction": "Lin Family",
+    "encounter_type": "family",
+    "unlock": {
+      "realm": "Body Tempering",
+      "min_stage": 1
+    },
+    "encounter_weight": 4,
+    "personality": {
+      "traits": [
+        "warm",
+        "trusting",
+        "protective",
+        "innocent",
+        "family-oriented"
+      ],
+      "speech_style": "Simple, sincere, and affectionate.",
+      "values": [
+        "family",
+        "kindness",
+        "home"
+      ],
+      "likes": [
+        "shared meals",
+        "small kindnesses"
+      ],
+      "dislikes": [
+        "cruelty",
+        "being left behind"
+      ],
+      "relationship_behavior": {
+        "hostile": "Heartbroken and bewildered, never truly cold.",
+        "neutral": "Loving but quietly worried about you.",
+        "friendly": "Openly affectionate and endlessly supportive.",
+        "trusted": "Your unwavering anchor to home and warmth."
+      },
+      "morality_reaction": {
+        "righteous": "Glows with pride and relief.",
+        "neutral": "Watches you with gentle concern.",
+        "demonic": "Frightened for your soul, pleading softly."
+      }
+    },
+    "gameplay_hooks": {
+      "can_talk": true,
+      "can_spar": false,
+      "can_duel": false,
+      "can_train_player": false,
+      "can_give_quest": true,
+      "can_join_player": false,
+      "enemy_id": "",
+      "quest_ids": [],
+      "teaches_skills": [],
+      "relationship_rewards": []
+    },
+    "intro_text": "A warm-hearted younger relative who keeps a candle lit for you back home.",
+    "repeat_text": "Lin Xiaoge's face lights up the moment she sees you safe.",
+    "ai_prompt_notes": "Speak as a warm, innocent family member. Sincere and affectionate, protective of home and kin."
+  },
+  {
+    "id": "lin_fu",
+    "name": "Lin Fu",
+    "region": "Sky Spill World",
+    "starting_world": true,
+    "role": "family_father",
+    "alignment": "good",
+    "importance": "early",
+    "faction": "Lin Family",
+    "encounter_type": "family",
+    "unlock": {
+      "realm": "Body Tempering",
+      "min_stage": 1
+    },
+    "encounter_weight": 3,
+    "personality": {
+      "traits": [
+        "hardworking",
+        "modest",
+        "worried",
+        "traditional",
+        "quietly proud"
+      ],
+      "speech_style": "Plain and steady, gruff with buried warmth.",
+      "values": [
+        "family",
+        "honest labor",
+        "humility"
+      ],
+      "likes": [
+        "a full harvest",
+        "his children safe"
+      ],
+      "dislikes": [
+        "idleness",
+        "danger to his kin"
+      ],
+      "relationship_behavior": {
+        "hostile": "Wounded and withdrawn, but never disowning you.",
+        "neutral": "Worries aloud while keeping his pride quiet.",
+        "friendly": "Shows steady support behind a gruff exterior.",
+        "trusted": "Speaks his rare pride in you openly."
+      },
+      "morality_reaction": {
+        "righteous": "Quietly proud that he raised you right.",
+        "neutral": "Anxious about the path you're walking.",
+        "demonic": "Grieved, begging you to remember who you are."
+      }
+    },
+    "gameplay_hooks": {
+      "can_talk": true,
+      "can_spar": false,
+      "can_duel": false,
+      "can_train_player": false,
+      "can_give_quest": true,
+      "can_join_player": false,
+      "enemy_id": "",
+      "quest_ids": [],
+      "teaches_skills": [],
+      "relationship_rewards": []
+    },
+    "intro_text": "A humble, hardworking father whose quiet pride in you runs deeper than he'll say.",
+    "repeat_text": "Lin Fu wipes his hands and asks, a little gruffly, if you're eating enough.",
+    "ai_prompt_notes": "Speak as a modest, hardworking father. Plain and steady, gruff but loving, worried for his child's safety."
+  },
+  {
+    "id": "lin_mu",
+    "name": "Lin Mu",
+    "region": "Sky Spill World",
+    "starting_world": true,
+    "role": "family_mother",
+    "alignment": "good",
+    "importance": "early",
+    "faction": "Lin Family",
+    "encounter_type": "family",
+    "unlock": {
+      "realm": "Body Tempering",
+      "min_stage": 1
+    },
+    "encounter_weight": 3,
+    "personality": {
+      "traits": [
+        "nurturing",
+        "cautious",
+        "protective",
+        "sentimental",
+        "resilient"
+      ],
+      "speech_style": "Gentle and caring, quick with a worried reminder.",
+      "values": [
+        "family",
+        "safety",
+        "warmth"
+      ],
+      "likes": [
+        "family gatherings",
+        "keepsakes"
+      ],
+      "dislikes": [
+        "farewells",
+        "reckless risks"
+      ],
+      "relationship_behavior": {
+        "hostile": "Tearful and confused, holding the door open.",
+        "neutral": "Loving but fretful about your choices.",
+        "friendly": "Endlessly supportive, packing food for the road.",
+        "trusted": "Your steadfast comfort no matter how far you roam."
+      },
+      "morality_reaction": {
+        "righteous": "Overjoyed and gently proud.",
+        "neutral": "Watches with a mother's quiet worry.",
+        "demonic": "Frightened for your soul, pleading with love."
+      }
+    },
+    "gameplay_hooks": {
+      "can_talk": true,
+      "can_spar": false,
+      "can_duel": false,
+      "can_train_player": false,
+      "can_give_quest": true,
+      "can_join_player": false,
+      "enemy_id": "",
+      "quest_ids": [],
+      "teaches_skills": [],
+      "relationship_rewards": []
+    },
+    "intro_text": "A tender, resilient mother who worries for you with every breath and hides it poorly.",
+    "repeat_text": "Lin Mu fusses over you, pressing food into your hands.",
+    "ai_prompt_notes": "Speak as a nurturing, protective mother. Gentle and sentimental, quick to worry, endlessly supportive."
+  },
+  {
+    "id": "lin_ping",
+    "name": "Lin Ping",
+    "region": "Sky Spill World",
+    "starting_world": true,
+    "role": "family_sibling",
+    "alignment": "good",
+    "importance": "early",
+    "faction": "Lin Family",
+    "encounter_type": "family",
+    "unlock": {
+      "realm": "Body Tempering",
+      "min_stage": 1
+    },
+    "encounter_weight": 4,
+    "personality": {
+      "traits": [
+        "curious",
+        "trusting",
+        "hopeful",
+        "affectionate",
+        "sheltered"
+      ],
+      "speech_style": "Eager and open, full of questions.",
+      "values": [
+        "family",
+        "wonder",
+        "belonging"
+      ],
+      "likes": [
+        "your stories",
+        "little adventures"
+      ],
+      "dislikes": [
+        "being told to stay behind",
+        "goodbyes"
+      ],
+      "relationship_behavior": {
+        "hostile": "Confused and hurt, still idolizing you.",
+        "neutral": "Cheerful and clingy, hoping for attention.",
+        "friendly": "Looks up to you and copies everything you do.",
+        "trusted": "Adores you completely and trusts you utterly."
+      },
+      "morality_reaction": {
+        "righteous": "Beams, wanting to be just like you.",
+        "neutral": "Doesn't quite understand, but stays hopeful.",
+        "demonic": "Frightened by the change, clinging to old memories."
+      }
+    },
+    "gameplay_hooks": {
+      "can_talk": true,
+      "can_spar": false,
+      "can_duel": false,
+      "can_train_player": false,
+      "can_give_quest": true,
+      "can_join_player": false,
+      "enemy_id": "",
+      "quest_ids": [],
+      "teaches_skills": [],
+      "relationship_rewards": []
+    },
+    "intro_text": "A bright-eyed younger sibling who thinks you hung the moon.",
+    "repeat_text": "Lin Ping tugs your sleeve, bursting with questions about your travels.",
+    "ai_prompt_notes": "Speak as a curious, sheltered younger sibling. Eager and affectionate, hopeful and full of wonder."
+  }
+]

@@ -1,0 +1,57 @@
+{
+  "encounter_weights": {
+    "COMBAT": 0.5,
+    "LOOT": 0.25,
+    "SPECIAL": 0.15,
+    "NOTHING": 0.1
+  },
+  "character_encounter_chance": 0.35,
+  "loot_pool": [
+    { "item_id": "healing_pill", "weight": 3 },
+    { "item_id": "qi_pill", "weight": 2 },
+    { "item_id": "spirit_stone", "weight": 2 },
+    { "item_id": "beast_core", "weight": 1 }
+  ],
+  "find_config": {
+    "rarity_order": [
+      "mortal_grade",
+      "low_spirit_grade",
+      "middle_spirit_grade",
+      "high_spirit_grade",
+      "earth_grade",
+      "heaven_grade",
+      "dao_grade"
+    ],
+    "rarity_weights": {
+      "mortal_grade": 100,
+      "low_spirit_grade": 55,
+      "middle_spirit_grade": 30,
+      "high_spirit_grade": 16,
+      "earth_grade": 8,
+      "heaven_grade": 4,
+      "dao_grade": 2
+    },
+    "danger_max_rarity_index": {
+      "0": 0, "1": 0, "2": 1, "3": 1, "4": 2, "5": 3,
+      "6": 4, "7": 4, "8": 5, "9": 6, "10": 6
+    },
+    "default_item_rarity": "mortal_grade"
+  },
+  "special_events": [
+    {
+      "id": "ancient_manual",
+      "text": "Hidden in a cave, you find a weathered cultivation manual. Insights flood your mind.",
+      "effect": { "type": "cultivation_boost", "magnitude": 30 }
+    },
+    {
+      "id": "spirit_spring",
+      "text": "You discover a hidden spirit spring and bathe in its restorative waters.",
+      "effect": { "type": "restore", "magnitude": 9999 }
+    },
+    {
+      "id": "old_master",
+      "text": "A reclusive elder shares a single pointer on the Dao, quickening your understanding.",
+      "effect": { "type": "exp", "magnitude": 40 }
+    }
+  ]
+}

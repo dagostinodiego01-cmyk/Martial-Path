@@ -1,0 +1,18 @@
+{
+  "variables": {
+    "relationship_score": { "min": -100, "max": 100, "default": 0 },
+    "trust": { "min": 0, "max": 100, "default": 0 },
+    "fear": { "min": 0, "max": 100, "default": 0 },
+    "respect": { "min": 0, "max": 100, "default": 0 },
+    "resentment": { "min": 0, "max": 100, "default": 0 },
+    "loyalty": { "min": 0, "max": 100, "default": 0 },
+    "suspicion": { "min": 0, "max": 100, "default": 0 },
+    "debt_to_player": { "min": 0, "max": 100, "default": 0 }
+  },
+  "tiers": [
+    { "id": "hostile", "label": "Hostile", "min": -100, "max": -34 },
+    { "id": "neutral", "label": "Neutral", "min": -33, "max": 33 },
+    { "id": "friendly", "label": "Friendly", "min": 34, "max": 74 },
+    { "id": "trusted", "label": "Trusted", "min": 75, "max": 100 }
+  ]
+}

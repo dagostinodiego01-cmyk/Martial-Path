@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/TextPanel.gd" id="1_text_panel"]
+
+[node name="TextPanel" type="PanelContainer"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_text_panel")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="VBox"]
+layout_mode = 2
+text = "Panel"
+theme_override_colors/font_color = Color(0.722, 0.541, 0.208, 1)
+theme_override_font_sizes/font_size = 20
+
+[node name="Text" type="RichTextLabel" parent="VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+fit_content = true
+theme_override_colors/default_color = Color(0.902, 0.867, 0.784, 1)

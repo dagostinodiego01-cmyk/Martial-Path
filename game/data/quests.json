@@ -1,0 +1,32 @@
+[
+  {
+    "id": "trial_of_the_forest",
+    "title": "Trial of the Forest",
+    "description": "Prove your strength by defeating the beasts that prowl the Outer Forest.",
+    "auto_start": true,
+    "objectives": [
+      { "type": "defeat", "target": "any", "count": 3, "text": "Defeat 3 foes" }
+    ],
+    "rewards": { "exp": 40, "gold": 20, "items": { "healing_pill": 2 } }
+  },
+  {
+    "id": "a_steady_foundation",
+    "title": "A Steady Foundation",
+    "description": "Temper your body until you break through to your next cultivation realm.",
+    "auto_start": true,
+    "objectives": [
+      { "type": "breakthrough", "target": "any", "count": 1, "text": "Achieve 1 breakthrough" }
+    ],
+    "rewards": { "exp": 60, "gold": 0, "items": { "spirit_stone": 1 } }
+  },
+  {
+    "id": "wanderers_path",
+    "title": "Wanderer's Path",
+    "description": "Broaden your horizons by travelling beyond the Outer Forest.",
+    "auto_start": true,
+    "objectives": [
+      { "type": "visit_location", "target": "misty_gorge", "count": 1, "text": "Reach the Misty Gorge" }
+    ],
+    "rewards": { "exp": 30, "gold": 10, "items": {} }
+  }
+]

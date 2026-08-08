@@ -1,0 +1,1724 @@
+[
+  {
+    "id": "healing_pill",
+    "name": "Healing Pill",
+    "type": "consumable",
+    "effect": "heal",
+    "magnitude": 40,
+    "description": "A common medicinal pill. Restores 40 HP."
+  },
+  {
+    "id": "profound_pill",
+    "name": "Profound Grade Pill",
+    "type": "consumable",
+    "effect": "heal",
+    "magnitude": 100,
+    "description": "A refined pill of profound grade. Restores 100 HP."
+  },
+  {
+    "id": "qi_pill",
+    "name": "Qi Recovery Pill",
+    "type": "consumable",
+    "effect": "restore_qi",
+    "magnitude": 30,
+    "description": "Replenishes 30 points of Qi."
+  },
+  {
+    "id": "spirit_stone",
+    "name": "Spirit Stone",
+    "type": "material",
+    "effect": "cultivation_boost",
+    "magnitude": 25,
+    "consumed_on_use": true,
+    "description": "A stone dense with spiritual energy. Absorb it to gain 25% cultivation progress."
+  },
+  {
+    "id": "beast_core",
+    "name": "Demonic Beast Core",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "description": "A crystallized core from a demonic beast. Valuable to the right buyer."
+  },
+  {
+    "id": "marrow_tempering_elixir",
+    "name": "Marrow Tempering Elixir",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "description": "A rare elixir used to steady the body during marrow refinement."
+  },
+  {
+    "id": "celestial_gate_essence",
+    "name": "Celestial Gate Essence",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "description": "Condensed essence used when opening a hidden body gate."
+  },
+  {
+    "id": "dao_palace_star_core",
+    "name": "Dao Palace Star Core",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "description": "A luminous core used to ignite a Dao Palace star."
+  },
+  {
+    "id": "frost_jade_elixir",
+    "name": "Frost Jade Elixir",
+    "type": "consumable",
+    "effect": "cleanse_poison",
+    "magnitude": 40,
+    "description": "Purges toxins from the meridians and heals 40 HP of poison damage."
+  },
+  {
+    "id": "profound_nectar",
+    "name": "Profound Nectar",
+    "type": "consumable",
+    "effect": "breakthrough_aid",
+    "magnitude": 2,
+    "description": "Steadies the dantian during a Houtian-realm breakthrough, raising success by 2%."
+  },
+  {
+    "id": "mystic_dan",
+    "name": "Mystic Dan",
+    "type": "consumable",
+    "effect": "breakthrough_aid",
+    "magnitude": 4,
+    "description": "Steadies the dantian during a Xiantian-realm breakthrough, raising success by 4%."
+  },
+  {
+    "id": "profound_decoction",
+    "name": "Profound Decoction",
+    "type": "consumable",
+    "effect": "restore_qi",
+    "magnitude": 455,
+    "description": "Refined for Foundation cultivators. Replenishes 455 points of Qi."
+  },
+  {
+    "id": "immortal_ascension_pellet",
+    "name": "Immortal Ascension Pellet",
+    "type": "consumable",
+    "effect": "heal",
+    "magnitude": 1344,
+    "description": "A divine sea-realm medicinal pellet. Restores 1344 HP."
+  },
+  {
+    "id": "immortal_ascension_pill",
+    "name": "Immortal Ascension Pill",
+    "type": "consumable",
+    "effect": "lifespan_extension",
+    "magnitude": 3000,
+    "description": "An Life Destruction-grade pill said to extend lifespan by 3000 years."
+  },
+  {
+    "id": "nirvana_rebirth_elixir",
+    "name": "Nirvana Rebirth Elixir",
+    "type": "consumable",
+    "effect": "comprehension_boost",
+    "magnitude": 26,
+    "description": "Clears the mind for insight, granting +26 comprehension for a time."
+  },
+  {
+    "id": "common_petal",
+    "name": "Common Petal",
+    "type": "material",
+    "effect": "cultivation_boost",
+    "magnitude": 25,
+    "consumed_on_use": true,
+    "description": "A Mortal-realm petal dense with spiritual energy. Absorb it to gain 25% cultivation progress."
+  },
+  {
+    "id": "common_crystal",
+    "name": "Common Crystal",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "description": "A Houtian-grade crystal prized by alchemists and refiners. Valuable to the right buyer."
+  },
+  {
+    "id": "mystic_decoction",
+    "name": "Mystic Decoction",
+    "type": "consumable",
+    "effect": "restore_hp_qi",
+    "magnitude": 234,
+    "description": "A balanced decoction that restores 234 HP and 234 Qi at once."
+  },
+  {
+    "id": "mystic_root",
+    "name": "Mystic Root",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "description": "A Foundation-grade root prized by alchemists and refiners. Valuable to the right buyer."
+  },
+  {
+    "id": "great_return_decoction",
+    "name": "Great Return Decoction",
+    "type": "consumable",
+    "effect": "heal",
+    "magnitude": 1477,
+    "description": "A divine sea-realm medicinal decoction. Restores 1477 HP."
+  },
+  {
+    "id": "immortal_ascension_nectar",
+    "name": "Immortal Ascension Nectar",
+    "type": "consumable",
+    "effect": "restore_hp_qi",
+    "magnitude": 3049,
+    "description": "A balanced nectar that restores 3049 HP and 3049 Qi at once."
+  },
+  {
+    "id": "immortal_ascension_blood_essence",
+    "name": "Immortal Ascension Blood Essence",
+    "type": "material",
+    "effect": "body_temper",
+    "magnitude": 26,
+    "consumed_on_use": true,
+    "description": "Refined into the body to temper the flesh, granting +26 body strength."
+  },
+  {
+    "id": "earth_tonic",
+    "name": "Earth Tonic",
+    "type": "consumable",
+    "effect": "lifespan_extension",
+    "magnitude": 10,
+    "description": "An Mortal-grade tonic said to extend lifespan by 10 years."
+  },
+  {
+    "id": "mystic_pill",
+    "name": "Mystic Pill",
+    "type": "consumable",
+    "effect": "breakthrough_aid",
+    "magnitude": 2,
+    "description": "Steadies the dantian during a Houtian-realm breakthrough, raising success by 2%."
+  },
+  {
+    "id": "heaven_decoction",
+    "name": "Heaven Decoction",
+    "type": "consumable",
+    "effect": "cleanse_poison",
+    "magnitude": 266,
+    "description": "Purges toxins from the meridians and heals 266 HP of poison damage."
+  },
+  {
+    "id": "purple_cloud_dan",
+    "name": "Purple Cloud Dan",
+    "type": "consumable",
+    "effect": "breakthrough_aid",
+    "magnitude": 7,
+    "description": "Steadies the dantian during a Foundation-realm breakthrough, raising success by 7%."
+  },
+  {
+    "id": "great_return_pill",
+    "name": "Great Return Pill",
+    "type": "consumable",
+    "effect": "breakthrough_aid",
+    "magnitude": 11,
+    "description": "Steadies the dantian during a Divine Sea-realm breakthrough, raising success by 11%."
+  },
+  {
+    "id": "immortal_ascension_elixir",
+    "name": "Immortal Ascension Elixir",
+    "type": "consumable",
+    "effect": "lifespan_extension",
+    "magnitude": 3000,
+    "description": "An Life Destruction-grade elixir said to extend lifespan by 3000 years."
+  },
+  {
+    "id": "immortal_ascension_elixir_mortal",
+    "name": "Immortal Ascension Elixir (Mortal)",
+    "type": "consumable",
+    "effect": "cleanse_poison",
+    "magnitude": 6949,
+    "description": "Purges toxins from the meridians and heals 6949 HP of poison damage."
+  },
+  {
+    "id": "profound_star_core",
+    "name": "Profound Star Core",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "description": "A Mortal-grade star core prized by alchemists and refiners. Valuable to the right buyer."
+  },
+  {
+    "id": "blood_quenching_fang",
+    "name": "Blood Quenching Fang",
+    "type": "material",
+    "effect": "cultivation_boost",
+    "magnitude": 20,
+    "consumed_on_use": true,
+    "description": "A Houtian-realm fang dense with spiritual energy. Absorb it to gain 20% cultivation progress."
+  },
+  {
+    "id": "marrow_cleansing_scale",
+    "name": "Marrow Cleansing Scale",
+    "type": "material",
+    "effect": "cultivation_boost",
+    "magnitude": 15,
+    "consumed_on_use": true,
+    "description": "A Xiantian-realm scale dense with spiritual energy. Absorb it to gain 15% cultivation progress."
+  },
+  {
+    "id": "heaven_tonic",
+    "name": "Heaven Tonic",
+    "type": "consumable",
+    "effect": "breakthrough_aid",
+    "magnitude": 7,
+    "description": "Steadies the dantian during a Foundation-realm breakthrough, raising success by 7%."
+  },
+  {
+    "id": "phoenix_marrow_blood_essence",
+    "name": "Phoenix Marrow Blood Essence",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "description": "A Divine Sea-grade blood essence prized by alchemists and refiners. Valuable to the right buyer."
+  },
+  {
+    "id": "dao_enlightenment_spirit_stone",
+    "name": "Dao Enlightenment Spirit Stone",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "description": "A Life Destruction-grade spirit stone prized by alchemists and refiners. Valuable to the right buyer."
+  },
+  {
+    "id": "nirvana_rebirth_pellet",
+    "name": "Nirvana Rebirth Pellet",
+    "type": "consumable",
+    "effect": "heal",
+    "magnitude": 7159,
+    "description": "A dao palace-realm medicinal pellet. Restores 7159 HP."
+  },
+  {
+    "id": "vermilion_elixir",
+    "name": "Vermilion Elixir",
+    "type": "consumable",
+    "effect": "comprehension_boost",
+    "magnitude": 1,
+    "description": "Clears the mind for insight, granting +1 comprehension for a time."
+  },
+  {
+    "id": "mystic_pellet",
+    "name": "Mystic Pellet",
+    "type": "consumable",
+    "effect": "cleanse_poison",
+    "magnitude": 108,
+    "description": "Purges toxins from the meridians and heals 108 HP of poison damage."
+  },
+  {
+    "id": "thunder_essence_pill",
+    "name": "Thunder Essence Pill",
+    "type": "consumable",
+    "effect": "restore_qi",
+    "magnitude": 202,
+    "description": "Refined for Xiantian cultivators. Replenishes 202 points of Qi."
+  },
+  {
+    "id": "marrow_cleansing_elixir",
+    "name": "Marrow Cleansing Elixir",
+    "type": "consumable",
+    "effect": "lifespan_extension",
+    "magnitude": 400,
+    "description": "An Foundation-grade elixir said to extend lifespan by 400 years."
+  },
+  {
+    "id": "immortal_ascension_nectar_mortal",
+    "name": "Immortal Ascension Nectar (Mortal)",
+    "type": "consumable",
+    "effect": "breakthrough_aid",
+    "magnitude": 11,
+    "description": "Steadies the dantian during a Divine Sea-realm breakthrough, raising success by 11%."
+  },
+  {
+    "id": "golden_body_tonic",
+    "name": "Golden Body Tonic",
+    "type": "consumable",
+    "effect": "cleanse_poison",
+    "magnitude": 3507,
+    "description": "Purges toxins from the meridians and heals 3507 HP of poison damage."
+  },
+  {
+    "id": "phoenix_marrow_elixir",
+    "name": "Phoenix Marrow Elixir",
+    "type": "consumable",
+    "effect": "restore_qi",
+    "magnitude": 5985,
+    "description": "Refined for Dao Palace cultivators. Replenishes 5985 points of Qi."
+  },
+  {
+    "id": "mystic_pill_mortal",
+    "name": "Mystic Pill (Mortal)",
+    "type": "consumable",
+    "effect": "cleanse_poison",
+    "magnitude": 42,
+    "description": "Purges toxins from the meridians and heals 42 HP of poison damage."
+  },
+  {
+    "id": "vermilion_pill",
+    "name": "Vermilion Pill",
+    "type": "consumable",
+    "effect": "restore_qi",
+    "magnitude": 80,
+    "description": "Refined for Houtian cultivators. Replenishes 80 points of Qi."
+  },
+  {
+    "id": "nine_revolutions_elixir",
+    "name": "Nine Revolutions Elixir",
+    "type": "consumable",
+    "effect": "comprehension_boost",
+    "magnitude": 4,
+    "description": "Clears the mind for insight, granting +4 comprehension for a time."
+  },
+  {
+    "id": "profound_fang",
+    "name": "Profound Fang",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "description": "A Foundation-grade fang prized by alchemists and refiners. Valuable to the right buyer."
+  },
+  {
+    "id": "void_spirit_pill",
+    "name": "Void Spirit Pill",
+    "type": "consumable",
+    "effect": "cleanse_poison",
+    "magnitude": 1386,
+    "description": "Purges toxins from the meridians and heals 1386 HP of poison damage."
+  },
+  {
+    "id": "great_return_elixir",
+    "name": "Great Return Elixir",
+    "type": "consumable",
+    "effect": "cleanse_poison",
+    "magnitude": 2716,
+    "description": "Purges toxins from the meridians and heals 2716 HP of poison damage."
+  },
+  {
+    "id": "golden_body_pill",
+    "name": "Golden Body Pill",
+    "type": "consumable",
+    "effect": "heal",
+    "magnitude": 7813,
+    "description": "A dao palace-realm medicinal pill. Restores 7813 HP."
+  },
+  {
+    "id": "marrow_cleansing_pill",
+    "name": "Marrow Cleansing Pill",
+    "type": "consumable",
+    "effect": "restore_hp_qi",
+    "magnitude": 37,
+    "description": "A balanced pill that restores 37 HP and 37 Qi at once."
+  },
+  {
+    "id": "profound_nectar_mortal",
+    "name": "Profound Nectar (Mortal)",
+    "type": "consumable",
+    "effect": "restore_qi",
+    "magnitude": 84,
+    "description": "Refined for Houtian cultivators. Replenishes 84 points of Qi."
+  },
+  {
+    "id": "vermilion_tonic",
+    "name": "Vermilion Tonic",
+    "type": "consumable",
+    "effect": "restore_hp_qi",
+    "magnitude": 256,
+    "description": "A balanced tonic that restores 256 HP and 256 Qi at once."
+  },
+  {
+    "id": "great_return_pellet",
+    "name": "Great Return Pellet",
+    "type": "consumable",
+    "effect": "heal",
+    "magnitude": 557,
+    "description": "A foundation-realm medicinal pellet. Restores 557 HP."
+  },
+  {
+    "id": "primordial_pellet",
+    "name": "Primordial Pellet",
+    "type": "consumable",
+    "effect": "cleanse_poison",
+    "magnitude": 1323,
+    "description": "Purges toxins from the meridians and heals 1323 HP of poison damage."
+  },
+  {
+    "id": "great_return_elixir_mortal",
+    "name": "Great Return Elixir (Mortal)",
+    "type": "consumable",
+    "effect": "heal",
+    "magnitude": 3480,
+    "description": "A life destruction-realm medicinal elixir. Restores 3480 HP."
+  },
+  {
+    "id": "void_spirit_pellet",
+    "name": "Void Spirit Pellet",
+    "type": "consumable",
+    "effect": "lifespan_extension",
+    "magnitude": 8000,
+    "description": "An Dao Palace-grade pellet said to extend lifespan by 8000 years."
+  },
+  {
+    "id": "marrow_cleansing_spirit_stone",
+    "name": "Marrow Cleansing Spirit Stone",
+    "type": "material",
+    "effect": "body_temper",
+    "magnitude": 1,
+    "consumed_on_use": true,
+    "description": "Refined into the body to temper the flesh, granting +1 body strength."
+  },
+  {
+    "id": "marrow_cleansing_flower",
+    "name": "Marrow Cleansing Flower",
+    "type": "material",
+    "effect": "body_temper",
+    "magnitude": 2,
+    "consumed_on_use": true,
+    "description": "Refined into the body to temper the flesh, granting +2 body strength."
+  },
+  {
+    "id": "common_feather",
+    "name": "Common Feather",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "description": "A Xiantian-grade feather prized by alchemists and refiners. Valuable to the right buyer."
+  },
+  {
+    "id": "earth_bone",
+    "name": "Earth Bone",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "description": "A Foundation-grade bone prized by alchemists and refiners. Valuable to the right buyer."
+  },
+  {
+    "id": "dao_enlightenment_fruit",
+    "name": "Dao Enlightenment Fruit",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "description": "A Divine Sea-grade fruit prized by alchemists and refiners. Valuable to the right buyer."
+  },
+  {
+    "id": "thunder_essence_fruit",
+    "name": "Thunder Essence Fruit",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "description": "A Life Destruction-grade fruit prized by alchemists and refiners. Valuable to the right buyer."
+  },
+  {
+    "id": "dao_enlightenment_root",
+    "name": "Dao Enlightenment Root",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "description": "A Dao Palace-grade root prized by alchemists and refiners. Valuable to the right buyer."
+  },
+  {
+    "id": "frost_jade_tonic",
+    "name": "Frost Jade Tonic",
+    "type": "consumable",
+    "effect": "heal",
+    "magnitude": 46,
+    "description": "A mortal-realm medicinal tonic. Restores 46 HP."
+  },
+  {
+    "id": "vermilion_pellet",
+    "name": "Vermilion Pellet",
+    "type": "consumable",
+    "effect": "restore_hp_qi",
+    "magnitude": 85,
+    "description": "A balanced pellet that restores 85 HP and 85 Qi at once."
+  },
+  {
+    "id": "great_return_pellet_mortal",
+    "name": "Great Return Pellet (Mortal)",
+    "type": "consumable",
+    "effect": "lifespan_extension",
+    "magnitude": 150,
+    "description": "An Xiantian-grade pellet said to extend lifespan by 150 years."
+  },
+  {
+    "id": "great_return_dan",
+    "name": "Great Return Dan",
+    "type": "consumable",
+    "effect": "heal",
+    "magnitude": 573,
+    "description": "A foundation-realm medicinal dan. Restores 573 HP."
+  },
+  {
+    "id": "dragon_blood_pellet",
+    "name": "Dragon Blood Pellet",
+    "type": "consumable",
+    "effect": "restore_qi",
+    "magnitude": 1181,
+    "description": "Refined for Divine Sea cultivators. Replenishes 1181 points of Qi."
+  },
+  {
+    "id": "primordial_decoction",
+    "name": "Primordial Decoction",
+    "type": "consumable",
+    "effect": "breakthrough_aid",
+    "magnitude": 17,
+    "description": "Steadies the dantian during a Life Destruction-realm breakthrough, raising success by 17%."
+  },
+  {
+    "id": "golden_body_pellet",
+    "name": "Golden Body Pellet",
+    "type": "consumable",
+    "effect": "comprehension_boost",
+    "magnitude": 26,
+    "description": "Clears the mind for insight, granting +26 comprehension for a time."
+  },
+  {
+    "id": "profound_nectar_no3",
+    "name": "Profound Nectar No.3",
+    "type": "consumable",
+    "effect": "comprehension_boost",
+    "magnitude": 1,
+    "description": "Clears the mind for insight, granting +1 comprehension for a time."
+  },
+  {
+    "id": "bone_forging_nectar",
+    "name": "Bone Forging Nectar",
+    "type": "consumable",
+    "effect": "comprehension_boost",
+    "magnitude": 2,
+    "description": "Clears the mind for insight, granting +2 comprehension for a time."
+  },
+  {
+    "id": "thunder_essence_herb",
+    "name": "Thunder Essence Herb",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "description": "A Xiantian-grade herb prized by alchemists and refiners. Valuable to the right buyer."
+  },
+  {
+    "id": "nine_revolutions_essence",
+    "name": "Nine Revolutions Essence",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "description": "A Foundation-grade essence prized by alchemists and refiners. Valuable to the right buyer."
+  },
+  {
+    "id": "great_return_tonic",
+    "name": "Great Return Tonic",
+    "type": "consumable",
+    "effect": "restore_qi",
+    "magnitude": 1131,
+    "description": "Refined for Divine Sea cultivators. Replenishes 1131 points of Qi."
+  },
+  {
+    "id": "star_gathering_decoction",
+    "name": "Star Gathering Decoction",
+    "type": "consumable",
+    "effect": "cleanse_poison",
+    "magnitude": 3334,
+    "description": "Purges toxins from the meridians and heals 3334 HP of poison damage."
+  },
+  {
+    "id": "primordial_tonic",
+    "name": "Primordial Tonic",
+    "type": "consumable",
+    "effect": "restore_hp_qi",
+    "magnitude": 6573,
+    "description": "A balanced tonic that restores 6573 HP and 6573 Qi at once."
+  },
+  {
+    "id": "marrow_cleansing_elixir_mortal",
+    "name": "Marrow Cleansing Elixir (Mortal)",
+    "type": "consumable",
+    "effect": "heal",
+    "magnitude": 36,
+    "description": "A mortal-realm medicinal elixir. Restores 36 HP."
+  },
+  {
+    "id": "profound_decoction_mortal",
+    "name": "Profound Decoction (Mortal)",
+    "type": "consumable",
+    "effect": "comprehension_boost",
+    "magnitude": 2,
+    "description": "Clears the mind for insight, granting +2 comprehension for a time."
+  },
+  {
+    "id": "vermilion_pellet_mortal",
+    "name": "Vermilion Pellet (Mortal)",
+    "type": "consumable",
+    "effect": "lifespan_extension",
+    "magnitude": 150,
+    "description": "An Xiantian-grade pellet said to extend lifespan by 150 years."
+  },
+  {
+    "id": "bone_forging_nectar_mortal",
+    "name": "Bone Forging Nectar (Mortal)",
+    "type": "consumable",
+    "effect": "lifespan_extension",
+    "magnitude": 400,
+    "description": "An Foundation-grade nectar said to extend lifespan by 400 years."
+  },
+  {
+    "id": "thunder_essence_pill_mortal",
+    "name": "Thunder Essence Pill (Mortal)",
+    "type": "consumable",
+    "effect": "restore_hp_qi",
+    "magnitude": 1239,
+    "description": "A balanced pill that restores 1239 HP and 1239 Qi at once."
+  },
+  {
+    "id": "celestial_elixir",
+    "name": "Celestial Elixir",
+    "type": "consumable",
+    "effect": "lifespan_extension",
+    "magnitude": 3000,
+    "description": "An Life Destruction-grade elixir said to extend lifespan by 3000 years."
+  },
+  {
+    "id": "immortal_ascension_dan",
+    "name": "Immortal Ascension Dan",
+    "type": "consumable",
+    "effect": "breakthrough_aid",
+    "magnitude": 26,
+    "description": "Steadies the dantian during a Dao Palace-realm breakthrough, raising success by 26%."
+  },
+  {
+    "id": "earth_pill",
+    "name": "Earth Pill",
+    "type": "consumable",
+    "effect": "comprehension_boost",
+    "magnitude": 1,
+    "description": "Clears the mind for insight, granting +1 comprehension for a time."
+  },
+  {
+    "id": "blood_quenching_tonic",
+    "name": "Blood Quenching Tonic",
+    "type": "consumable",
+    "effect": "breakthrough_aid",
+    "magnitude": 2,
+    "description": "Steadies the dantian during a Houtian-realm breakthrough, raising success by 2%."
+  },
+  {
+    "id": "dragon_blood_ore",
+    "name": "Dragon Blood Ore",
+    "type": "material",
+    "effect": "body_temper",
+    "magnitude": 4,
+    "consumed_on_use": true,
+    "description": "Refined into the body to temper the flesh, granting +4 body strength."
+  },
+  {
+    "id": "dragon_blood_decoction",
+    "name": "Dragon Blood Decoction",
+    "type": "consumable",
+    "effect": "heal",
+    "magnitude": 671,
+    "description": "A foundation-realm medicinal decoction. Restores 671 HP."
+  },
+  {
+    "id": "heaven_crystal",
+    "name": "Heaven Crystal",
+    "type": "material",
+    "effect": "body_temper",
+    "magnitude": 11,
+    "consumed_on_use": true,
+    "description": "Refined into the body to temper the flesh, granting +11 body strength."
+  },
+  {
+    "id": "soul_nurturing_decoction",
+    "name": "Soul Nurturing Decoction",
+    "type": "consumable",
+    "effect": "heal",
+    "magnitude": 3141,
+    "description": "A life destruction-realm medicinal decoction. Restores 3141 HP."
+  },
+  {
+    "id": "celestial_pellet",
+    "name": "Celestial Pellet",
+    "type": "consumable",
+    "effect": "lifespan_extension",
+    "magnitude": 8000,
+    "description": "An Dao Palace-grade pellet said to extend lifespan by 8000 years."
+  },
+  {
+    "id": "profound_decoction_no3",
+    "name": "Profound Decoction No.3",
+    "type": "consumable",
+    "effect": "heal",
+    "magnitude": 38,
+    "description": "A mortal-realm medicinal decoction. Restores 38 HP."
+  },
+  {
+    "id": "vermilion_pill_mortal",
+    "name": "Vermilion Pill (Mortal)",
+    "type": "consumable",
+    "effect": "lifespan_extension",
+    "magnitude": 50,
+    "description": "An Houtian-grade pill said to extend lifespan by 50 years."
+  },
+  {
+    "id": "mystic_decoction_mortal",
+    "name": "Mystic Decoction (Mortal)",
+    "type": "consumable",
+    "effect": "cleanse_poison",
+    "magnitude": 242,
+    "description": "Purges toxins from the meridians and heals 242 HP of poison damage."
+  },
+  {
+    "id": "earth_pellet",
+    "name": "Earth Pellet",
+    "type": "consumable",
+    "effect": "restore_hp_qi",
+    "magnitude": 579,
+    "description": "A balanced pellet that restores 579 HP and 579 Qi at once."
+  },
+  {
+    "id": "celestial_decoction",
+    "name": "Celestial Decoction",
+    "type": "consumable",
+    "effect": "breakthrough_aid",
+    "magnitude": 11,
+    "description": "Steadies the dantian during a Divine Sea-realm breakthrough, raising success by 11%."
+  },
+  {
+    "id": "thunder_essence_tonic",
+    "name": "Thunder Essence Tonic",
+    "type": "consumable",
+    "effect": "restore_hp_qi",
+    "magnitude": 3039,
+    "description": "A balanced tonic that restores 3039 HP and 3039 Qi at once."
+  },
+  {
+    "id": "celestial_nectar",
+    "name": "Celestial Nectar",
+    "type": "consumable",
+    "effect": "cleanse_poison",
+    "magnitude": 7142,
+    "description": "Purges toxins from the meridians and heals 7142 HP of poison damage."
+  },
+  {
+    "id": "marrow_cleansing_dan",
+    "name": "Marrow Cleansing Dan",
+    "type": "consumable",
+    "effect": "breakthrough_aid",
+    "magnitude": 1,
+    "description": "Steadies the dantian during a Mortal-realm breakthrough, raising success by 1%."
+  },
+  {
+    "id": "mystic_fang",
+    "name": "Mystic Fang",
+    "type": "material",
+    "effect": "body_temper",
+    "magnitude": 2,
+    "consumed_on_use": true,
+    "description": "Refined into the body to temper the flesh, granting +2 body strength."
+  },
+  {
+    "id": "soul_nurturing_pellet",
+    "name": "Soul Nurturing Pellet",
+    "type": "consumable",
+    "effect": "restore_hp_qi",
+    "magnitude": 207,
+    "description": "A balanced pellet that restores 207 HP and 207 Qi at once."
+  },
+  {
+    "id": "earth_elixir",
+    "name": "Earth Elixir",
+    "type": "consumable",
+    "effect": "comprehension_boost",
+    "magnitude": 7,
+    "description": "Clears the mind for insight, granting +7 comprehension for a time."
+  },
+  {
+    "id": "soul_nurturing_nectar",
+    "name": "Soul Nurturing Nectar",
+    "type": "consumable",
+    "effect": "restore_qi",
+    "magnitude": 1362,
+    "description": "Refined for Divine Sea cultivators. Replenishes 1362 points of Qi."
+  },
+  {
+    "id": "dao_enlightenment_crystal",
+    "name": "Dao Enlightenment Crystal",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "description": "A Life Destruction-grade crystal prized by alchemists and refiners. Valuable to the right buyer."
+  },
+  {
+    "id": "primordial_fruit",
+    "name": "Primordial Fruit",
+    "type": "material",
+    "effect": "cultivation_boost",
+    "magnitude": 6,
+    "consumed_on_use": true,
+    "description": "A Dao Palace-realm fruit dense with spiritual energy. Absorb it to gain 6% cultivation progress."
+  },
+  {
+    "id": "bone_forging_pellet",
+    "name": "Bone Forging Pellet",
+    "type": "consumable",
+    "effect": "restore_qi",
+    "magnitude": 34,
+    "description": "Refined for Mortal cultivators. Replenishes 34 points of Qi."
+  },
+  {
+    "id": "mystic_elixir",
+    "name": "Mystic Elixir",
+    "type": "consumable",
+    "effect": "comprehension_boost",
+    "magnitude": 2,
+    "description": "Clears the mind for insight, granting +2 comprehension for a time."
+  },
+  {
+    "id": "star_gathering_decoction_mortal",
+    "name": "Star Gathering Decoction (Mortal)",
+    "type": "consumable",
+    "effect": "cleanse_poison",
+    "magnitude": 225,
+    "description": "Purges toxins from the meridians and heals 225 HP of poison damage."
+  },
+  {
+    "id": "bone_forging_dan",
+    "name": "Bone Forging Dan",
+    "type": "consumable",
+    "effect": "restore_hp_qi",
+    "magnitude": 508,
+    "description": "A balanced dan that restores 508 HP and 508 Qi at once."
+  },
+  {
+    "id": "dao_enlightenment_pill",
+    "name": "Dao Enlightenment Pill",
+    "type": "consumable",
+    "effect": "restore_hp_qi",
+    "magnitude": 1350,
+    "description": "A balanced pill that restores 1350 HP and 1350 Qi at once."
+  },
+  {
+    "id": "phoenix_marrow_tonic",
+    "name": "Phoenix Marrow Tonic",
+    "type": "consumable",
+    "effect": "heal",
+    "magnitude": 3187,
+    "description": "A life destruction-realm medicinal tonic. Restores 3187 HP."
+  },
+  {
+    "id": "celestial_decoction_mortal",
+    "name": "Celestial Decoction (Mortal)",
+    "type": "consumable",
+    "effect": "restore_hp_qi",
+    "magnitude": 7196,
+    "description": "A balanced decoction that restores 7196 HP and 7196 Qi at once."
+  },
+  {
+    "id": "mystic_pill_no3",
+    "name": "Mystic Pill No.3",
+    "type": "consumable",
+    "effect": "heal",
+    "magnitude": 39,
+    "description": "A mortal-realm medicinal pill. Restores 39 HP."
+  },
+  {
+    "id": "earth_dan",
+    "name": "Earth Dan",
+    "type": "consumable",
+    "effect": "lifespan_extension",
+    "magnitude": 50,
+    "description": "An Houtian-grade dan said to extend lifespan by 50 years."
+  },
+  {
+    "id": "star_gathering_nectar",
+    "name": "Star Gathering Nectar",
+    "type": "consumable",
+    "effect": "comprehension_boost",
+    "magnitude": 4,
+    "description": "Clears the mind for insight, granting +4 comprehension for a time."
+  },
+  {
+    "id": "marrow_cleansing_petal",
+    "name": "Marrow Cleansing Petal",
+    "type": "material",
+    "effect": "body_temper",
+    "magnitude": 7,
+    "consumed_on_use": true,
+    "description": "Refined into the body to temper the flesh, granting +7 body strength."
+  },
+  {
+    "id": "celestial_decoction_no3",
+    "name": "Celestial Decoction No.3",
+    "type": "consumable",
+    "effect": "cleanse_poison",
+    "magnitude": 1414,
+    "description": "Purges toxins from the meridians and heals 1414 HP of poison damage."
+  },
+  {
+    "id": "nine_revolutions_nectar",
+    "name": "Nine Revolutions Nectar",
+    "type": "consumable",
+    "effect": "comprehension_boost",
+    "magnitude": 17,
+    "description": "Clears the mind for insight, granting +17 comprehension for a time."
+  },
+  {
+    "id": "nirvana_rebirth_dan",
+    "name": "Nirvana Rebirth Dan",
+    "type": "consumable",
+    "effect": "heal",
+    "magnitude": 7940,
+    "description": "A dao palace-realm medicinal dan. Restores 7940 HP."
+  },
+  {
+    "id": "vermilion_pill_no3",
+    "name": "Vermilion Pill No.3",
+    "type": "consumable",
+    "effect": "breakthrough_aid",
+    "magnitude": 1,
+    "description": "Steadies the dantian during a Mortal-realm breakthrough, raising success by 1%."
+  },
+  {
+    "id": "mystic_pill_no4",
+    "name": "Mystic Pill No.4",
+    "type": "consumable",
+    "effect": "restore_hp_qi",
+    "magnitude": 100,
+    "description": "A balanced pill that restores 100 HP and 100 Qi at once."
+  },
+  {
+    "id": "purple_cloud_pill",
+    "name": "Purple Cloud Pill",
+    "type": "consumable",
+    "effect": "restore_hp_qi",
+    "magnitude": 258,
+    "description": "A balanced pill that restores 258 HP and 258 Qi at once."
+  },
+  {
+    "id": "star_gathering_dan",
+    "name": "Star Gathering Dan",
+    "type": "consumable",
+    "effect": "breakthrough_aid",
+    "magnitude": 7,
+    "description": "Steadies the dantian during a Foundation-realm breakthrough, raising success by 7%."
+  },
+  {
+    "id": "star_gathering_pill",
+    "name": "Star Gathering Pill",
+    "type": "consumable",
+    "effect": "breakthrough_aid",
+    "magnitude": 11,
+    "description": "Steadies the dantian during a Divine Sea-realm breakthrough, raising success by 11%."
+  },
+  {
+    "id": "dragon_blood_pill",
+    "name": "Dragon Blood Pill",
+    "type": "consumable",
+    "effect": "restore_qi",
+    "magnitude": 2703,
+    "description": "Refined for Life Destruction cultivators. Replenishes 2703 points of Qi."
+  },
+  {
+    "id": "life_extending_elixir",
+    "name": "Life Extending Elixir",
+    "type": "consumable",
+    "effect": "restore_hp_qi",
+    "magnitude": 7400,
+    "description": "A balanced elixir that restores 7400 HP and 7400 Qi at once."
+  },
+  {
+    "id": "mystic_dan_mortal",
+    "name": "Mystic Dan (Mortal)",
+    "type": "consumable",
+    "effect": "cleanse_poison",
+    "magnitude": 38,
+    "description": "Purges toxins from the meridians and heals 38 HP of poison damage."
+  },
+  {
+    "id": "frost_jade_nectar",
+    "name": "Frost Jade Nectar",
+    "type": "consumable",
+    "effect": "heal",
+    "magnitude": 115,
+    "description": "A houtian-realm medicinal nectar. Restores 115 HP."
+  },
+  {
+    "id": "common_tonic",
+    "name": "Common Tonic",
+    "type": "consumable",
+    "effect": "breakthrough_aid",
+    "magnitude": 4,
+    "description": "Steadies the dantian during a Xiantian-realm breakthrough, raising success by 4%."
+  },
+  {
+    "id": "bone_forging_feather",
+    "name": "Bone Forging Feather",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "description": "A Foundation-grade feather prized by alchemists and refiners. Valuable to the right buyer."
+  },
+  {
+    "id": "phoenix_marrow_pill",
+    "name": "Phoenix Marrow Pill",
+    "type": "consumable",
+    "effect": "comprehension_boost",
+    "magnitude": 11,
+    "description": "Clears the mind for insight, granting +11 comprehension for a time."
+  },
+  {
+    "id": "immortal_ascension_scale",
+    "name": "Immortal Ascension Scale",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "description": "A Life Destruction-grade scale prized by alchemists and refiners. Valuable to the right buyer."
+  },
+  {
+    "id": "void_spirit_root",
+    "name": "Void Spirit Root",
+    "type": "material",
+    "effect": "body_temper",
+    "magnitude": 26,
+    "consumed_on_use": true,
+    "description": "Refined into the body to temper the flesh, granting +26 body strength."
+  },
+  {
+    "id": "frost_jade_elixir_mortal",
+    "name": "Frost Jade Elixir (Mortal)",
+    "type": "consumable",
+    "effect": "lifespan_extension",
+    "magnitude": 10,
+    "description": "An Mortal-grade elixir said to extend lifespan by 10 years."
+  },
+  {
+    "id": "earth_pellet_mortal",
+    "name": "Earth Pellet (Mortal)",
+    "type": "consumable",
+    "effect": "restore_hp_qi",
+    "magnitude": 103,
+    "description": "A balanced pellet that restores 103 HP and 103 Qi at once."
+  },
+  {
+    "id": "vermilion_pill_no4",
+    "name": "Vermilion Pill No.4",
+    "type": "consumable",
+    "effect": "heal",
+    "magnitude": 264,
+    "description": "A xiantian-realm medicinal pill. Restores 264 HP."
+  },
+  {
+    "id": "marrow_cleansing_pellet",
+    "name": "Marrow Cleansing Pellet",
+    "type": "consumable",
+    "effect": "restore_qi",
+    "magnitude": 457,
+    "description": "Refined for Foundation cultivators. Replenishes 457 points of Qi."
+  },
+  {
+    "id": "void_spirit_nectar",
+    "name": "Void Spirit Nectar",
+    "type": "consumable",
+    "effect": "breakthrough_aid",
+    "magnitude": 11,
+    "description": "Steadies the dantian during a Divine Sea-realm breakthrough, raising success by 11%."
+  },
+  {
+    "id": "nirvana_rebirth_decoction",
+    "name": "Nirvana Rebirth Decoction",
+    "type": "consumable",
+    "effect": "restore_qi",
+    "magnitude": 3005,
+    "description": "Refined for Life Destruction cultivators. Replenishes 3005 points of Qi."
+  },
+  {
+    "id": "golden_body_pellet_mortal",
+    "name": "Golden Body Pellet (Mortal)",
+    "type": "consumable",
+    "effect": "restore_qi",
+    "magnitude": 6106,
+    "description": "Refined for Dao Palace cultivators. Replenishes 6106 points of Qi."
+  },
+  {
+    "id": "vermilion_dan",
+    "name": "Vermilion Dan",
+    "type": "consumable",
+    "effect": "restore_hp_qi",
+    "magnitude": 40,
+    "description": "A balanced dan that restores 40 HP and 40 Qi at once."
+  },
+  {
+    "id": "mystic_pill_no5",
+    "name": "Mystic Pill No.5",
+    "type": "consumable",
+    "effect": "restore_hp_qi",
+    "magnitude": 86,
+    "description": "A balanced pill that restores 86 HP and 86 Qi at once."
+  },
+  {
+    "id": "nine_revolutions_pellet",
+    "name": "Nine Revolutions Pellet",
+    "type": "consumable",
+    "effect": "heal",
+    "magnitude": 255,
+    "description": "A xiantian-realm medicinal pellet. Restores 255 HP."
+  },
+  {
+    "id": "bone_forging_elixir",
+    "name": "Bone Forging Elixir",
+    "type": "consumable",
+    "effect": "breakthrough_aid",
+    "magnitude": 7,
+    "description": "Steadies the dantian during a Foundation-realm breakthrough, raising success by 7%."
+  },
+  {
+    "id": "great_return_bone",
+    "name": "Great Return Bone",
+    "type": "material",
+    "effect": "cultivation_boost",
+    "magnitude": 10,
+    "consumed_on_use": true,
+    "description": "A Divine Sea-realm bone dense with spiritual energy. Absorb it to gain 10% cultivation progress."
+  },
+  {
+    "id": "nine_revolutions_pellet_mortal",
+    "name": "Nine Revolutions Pellet (Mortal)",
+    "type": "consumable",
+    "effect": "heal",
+    "magnitude": 3120,
+    "description": "A life destruction-realm medicinal pellet. Restores 3120 HP."
+  },
+  {
+    "id": "nirvana_rebirth_feather",
+    "name": "Nirvana Rebirth Feather",
+    "type": "material",
+    "effect": "body_temper",
+    "magnitude": 26,
+    "consumed_on_use": true,
+    "description": "Refined into the body to temper the flesh, granting +26 body strength."
+  },
+  {
+    "id": "bone_forging_nectar_no3",
+    "name": "Bone Forging Nectar No.3",
+    "type": "consumable",
+    "effect": "restore_hp_qi",
+    "magnitude": 38,
+    "description": "A balanced nectar that restores 38 HP and 38 Qi at once."
+  },
+  {
+    "id": "blood_quenching_elixir",
+    "name": "Blood Quenching Elixir",
+    "type": "consumable",
+    "effect": "restore_hp_qi",
+    "magnitude": 97,
+    "description": "A balanced elixir that restores 97 HP and 97 Qi at once."
+  },
+  {
+    "id": "vermilion_pill_no5",
+    "name": "Vermilion Pill No.5",
+    "type": "consumable",
+    "effect": "lifespan_extension",
+    "magnitude": 150,
+    "description": "An Xiantian-grade pill said to extend lifespan by 150 years."
+  },
+  {
+    "id": "dragon_blood_tonic",
+    "name": "Dragon Blood Tonic",
+    "type": "consumable",
+    "effect": "cleanse_poison",
+    "magnitude": 612,
+    "description": "Purges toxins from the meridians and heals 612 HP of poison damage."
+  },
+  {
+    "id": "celestial_elixir_mortal",
+    "name": "Celestial Elixir (Mortal)",
+    "type": "consumable",
+    "effect": "breakthrough_aid",
+    "magnitude": 11,
+    "description": "Steadies the dantian during a Divine Sea-realm breakthrough, raising success by 11%."
+  },
+  {
+    "id": "celestial_decoction_no4",
+    "name": "Celestial Decoction No.4",
+    "type": "consumable",
+    "effect": "lifespan_extension",
+    "magnitude": 3000,
+    "description": "An Life Destruction-grade decoction said to extend lifespan by 3000 years."
+  },
+  {
+    "id": "golden_body_nectar",
+    "name": "Golden Body Nectar",
+    "type": "consumable",
+    "effect": "comprehension_boost",
+    "magnitude": 26,
+    "description": "Clears the mind for insight, granting +26 comprehension for a time."
+  },
+  {
+    "id": "mystic_essence",
+    "name": "Mystic Essence",
+    "type": "material",
+    "effect": "cultivation_boost",
+    "magnitude": 25,
+    "consumed_on_use": true,
+    "description": "A Mortal-realm essence dense with spiritual energy. Absorb it to gain 25% cultivation progress."
+  },
+  {
+    "id": "frost_jade_pill",
+    "name": "Frost Jade Pill",
+    "type": "consumable",
+    "effect": "cleanse_poison",
+    "magnitude": 105,
+    "description": "Purges toxins from the meridians and heals 105 HP of poison damage."
+  },
+  {
+    "id": "common_fruit",
+    "name": "Common Fruit",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "description": "A Xiantian-grade fruit prized by alchemists and refiners. Valuable to the right buyer."
+  },
+  {
+    "id": "purple_cloud_nectar",
+    "name": "Purple Cloud Nectar",
+    "type": "consumable",
+    "effect": "heal",
+    "magnitude": 652,
+    "description": "A foundation-realm medicinal nectar. Restores 652 HP."
+  },
+  {
+    "id": "great_return_tonic_mortal",
+    "name": "Great Return Tonic (Mortal)",
+    "type": "consumable",
+    "effect": "breakthrough_aid",
+    "magnitude": 11,
+    "description": "Steadies the dantian during a Divine Sea-realm breakthrough, raising success by 11%."
+  },
+  {
+    "id": "primordial_dan",
+    "name": "Primordial Dan",
+    "type": "consumable",
+    "effect": "lifespan_extension",
+    "magnitude": 3000,
+    "description": "An Life Destruction-grade dan said to extend lifespan by 3000 years."
+  },
+  {
+    "id": "void_spirit_elixir",
+    "name": "Void Spirit Elixir",
+    "type": "consumable",
+    "effect": "comprehension_boost",
+    "magnitude": 26,
+    "description": "Clears the mind for insight, granting +26 comprehension for a time."
+  },
+  {
+    "id": "mystic_elixir_mortal",
+    "name": "Mystic Elixir (Mortal)",
+    "type": "consumable",
+    "effect": "comprehension_boost",
+    "magnitude": 1,
+    "description": "Clears the mind for insight, granting +1 comprehension for a time."
+  },
+  {
+    "id": "blood_quenching_pellet",
+    "name": "Blood Quenching Pellet",
+    "type": "consumable",
+    "effect": "lifespan_extension",
+    "magnitude": 50,
+    "description": "An Houtian-grade pellet said to extend lifespan by 50 years."
+  },
+  {
+    "id": "soul_nurturing_pill",
+    "name": "Soul Nurturing Pill",
+    "type": "consumable",
+    "effect": "cleanse_poison",
+    "magnitude": 268,
+    "description": "Purges toxins from the meridians and heals 268 HP of poison damage."
+  },
+  {
+    "id": "heaven_nectar",
+    "name": "Heaven Nectar",
+    "type": "consumable",
+    "effect": "heal",
+    "magnitude": 633,
+    "description": "A foundation-realm medicinal nectar. Restores 633 HP."
+  },
+  {
+    "id": "thunder_essence_pill_no3",
+    "name": "Thunder Essence Pill No.3",
+    "type": "consumable",
+    "effect": "breakthrough_aid",
+    "magnitude": 11,
+    "description": "Steadies the dantian during a Divine Sea-realm breakthrough, raising success by 11%."
+  },
+  {
+    "id": "star_gathering_dan_mortal",
+    "name": "Star Gathering Dan (Mortal)",
+    "type": "consumable",
+    "effect": "restore_hp_qi",
+    "magnitude": 3189,
+    "description": "A balanced dan that restores 3189 HP and 3189 Qi at once."
+  },
+  {
+    "id": "void_spirit_decoction",
+    "name": "Void Spirit Decoction",
+    "type": "consumable",
+    "effect": "breakthrough_aid",
+    "magnitude": 26,
+    "description": "Steadies the dantian during a Dao Palace-realm breakthrough, raising success by 26%."
+  },
+  {
+    "id": "blood_quenching_pill",
+    "name": "Blood Quenching Pill",
+    "type": "consumable",
+    "effect": "cleanse_poison",
+    "magnitude": 35,
+    "description": "Purges toxins from the meridians and heals 35 HP of poison damage."
+  },
+  {
+    "id": "mystic_scale",
+    "name": "Mystic Scale",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "description": "A Houtian-grade scale prized by alchemists and refiners. Valuable to the right buyer."
+  },
+  {
+    "id": "heaven_fang",
+    "name": "Heaven Fang",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "description": "A Xiantian-grade fang prized by alchemists and refiners. Valuable to the right buyer."
+  },
+  {
+    "id": "mystic_decoction_no3",
+    "name": "Mystic Decoction No.3",
+    "type": "consumable",
+    "effect": "restore_qi",
+    "magnitude": 489,
+    "description": "Refined for Foundation cultivators. Replenishes 489 points of Qi."
+  },
+  {
+    "id": "primordial_pill",
+    "name": "Primordial Pill",
+    "type": "consumable",
+    "effect": "restore_hp_qi",
+    "magnitude": 1319,
+    "description": "A balanced pill that restores 1319 HP and 1319 Qi at once."
+  },
+  {
+    "id": "phoenix_marrow_bone",
+    "name": "Phoenix Marrow Bone",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "description": "A Life Destruction-grade bone prized by alchemists and refiners. Valuable to the right buyer."
+  },
+  {
+    "id": "dao_enlightenment_pill_mortal",
+    "name": "Dao Enlightenment Pill (Mortal)",
+    "type": "consumable",
+    "effect": "breakthrough_aid",
+    "magnitude": 26,
+    "description": "Steadies the dantian during a Dao Palace-realm breakthrough, raising success by 26%."
+  },
+  {
+    "id": "profound_elixir",
+    "name": "Profound Elixir",
+    "type": "consumable",
+    "effect": "comprehension_boost",
+    "magnitude": 1,
+    "description": "Clears the mind for insight, granting +1 comprehension for a time."
+  },
+  {
+    "id": "marrow_cleansing_dan_mortal",
+    "name": "Marrow Cleansing Dan (Mortal)",
+    "type": "consumable",
+    "effect": "restore_hp_qi",
+    "magnitude": 84,
+    "description": "A balanced dan that restores 84 HP and 84 Qi at once."
+  },
+  {
+    "id": "dragon_blood_dan",
+    "name": "Dragon Blood Dan",
+    "type": "consumable",
+    "effect": "heal",
+    "magnitude": 269,
+    "description": "A xiantian-realm medicinal dan. Restores 269 HP."
+  },
+  {
+    "id": "blood_quenching_pellet_mortal",
+    "name": "Blood Quenching Pellet (Mortal)",
+    "type": "consumable",
+    "effect": "cleanse_poison",
+    "magnitude": 551,
+    "description": "Purges toxins from the meridians and heals 551 HP of poison damage."
+  },
+  {
+    "id": "purple_cloud_pill_mortal",
+    "name": "Purple Cloud Pill (Mortal)",
+    "type": "consumable",
+    "effect": "cleanse_poison",
+    "magnitude": 1406,
+    "description": "Purges toxins from the meridians and heals 1406 HP of poison damage."
+  },
+  {
+    "id": "void_spirit_dan",
+    "name": "Void Spirit Dan",
+    "type": "consumable",
+    "effect": "comprehension_boost",
+    "magnitude": 17,
+    "description": "Clears the mind for insight, granting +17 comprehension for a time."
+  },
+  {
+    "id": "life_extending_pellet",
+    "name": "Life Extending Pellet",
+    "type": "consumable",
+    "effect": "restore_hp_qi",
+    "magnitude": 6958,
+    "description": "A balanced pellet that restores 6958 HP and 6958 Qi at once."
+  },
+  {
+    "id": "frost_jade_pill_mortal",
+    "name": "Frost Jade Pill (Mortal)",
+    "type": "consumable",
+    "effect": "restore_hp_qi",
+    "magnitude": 38,
+    "description": "A balanced pill that restores 38 HP and 38 Qi at once."
+  },
+  {
+    "id": "profound_root",
+    "name": "Profound Root",
+    "type": "material",
+    "effect": "cultivation_boost",
+    "magnitude": 20,
+    "consumed_on_use": true,
+    "description": "A Houtian-realm root dense with spiritual energy. Absorb it to gain 20% cultivation progress."
+  },
+  {
+    "id": "heaven_bone",
+    "name": "Heaven Bone",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "description": "A Xiantian-grade bone prized by alchemists and refiners. Valuable to the right buyer."
+  },
+  {
+    "id": "soul_nurturing_nectar_mortal",
+    "name": "Soul Nurturing Nectar (Mortal)",
+    "type": "consumable",
+    "effect": "breakthrough_aid",
+    "magnitude": 7,
+    "description": "Steadies the dantian during a Foundation-realm breakthrough, raising success by 7%."
+  },
+  {
+    "id": "immortal_ascension_nectar_no3",
+    "name": "Immortal Ascension Nectar No.3",
+    "type": "consumable",
+    "effect": "restore_hp_qi",
+    "magnitude": 1448,
+    "description": "A balanced nectar that restores 1448 HP and 1448 Qi at once."
+  },
+  {
+    "id": "nine_revolutions_nectar_mortal",
+    "name": "Nine Revolutions Nectar (Mortal)",
+    "type": "consumable",
+    "effect": "comprehension_boost",
+    "magnitude": 17,
+    "description": "Clears the mind for insight, granting +17 comprehension for a time."
+  },
+  {
+    "id": "life_extending_elixir_mortal",
+    "name": "Life Extending Elixir (Mortal)",
+    "type": "consumable",
+    "effect": "restore_hp_qi",
+    "magnitude": 7063,
+    "description": "A balanced elixir that restores 7063 HP and 7063 Qi at once."
+  },
+  {
+    "id": "frost_jade_elixir_no3",
+    "name": "Frost Jade Elixir No.3",
+    "type": "consumable",
+    "effect": "lifespan_extension",
+    "magnitude": 10,
+    "description": "An Mortal-grade elixir said to extend lifespan by 10 years."
+  },
+  {
+    "id": "frost_jade_nectar_mortal",
+    "name": "Frost Jade Nectar (Mortal)",
+    "type": "consumable",
+    "effect": "cleanse_poison",
+    "magnitude": 107,
+    "description": "Purges toxins from the meridians and heals 107 HP of poison damage."
+  },
+  {
+    "id": "soul_nurturing_decoction_mortal",
+    "name": "Soul Nurturing Decoction (Mortal)",
+    "type": "consumable",
+    "effect": "breakthrough_aid",
+    "magnitude": 4,
+    "description": "Steadies the dantian during a Xiantian-realm breakthrough, raising success by 4%."
+  },
+  {
+    "id": "bone_forging_tonic",
+    "name": "Bone Forging Tonic",
+    "type": "consumable",
+    "effect": "heal",
+    "magnitude": 547,
+    "description": "A foundation-realm medicinal tonic. Restores 547 HP."
+  },
+  {
+    "id": "immortal_ascension_pellet_mortal",
+    "name": "Immortal Ascension Pellet (Mortal)",
+    "type": "consumable",
+    "effect": "breakthrough_aid",
+    "magnitude": 11,
+    "description": "Steadies the dantian during a Divine Sea-realm breakthrough, raising success by 11%."
+  },
+  {
+    "id": "star_gathering_tonic",
+    "name": "Star Gathering Tonic",
+    "type": "consumable",
+    "effect": "lifespan_extension",
+    "magnitude": 3000,
+    "description": "An Life Destruction-grade tonic said to extend lifespan by 3000 years."
+  },
+  {
+    "id": "void_spirit_pellet_mortal",
+    "name": "Void Spirit Pellet (Mortal)",
+    "type": "consumable",
+    "effect": "heal",
+    "magnitude": 8460,
+    "description": "A dao palace-realm medicinal pellet. Restores 8460 HP."
+  },
+  {
+    "id": "earth_scale",
+    "name": "Earth Scale",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "description": "A Mortal-grade scale prized by alchemists and refiners. Valuable to the right buyer."
+  },
+  {
+    "id": "vermilion_dan_mortal",
+    "name": "Vermilion Dan (Mortal)",
+    "type": "consumable",
+    "effect": "comprehension_boost",
+    "magnitude": 2,
+    "description": "Clears the mind for insight, granting +2 comprehension for a time."
+  },
+  {
+    "id": "marrow_cleansing_petal_mortal",
+    "name": "Marrow Cleansing Petal (Mortal)",
+    "type": "material",
+    "effect": "body_temper",
+    "magnitude": 4,
+    "consumed_on_use": true,
+    "description": "Refined into the body to temper the flesh, granting +4 body strength."
+  },
+  {
+    "id": "soul_nurturing_pill_mortal",
+    "name": "Soul Nurturing Pill (Mortal)",
+    "type": "consumable",
+    "effect": "restore_qi",
+    "magnitude": 530,
+    "description": "Refined for Foundation cultivators. Replenishes 530 points of Qi."
+  },
+  {
+    "id": "celestial_nectar_mortal",
+    "name": "Celestial Nectar (Mortal)",
+    "type": "consumable",
+    "effect": "cleanse_poison",
+    "magnitude": 1351,
+    "description": "Purges toxins from the meridians and heals 1351 HP of poison damage."
+  },
+  {
+    "id": "life_extending_nectar",
+    "name": "Life Extending Nectar",
+    "type": "consumable",
+    "effect": "cleanse_poison",
+    "magnitude": 2970,
+    "description": "Purges toxins from the meridians and heals 2970 HP of poison damage."
+  },
+  {
+    "id": "dao_enlightenment_pill_no3",
+    "name": "Dao Enlightenment Pill No.3",
+    "type": "consumable",
+    "effect": "restore_qi",
+    "magnitude": 6406,
+    "description": "Refined for Dao Palace cultivators. Replenishes 6406 points of Qi."
+  },
+  {
+    "id": "profound_dan",
+    "name": "Profound Dan",
+    "type": "consumable",
+    "effect": "restore_qi",
+    "magnitude": 30,
+    "description": "Refined for Mortal cultivators. Replenishes 30 points of Qi."
+  },
+  {
+    "id": "mystic_pill_no6",
+    "name": "Mystic Pill No.6",
+    "type": "consumable",
+    "effect": "comprehension_boost",
+    "magnitude": 2,
+    "description": "Clears the mind for insight, granting +2 comprehension for a time."
+  },
+  {
+    "id": "star_gathering_pellet",
+    "name": "Star Gathering Pellet",
+    "type": "consumable",
+    "effect": "cleanse_poison",
+    "magnitude": 256,
+    "description": "Purges toxins from the meridians and heals 256 HP of poison damage."
+  },
+  {
+    "id": "bone_forging_pellet_mortal",
+    "name": "Bone Forging Pellet (Mortal)",
+    "type": "consumable",
+    "effect": "restore_hp_qi",
+    "magnitude": 542,
+    "description": "A balanced pellet that restores 542 HP and 542 Qi at once."
+  },
+  {
+    "id": "nine_revolutions_pellet_no3",
+    "name": "Nine Revolutions Pellet No.3",
+    "type": "consumable",
+    "effect": "restore_hp_qi",
+    "magnitude": 1357,
+    "description": "A balanced pellet that restores 1357 HP and 1357 Qi at once."
+  },
+  {
+    "id": "dao_enlightenment_elixir",
+    "name": "Dao Enlightenment Elixir",
+    "type": "consumable",
+    "effect": "comprehension_boost",
+    "magnitude": 17,
+    "description": "Clears the mind for insight, granting +17 comprehension for a time."
+  },
+  {
+    "id": "celestial_decoction_no5",
+    "name": "Celestial Decoction No.5",
+    "type": "consumable",
+    "effect": "comprehension_boost",
+    "magnitude": 26,
+    "description": "Clears the mind for insight, granting +26 comprehension for a time."
+  },
+  {
+    "id": "mystic_essence_mortal",
+    "name": "Mystic Essence (Mortal)",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "description": "A Mortal-grade essence prized by alchemists and refiners. Valuable to the right buyer."
+  },
+  {
+    "id": "bone_forging_petal",
+    "name": "Bone Forging Petal",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "description": "A Houtian-grade petal prized by alchemists and refiners. Valuable to the right buyer."
+  }
+]

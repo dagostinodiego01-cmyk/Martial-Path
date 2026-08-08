@@ -1,0 +1,28 @@
+{
+  "min": -100,
+  "max": 100,
+  "default": 0,
+  "bands": [
+    {
+      "id": "demonic",
+      "label": "Demonic",
+      "min": -100,
+      "max": -34,
+      "description": "Ruthless and feared; the righteous shun you while demonic powers take interest."
+    },
+    {
+      "id": "neutral",
+      "label": "Neutral",
+      "min": -33,
+      "max": 33,
+      "description": "Unaligned; your intentions remain your own to define."
+    },
+    {
+      "id": "righteous",
+      "label": "Righteous",
+      "min": 34,
+      "max": 100,
+      "description": "Honorable and principled; the upright respect and aid you."
+    }
+  ]
+}

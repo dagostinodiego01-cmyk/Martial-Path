@@ -1,0 +1,11 @@
+[
+  {
+    "id": "wandering_sword_master",
+    "display_name": "Wandering Sword Master",
+    "location_ids": ["outer_forest"],
+    "description": "A reclusive cultivator who trades pointers on the martial path for coin.",
+    "techniques": [
+      { "skill_id": "spirit_palm", "price": { "gold": 80 } }
+    ]
+  }
+]

@@ -1,0 +1,7513 @@
+[
+  {
+    "id": "training_sword",
+    "display_name": "Training Sword",
+    "slot": "weapon",
+    "valid_slots": [
+      "weapon"
+    ],
+    "category": "martial_weapon",
+    "rarity": "mortal_grade",
+    "description": "A plain iron practice sword, reliable enough for early duels.",
+    "requirements": {},
+    "stat_modifiers": {
+      "attack": 2
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {},
+    "tags": [
+      "weapon",
+      "early_game"
+    ],
+    "value": 25,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "iron_spear",
+    "display_name": "Iron Spear",
+    "slot": "weapon",
+    "valid_slots": [
+      "weapon"
+    ],
+    "category": "martial_weapon",
+    "rarity": "mortal_grade",
+    "description": "A long spear with a heavy iron head.",
+    "requirements": {},
+    "stat_modifiers": {
+      "attack": 3
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {},
+    "tags": [
+      "weapon",
+      "reach"
+    ],
+    "value": 35,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "wooden_staff",
+    "display_name": "Wooden Staff",
+    "slot": "weapon",
+    "valid_slots": [
+      "weapon"
+    ],
+    "category": "martial_weapon",
+    "rarity": "mortal_grade",
+    "description": "A balanced staff suitable for steady footwork and defense.",
+    "requirements": {},
+    "stat_modifiers": {
+      "attack": 1,
+      "defense": 1
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {},
+    "tags": [
+      "weapon",
+      "defensive"
+    ],
+    "value": 20,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "bone_forged_blade",
+    "display_name": "Bone Forged Blade",
+    "slot": "weapon",
+    "valid_slots": [
+      "weapon"
+    ],
+    "category": "martial_weapon",
+    "rarity": "low_spirit_grade",
+    "description": "A blade strengthened with beast bone powder.",
+    "requirements": {
+      "minimum_body_realm": "flesh_training"
+    },
+    "stat_modifiers": {
+      "attack": 6,
+      "body_strength": 2
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {},
+    "tags": [
+      "weapon",
+      "body_cultivation"
+    ],
+    "value": 180,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "sect_disciple_sword",
+    "display_name": "Sect Disciple Sword",
+    "slot": "weapon",
+    "valid_slots": [
+      "weapon"
+    ],
+    "category": "martial_weapon",
+    "rarity": "low_spirit_grade",
+    "description": "A clean sword issued to promising outer disciples.",
+    "requirements": {
+      "minimum_comprehension": 8
+    },
+    "stat_modifiers": {
+      "attack": 5,
+      "defense": 1
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 1
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "weapon",
+      "sect"
+    ],
+    "value": 160,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "patched_leather_armor",
+    "display_name": "Patched Leather Armor",
+    "slot": "armor",
+    "valid_slots": [
+      "armor"
+    ],
+    "category": "light_armor",
+    "rarity": "mortal_grade",
+    "description": "Scuffed leather armor patched many times.",
+    "requirements": {},
+    "stat_modifiers": {
+      "defense": 2,
+      "max_hp": 5
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {},
+    "tags": [
+      "armor",
+      "early_game"
+    ],
+    "value": 35,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "plain_cultivator_robe",
+    "display_name": "Plain Cultivator Robe",
+    "slot": "armor",
+    "valid_slots": [
+      "armor"
+    ],
+    "category": "robe",
+    "rarity": "mortal_grade",
+    "description": "A simple robe that does not interfere with qi circulation.",
+    "requirements": {},
+    "stat_modifiers": {
+      "defense": 1,
+      "max_qi": 5
+    },
+    "cultivation_modifiers": {
+      "essence_cultivation_flat_bonus": 1
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "robe",
+      "essence_cultivation"
+    ],
+    "value": 45,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "beast_hide_vest",
+    "display_name": "Beast Hide Vest",
+    "slot": "armor",
+    "valid_slots": [
+      "armor"
+    ],
+    "category": "light_armor",
+    "rarity": "low_spirit_grade",
+    "description": "A vest cut from the hide of a low-grade beast.",
+    "requirements": {},
+    "stat_modifiers": {
+      "defense": 3,
+      "max_hp": 12
+    },
+    "cultivation_modifiers": {
+      "body_strain_gain_multiplier": 0.98
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "armor",
+      "beast"
+    ],
+    "value": 120,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "azure_meridian_robes",
+    "display_name": "Azure Meridian Robes",
+    "slot": "armor",
+    "valid_slots": [
+      "armor"
+    ],
+    "category": "robe",
+    "rarity": "middle_spirit_grade",
+    "description": "Blue robes stitched with faint meridian-guiding thread.",
+    "requirements": {
+      "minimum_comprehension": 12
+    },
+    "stat_modifiers": {
+      "defense": 2,
+      "max_qi": 18
+    },
+    "cultivation_modifiers": {
+      "essence_cultivation_flat_bonus": 3,
+      "essence_breakthrough_modifier": 0.02
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "robe",
+      "essence_cultivation"
+    ],
+    "value": 360,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "stone_skin_armor",
+    "display_name": "Stone Skin Armor",
+    "slot": "armor",
+    "valid_slots": [
+      "armor"
+    ],
+    "category": "heavy_armor",
+    "rarity": "middle_spirit_grade",
+    "description": "Heavy armor that teaches the skin to resist impact.",
+    "requirements": {
+      "minimum_body_realm": "bone_forging"
+    },
+    "stat_modifiers": {
+      "defense": 7,
+      "max_hp": 25,
+      "body_strength": 3
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 1,
+      "body_strain_gain_multiplier": 1.05
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "armor",
+      "body_cultivation"
+    ],
+    "value": 420,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "worn_travel_boots",
+    "display_name": "Worn Travel Boots",
+    "slot": "boots",
+    "valid_slots": [
+      "boots"
+    ],
+    "category": "boots",
+    "rarity": "mortal_grade",
+    "description": "Old boots with sturdy soles.",
+    "requirements": {},
+    "stat_modifiers": {
+      "evasion": 1
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "travel_safety_bonus": 1
+    },
+    "tags": [
+      "travel",
+      "early_game"
+    ],
+    "value": 20,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "cloudstep_boots",
+    "display_name": "Cloudstep Boots",
+    "slot": "boots",
+    "valid_slots": [
+      "boots"
+    ],
+    "category": "boots",
+    "rarity": "low_spirit_grade",
+    "description": "Light boots that make footwork feel strangely buoyant.",
+    "requirements": {},
+    "stat_modifiers": {
+      "evasion": 4,
+      "speed": 2
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "travel_safety_bonus": 3
+    },
+    "tags": [
+      "movement",
+      "travel"
+    ],
+    "value": 140,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "mist_walking_boots",
+    "display_name": "Mist Walking Boots",
+    "slot": "boots",
+    "valid_slots": [
+      "boots"
+    ],
+    "category": "boots",
+    "rarity": "middle_spirit_grade",
+    "description": "Boots that blur footfalls in mist and rain.",
+    "requirements": {
+      "minimum_essence_realm": "xiantian"
+    },
+    "stat_modifiers": {
+      "evasion": 6,
+      "speed": 3
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "stealth_bonus": 3,
+      "ambush_avoidance_bonus": 3
+    },
+    "tags": [
+      "movement",
+      "stealth"
+    ],
+    "value": 340,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "iron_thread_boots",
+    "display_name": "Iron Thread Boots",
+    "slot": "boots",
+    "valid_slots": [
+      "boots"
+    ],
+    "category": "boots",
+    "rarity": "low_spirit_grade",
+    "description": "Weighted boots woven with iron thread for leg tempering.",
+    "requirements": {},
+    "stat_modifiers": {
+      "defense": 1,
+      "body_strength": 1
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 1
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "body_cultivation",
+      "movement"
+    ],
+    "value": 150,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "plain_traveller_cloak",
+    "display_name": "Plain Traveller Cloak",
+    "slot": "cloak",
+    "valid_slots": [
+      "cloak"
+    ],
+    "category": "cloak",
+    "rarity": "mortal_grade",
+    "description": "A weathered cloak for road dust and cold nights.",
+    "requirements": {},
+    "stat_modifiers": {
+      "defense": 1
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "travel_safety_bonus": 1
+    },
+    "tags": [
+      "travel"
+    ],
+    "value": 18,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "mist_concealment_cloak",
+    "display_name": "Mist Concealment Cloak",
+    "slot": "cloak",
+    "valid_slots": [
+      "cloak"
+    ],
+    "category": "cloak",
+    "rarity": "low_spirit_grade",
+    "description": "A grey cloak woven with faint mist-thread.",
+    "requirements": {},
+    "stat_modifiers": {
+      "evasion": 4,
+      "defense": 1
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "stealth_bonus": 8,
+      "travel_safety_bonus": 3,
+      "ambush_avoidance_bonus": 5
+    },
+    "tags": [
+      "stealth",
+      "exploration",
+      "early_game"
+    ],
+    "value": 120,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "shadow_thread_cloak",
+    "display_name": "Shadow Thread Cloak",
+    "slot": "cloak",
+    "valid_slots": [
+      "cloak"
+    ],
+    "category": "cloak",
+    "rarity": "middle_spirit_grade",
+    "description": "Dark thread drinks in stray light and softens movement.",
+    "requirements": {
+      "minimum_comprehension": 10
+    },
+    "stat_modifiers": {
+      "evasion": 6
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "stealth_bonus": 12,
+      "ambush_avoidance_bonus": 6
+    },
+    "tags": [
+      "stealth"
+    ],
+    "value": 310,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "outer_disciple_cloak",
+    "display_name": "Outer Disciple Cloak",
+    "slot": "cloak",
+    "valid_slots": [
+      "cloak"
+    ],
+    "category": "cloak",
+    "rarity": "mortal_grade",
+    "description": "A cloak bearing a plain outer-disciple cut.",
+    "requirements": {},
+    "stat_modifiers": {
+      "defense": 1,
+      "max_qi": 3
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "travel_safety_bonus": 2
+    },
+    "tags": [
+      "sect",
+      "travel"
+    ],
+    "value": 60,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "minor_qi_ring",
+    "display_name": "Minor Qi Ring",
+    "slot": "ring",
+    "valid_slots": [
+      "ring_1",
+      "ring_2"
+    ],
+    "category": "ring",
+    "rarity": "mortal_grade",
+    "description": "A small ring that helps a faint thread of qi circulate.",
+    "requirements": {},
+    "stat_modifiers": {
+      "max_qi": 8
+    },
+    "cultivation_modifiers": {
+      "essence_cultivation_flat_bonus": 1
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "ring",
+      "essence_cultivation"
+    ],
+    "value": 80,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "iron_body_ring",
+    "display_name": "Iron Body Ring",
+    "slot": "ring",
+    "valid_slots": [
+      "ring_1",
+      "ring_2"
+    ],
+    "category": "ring",
+    "rarity": "mortal_grade",
+    "description": "A heavy ring used by body cultivators to keep tension in the arms.",
+    "requirements": {},
+    "stat_modifiers": {
+      "body_strength": 2,
+      "max_hp": 8
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 1
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "ring",
+      "body_cultivation"
+    ],
+    "value": 85,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "spirit_storage_ring",
+    "display_name": "Spirit Storage Ring",
+    "slot": "ring",
+    "valid_slots": [
+      "ring_1",
+      "ring_2"
+    ],
+    "category": "ring",
+    "rarity": "low_spirit_grade",
+    "description": "A ring with a tiny storage inscription and a mild qi focus.",
+    "requirements": {},
+    "stat_modifiers": {
+      "max_qi": 12
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "spirit_stone_find_bonus": 1
+    },
+    "tags": [
+      "ring",
+      "utility"
+    ],
+    "value": 160,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "bone_tempering_ring",
+    "display_name": "Bone Tempering Ring",
+    "slot": "ring",
+    "valid_slots": [
+      "ring_1",
+      "ring_2"
+    ],
+    "category": "ring",
+    "rarity": "low_spirit_grade",
+    "description": "The ring hums softly when bones are stressed.",
+    "requirements": {
+      "minimum_body_realm": "flesh_training"
+    },
+    "stat_modifiers": {
+      "body_strength": 4,
+      "defense": 1
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 2,
+      "body_strain_gain_multiplier": 0.97
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "ring",
+      "body_cultivation"
+    ],
+    "value": 210,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "clear_stream_ring",
+    "display_name": "Clear Stream Ring",
+    "slot": "ring",
+    "valid_slots": [
+      "ring_1",
+      "ring_2"
+    ],
+    "category": "ring",
+    "rarity": "low_spirit_grade",
+    "description": "A cool ring that calms rough qi circulation.",
+    "requirements": {},
+    "stat_modifiers": {
+      "max_qi": 10
+    },
+    "cultivation_modifiers": {
+      "essence_cultivation_flat_bonus": 2,
+      "qi_strain_gain_multiplier": 0.95
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "ring",
+      "essence_cultivation"
+    ],
+    "value": 200,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "blood_heat_ring",
+    "display_name": "Blood Heat Ring",
+    "slot": "ring",
+    "valid_slots": [
+      "ring_1",
+      "ring_2"
+    ],
+    "category": "ring",
+    "rarity": "middle_spirit_grade",
+    "description": "A crimson ring that warms the blood before breakthrough attempts.",
+    "requirements": {
+      "minimum_body_realm": "viscera_training"
+    },
+    "stat_modifiers": {
+      "attack": 2,
+      "body_strength": 3
+    },
+    "cultivation_modifiers": {
+      "body_breakthrough_modifier": 0.03,
+      "body_strain_gain_multiplier": 0.96
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "ring",
+      "breakthrough"
+    ],
+    "value": 330,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "spirit_jade_amulet",
+    "display_name": "Spirit Jade Amulet",
+    "slot": "amulet",
+    "valid_slots": [
+      "amulet"
+    ],
+    "category": "amulet",
+    "rarity": "low_spirit_grade",
+    "description": "A smooth jade amulet that gathers cool qi near the heart.",
+    "requirements": {},
+    "stat_modifiers": {
+      "max_qi": 15
+    },
+    "cultivation_modifiers": {
+      "essence_cultivation_flat_bonus": 1
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "amulet",
+      "essence_cultivation"
+    ],
+    "value": 180,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "clear_mind_amulet",
+    "display_name": "Clear Mind Amulet",
+    "slot": "amulet",
+    "valid_slots": [
+      "amulet"
+    ],
+    "category": "amulet",
+    "rarity": "low_spirit_grade",
+    "description": "A pale amulet that steadies the mind during meditation.",
+    "requirements": {},
+    "stat_modifiers": {
+      "comprehension": 1
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 1,
+      "essence_breakthrough_modifier": 0.01
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "amulet",
+      "comprehension"
+    ],
+    "value": 190,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "heart_guard_amulet",
+    "display_name": "Heart Guard Amulet",
+    "slot": "amulet",
+    "valid_slots": [
+      "amulet"
+    ],
+    "category": "amulet",
+    "rarity": "middle_spirit_grade",
+    "description": "A warm amulet that presses back against panic and heart demons.",
+    "requirements": {
+      "minimum_comprehension": 10
+    },
+    "stat_modifiers": {
+      "defense": 2,
+      "max_qi": 8
+    },
+    "cultivation_modifiers": {
+      "breakthrough_chance_modifier": 0.02
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "amulet",
+      "breakthrough"
+    ],
+    "value": 360,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "foundation_stone_amulet",
+    "display_name": "Foundation Stone Amulet",
+    "slot": "amulet",
+    "valid_slots": [
+      "amulet"
+    ],
+    "category": "amulet",
+    "rarity": "middle_spirit_grade",
+    "description": "A heavy amulet that feels like a steady stone against the chest.",
+    "requirements": {},
+    "stat_modifiers": {
+      "max_hp": 10,
+      "defense": 1
+    },
+    "cultivation_modifiers": {
+      "foundation_stability_bonus": 5
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "amulet",
+      "foundation"
+    ],
+    "value": 300,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "cracked_protection_talisman",
+    "display_name": "Cracked Protection Talisman",
+    "slot": "talisman",
+    "valid_slots": [
+      "talisman"
+    ],
+    "category": "talisman",
+    "rarity": "mortal_grade",
+    "description": "A cracked paper talisman with one faint protective stroke remaining.",
+    "requirements": {},
+    "stat_modifiers": {
+      "defense": 2
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {},
+    "tags": [
+      "talisman",
+      "defense"
+    ],
+    "value": 45,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "minor_breakthrough_talisman",
+    "display_name": "Minor Breakthrough Talisman",
+    "slot": "talisman",
+    "valid_slots": [
+      "talisman"
+    ],
+    "category": "talisman",
+    "rarity": "low_spirit_grade",
+    "description": "A small talisman used to steady a minor breakthrough attempt.",
+    "requirements": {},
+    "stat_modifiers": {},
+    "cultivation_modifiers": {
+      "breakthrough_chance_modifier": 0.03,
+      "foundation_stability_bonus": 3
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "talisman",
+      "breakthrough"
+    ],
+    "value": 220,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "mist_ward_talisman",
+    "display_name": "Mist Ward Talisman",
+    "slot": "talisman",
+    "valid_slots": [
+      "talisman"
+    ],
+    "category": "talisman",
+    "rarity": "low_spirit_grade",
+    "description": "A talisman that warns of movement hidden in fog.",
+    "requirements": {},
+    "stat_modifiers": {
+      "evasion": 2
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "ambush_avoidance_bonus": 4,
+      "travel_safety_bonus": 2
+    },
+    "tags": [
+      "talisman",
+      "travel"
+    ],
+    "value": 150,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "blood_sealing_talisman",
+    "display_name": "Blood Sealing Talisman",
+    "slot": "talisman",
+    "valid_slots": [
+      "talisman"
+    ],
+    "category": "talisman",
+    "rarity": "middle_spirit_grade",
+    "description": "A talisman that can slow a dangerous surge of blood heat.",
+    "requirements": {
+      "minimum_body_realm": "viscera_training"
+    },
+    "stat_modifiers": {
+      "max_hp": 8
+    },
+    "cultivation_modifiers": {
+      "body_strain_gain_multiplier": 0.94
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "talisman",
+      "body_cultivation"
+    ],
+    "value": 260,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "corpse_qi_ward_talisman",
+    "display_name": "Corpse Qi Ward Talisman",
+    "slot": "talisman",
+    "valid_slots": [
+      "talisman"
+    ],
+    "category": "talisman",
+    "rarity": "low_spirit_grade",
+    "description": "A yellow talisman that blackens near corpse qi.",
+    "requirements": {},
+    "stat_modifiers": {
+      "defense": 1
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "corpse_qi_resistance": 6
+    },
+    "tags": [
+      "talisman",
+      "ward"
+    ],
+    "value": 170,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "cracked_black_pagoda",
+    "display_name": "Cracked Black Pagoda",
+    "slot": "artifact",
+    "valid_slots": [
+      "artifact_1",
+      "artifact_2"
+    ],
+    "category": "artifact",
+    "rarity": "earth_grade",
+    "description": "A palm-sized black pagoda with cracks across every tier.",
+    "requirements": {
+      "minimum_body_realm": "bone_forging"
+    },
+    "stat_modifiers": {
+      "defense": 4,
+      "max_hp": 20
+    },
+    "cultivation_modifiers": {
+      "foundation_stability_bonus": 4,
+      "body_breakthrough_modifier": 0.02
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "artifact",
+      "defense"
+    ],
+    "value": 900,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "nameless_bone_shard",
+    "display_name": "Nameless Bone Shard",
+    "slot": "artifact",
+    "valid_slots": [
+      "artifact_1",
+      "artifact_2"
+    ],
+    "category": "artifact",
+    "rarity": "earth_grade",
+    "description": "A pale shard of ancient bone. It grows warm near danger and cold near hidden fortune.",
+    "requirements": {},
+    "stat_modifiers": {
+      "body_strength": 2
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 2,
+      "body_strain_gain_multiplier": 0.95
+    },
+    "utility_modifiers": {
+      "rare_event_chance_bonus": 3
+    },
+    "tags": [
+      "body_cultivation",
+      "fortune",
+      "ancient"
+    ],
+    "value": 800,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "ancient_jade_slip",
+    "display_name": "Ancient Jade Slip",
+    "slot": "artifact",
+    "valid_slots": [
+      "artifact_1",
+      "artifact_2"
+    ],
+    "category": "artifact",
+    "rarity": "middle_spirit_grade",
+    "description": "A fragmentary jade slip filled with half-erased cultivation notes.",
+    "requirements": {
+      "minimum_comprehension": 12
+    },
+    "stat_modifiers": {
+      "comprehension": 2
+    },
+    "cultivation_modifiers": {
+      "essence_cultivation_flat_bonus": 2,
+      "comprehension_bonus": 1
+    },
+    "utility_modifiers": {
+      "rare_event_chance_bonus": 1
+    },
+    "tags": [
+      "artifact",
+      "comprehension"
+    ],
+    "value": 620,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "bronze_spirit_mirror",
+    "display_name": "Bronze Spirit Mirror",
+    "slot": "artifact",
+    "valid_slots": [
+      "artifact_1",
+      "artifact_2"
+    ],
+    "category": "artifact",
+    "rarity": "middle_spirit_grade",
+    "description": "A clouded bronze mirror that reflects the movement of qi.",
+    "requirements": {},
+    "stat_modifiers": {
+      "max_qi": 18,
+      "defense": 1
+    },
+    "cultivation_modifiers": {
+      "essence_breakthrough_modifier": 0.02
+    },
+    "utility_modifiers": {
+      "ambush_avoidance_bonus": 2
+    },
+    "tags": [
+      "artifact",
+      "essence_cultivation"
+    ],
+    "value": 580,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "miniature_alchemy_cauldron",
+    "display_name": "Miniature Alchemy Cauldron",
+    "slot": "artifact",
+    "valid_slots": [
+      "artifact_1",
+      "artifact_2"
+    ],
+    "category": "artifact",
+    "rarity": "earth_grade",
+    "description": "A tiny cauldron that smells faintly of old medicinal smoke.",
+    "requirements": {},
+    "stat_modifiers": {
+      "comprehension": 1,
+      "max_qi": 10
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 1,
+      "essence_cultivation_flat_bonus": 1
+    },
+    "utility_modifiers": {
+      "herb_gathering_bonus": 4,
+      "shop_discount_modifier": 1
+    },
+    "tags": [
+      "artifact",
+      "alchemy"
+    ],
+    "value": 760,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "rusted_flying_sword",
+    "display_name": "Rusted Flying Sword",
+    "slot": "flying_sword",
+    "valid_slots": [
+      "flying_sword"
+    ],
+    "category": "flying_sword",
+    "rarity": "mortal_grade",
+    "description": "A damaged flying sword with a cracked inscription. It can barely hover, but still carries a trace of sword qi.",
+    "requirements": {
+      "minimum_essence_realm": "xiantian",
+      "minimum_comprehension": 15
+    },
+    "stat_modifiers": {
+      "attack": 3,
+      "speed": 2
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 1
+    },
+    "utility_modifiers": {
+      "travel_safety_bonus": 2
+    },
+    "tags": [
+      "sword",
+      "flying_sword",
+      "early_artifact"
+    ],
+    "value": 250,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "outer_disciple_flying_sword",
+    "display_name": "Outer Disciple Flying Sword",
+    "slot": "flying_sword",
+    "valid_slots": [
+      "flying_sword"
+    ],
+    "category": "flying_sword",
+    "rarity": "low_spirit_grade",
+    "description": "A basic flying sword given to outer disciples who have proven control.",
+    "requirements": {
+      "minimum_essence_realm": "xiantian",
+      "minimum_comprehension": 18
+    },
+    "stat_modifiers": {
+      "attack": 6,
+      "speed": 4,
+      "evasion": 2
+    },
+    "cultivation_modifiers": {
+      "essence_breakthrough_modifier": 0.01
+    },
+    "utility_modifiers": {
+      "travel_safety_bonus": 4
+    },
+    "tags": [
+      "sword",
+      "flying_sword",
+      "sect"
+    ],
+    "value": 520,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "cloudpiercer_sword",
+    "display_name": "Cloudpiercer Sword",
+    "slot": "flying_sword",
+    "valid_slots": [
+      "flying_sword"
+    ],
+    "category": "flying_sword",
+    "rarity": "middle_spirit_grade",
+    "description": "A bright flying sword that hums as if it wants to split cloudbanks.",
+    "requirements": {
+      "minimum_essence_realm": "revolving_core",
+      "minimum_comprehension": 25
+    },
+    "stat_modifiers": {
+      "attack": 12,
+      "speed": 8,
+      "evasion": 4
+    },
+    "cultivation_modifiers": {
+      "essence_breakthrough_modifier": 0.03,
+      "comprehension_bonus": 1
+    },
+    "utility_modifiers": {
+      "travel_safety_bonus": 8
+    },
+    "tags": [
+      "sword",
+      "flying_sword"
+    ],
+    "value": 1200,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "blazing_yang_saber",
+    "display_name": "Blazing Yang Saber",
+    "slot": "weapon",
+    "valid_slots": [
+      "weapon"
+    ],
+    "category": "martial_weapon",
+    "rarity": "mortal_grade",
+    "description": "Blazing Yang Saber — a rough, mortal-forged treasure said to carry the aura of the blazing yang path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "attack": 4,
+      "body_strength": 1
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 1
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "weapon",
+      "body_cultivation"
+    ],
+    "value": 29,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "thunder_spear",
+    "display_name": "Thunder Spear",
+    "slot": "weapon",
+    "valid_slots": [
+      "weapon"
+    ],
+    "category": "martial_weapon",
+    "rarity": "low_spirit_grade",
+    "description": "Thunder Spear — a low-grade spirit treasure said to carry the aura of the thunder path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "attack": 9,
+      "defense": 2
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 0
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "weapon",
+      "sect"
+    ],
+    "value": 168,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "spirit_devouring_saber",
+    "display_name": "Spirit Devouring Saber",
+    "slot": "weapon",
+    "valid_slots": [
+      "weapon"
+    ],
+    "category": "martial_weapon",
+    "rarity": "middle_spirit_grade",
+    "description": "Spirit Devouring Saber — a refined spirit treasure said to carry the aura of the spirit devouring path.",
+    "requirements": {
+      "minimum_comprehension": 14
+    },
+    "stat_modifiers": {
+      "attack": 16,
+      "defense": 4
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 1
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "weapon",
+      "sect"
+    ],
+    "value": 302,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "blood_moon_halberd",
+    "display_name": "Blood Moon Halberd",
+    "slot": "weapon",
+    "valid_slots": [
+      "weapon"
+    ],
+    "category": "martial_weapon",
+    "rarity": "high_spirit_grade",
+    "description": "Blood Moon Halberd — a high spirit-grade treasure said to carry the aura of the blood moon path.",
+    "requirements": {
+      "minimum_body_realm": "viscera_training"
+    },
+    "stat_modifiers": {
+      "attack": 28,
+      "body_strength": 7
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 3
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "weapon",
+      "body_cultivation"
+    ],
+    "value": 764,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "cloud_sea_halberd",
+    "display_name": "Cloud Sea Halberd",
+    "slot": "weapon",
+    "valid_slots": [
+      "weapon"
+    ],
+    "category": "martial_weapon",
+    "rarity": "earth_grade",
+    "description": "Cloud Sea Halberd — an earth-grade treasure said to carry the aura of the cloud sea path.",
+    "requirements": {
+      "minimum_comprehension": 22
+    },
+    "stat_modifiers": {
+      "attack": 44,
+      "defense": 11
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 3
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "weapon",
+      "sword_intent"
+    ],
+    "value": 1583,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "ghost_flame_halberd",
+    "display_name": "Ghost Flame Halberd",
+    "slot": "weapon",
+    "valid_slots": [
+      "weapon"
+    ],
+    "category": "martial_weapon",
+    "rarity": "heaven_grade",
+    "description": "Ghost Flame Halberd — a heaven-grade treasure said to carry the aura of the ghost flame path.",
+    "requirements": {
+      "minimum_comprehension": 26
+    },
+    "stat_modifiers": {
+      "attack": 68,
+      "defense": 17
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 4
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "weapon",
+      "sword_intent"
+    ],
+    "value": 3364,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "azure_trident",
+    "display_name": "Azure Trident",
+    "slot": "weapon",
+    "valid_slots": [
+      "weapon"
+    ],
+    "category": "martial_weapon",
+    "rarity": "dao_grade",
+    "description": "Azure Trident — a dao-grade treasure said to carry the aura of the azure path.",
+    "requirements": {
+      "minimum_comprehension": 30
+    },
+    "stat_modifiers": {
+      "attack": 104,
+      "defense": 26
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 5
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "weapon",
+      "sword_intent"
+    ],
+    "value": 10163,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "silver_moon_plate",
+    "display_name": "Silver Moon Plate",
+    "slot": "armor",
+    "valid_slots": [
+      "armor"
+    ],
+    "category": "light_armor",
+    "rarity": "mortal_grade",
+    "description": "Silver Moon Plate — a rough, mortal-forged treasure said to carry the aura of the silver moon path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "defense": 3,
+      "max_hp": 8,
+      "body_strength": 1
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 0
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "armor",
+      "body_cultivation"
+    ],
+    "value": 30,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "crimson_lotus_vestments",
+    "display_name": "Crimson Lotus Vestments",
+    "slot": "armor",
+    "valid_slots": [
+      "armor"
+    ],
+    "category": "robe",
+    "rarity": "low_spirit_grade",
+    "description": "Crimson Lotus Vestments — a low-grade spirit treasure said to carry the aura of the crimson lotus path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "defense": 2,
+      "max_qi": 13
+    },
+    "cultivation_modifiers": {
+      "essence_cultivation_flat_bonus": 1
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "robe",
+      "essence_cultivation"
+    ],
+    "value": 143,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "nine_nether_vestments",
+    "display_name": "Nine Nether Vestments",
+    "slot": "armor",
+    "valid_slots": [
+      "armor"
+    ],
+    "category": "robe",
+    "rarity": "middle_spirit_grade",
+    "description": "Nine Nether Vestments — a refined spirit treasure said to carry the aura of the nine nether path.",
+    "requirements": {
+      "minimum_comprehension": 14
+    },
+    "stat_modifiers": {
+      "defense": 4,
+      "max_qi": 24
+    },
+    "cultivation_modifiers": {
+      "essence_cultivation_flat_bonus": 2,
+      "essence_breakthrough_modifier": 0.02
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "robe",
+      "essence_cultivation"
+    ],
+    "value": 315,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "sky_severing_scale_mail",
+    "display_name": "Sky Severing Scale Mail",
+    "slot": "armor",
+    "valid_slots": [
+      "armor"
+    ],
+    "category": "light_armor",
+    "rarity": "high_spirit_grade",
+    "description": "Sky Severing Scale Mail — a high spirit-grade treasure said to carry the aura of the sky severing path.",
+    "requirements": {
+      "minimum_body_realm": "viscera_training"
+    },
+    "stat_modifiers": {
+      "defense": 21,
+      "max_hp": 56,
+      "body_strength": 7
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 2
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "armor",
+      "body_cultivation"
+    ],
+    "value": 792,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "nine_nether_war_vestments",
+    "display_name": "Nine Nether War Vestments",
+    "slot": "armor",
+    "valid_slots": [
+      "armor"
+    ],
+    "category": "robe",
+    "rarity": "earth_grade",
+    "description": "Nine Nether War Vestments — an earth-grade treasure said to carry the aura of the nine nether path.",
+    "requirements": {
+      "minimum_comprehension": 22
+    },
+    "stat_modifiers": {
+      "defense": 11,
+      "max_qi": 66
+    },
+    "cultivation_modifiers": {
+      "essence_cultivation_flat_bonus": 4,
+      "essence_breakthrough_modifier": 0.04
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "robe",
+      "essence_cultivation"
+    ],
+    "value": 1742,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "thunder_war_vestments",
+    "display_name": "Thunder War Vestments",
+    "slot": "armor",
+    "valid_slots": [
+      "armor"
+    ],
+    "category": "robe",
+    "rarity": "heaven_grade",
+    "description": "Thunder War Vestments — a heaven-grade treasure said to carry the aura of the thunder path.",
+    "requirements": {
+      "minimum_comprehension": 26
+    },
+    "stat_modifiers": {
+      "defense": 17,
+      "max_qi": 102
+    },
+    "cultivation_modifiers": {
+      "essence_cultivation_flat_bonus": 5,
+      "essence_breakthrough_modifier": 0.05
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "robe",
+      "essence_cultivation"
+    ],
+    "value": 3364,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "blazing_yang_robe",
+    "display_name": "Blazing Yang Robe",
+    "slot": "armor",
+    "valid_slots": [
+      "armor"
+    ],
+    "category": "robe",
+    "rarity": "dao_grade",
+    "description": "Blazing Yang Robe — a dao-grade treasure said to carry the aura of the blazing yang path.",
+    "requirements": {
+      "minimum_comprehension": 30
+    },
+    "stat_modifiers": {
+      "defense": 26,
+      "max_qi": 156
+    },
+    "cultivation_modifiers": {
+      "essence_cultivation_flat_bonus": 6,
+      "essence_breakthrough_modifier": 0.06
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "robe",
+      "essence_cultivation"
+    ],
+    "value": 8983,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "inferno_treads",
+    "display_name": "Inferno Treads",
+    "slot": "boots",
+    "valid_slots": [
+      "boots"
+    ],
+    "category": "boots",
+    "rarity": "mortal_grade",
+    "description": "Inferno Treads — a rough, mortal-forged treasure said to carry the aura of the inferno path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "evasion": 2,
+      "speed": 1
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "travel_safety_bonus": 2
+    },
+    "tags": [
+      "movement",
+      "travel"
+    ],
+    "value": 34,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "vermilion_bird_sabatons",
+    "display_name": "Vermilion Bird Sabatons",
+    "slot": "boots",
+    "valid_slots": [
+      "boots"
+    ],
+    "category": "boots",
+    "rarity": "low_spirit_grade",
+    "description": "Vermilion Bird Sabatons — a low-grade spirit treasure said to carry the aura of the vermilion bird path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "evasion": 4,
+      "speed": 2
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "travel_safety_bonus": 4
+    },
+    "tags": [
+      "movement",
+      "travel"
+    ],
+    "value": 160,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "earth_vein_greaves",
+    "display_name": "Earth Vein Greaves",
+    "slot": "boots",
+    "valid_slots": [
+      "boots"
+    ],
+    "category": "boots",
+    "rarity": "middle_spirit_grade",
+    "description": "Earth Vein Greaves — a refined spirit treasure said to carry the aura of the earth vein path.",
+    "requirements": {
+      "minimum_essence_realm": "xiantian"
+    },
+    "stat_modifiers": {
+      "evasion": 8,
+      "speed": 4
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "travel_safety_bonus": 8
+    },
+    "tags": [
+      "movement",
+      "travel"
+    ],
+    "value": 335,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "blazing_yang_sabatons",
+    "display_name": "Blazing Yang Sabatons",
+    "slot": "boots",
+    "valid_slots": [
+      "boots"
+    ],
+    "category": "boots",
+    "rarity": "high_spirit_grade",
+    "description": "Blazing Yang Sabatons — a high spirit-grade treasure said to carry the aura of the blazing yang path.",
+    "requirements": {
+      "minimum_essence_realm": "revolving_core"
+    },
+    "stat_modifiers": {
+      "evasion": 14,
+      "speed": 7
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "travel_safety_bonus": 14,
+      "stealth_bonus": 14,
+      "ambush_avoidance_bonus": 7
+    },
+    "tags": [
+      "movement",
+      "stealth"
+    ],
+    "value": 686,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "heaven_splitting_greaves",
+    "display_name": "Heaven Splitting Greaves",
+    "slot": "boots",
+    "valid_slots": [
+      "boots"
+    ],
+    "category": "boots",
+    "rarity": "earth_grade",
+    "description": "Heaven Splitting Greaves — an earth-grade treasure said to carry the aura of the heaven splitting path.",
+    "requirements": {
+      "minimum_essence_realm": "divine_sea"
+    },
+    "stat_modifiers": {
+      "evasion": 22,
+      "speed": 11
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "travel_safety_bonus": 22
+    },
+    "tags": [
+      "movement",
+      "travel"
+    ],
+    "value": 1641,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "myriad_star_treads",
+    "display_name": "Myriad Star Treads",
+    "slot": "boots",
+    "valid_slots": [
+      "boots"
+    ],
+    "category": "boots",
+    "rarity": "heaven_grade",
+    "description": "Myriad Star Treads — a heaven-grade treasure said to carry the aura of the myriad star path.",
+    "requirements": {
+      "minimum_essence_realm": "life_destruction"
+    },
+    "stat_modifiers": {
+      "evasion": 34,
+      "speed": 17
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "travel_safety_bonus": 34,
+      "stealth_bonus": 34,
+      "ambush_avoidance_bonus": 17
+    },
+    "tags": [
+      "movement",
+      "stealth"
+    ],
+    "value": 4253,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "eternal_night_treads",
+    "display_name": "Eternal Night Treads",
+    "slot": "boots",
+    "valid_slots": [
+      "boots"
+    ],
+    "category": "boots",
+    "rarity": "dao_grade",
+    "description": "Eternal Night Treads — a dao-grade treasure said to carry the aura of the eternal night path.",
+    "requirements": {
+      "minimum_essence_realm": "divine_transformation"
+    },
+    "stat_modifiers": {
+      "evasion": 52,
+      "speed": 26
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "travel_safety_bonus": 52,
+      "stealth_bonus": 52,
+      "ambush_avoidance_bonus": 26
+    },
+    "tags": [
+      "movement",
+      "stealth"
+    ],
+    "value": 9447,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "nether_river_cape",
+    "display_name": "Nether River Cape",
+    "slot": "cloak",
+    "valid_slots": [
+      "cloak"
+    ],
+    "category": "cloak",
+    "rarity": "mortal_grade",
+    "description": "Nether River Cape — a rough, mortal-forged treasure said to carry the aura of the nether river path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "evasion": 2,
+      "defense": 1
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "stealth_bonus": 6,
+      "ambush_avoidance_bonus": 3,
+      "travel_safety_bonus": 1
+    },
+    "tags": [
+      "stealth",
+      "exploration"
+    ],
+    "value": 27,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "primordial_mantle",
+    "display_name": "Primordial Mantle",
+    "slot": "cloak",
+    "valid_slots": [
+      "cloak"
+    ],
+    "category": "cloak",
+    "rarity": "low_spirit_grade",
+    "description": "Primordial Mantle — a low-grade spirit treasure said to carry the aura of the primordial path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "evasion": 4,
+      "defense": 2
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "stealth_bonus": 13,
+      "ambush_avoidance_bonus": 7,
+      "travel_safety_bonus": 2
+    },
+    "tags": [
+      "stealth",
+      "exploration"
+    ],
+    "value": 172,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "spirit_devouring_shroud",
+    "display_name": "Spirit Devouring Shroud",
+    "slot": "cloak",
+    "valid_slots": [
+      "cloak"
+    ],
+    "category": "cloak",
+    "rarity": "middle_spirit_grade",
+    "description": "Spirit Devouring Shroud — a refined spirit treasure said to carry the aura of the spirit devouring path.",
+    "requirements": {
+      "minimum_comprehension": 14
+    },
+    "stat_modifiers": {
+      "evasion": 8,
+      "defense": 4
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "stealth_bonus": 24,
+      "ambush_avoidance_bonus": 12,
+      "travel_safety_bonus": 4
+    },
+    "tags": [
+      "stealth",
+      "exploration"
+    ],
+    "value": 402,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "white_tiger_veil",
+    "display_name": "White Tiger Veil",
+    "slot": "cloak",
+    "valid_slots": [
+      "cloak"
+    ],
+    "category": "cloak",
+    "rarity": "high_spirit_grade",
+    "description": "White Tiger Veil — a high spirit-grade treasure said to carry the aura of the white tiger path.",
+    "requirements": {
+      "minimum_comprehension": 18
+    },
+    "stat_modifiers": {
+      "evasion": 14,
+      "defense": 7
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "stealth_bonus": 42,
+      "ambush_avoidance_bonus": 21,
+      "travel_safety_bonus": 7
+    },
+    "tags": [
+      "stealth",
+      "exploration"
+    ],
+    "value": 707,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "thunder_mantle",
+    "display_name": "Thunder Mantle",
+    "slot": "cloak",
+    "valid_slots": [
+      "cloak"
+    ],
+    "category": "cloak",
+    "rarity": "earth_grade",
+    "description": "Thunder Mantle — an earth-grade treasure said to carry the aura of the thunder path.",
+    "requirements": {
+      "minimum_comprehension": 22
+    },
+    "stat_modifiers": {
+      "evasion": 22,
+      "defense": 11
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "stealth_bonus": 66,
+      "ambush_avoidance_bonus": 33,
+      "travel_safety_bonus": 11
+    },
+    "tags": [
+      "stealth",
+      "exploration"
+    ],
+    "value": 1475,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "blood_moon_cloak",
+    "display_name": "Blood Moon Cloak",
+    "slot": "cloak",
+    "valid_slots": [
+      "cloak"
+    ],
+    "category": "cloak",
+    "rarity": "heaven_grade",
+    "description": "Blood Moon Cloak — a heaven-grade treasure said to carry the aura of the blood moon path.",
+    "requirements": {
+      "minimum_comprehension": 26
+    },
+    "stat_modifiers": {
+      "evasion": 34,
+      "defense": 17
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "stealth_bonus": 102,
+      "ambush_avoidance_bonus": 51,
+      "travel_safety_bonus": 17
+    },
+    "tags": [
+      "stealth",
+      "exploration"
+    ],
+    "value": 4181,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "immortal_mantle",
+    "display_name": "Immortal Mantle",
+    "slot": "cloak",
+    "valid_slots": [
+      "cloak"
+    ],
+    "category": "cloak",
+    "rarity": "dao_grade",
+    "description": "Immortal Mantle — a dao-grade treasure said to carry the aura of the immortal path.",
+    "requirements": {
+      "minimum_comprehension": 30
+    },
+    "stat_modifiers": {
+      "evasion": 52,
+      "defense": 26
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "stealth_bonus": 156,
+      "ambush_avoidance_bonus": 78,
+      "travel_safety_bonus": 26
+    },
+    "tags": [
+      "stealth",
+      "exploration"
+    ],
+    "value": 10501,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "white_tiger_ring",
+    "display_name": "White Tiger Ring",
+    "slot": "ring",
+    "valid_slots": [
+      "ring_1",
+      "ring_2"
+    ],
+    "category": "ring",
+    "rarity": "mortal_grade",
+    "description": "White Tiger Ring — a rough, mortal-forged treasure said to carry the aura of the white tiger path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "max_qi": 8
+    },
+    "cultivation_modifiers": {
+      "essence_cultivation_flat_bonus": 1
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "ring",
+      "essence_cultivation"
+    ],
+    "value": 31,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "golden_body_ring",
+    "display_name": "Golden Body Ring",
+    "slot": "ring",
+    "valid_slots": [
+      "ring_1",
+      "ring_2"
+    ],
+    "category": "ring",
+    "rarity": "low_spirit_grade",
+    "description": "Golden Body Ring — a low-grade spirit treasure said to carry the aura of the golden body path.",
+    "requirements": {
+      "minimum_body_realm": "flesh_training"
+    },
+    "stat_modifiers": {
+      "body_strength": 4,
+      "max_hp": 13
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 1
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "ring",
+      "body_cultivation"
+    ],
+    "value": 134,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "spirit_devouring_circlet",
+    "display_name": "Spirit Devouring Circlet",
+    "slot": "ring",
+    "valid_slots": [
+      "ring_1",
+      "ring_2"
+    ],
+    "category": "ring",
+    "rarity": "middle_spirit_grade",
+    "description": "Spirit Devouring Circlet — a refined spirit treasure said to carry the aura of the spirit devouring path.",
+    "requirements": {
+      "minimum_body_realm": "bone_forging"
+    },
+    "stat_modifiers": {
+      "body_strength": 8,
+      "max_hp": 24
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 2
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "ring",
+      "body_cultivation"
+    ],
+    "value": 345,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "phoenix_signet",
+    "display_name": "Phoenix Signet",
+    "slot": "ring",
+    "valid_slots": [
+      "ring_1",
+      "ring_2"
+    ],
+    "category": "ring",
+    "rarity": "high_spirit_grade",
+    "description": "Phoenix Signet — a high spirit-grade treasure said to carry the aura of the phoenix path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "max_qi": 56
+    },
+    "cultivation_modifiers": {
+      "essence_cultivation_flat_bonus": 3,
+      "qi_strain_gain_multiplier": 0.96
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "ring",
+      "essence_cultivation"
+    ],
+    "value": 797,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "golden_body_band",
+    "display_name": "Golden Body Band",
+    "slot": "ring",
+    "valid_slots": [
+      "ring_1",
+      "ring_2"
+    ],
+    "category": "ring",
+    "rarity": "earth_grade",
+    "description": "Golden Body Band — an earth-grade treasure said to carry the aura of the golden body path.",
+    "requirements": {
+      "minimum_body_realm": "tempering_marrow"
+    },
+    "stat_modifiers": {
+      "body_strength": 22,
+      "max_hp": 66
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 4
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "ring",
+      "body_cultivation"
+    ],
+    "value": 1250,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "blazing_yang_circlet",
+    "display_name": "Blazing Yang Circlet",
+    "slot": "ring",
+    "valid_slots": [
+      "ring_1",
+      "ring_2"
+    ],
+    "category": "ring",
+    "rarity": "heaven_grade",
+    "description": "Blazing Yang Circlet — a heaven-grade treasure said to carry the aura of the blazing yang path.",
+    "requirements": {
+      "minimum_body_realm": "eight_gates_hidden_celestial_stems"
+    },
+    "stat_modifiers": {
+      "body_strength": 34,
+      "max_hp": 102
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 5
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "ring",
+      "body_cultivation"
+    ],
+    "value": 3686,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "frost_band",
+    "display_name": "Frost Band",
+    "slot": "ring",
+    "valid_slots": [
+      "ring_1",
+      "ring_2"
+    ],
+    "category": "ring",
+    "rarity": "dao_grade",
+    "description": "Frost Band — a dao-grade treasure said to carry the aura of the frost path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "max_qi": 208
+    },
+    "cultivation_modifiers": {
+      "essence_cultivation_flat_bonus": 6,
+      "qi_strain_gain_multiplier": 0.93
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "ring",
+      "essence_cultivation"
+    ],
+    "value": 11083,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "demon_sealing_amulet",
+    "display_name": "Demon Sealing Amulet",
+    "slot": "amulet",
+    "valid_slots": [
+      "amulet"
+    ],
+    "category": "amulet",
+    "rarity": "mortal_grade",
+    "description": "Demon Sealing Amulet — a rough, mortal-forged treasure said to carry the aura of the demon sealing path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "max_qi": 6,
+      "comprehension": 1
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 1,
+      "foundation_stability_bonus": 3
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "amulet",
+      "comprehension"
+    ],
+    "value": 33,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "glacial_amulet",
+    "display_name": "Glacial Amulet",
+    "slot": "amulet",
+    "valid_slots": [
+      "amulet"
+    ],
+    "category": "amulet",
+    "rarity": "low_spirit_grade",
+    "description": "Glacial Amulet — a low-grade spirit treasure said to carry the aura of the glacial path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "max_qi": 13,
+      "comprehension": 1
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 1,
+      "foundation_stability_bonus": 7
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "amulet",
+      "comprehension"
+    ],
+    "value": 134,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "abyssal_medallion",
+    "display_name": "Abyssal Medallion",
+    "slot": "amulet",
+    "valid_slots": [
+      "amulet"
+    ],
+    "category": "amulet",
+    "rarity": "middle_spirit_grade",
+    "description": "Abyssal Medallion — a refined spirit treasure said to carry the aura of the abyssal path.",
+    "requirements": {
+      "minimum_comprehension": 14
+    },
+    "stat_modifiers": {
+      "max_qi": 24,
+      "comprehension": 1
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 1,
+      "breakthrough_chance_modifier": 0.03,
+      "foundation_stability_bonus": 12
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "amulet",
+      "breakthrough"
+    ],
+    "value": 331,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "earth_vein_amulet",
+    "display_name": "Earth Vein Amulet",
+    "slot": "amulet",
+    "valid_slots": [
+      "amulet"
+    ],
+    "category": "amulet",
+    "rarity": "high_spirit_grade",
+    "description": "Earth Vein Amulet — a high spirit-grade treasure said to carry the aura of the earth vein path.",
+    "requirements": {
+      "minimum_comprehension": 18
+    },
+    "stat_modifiers": {
+      "max_qi": 42,
+      "comprehension": 2
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 2,
+      "breakthrough_chance_modifier": 0.04,
+      "foundation_stability_bonus": 21
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "amulet",
+      "breakthrough"
+    ],
+    "value": 619,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "glacial_amulet_mk_2",
+    "display_name": "Glacial Amulet Mk 2",
+    "slot": "amulet",
+    "valid_slots": [
+      "amulet"
+    ],
+    "category": "amulet",
+    "rarity": "earth_grade",
+    "description": "Glacial Amulet Mk 2 — an earth-grade treasure said to carry the aura of the glacial path.",
+    "requirements": {
+      "minimum_comprehension": 22
+    },
+    "stat_modifiers": {
+      "max_qi": 66,
+      "comprehension": 3
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 3,
+      "breakthrough_chance_modifier": 0.05,
+      "foundation_stability_bonus": 33
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "amulet",
+      "breakthrough"
+    ],
+    "value": 1738,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "spirit_devouring_pendant",
+    "display_name": "Spirit Devouring Pendant",
+    "slot": "amulet",
+    "valid_slots": [
+      "amulet"
+    ],
+    "category": "amulet",
+    "rarity": "heaven_grade",
+    "description": "Spirit Devouring Pendant — a heaven-grade treasure said to carry the aura of the spirit devouring path.",
+    "requirements": {
+      "minimum_comprehension": 26
+    },
+    "stat_modifiers": {
+      "max_qi": 102,
+      "comprehension": 4
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 4,
+      "breakthrough_chance_modifier": 0.06,
+      "foundation_stability_bonus": 51
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "amulet",
+      "breakthrough"
+    ],
+    "value": 3155,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "scarlet_sun_pendant",
+    "display_name": "Scarlet Sun Pendant",
+    "slot": "amulet",
+    "valid_slots": [
+      "amulet"
+    ],
+    "category": "amulet",
+    "rarity": "dao_grade",
+    "description": "Scarlet Sun Pendant — a dao-grade treasure said to carry the aura of the scarlet sun path.",
+    "requirements": {
+      "minimum_comprehension": 30
+    },
+    "stat_modifiers": {
+      "max_qi": 156,
+      "comprehension": 5
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 5,
+      "breakthrough_chance_modifier": 0.07,
+      "foundation_stability_bonus": 78
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "amulet",
+      "breakthrough"
+    ],
+    "value": 8604,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "iron_bone_sigil",
+    "display_name": "Iron Bone Sigil",
+    "slot": "talisman",
+    "valid_slots": [
+      "talisman"
+    ],
+    "category": "talisman",
+    "rarity": "mortal_grade",
+    "description": "Iron Bone Sigil — a rough, mortal-forged treasure said to carry the aura of the iron bone path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "defense": 2
+    },
+    "cultivation_modifiers": {
+      "breakthrough_chance_modifier": 0.02,
+      "foundation_stability_bonus": 3
+    },
+    "utility_modifiers": {
+      "ambush_avoidance_bonus": 2
+    },
+    "tags": [
+      "talisman",
+      "protection"
+    ],
+    "value": 37,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "coiling_dragon_seal",
+    "display_name": "Coiling Dragon Seal",
+    "slot": "talisman",
+    "valid_slots": [
+      "talisman"
+    ],
+    "category": "talisman",
+    "rarity": "low_spirit_grade",
+    "description": "Coiling Dragon Seal — a low-grade spirit treasure said to carry the aura of the coiling dragon path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "defense": 4
+    },
+    "cultivation_modifiers": {
+      "breakthrough_chance_modifier": 0.03,
+      "foundation_stability_bonus": 7
+    },
+    "utility_modifiers": {
+      "ambush_avoidance_bonus": 4
+    },
+    "tags": [
+      "talisman",
+      "protection"
+    ],
+    "value": 151,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "falling_star_charm_paper",
+    "display_name": "Falling Star Charm Paper",
+    "slot": "talisman",
+    "valid_slots": [
+      "talisman"
+    ],
+    "category": "talisman",
+    "rarity": "middle_spirit_grade",
+    "description": "Falling Star Charm Paper — a refined spirit treasure said to carry the aura of the falling star path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "defense": 8
+    },
+    "cultivation_modifiers": {
+      "breakthrough_chance_modifier": 0.04,
+      "foundation_stability_bonus": 12
+    },
+    "utility_modifiers": {
+      "ambush_avoidance_bonus": 8
+    },
+    "tags": [
+      "talisman",
+      "protection"
+    ],
+    "value": 370,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "void_seal",
+    "display_name": "Void Seal",
+    "slot": "talisman",
+    "valid_slots": [
+      "talisman"
+    ],
+    "category": "talisman",
+    "rarity": "high_spirit_grade",
+    "description": "Void Seal — a high spirit-grade treasure said to carry the aura of the void path.",
+    "requirements": {
+      "minimum_essence_realm": "revolving_core"
+    },
+    "stat_modifiers": {
+      "defense": 14
+    },
+    "cultivation_modifiers": {
+      "breakthrough_chance_modifier": 0.05,
+      "foundation_stability_bonus": 21
+    },
+    "utility_modifiers": {
+      "corpse_qi_resistance": 28
+    },
+    "tags": [
+      "talisman",
+      "ward"
+    ],
+    "value": 690,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "radiant_dawn_seal",
+    "display_name": "Radiant Dawn Seal",
+    "slot": "talisman",
+    "valid_slots": [
+      "talisman"
+    ],
+    "category": "talisman",
+    "rarity": "earth_grade",
+    "description": "Radiant Dawn Seal — an earth-grade treasure said to carry the aura of the radiant dawn path.",
+    "requirements": {
+      "minimum_essence_realm": "divine_sea"
+    },
+    "stat_modifiers": {
+      "defense": 22
+    },
+    "cultivation_modifiers": {
+      "breakthrough_chance_modifier": 0.06,
+      "foundation_stability_bonus": 33
+    },
+    "utility_modifiers": {
+      "ambush_avoidance_bonus": 22
+    },
+    "tags": [
+      "talisman",
+      "protection"
+    ],
+    "value": 1194,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "blazing_yang_talisman",
+    "display_name": "Blazing Yang Talisman",
+    "slot": "talisman",
+    "valid_slots": [
+      "talisman"
+    ],
+    "category": "talisman",
+    "rarity": "heaven_grade",
+    "description": "Blazing Yang Talisman — a heaven-grade treasure said to carry the aura of the blazing yang path.",
+    "requirements": {
+      "minimum_essence_realm": "life_destruction"
+    },
+    "stat_modifiers": {
+      "defense": 34
+    },
+    "cultivation_modifiers": {
+      "breakthrough_chance_modifier": 0.07,
+      "foundation_stability_bonus": 51
+    },
+    "utility_modifiers": {
+      "corpse_qi_resistance": 68
+    },
+    "tags": [
+      "talisman",
+      "ward"
+    ],
+    "value": 4243,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "silver_moon_talisman",
+    "display_name": "Silver Moon Talisman",
+    "slot": "talisman",
+    "valid_slots": [
+      "talisman"
+    ],
+    "category": "talisman",
+    "rarity": "dao_grade",
+    "description": "Silver Moon Talisman — a dao-grade treasure said to carry the aura of the silver moon path.",
+    "requirements": {
+      "minimum_essence_realm": "divine_transformation"
+    },
+    "stat_modifiers": {
+      "defense": 52
+    },
+    "cultivation_modifiers": {
+      "breakthrough_chance_modifier": 0.08,
+      "foundation_stability_bonus": 78
+    },
+    "utility_modifiers": {
+      "ambush_avoidance_bonus": 52
+    },
+    "tags": [
+      "talisman",
+      "protection"
+    ],
+    "value": 8653,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "glacial_bell",
+    "display_name": "Glacial Bell",
+    "slot": "artifact",
+    "valid_slots": [
+      "artifact_1",
+      "artifact_2"
+    ],
+    "category": "artifact",
+    "rarity": "mortal_grade",
+    "description": "Glacial Bell — a rough, mortal-forged treasure said to carry the aura of the glacial path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "defense": 3,
+      "max_hp": 10,
+      "max_qi": 8
+    },
+    "cultivation_modifiers": {
+      "foundation_stability_bonus": 4,
+      "essence_breakthrough_modifier": 0.0
+    },
+    "utility_modifiers": {
+      "rare_event_chance_bonus": 1
+    },
+    "tags": [
+      "artifact",
+      "treasure"
+    ],
+    "value": 32,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "eternal_night_compass",
+    "display_name": "Eternal Night Compass",
+    "slot": "artifact",
+    "valid_slots": [
+      "artifact_1",
+      "artifact_2"
+    ],
+    "category": "artifact",
+    "rarity": "low_spirit_grade",
+    "description": "Eternal Night Compass — a low-grade spirit treasure said to carry the aura of the eternal night path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "defense": 7,
+      "max_hp": 22,
+      "max_qi": 18
+    },
+    "cultivation_modifiers": {
+      "foundation_stability_bonus": 9,
+      "essence_breakthrough_modifier": 0.01
+    },
+    "utility_modifiers": {
+      "rare_event_chance_bonus": 1
+    },
+    "tags": [
+      "artifact",
+      "treasure"
+    ],
+    "value": 142,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "scarlet_sun_lantern",
+    "display_name": "Scarlet Sun Lantern",
+    "slot": "artifact",
+    "valid_slots": [
+      "artifact_1",
+      "artifact_2"
+    ],
+    "category": "artifact",
+    "rarity": "middle_spirit_grade",
+    "description": "Scarlet Sun Lantern — a refined spirit treasure said to carry the aura of the scarlet sun path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "defense": 12,
+      "max_hp": 40,
+      "max_qi": 32
+    },
+    "cultivation_modifiers": {
+      "foundation_stability_bonus": 16,
+      "essence_breakthrough_modifier": 0.02
+    },
+    "utility_modifiers": {
+      "rare_event_chance_bonus": 1
+    },
+    "tags": [
+      "artifact",
+      "treasure"
+    ],
+    "value": 324,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "star_origin_lantern",
+    "display_name": "Star Origin Lantern",
+    "slot": "artifact",
+    "valid_slots": [
+      "artifact_1",
+      "artifact_2"
+    ],
+    "category": "artifact",
+    "rarity": "high_spirit_grade",
+    "description": "Star Origin Lantern — a high spirit-grade treasure said to carry the aura of the star origin path.",
+    "requirements": {
+      "minimum_comprehension": 18
+    },
+    "stat_modifiers": {
+      "defense": 21,
+      "max_hp": 70,
+      "max_qi": 56
+    },
+    "cultivation_modifiers": {
+      "foundation_stability_bonus": 28,
+      "essence_breakthrough_modifier": 0.03
+    },
+    "utility_modifiers": {
+      "rare_event_chance_bonus": 2
+    },
+    "tags": [
+      "artifact",
+      "treasure"
+    ],
+    "value": 694,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "ghost_flame_compass",
+    "display_name": "Ghost Flame Compass",
+    "slot": "artifact",
+    "valid_slots": [
+      "artifact_1",
+      "artifact_2"
+    ],
+    "category": "artifact",
+    "rarity": "earth_grade",
+    "description": "Ghost Flame Compass — an earth-grade treasure said to carry the aura of the ghost flame path.",
+    "requirements": {
+      "minimum_comprehension": 22
+    },
+    "stat_modifiers": {
+      "defense": 33,
+      "max_hp": 110,
+      "max_qi": 88
+    },
+    "cultivation_modifiers": {
+      "foundation_stability_bonus": 44,
+      "essence_breakthrough_modifier": 0.04
+    },
+    "utility_modifiers": {
+      "rare_event_chance_bonus": 3
+    },
+    "tags": [
+      "artifact",
+      "treasure"
+    ],
+    "value": 1674,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "heaven_splitting_mirror",
+    "display_name": "Heaven Splitting Mirror",
+    "slot": "artifact",
+    "valid_slots": [
+      "artifact_1",
+      "artifact_2"
+    ],
+    "category": "artifact",
+    "rarity": "heaven_grade",
+    "description": "Heaven Splitting Mirror — a heaven-grade treasure said to carry the aura of the heaven splitting path.",
+    "requirements": {
+      "minimum_comprehension": 26
+    },
+    "stat_modifiers": {
+      "defense": 51,
+      "max_hp": 170,
+      "max_qi": 136
+    },
+    "cultivation_modifiers": {
+      "foundation_stability_bonus": 68,
+      "essence_breakthrough_modifier": 0.05
+    },
+    "utility_modifiers": {
+      "rare_event_chance_bonus": 4
+    },
+    "tags": [
+      "artifact",
+      "treasure"
+    ],
+    "value": 3060,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "silver_moon_mirror",
+    "display_name": "Silver Moon Mirror",
+    "slot": "artifact",
+    "valid_slots": [
+      "artifact_1",
+      "artifact_2"
+    ],
+    "category": "artifact",
+    "rarity": "dao_grade",
+    "description": "Silver Moon Mirror — a dao-grade treasure said to carry the aura of the silver moon path.",
+    "requirements": {
+      "minimum_comprehension": 30
+    },
+    "stat_modifiers": {
+      "defense": 78,
+      "max_hp": 260,
+      "max_qi": 208
+    },
+    "cultivation_modifiers": {
+      "foundation_stability_bonus": 104,
+      "essence_breakthrough_modifier": 0.06
+    },
+    "utility_modifiers": {
+      "rare_event_chance_bonus": 5
+    },
+    "tags": [
+      "artifact",
+      "treasure"
+    ],
+    "value": 8545,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "frost_immortal_sword",
+    "display_name": "Frost Immortal Sword",
+    "slot": "flying_sword",
+    "valid_slots": [
+      "flying_sword"
+    ],
+    "category": "flying_sword",
+    "rarity": "mortal_grade",
+    "description": "Frost Immortal Sword — a rough, mortal-forged treasure said to carry the aura of the frost path.",
+    "requirements": {
+      "minimum_essence_realm": "xiantian",
+      "minimum_comprehension": 12
+    },
+    "stat_modifiers": {
+      "attack": 6,
+      "speed": 4,
+      "evasion": 2
+    },
+    "cultivation_modifiers": {
+      "essence_breakthrough_modifier": 0.01,
+      "comprehension_bonus": 1
+    },
+    "utility_modifiers": {
+      "travel_safety_bonus": 4
+    },
+    "tags": [
+      "sword",
+      "flying_sword"
+    ],
+    "value": 27,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "purple_cloud_sky_sword",
+    "display_name": "Purple Cloud Sky Sword",
+    "slot": "flying_sword",
+    "valid_slots": [
+      "flying_sword"
+    ],
+    "category": "flying_sword",
+    "rarity": "low_spirit_grade",
+    "description": "Purple Cloud Sky Sword — a low-grade spirit treasure said to carry the aura of the purple cloud path.",
+    "requirements": {
+      "minimum_essence_realm": "xiantian",
+      "minimum_comprehension": 16
+    },
+    "stat_modifiers": {
+      "attack": 13,
+      "speed": 9,
+      "evasion": 4
+    },
+    "cultivation_modifiers": {
+      "essence_breakthrough_modifier": 0.02,
+      "comprehension_bonus": 1
+    },
+    "utility_modifiers": {
+      "travel_safety_bonus": 9
+    },
+    "tags": [
+      "sword",
+      "flying_sword"
+    ],
+    "value": 155,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "vermilion_bird_immortal_sword",
+    "display_name": "Vermilion Bird Immortal Sword",
+    "slot": "flying_sword",
+    "valid_slots": [
+      "flying_sword"
+    ],
+    "category": "flying_sword",
+    "rarity": "middle_spirit_grade",
+    "description": "Vermilion Bird Immortal Sword — a refined spirit treasure said to carry the aura of the vermilion bird path.",
+    "requirements": {
+      "minimum_essence_realm": "xiantian",
+      "minimum_comprehension": 20
+    },
+    "stat_modifiers": {
+      "attack": 24,
+      "speed": 16,
+      "evasion": 8
+    },
+    "cultivation_modifiers": {
+      "essence_breakthrough_modifier": 0.03,
+      "comprehension_bonus": 1
+    },
+    "utility_modifiers": {
+      "travel_safety_bonus": 16
+    },
+    "tags": [
+      "sword",
+      "flying_sword"
+    ],
+    "value": 411,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "cloud_sea_flying_sword",
+    "display_name": "Cloud Sea Flying Sword",
+    "slot": "flying_sword",
+    "valid_slots": [
+      "flying_sword"
+    ],
+    "category": "flying_sword",
+    "rarity": "high_spirit_grade",
+    "description": "Cloud Sea Flying Sword — a high spirit-grade treasure said to carry the aura of the cloud sea path.",
+    "requirements": {
+      "minimum_essence_realm": "revolving_core",
+      "minimum_comprehension": 24
+    },
+    "stat_modifiers": {
+      "attack": 42,
+      "speed": 28,
+      "evasion": 14
+    },
+    "cultivation_modifiers": {
+      "essence_breakthrough_modifier": 0.04,
+      "comprehension_bonus": 2
+    },
+    "utility_modifiers": {
+      "travel_safety_bonus": 28
+    },
+    "tags": [
+      "sword",
+      "flying_sword"
+    ],
+    "value": 609,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "spirit_devouring_flying_sword",
+    "display_name": "Spirit Devouring Flying Sword",
+    "slot": "flying_sword",
+    "valid_slots": [
+      "flying_sword"
+    ],
+    "category": "flying_sword",
+    "rarity": "earth_grade",
+    "description": "Spirit Devouring Flying Sword — an earth-grade treasure said to carry the aura of the spirit devouring path.",
+    "requirements": {
+      "minimum_essence_realm": "divine_sea",
+      "minimum_comprehension": 28
+    },
+    "stat_modifiers": {
+      "attack": 66,
+      "speed": 44,
+      "evasion": 22
+    },
+    "cultivation_modifiers": {
+      "essence_breakthrough_modifier": 0.05,
+      "comprehension_bonus": 3
+    },
+    "utility_modifiers": {
+      "travel_safety_bonus": 44
+    },
+    "tags": [
+      "sword",
+      "flying_sword"
+    ],
+    "value": 1733,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "earth_vein_sword_slip",
+    "display_name": "Earth Vein Sword Slip",
+    "slot": "flying_sword",
+    "valid_slots": [
+      "flying_sword"
+    ],
+    "category": "flying_sword",
+    "rarity": "heaven_grade",
+    "description": "Earth Vein Sword Slip — a heaven-grade treasure said to carry the aura of the earth vein path.",
+    "requirements": {
+      "minimum_essence_realm": "life_destruction",
+      "minimum_comprehension": 32
+    },
+    "stat_modifiers": {
+      "attack": 102,
+      "speed": 68,
+      "evasion": 34
+    },
+    "cultivation_modifiers": {
+      "essence_breakthrough_modifier": 0.06,
+      "comprehension_bonus": 4
+    },
+    "utility_modifiers": {
+      "travel_safety_bonus": 68
+    },
+    "tags": [
+      "sword",
+      "flying_sword"
+    ],
+    "value": 3544,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "scarlet_sun_sword_slip",
+    "display_name": "Scarlet Sun Sword Slip",
+    "slot": "flying_sword",
+    "valid_slots": [
+      "flying_sword"
+    ],
+    "category": "flying_sword",
+    "rarity": "dao_grade",
+    "description": "Scarlet Sun Sword Slip — a dao-grade treasure said to carry the aura of the scarlet sun path.",
+    "requirements": {
+      "minimum_essence_realm": "divine_transformation",
+      "minimum_comprehension": 36
+    },
+    "stat_modifiers": {
+      "attack": 120,
+      "speed": 104,
+      "evasion": 52
+    },
+    "cultivation_modifiers": {
+      "essence_breakthrough_modifier": 0.07,
+      "comprehension_bonus": 5
+    },
+    "utility_modifiers": {
+      "travel_safety_bonus": 104
+    },
+    "tags": [
+      "sword",
+      "flying_sword"
+    ],
+    "value": 10763,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "heaven_splitting_spear",
+    "display_name": "Heaven Splitting Spear",
+    "slot": "weapon",
+    "valid_slots": [
+      "weapon"
+    ],
+    "category": "martial_weapon",
+    "rarity": "mortal_grade",
+    "description": "Heaven Splitting Spear — a rough, mortal-forged treasure said to carry the aura of the heaven splitting path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "attack": 4,
+      "body_strength": 1
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 1
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "weapon",
+      "body_cultivation"
+    ],
+    "value": 37,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "golden_body_trident",
+    "display_name": "Golden Body Trident",
+    "slot": "weapon",
+    "valid_slots": [
+      "weapon"
+    ],
+    "category": "martial_weapon",
+    "rarity": "low_spirit_grade",
+    "description": "Golden Body Trident — a low-grade spirit treasure said to carry the aura of the golden body path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "attack": 9,
+      "defense": 2
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 0
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "weapon",
+      "sect"
+    ],
+    "value": 145,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "coiling_dragon_glaive",
+    "display_name": "Coiling Dragon Glaive",
+    "slot": "weapon",
+    "valid_slots": [
+      "weapon"
+    ],
+    "category": "martial_weapon",
+    "rarity": "middle_spirit_grade",
+    "description": "Coiling Dragon Glaive — a refined spirit treasure said to carry the aura of the coiling dragon path.",
+    "requirements": {
+      "minimum_comprehension": 14
+    },
+    "stat_modifiers": {
+      "attack": 16,
+      "defense": 4
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 1
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "weapon",
+      "sect"
+    ],
+    "value": 375,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "glacial_spear",
+    "display_name": "Glacial Spear",
+    "slot": "weapon",
+    "valid_slots": [
+      "weapon"
+    ],
+    "category": "martial_weapon",
+    "rarity": "high_spirit_grade",
+    "description": "Glacial Spear — a high spirit-grade treasure said to carry the aura of the glacial path.",
+    "requirements": {
+      "minimum_body_realm": "viscera_training"
+    },
+    "stat_modifiers": {
+      "attack": 28,
+      "body_strength": 7
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 3
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "weapon",
+      "body_cultivation"
+    ],
+    "value": 656,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "heaven_splitting_fan",
+    "display_name": "Heaven Splitting Fan",
+    "slot": "weapon",
+    "valid_slots": [
+      "weapon"
+    ],
+    "category": "martial_weapon",
+    "rarity": "earth_grade",
+    "description": "Heaven Splitting Fan — an earth-grade treasure said to carry the aura of the heaven splitting path.",
+    "requirements": {
+      "minimum_comprehension": 22
+    },
+    "stat_modifiers": {
+      "attack": 44,
+      "defense": 11
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 3
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "weapon",
+      "sword_intent"
+    ],
+    "value": 1224,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "jade_serpent_sword",
+    "display_name": "Jade Serpent Sword",
+    "slot": "weapon",
+    "valid_slots": [
+      "weapon"
+    ],
+    "category": "martial_weapon",
+    "rarity": "heaven_grade",
+    "description": "Jade Serpent Sword — a heaven-grade treasure said to carry the aura of the jade serpent path.",
+    "requirements": {
+      "minimum_body_realm": "eight_gates_hidden_celestial_stems"
+    },
+    "stat_modifiers": {
+      "attack": 68,
+      "body_strength": 17
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 5
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "weapon",
+      "body_cultivation"
+    ],
+    "value": 3643,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "demon_sealing_spear",
+    "display_name": "Demon Sealing Spear",
+    "slot": "weapon",
+    "valid_slots": [
+      "weapon"
+    ],
+    "category": "martial_weapon",
+    "rarity": "dao_grade",
+    "description": "Demon Sealing Spear — a dao-grade treasure said to carry the aura of the demon sealing path.",
+    "requirements": {
+      "minimum_body_realm": "nine_stars_dao_palace"
+    },
+    "stat_modifiers": {
+      "attack": 104,
+      "body_strength": 26
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 6
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "weapon",
+      "body_cultivation"
+    ],
+    "value": 9478,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "purple_cloud_battle_armor",
+    "display_name": "Purple Cloud Battle Armor",
+    "slot": "armor",
+    "valid_slots": [
+      "armor"
+    ],
+    "category": "heavy_armor",
+    "rarity": "mortal_grade",
+    "description": "Purple Cloud Battle Armor — a rough, mortal-forged treasure said to carry the aura of the purple cloud path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "defense": 3,
+      "max_hp": 8,
+      "body_strength": 1
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 0
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "armor",
+      "body_cultivation"
+    ],
+    "value": 37,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "eternal_night_battle_armor",
+    "display_name": "Eternal Night Battle Armor",
+    "slot": "armor",
+    "valid_slots": [
+      "armor"
+    ],
+    "category": "heavy_armor",
+    "rarity": "low_spirit_grade",
+    "description": "Eternal Night Battle Armor — a low-grade spirit treasure said to carry the aura of the eternal night path.",
+    "requirements": {
+      "minimum_body_realm": "flesh_training"
+    },
+    "stat_modifiers": {
+      "defense": 7,
+      "max_hp": 18,
+      "body_strength": 2
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 0
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "armor",
+      "body_cultivation"
+    ],
+    "value": 163,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "demon_sealing_scale_mail",
+    "display_name": "Demon Sealing Scale Mail",
+    "slot": "armor",
+    "valid_slots": [
+      "armor"
+    ],
+    "category": "heavy_armor",
+    "rarity": "middle_spirit_grade",
+    "description": "Demon Sealing Scale Mail — a refined spirit treasure said to carry the aura of the demon sealing path.",
+    "requirements": {
+      "minimum_body_realm": "bone_forging"
+    },
+    "stat_modifiers": {
+      "defense": 12,
+      "max_hp": 32
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 1
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "armor",
+      "body_cultivation"
+    ],
+    "value": 341,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "golden_body_scale_mail",
+    "display_name": "Golden Body Scale Mail",
+    "slot": "armor",
+    "valid_slots": [
+      "armor"
+    ],
+    "category": "light_armor",
+    "rarity": "high_spirit_grade",
+    "description": "Golden Body Scale Mail — a high spirit-grade treasure said to carry the aura of the golden body path.",
+    "requirements": {
+      "minimum_body_realm": "viscera_training"
+    },
+    "stat_modifiers": {
+      "defense": 21,
+      "max_hp": 56,
+      "body_strength": 7
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 2
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "armor",
+      "body_cultivation"
+    ],
+    "value": 806,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "vermilion_bird_battle_armor",
+    "display_name": "Vermilion Bird Battle Armor",
+    "slot": "armor",
+    "valid_slots": [
+      "armor"
+    ],
+    "category": "heavy_armor",
+    "rarity": "earth_grade",
+    "description": "Vermilion Bird Battle Armor — an earth-grade treasure said to carry the aura of the vermilion bird path.",
+    "requirements": {
+      "minimum_body_realm": "tempering_marrow"
+    },
+    "stat_modifiers": {
+      "defense": 33,
+      "max_hp": 88,
+      "body_strength": 11
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 3
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "armor",
+      "body_cultivation"
+    ],
+    "value": 1473,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "primordial_robe",
+    "display_name": "Primordial Robe",
+    "slot": "armor",
+    "valid_slots": [
+      "armor"
+    ],
+    "category": "robe",
+    "rarity": "heaven_grade",
+    "description": "Primordial Robe — a heaven-grade treasure said to carry the aura of the primordial path.",
+    "requirements": {
+      "minimum_comprehension": 26
+    },
+    "stat_modifiers": {
+      "defense": 17,
+      "max_qi": 102
+    },
+    "cultivation_modifiers": {
+      "essence_cultivation_flat_bonus": 5,
+      "essence_breakthrough_modifier": 0.05
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "robe",
+      "essence_cultivation"
+    ],
+    "value": 4206,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "abyssal_cuirass",
+    "display_name": "Abyssal Cuirass",
+    "slot": "armor",
+    "valid_slots": [
+      "armor"
+    ],
+    "category": "light_armor",
+    "rarity": "dao_grade",
+    "description": "Abyssal Cuirass — a dao-grade treasure said to carry the aura of the abyssal path.",
+    "requirements": {
+      "minimum_body_realm": "nine_stars_dao_palace"
+    },
+    "stat_modifiers": {
+      "defense": 78,
+      "max_hp": 208
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 5
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "armor",
+      "body_cultivation"
+    ],
+    "value": 11204,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "nether_river_sabatons",
+    "display_name": "Nether River Sabatons",
+    "slot": "boots",
+    "valid_slots": [
+      "boots"
+    ],
+    "category": "boots",
+    "rarity": "mortal_grade",
+    "description": "Nether River Sabatons — a rough, mortal-forged treasure said to carry the aura of the nether river path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "evasion": 2,
+      "speed": 1
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "travel_safety_bonus": 2,
+      "stealth_bonus": 2,
+      "ambush_avoidance_bonus": 1
+    },
+    "tags": [
+      "movement",
+      "stealth"
+    ],
+    "value": 35,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "ancestral_boots",
+    "display_name": "Ancestral Boots",
+    "slot": "boots",
+    "valid_slots": [
+      "boots"
+    ],
+    "category": "boots",
+    "rarity": "low_spirit_grade",
+    "description": "Ancestral Boots — a low-grade spirit treasure said to carry the aura of the ancestral path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "evasion": 4,
+      "speed": 2
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "travel_safety_bonus": 4
+    },
+    "tags": [
+      "movement",
+      "travel"
+    ],
+    "value": 136,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "void_boots",
+    "display_name": "Void Boots",
+    "slot": "boots",
+    "valid_slots": [
+      "boots"
+    ],
+    "category": "boots",
+    "rarity": "middle_spirit_grade",
+    "description": "Void Boots — a refined spirit treasure said to carry the aura of the void path.",
+    "requirements": {
+      "minimum_essence_realm": "xiantian"
+    },
+    "stat_modifiers": {
+      "evasion": 8,
+      "speed": 4
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "travel_safety_bonus": 8
+    },
+    "tags": [
+      "movement",
+      "travel"
+    ],
+    "value": 319,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "phoenix_sabatons",
+    "display_name": "Phoenix Sabatons",
+    "slot": "boots",
+    "valid_slots": [
+      "boots"
+    ],
+    "category": "boots",
+    "rarity": "high_spirit_grade",
+    "description": "Phoenix Sabatons — a high spirit-grade treasure said to carry the aura of the phoenix path.",
+    "requirements": {
+      "minimum_essence_realm": "revolving_core"
+    },
+    "stat_modifiers": {
+      "evasion": 14,
+      "speed": 7
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "travel_safety_bonus": 14,
+      "stealth_bonus": 14,
+      "ambush_avoidance_bonus": 7
+    },
+    "tags": [
+      "movement",
+      "stealth"
+    ],
+    "value": 691,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "divine_splendor_treads",
+    "display_name": "Divine Splendor Treads",
+    "slot": "boots",
+    "valid_slots": [
+      "boots"
+    ],
+    "category": "boots",
+    "rarity": "earth_grade",
+    "description": "Divine Splendor Treads — an earth-grade treasure said to carry the aura of the divine splendor path.",
+    "requirements": {
+      "minimum_essence_realm": "divine_sea"
+    },
+    "stat_modifiers": {
+      "evasion": 22,
+      "speed": 11
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "travel_safety_bonus": 22
+    },
+    "tags": [
+      "movement",
+      "travel"
+    ],
+    "value": 1331,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "heaven_splitting_boots",
+    "display_name": "Heaven Splitting Boots",
+    "slot": "boots",
+    "valid_slots": [
+      "boots"
+    ],
+    "category": "boots",
+    "rarity": "heaven_grade",
+    "description": "Heaven Splitting Boots — a heaven-grade treasure said to carry the aura of the heaven splitting path.",
+    "requirements": {
+      "minimum_essence_realm": "life_destruction"
+    },
+    "stat_modifiers": {
+      "evasion": 34,
+      "speed": 17
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "travel_safety_bonus": 34
+    },
+    "tags": [
+      "movement",
+      "travel"
+    ],
+    "value": 4136,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "nine_nether_boots",
+    "display_name": "Nine Nether Boots",
+    "slot": "boots",
+    "valid_slots": [
+      "boots"
+    ],
+    "category": "boots",
+    "rarity": "dao_grade",
+    "description": "Nine Nether Boots — a dao-grade treasure said to carry the aura of the nine nether path.",
+    "requirements": {
+      "minimum_essence_realm": "divine_transformation"
+    },
+    "stat_modifiers": {
+      "evasion": 52,
+      "speed": 26
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "travel_safety_bonus": 52,
+      "stealth_bonus": 52,
+      "ambush_avoidance_bonus": 26
+    },
+    "tags": [
+      "movement",
+      "stealth"
+    ],
+    "value": 8121,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "golden_body_mantle",
+    "display_name": "Golden Body Mantle",
+    "slot": "cloak",
+    "valid_slots": [
+      "cloak"
+    ],
+    "category": "cloak",
+    "rarity": "mortal_grade",
+    "description": "Golden Body Mantle — a rough, mortal-forged treasure said to carry the aura of the golden body path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "evasion": 2,
+      "defense": 1
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "stealth_bonus": 6,
+      "ambush_avoidance_bonus": 3,
+      "travel_safety_bonus": 1
+    },
+    "tags": [
+      "stealth",
+      "exploration"
+    ],
+    "value": 34,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "cloud_sea_cape",
+    "display_name": "Cloud Sea Cape",
+    "slot": "cloak",
+    "valid_slots": [
+      "cloak"
+    ],
+    "category": "cloak",
+    "rarity": "low_spirit_grade",
+    "description": "Cloud Sea Cape — a low-grade spirit treasure said to carry the aura of the cloud sea path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "evasion": 4,
+      "defense": 2
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "stealth_bonus": 13,
+      "ambush_avoidance_bonus": 7,
+      "travel_safety_bonus": 2
+    },
+    "tags": [
+      "stealth",
+      "exploration"
+    ],
+    "value": 161,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "void_cloak",
+    "display_name": "Void Cloak",
+    "slot": "cloak",
+    "valid_slots": [
+      "cloak"
+    ],
+    "category": "cloak",
+    "rarity": "middle_spirit_grade",
+    "description": "Void Cloak — a refined spirit treasure said to carry the aura of the void path.",
+    "requirements": {
+      "minimum_comprehension": 14
+    },
+    "stat_modifiers": {
+      "evasion": 8,
+      "defense": 4
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "stealth_bonus": 24,
+      "ambush_avoidance_bonus": 12,
+      "travel_safety_bonus": 4
+    },
+    "tags": [
+      "stealth",
+      "exploration"
+    ],
+    "value": 430,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "coiling_dragon_mantle",
+    "display_name": "Coiling Dragon Mantle",
+    "slot": "cloak",
+    "valid_slots": [
+      "cloak"
+    ],
+    "category": "cloak",
+    "rarity": "high_spirit_grade",
+    "description": "Coiling Dragon Mantle — a high spirit-grade treasure said to carry the aura of the coiling dragon path.",
+    "requirements": {
+      "minimum_comprehension": 18
+    },
+    "stat_modifiers": {
+      "evasion": 14,
+      "defense": 7
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "stealth_bonus": 42,
+      "ambush_avoidance_bonus": 21,
+      "travel_safety_bonus": 7
+    },
+    "tags": [
+      "stealth",
+      "exploration"
+    ],
+    "value": 748,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "abyssal_veil",
+    "display_name": "Abyssal Veil",
+    "slot": "cloak",
+    "valid_slots": [
+      "cloak"
+    ],
+    "category": "cloak",
+    "rarity": "earth_grade",
+    "description": "Abyssal Veil — an earth-grade treasure said to carry the aura of the abyssal path.",
+    "requirements": {
+      "minimum_comprehension": 22
+    },
+    "stat_modifiers": {
+      "evasion": 22,
+      "defense": 11
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "stealth_bonus": 66,
+      "ambush_avoidance_bonus": 33,
+      "travel_safety_bonus": 11
+    },
+    "tags": [
+      "stealth",
+      "exploration"
+    ],
+    "value": 1499,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "white_tiger_mantle",
+    "display_name": "White Tiger Mantle",
+    "slot": "cloak",
+    "valid_slots": [
+      "cloak"
+    ],
+    "category": "cloak",
+    "rarity": "heaven_grade",
+    "description": "White Tiger Mantle — a heaven-grade treasure said to carry the aura of the white tiger path.",
+    "requirements": {
+      "minimum_comprehension": 26
+    },
+    "stat_modifiers": {
+      "evasion": 34,
+      "defense": 17
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "stealth_bonus": 102,
+      "ambush_avoidance_bonus": 51,
+      "travel_safety_bonus": 17
+    },
+    "tags": [
+      "stealth",
+      "exploration"
+    ],
+    "value": 3034,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "abyssal_cloak",
+    "display_name": "Abyssal Cloak",
+    "slot": "cloak",
+    "valid_slots": [
+      "cloak"
+    ],
+    "category": "cloak",
+    "rarity": "dao_grade",
+    "description": "Abyssal Cloak — a dao-grade treasure said to carry the aura of the abyssal path.",
+    "requirements": {
+      "minimum_comprehension": 30
+    },
+    "stat_modifiers": {
+      "evasion": 52,
+      "defense": 26
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "stealth_bonus": 156,
+      "ambush_avoidance_bonus": 78,
+      "travel_safety_bonus": 26
+    },
+    "tags": [
+      "stealth",
+      "exploration"
+    ],
+    "value": 10886,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "inferno_band",
+    "display_name": "Inferno Band",
+    "slot": "ring",
+    "valid_slots": [
+      "ring_1",
+      "ring_2"
+    ],
+    "category": "ring",
+    "rarity": "mortal_grade",
+    "description": "Inferno Band — a rough, mortal-forged treasure said to carry the aura of the inferno path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "body_strength": 2,
+      "max_hp": 6
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 1
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "ring",
+      "body_cultivation"
+    ],
+    "value": 30,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "cloud_sea_signet",
+    "display_name": "Cloud Sea Signet",
+    "slot": "ring",
+    "valid_slots": [
+      "ring_1",
+      "ring_2"
+    ],
+    "category": "ring",
+    "rarity": "low_spirit_grade",
+    "description": "Cloud Sea Signet — a low-grade spirit treasure said to carry the aura of the cloud sea path.",
+    "requirements": {
+      "minimum_body_realm": "flesh_training"
+    },
+    "stat_modifiers": {
+      "body_strength": 4,
+      "max_hp": 13
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 1
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "ring",
+      "body_cultivation"
+    ],
+    "value": 172,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "earth_vein_band",
+    "display_name": "Earth Vein Band",
+    "slot": "ring",
+    "valid_slots": [
+      "ring_1",
+      "ring_2"
+    ],
+    "category": "ring",
+    "rarity": "middle_spirit_grade",
+    "description": "Earth Vein Band — a refined spirit treasure said to carry the aura of the earth vein path.",
+    "requirements": {
+      "minimum_body_realm": "bone_forging"
+    },
+    "stat_modifiers": {
+      "body_strength": 8,
+      "max_hp": 24
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 2
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "ring",
+      "body_cultivation"
+    ],
+    "value": 411,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "ghost_flame_ring",
+    "display_name": "Ghost Flame Ring",
+    "slot": "ring",
+    "valid_slots": [
+      "ring_1",
+      "ring_2"
+    ],
+    "category": "ring",
+    "rarity": "high_spirit_grade",
+    "description": "Ghost Flame Ring — a high spirit-grade treasure said to carry the aura of the ghost flame path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "max_qi": 56
+    },
+    "cultivation_modifiers": {
+      "essence_cultivation_flat_bonus": 3
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "ring",
+      "essence_cultivation"
+    ],
+    "value": 814,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "ghost_flame_band",
+    "display_name": "Ghost Flame Band",
+    "slot": "ring",
+    "valid_slots": [
+      "ring_1",
+      "ring_2"
+    ],
+    "category": "ring",
+    "rarity": "earth_grade",
+    "description": "Ghost Flame Band — an earth-grade treasure said to carry the aura of the ghost flame path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "max_qi": 88
+    },
+    "cultivation_modifiers": {
+      "essence_cultivation_flat_bonus": 4
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "ring",
+      "essence_cultivation"
+    ],
+    "value": 1251,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "nine_nether_signet",
+    "display_name": "Nine Nether Signet",
+    "slot": "ring",
+    "valid_slots": [
+      "ring_1",
+      "ring_2"
+    ],
+    "category": "ring",
+    "rarity": "heaven_grade",
+    "description": "Nine Nether Signet — a heaven-grade treasure said to carry the aura of the nine nether path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "max_qi": 136
+    },
+    "cultivation_modifiers": {
+      "essence_cultivation_flat_bonus": 5
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "ring",
+      "essence_cultivation"
+    ],
+    "value": 3619,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "ancestral_band",
+    "display_name": "Ancestral Band",
+    "slot": "ring",
+    "valid_slots": [
+      "ring_1",
+      "ring_2"
+    ],
+    "category": "ring",
+    "rarity": "dao_grade",
+    "description": "Ancestral Band — a dao-grade treasure said to carry the aura of the ancestral path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "max_qi": 208
+    },
+    "cultivation_modifiers": {
+      "essence_cultivation_flat_bonus": 6
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "ring",
+      "essence_cultivation"
+    ],
+    "value": 9084,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "true_dragon_amulet",
+    "display_name": "True Dragon Amulet",
+    "slot": "amulet",
+    "valid_slots": [
+      "amulet"
+    ],
+    "category": "amulet",
+    "rarity": "mortal_grade",
+    "description": "True Dragon Amulet — a rough, mortal-forged treasure said to carry the aura of the true dragon path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "max_qi": 6,
+      "comprehension": 1
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 1,
+      "foundation_stability_bonus": 3
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "amulet",
+      "comprehension"
+    ],
+    "value": 37,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "true_dragon_medallion",
+    "display_name": "True Dragon Medallion",
+    "slot": "amulet",
+    "valid_slots": [
+      "amulet"
+    ],
+    "category": "amulet",
+    "rarity": "low_spirit_grade",
+    "description": "True Dragon Medallion — a low-grade spirit treasure said to carry the aura of the true dragon path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "max_qi": 13,
+      "comprehension": 1
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 1,
+      "foundation_stability_bonus": 7
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "amulet",
+      "comprehension"
+    ],
+    "value": 166,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "myriad_star_medallion",
+    "display_name": "Myriad Star Medallion",
+    "slot": "amulet",
+    "valid_slots": [
+      "amulet"
+    ],
+    "category": "amulet",
+    "rarity": "middle_spirit_grade",
+    "description": "Myriad Star Medallion — a refined spirit treasure said to carry the aura of the myriad star path.",
+    "requirements": {
+      "minimum_comprehension": 14
+    },
+    "stat_modifiers": {
+      "max_qi": 24,
+      "comprehension": 1
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 1,
+      "breakthrough_chance_modifier": 0.03,
+      "foundation_stability_bonus": 12
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "amulet",
+      "breakthrough"
+    ],
+    "value": 429,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "void_medallion",
+    "display_name": "Void Medallion",
+    "slot": "amulet",
+    "valid_slots": [
+      "amulet"
+    ],
+    "category": "amulet",
+    "rarity": "high_spirit_grade",
+    "description": "Void Medallion — a high spirit-grade treasure said to carry the aura of the void path.",
+    "requirements": {
+      "minimum_comprehension": 18
+    },
+    "stat_modifiers": {
+      "max_qi": 42,
+      "comprehension": 2
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 2,
+      "breakthrough_chance_modifier": 0.04,
+      "foundation_stability_bonus": 21
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "amulet",
+      "breakthrough"
+    ],
+    "value": 645,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "golden_body_amulet",
+    "display_name": "Golden Body Amulet",
+    "slot": "amulet",
+    "valid_slots": [
+      "amulet"
+    ],
+    "category": "amulet",
+    "rarity": "earth_grade",
+    "description": "Golden Body Amulet — an earth-grade treasure said to carry the aura of the golden body path.",
+    "requirements": {
+      "minimum_comprehension": 22
+    },
+    "stat_modifiers": {
+      "max_qi": 66,
+      "comprehension": 3
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 3,
+      "breakthrough_chance_modifier": 0.05,
+      "foundation_stability_bonus": 33
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "amulet",
+      "breakthrough"
+    ],
+    "value": 1251,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "white_tiger_medallion",
+    "display_name": "White Tiger Medallion",
+    "slot": "amulet",
+    "valid_slots": [
+      "amulet"
+    ],
+    "category": "amulet",
+    "rarity": "heaven_grade",
+    "description": "White Tiger Medallion — a heaven-grade treasure said to carry the aura of the white tiger path.",
+    "requirements": {
+      "minimum_comprehension": 26
+    },
+    "stat_modifiers": {
+      "max_qi": 102,
+      "comprehension": 4
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 4,
+      "breakthrough_chance_modifier": 0.06,
+      "foundation_stability_bonus": 51
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "amulet",
+      "breakthrough"
+    ],
+    "value": 3995,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "jade_serpent_charm",
+    "display_name": "Jade Serpent Charm",
+    "slot": "amulet",
+    "valid_slots": [
+      "amulet"
+    ],
+    "category": "amulet",
+    "rarity": "dao_grade",
+    "description": "Jade Serpent Charm — a dao-grade treasure said to carry the aura of the jade serpent path.",
+    "requirements": {
+      "minimum_comprehension": 30
+    },
+    "stat_modifiers": {
+      "max_qi": 156,
+      "comprehension": 5
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 5,
+      "breakthrough_chance_modifier": 0.07,
+      "foundation_stability_bonus": 78
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "amulet",
+      "breakthrough"
+    ],
+    "value": 9832,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "storm_origin_talisman",
+    "display_name": "Storm Origin Talisman",
+    "slot": "talisman",
+    "valid_slots": [
+      "talisman"
+    ],
+    "category": "talisman",
+    "rarity": "mortal_grade",
+    "description": "Storm Origin Talisman — a rough, mortal-forged treasure said to carry the aura of the storm origin path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "defense": 2
+    },
+    "cultivation_modifiers": {
+      "breakthrough_chance_modifier": 0.02,
+      "foundation_stability_bonus": 3
+    },
+    "utility_modifiers": {
+      "corpse_qi_resistance": 4
+    },
+    "tags": [
+      "talisman",
+      "ward"
+    ],
+    "value": 32,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "golden_body_talisman",
+    "display_name": "Golden Body Talisman",
+    "slot": "talisman",
+    "valid_slots": [
+      "talisman"
+    ],
+    "category": "talisman",
+    "rarity": "low_spirit_grade",
+    "description": "Golden Body Talisman — a low-grade spirit treasure said to carry the aura of the golden body path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "defense": 4
+    },
+    "cultivation_modifiers": {
+      "breakthrough_chance_modifier": 0.03,
+      "foundation_stability_bonus": 7
+    },
+    "utility_modifiers": {
+      "ambush_avoidance_bonus": 4
+    },
+    "tags": [
+      "talisman",
+      "protection"
+    ],
+    "value": 128,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "spirit_devouring_seal",
+    "display_name": "Spirit Devouring Seal",
+    "slot": "talisman",
+    "valid_slots": [
+      "talisman"
+    ],
+    "category": "talisman",
+    "rarity": "middle_spirit_grade",
+    "description": "Spirit Devouring Seal — a refined spirit treasure said to carry the aura of the spirit devouring path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "defense": 8
+    },
+    "cultivation_modifiers": {
+      "breakthrough_chance_modifier": 0.04,
+      "foundation_stability_bonus": 12
+    },
+    "utility_modifiers": {
+      "corpse_qi_resistance": 16
+    },
+    "tags": [
+      "talisman",
+      "ward"
+    ],
+    "value": 307,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "falling_star_charm_paper_mk_2",
+    "display_name": "Falling Star Charm Paper Mk 2",
+    "slot": "talisman",
+    "valid_slots": [
+      "talisman"
+    ],
+    "category": "talisman",
+    "rarity": "high_spirit_grade",
+    "description": "Falling Star Charm Paper Mk 2 — a high spirit-grade treasure said to carry the aura of the falling star path.",
+    "requirements": {
+      "minimum_essence_realm": "revolving_core"
+    },
+    "stat_modifiers": {
+      "defense": 14
+    },
+    "cultivation_modifiers": {
+      "breakthrough_chance_modifier": 0.05,
+      "foundation_stability_bonus": 21
+    },
+    "utility_modifiers": {
+      "ambush_avoidance_bonus": 14
+    },
+    "tags": [
+      "talisman",
+      "protection"
+    ],
+    "value": 781,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "void_charm_paper",
+    "display_name": "Void Charm Paper",
+    "slot": "talisman",
+    "valid_slots": [
+      "talisman"
+    ],
+    "category": "talisman",
+    "rarity": "earth_grade",
+    "description": "Void Charm Paper — an earth-grade treasure said to carry the aura of the void path.",
+    "requirements": {
+      "minimum_essence_realm": "divine_sea"
+    },
+    "stat_modifiers": {
+      "defense": 22
+    },
+    "cultivation_modifiers": {
+      "breakthrough_chance_modifier": 0.06,
+      "foundation_stability_bonus": 33
+    },
+    "utility_modifiers": {
+      "ambush_avoidance_bonus": 22
+    },
+    "tags": [
+      "talisman",
+      "protection"
+    ],
+    "value": 1563,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "jade_serpent_sigil",
+    "display_name": "Jade Serpent Sigil",
+    "slot": "talisman",
+    "valid_slots": [
+      "talisman"
+    ],
+    "category": "talisman",
+    "rarity": "heaven_grade",
+    "description": "Jade Serpent Sigil — a heaven-grade treasure said to carry the aura of the jade serpent path.",
+    "requirements": {
+      "minimum_essence_realm": "life_destruction"
+    },
+    "stat_modifiers": {
+      "defense": 34
+    },
+    "cultivation_modifiers": {
+      "breakthrough_chance_modifier": 0.07,
+      "foundation_stability_bonus": 51
+    },
+    "utility_modifiers": {
+      "ambush_avoidance_bonus": 34
+    },
+    "tags": [
+      "talisman",
+      "protection"
+    ],
+    "value": 3751,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "frost_sigil",
+    "display_name": "Frost Sigil",
+    "slot": "talisman",
+    "valid_slots": [
+      "talisman"
+    ],
+    "category": "talisman",
+    "rarity": "dao_grade",
+    "description": "Frost Sigil — a dao-grade treasure said to carry the aura of the frost path.",
+    "requirements": {
+      "minimum_essence_realm": "divine_transformation"
+    },
+    "stat_modifiers": {
+      "defense": 52
+    },
+    "cultivation_modifiers": {
+      "breakthrough_chance_modifier": 0.08,
+      "foundation_stability_bonus": 78
+    },
+    "utility_modifiers": {
+      "ambush_avoidance_bonus": 52
+    },
+    "tags": [
+      "talisman",
+      "protection"
+    ],
+    "value": 9015,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "purple_cloud_seal",
+    "display_name": "Purple Cloud Seal",
+    "slot": "artifact",
+    "valid_slots": [
+      "artifact_1",
+      "artifact_2"
+    ],
+    "category": "artifact",
+    "rarity": "mortal_grade",
+    "description": "Purple Cloud Seal — a rough, mortal-forged treasure said to carry the aura of the purple cloud path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "defense": 3,
+      "max_hp": 10,
+      "max_qi": 8
+    },
+    "cultivation_modifiers": {
+      "foundation_stability_bonus": 4,
+      "essence_breakthrough_modifier": 0.0
+    },
+    "utility_modifiers": {
+      "rare_event_chance_bonus": 1
+    },
+    "tags": [
+      "artifact",
+      "treasure"
+    ],
+    "value": 30,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "azure_seal",
+    "display_name": "Azure Seal",
+    "slot": "artifact",
+    "valid_slots": [
+      "artifact_1",
+      "artifact_2"
+    ],
+    "category": "artifact",
+    "rarity": "low_spirit_grade",
+    "description": "Azure Seal — a low-grade spirit treasure said to carry the aura of the azure path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "defense": 7,
+      "max_hp": 22,
+      "max_qi": 18
+    },
+    "cultivation_modifiers": {
+      "foundation_stability_bonus": 9,
+      "essence_breakthrough_modifier": 0.01
+    },
+    "utility_modifiers": {
+      "rare_event_chance_bonus": 1
+    },
+    "tags": [
+      "artifact",
+      "treasure"
+    ],
+    "value": 145,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "white_tiger_gourd",
+    "display_name": "White Tiger Gourd",
+    "slot": "artifact",
+    "valid_slots": [
+      "artifact_1",
+      "artifact_2"
+    ],
+    "category": "artifact",
+    "rarity": "middle_spirit_grade",
+    "description": "White Tiger Gourd — a refined spirit treasure said to carry the aura of the white tiger path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "defense": 12,
+      "max_hp": 40,
+      "max_qi": 32
+    },
+    "cultivation_modifiers": {
+      "foundation_stability_bonus": 16,
+      "essence_breakthrough_modifier": 0.02
+    },
+    "utility_modifiers": {
+      "rare_event_chance_bonus": 1
+    },
+    "tags": [
+      "artifact",
+      "treasure"
+    ],
+    "value": 363,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "black_tortoise_bell",
+    "display_name": "Black Tortoise Bell",
+    "slot": "artifact",
+    "valid_slots": [
+      "artifact_1",
+      "artifact_2"
+    ],
+    "category": "artifact",
+    "rarity": "high_spirit_grade",
+    "description": "Black Tortoise Bell — a high spirit-grade treasure said to carry the aura of the black tortoise path.",
+    "requirements": {
+      "minimum_comprehension": 18
+    },
+    "stat_modifiers": {
+      "defense": 21,
+      "max_hp": 70,
+      "max_qi": 56
+    },
+    "cultivation_modifiers": {
+      "foundation_stability_bonus": 28,
+      "essence_breakthrough_modifier": 0.03
+    },
+    "utility_modifiers": {
+      "rare_event_chance_bonus": 2
+    },
+    "tags": [
+      "artifact",
+      "treasure"
+    ],
+    "value": 738,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "nirvana_mirror",
+    "display_name": "Nirvana Mirror",
+    "slot": "artifact",
+    "valid_slots": [
+      "artifact_1",
+      "artifact_2"
+    ],
+    "category": "artifact",
+    "rarity": "earth_grade",
+    "description": "Nirvana Mirror — an earth-grade treasure said to carry the aura of the nirvana path.",
+    "requirements": {
+      "minimum_comprehension": 22
+    },
+    "stat_modifiers": {
+      "defense": 33,
+      "max_hp": 110,
+      "max_qi": 88
+    },
+    "cultivation_modifiers": {
+      "foundation_stability_bonus": 44,
+      "essence_breakthrough_modifier": 0.04
+    },
+    "utility_modifiers": {
+      "rare_event_chance_bonus": 3
+    },
+    "tags": [
+      "artifact",
+      "treasure"
+    ],
+    "value": 1349,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "falling_star_gourd",
+    "display_name": "Falling Star Gourd",
+    "slot": "artifact",
+    "valid_slots": [
+      "artifact_1",
+      "artifact_2"
+    ],
+    "category": "artifact",
+    "rarity": "heaven_grade",
+    "description": "Falling Star Gourd — a heaven-grade treasure said to carry the aura of the falling star path.",
+    "requirements": {
+      "minimum_comprehension": 26
+    },
+    "stat_modifiers": {
+      "defense": 51,
+      "max_hp": 170,
+      "max_qi": 136
+    },
+    "cultivation_modifiers": {
+      "foundation_stability_bonus": 68,
+      "essence_breakthrough_modifier": 0.05
+    },
+    "utility_modifiers": {
+      "rare_event_chance_bonus": 4
+    },
+    "tags": [
+      "artifact",
+      "treasure"
+    ],
+    "value": 3106,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "earth_vein_seal",
+    "display_name": "Earth Vein Seal",
+    "slot": "artifact",
+    "valid_slots": [
+      "artifact_1",
+      "artifact_2"
+    ],
+    "category": "artifact",
+    "rarity": "dao_grade",
+    "description": "Earth Vein Seal — a dao-grade treasure said to carry the aura of the earth vein path.",
+    "requirements": {
+      "minimum_comprehension": 30
+    },
+    "stat_modifiers": {
+      "defense": 78,
+      "max_hp": 260,
+      "max_qi": 208
+    },
+    "cultivation_modifiers": {
+      "foundation_stability_bonus": 104,
+      "essence_breakthrough_modifier": 0.06
+    },
+    "utility_modifiers": {
+      "rare_event_chance_bonus": 5
+    },
+    "tags": [
+      "artifact",
+      "treasure"
+    ],
+    "value": 8459,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "frost_sword_slip",
+    "display_name": "Frost Sword Slip",
+    "slot": "flying_sword",
+    "valid_slots": [
+      "flying_sword"
+    ],
+    "category": "flying_sword",
+    "rarity": "mortal_grade",
+    "description": "Frost Sword Slip — a rough, mortal-forged treasure said to carry the aura of the frost path.",
+    "requirements": {
+      "minimum_essence_realm": "xiantian",
+      "minimum_comprehension": 12
+    },
+    "stat_modifiers": {
+      "attack": 6,
+      "speed": 4,
+      "evasion": 2
+    },
+    "cultivation_modifiers": {
+      "essence_breakthrough_modifier": 0.01,
+      "comprehension_bonus": 1
+    },
+    "utility_modifiers": {
+      "travel_safety_bonus": 4
+    },
+    "tags": [
+      "sword",
+      "flying_sword"
+    ],
+    "value": 26,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "earth_vein_immortal_sword",
+    "display_name": "Earth Vein Immortal Sword",
+    "slot": "flying_sword",
+    "valid_slots": [
+      "flying_sword"
+    ],
+    "category": "flying_sword",
+    "rarity": "low_spirit_grade",
+    "description": "Earth Vein Immortal Sword — a low-grade spirit treasure said to carry the aura of the earth vein path.",
+    "requirements": {
+      "minimum_essence_realm": "xiantian",
+      "minimum_comprehension": 16
+    },
+    "stat_modifiers": {
+      "attack": 13,
+      "speed": 9,
+      "evasion": 4
+    },
+    "cultivation_modifiers": {
+      "essence_breakthrough_modifier": 0.02,
+      "comprehension_bonus": 1
+    },
+    "utility_modifiers": {
+      "travel_safety_bonus": 9
+    },
+    "tags": [
+      "sword",
+      "flying_sword"
+    ],
+    "value": 164,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "vermilion_bird_immortal_sword_mk_2",
+    "display_name": "Vermilion Bird Immortal Sword Mk 2",
+    "slot": "flying_sword",
+    "valid_slots": [
+      "flying_sword"
+    ],
+    "category": "flying_sword",
+    "rarity": "middle_spirit_grade",
+    "description": "Vermilion Bird Immortal Sword Mk 2 — a refined spirit treasure said to carry the aura of the vermilion bird path.",
+    "requirements": {
+      "minimum_essence_realm": "xiantian",
+      "minimum_comprehension": 20
+    },
+    "stat_modifiers": {
+      "attack": 24,
+      "speed": 16,
+      "evasion": 8
+    },
+    "cultivation_modifiers": {
+      "essence_breakthrough_modifier": 0.03,
+      "comprehension_bonus": 1
+    },
+    "utility_modifiers": {
+      "travel_safety_bonus": 16
+    },
+    "tags": [
+      "sword",
+      "flying_sword"
+    ],
+    "value": 356,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "blazing_yang_sword_slip",
+    "display_name": "Blazing Yang Sword Slip",
+    "slot": "flying_sword",
+    "valid_slots": [
+      "flying_sword"
+    ],
+    "category": "flying_sword",
+    "rarity": "high_spirit_grade",
+    "description": "Blazing Yang Sword Slip — a high spirit-grade treasure said to carry the aura of the blazing yang path.",
+    "requirements": {
+      "minimum_essence_realm": "revolving_core",
+      "minimum_comprehension": 24
+    },
+    "stat_modifiers": {
+      "attack": 42,
+      "speed": 28,
+      "evasion": 14
+    },
+    "cultivation_modifiers": {
+      "essence_breakthrough_modifier": 0.04,
+      "comprehension_bonus": 2
+    },
+    "utility_modifiers": {
+      "travel_safety_bonus": 28
+    },
+    "tags": [
+      "sword",
+      "flying_sword"
+    ],
+    "value": 796,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "sky_severing_immortal_sword",
+    "display_name": "Sky Severing Immortal Sword",
+    "slot": "flying_sword",
+    "valid_slots": [
+      "flying_sword"
+    ],
+    "category": "flying_sword",
+    "rarity": "earth_grade",
+    "description": "Sky Severing Immortal Sword — an earth-grade treasure said to carry the aura of the sky severing path.",
+    "requirements": {
+      "minimum_essence_realm": "divine_sea",
+      "minimum_comprehension": 28
+    },
+    "stat_modifiers": {
+      "attack": 66,
+      "speed": 44,
+      "evasion": 22
+    },
+    "cultivation_modifiers": {
+      "essence_breakthrough_modifier": 0.05,
+      "comprehension_bonus": 3
+    },
+    "utility_modifiers": {
+      "travel_safety_bonus": 44
+    },
+    "tags": [
+      "sword",
+      "flying_sword"
+    ],
+    "value": 1414,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "immortal_flying_sword",
+    "display_name": "Immortal Flying Sword",
+    "slot": "flying_sword",
+    "valid_slots": [
+      "flying_sword"
+    ],
+    "category": "flying_sword",
+    "rarity": "heaven_grade",
+    "description": "Immortal Flying Sword — a heaven-grade treasure said to carry the aura of the immortal path.",
+    "requirements": {
+      "minimum_essence_realm": "life_destruction",
+      "minimum_comprehension": 32
+    },
+    "stat_modifiers": {
+      "attack": 102,
+      "speed": 68,
+      "evasion": 34
+    },
+    "cultivation_modifiers": {
+      "essence_breakthrough_modifier": 0.06,
+      "comprehension_bonus": 4
+    },
+    "utility_modifiers": {
+      "travel_safety_bonus": 68
+    },
+    "tags": [
+      "sword",
+      "flying_sword"
+    ],
+    "value": 4225,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "star_origin_immortal_sword",
+    "display_name": "Star Origin Immortal Sword",
+    "slot": "flying_sword",
+    "valid_slots": [
+      "flying_sword"
+    ],
+    "category": "flying_sword",
+    "rarity": "dao_grade",
+    "description": "Star Origin Immortal Sword — a dao-grade treasure said to carry the aura of the star origin path.",
+    "requirements": {
+      "minimum_essence_realm": "divine_transformation",
+      "minimum_comprehension": 36
+    },
+    "stat_modifiers": {
+      "attack": 120,
+      "speed": 104,
+      "evasion": 52
+    },
+    "cultivation_modifiers": {
+      "essence_breakthrough_modifier": 0.07,
+      "comprehension_bonus": 5
+    },
+    "utility_modifiers": {
+      "travel_safety_bonus": 104
+    },
+    "tags": [
+      "sword",
+      "flying_sword"
+    ],
+    "value": 8438,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "coiling_dragon_whip",
+    "display_name": "Coiling Dragon Whip",
+    "slot": "weapon",
+    "valid_slots": [
+      "weapon"
+    ],
+    "category": "martial_weapon",
+    "rarity": "mortal_grade",
+    "description": "Coiling Dragon Whip — a rough, mortal-forged treasure said to carry the aura of the coiling dragon path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "attack": 4,
+      "defense": 1
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 0
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "weapon",
+      "sect"
+    ],
+    "value": 32,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "void_bow",
+    "display_name": "Void Bow",
+    "slot": "weapon",
+    "valid_slots": [
+      "weapon"
+    ],
+    "category": "martial_weapon",
+    "rarity": "low_spirit_grade",
+    "description": "Void Bow — a low-grade spirit treasure said to carry the aura of the void path.",
+    "requirements": {
+      "minimum_body_realm": "flesh_training"
+    },
+    "stat_modifiers": {
+      "attack": 9,
+      "body_strength": 2
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 1
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "weapon",
+      "body_cultivation"
+    ],
+    "value": 155,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "demon_sealing_whip",
+    "display_name": "Demon Sealing Whip",
+    "slot": "weapon",
+    "valid_slots": [
+      "weapon"
+    ],
+    "category": "martial_weapon",
+    "rarity": "middle_spirit_grade",
+    "description": "Demon Sealing Whip — a refined spirit treasure said to carry the aura of the demon sealing path.",
+    "requirements": {
+      "minimum_comprehension": 14
+    },
+    "stat_modifiers": {
+      "attack": 16,
+      "defense": 4
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 1
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "weapon",
+      "sect"
+    ],
+    "value": 431,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "black_tortoise_fan",
+    "display_name": "Black Tortoise Fan",
+    "slot": "weapon",
+    "valid_slots": [
+      "weapon"
+    ],
+    "category": "martial_weapon",
+    "rarity": "high_spirit_grade",
+    "description": "Black Tortoise Fan — a high spirit-grade treasure said to carry the aura of the black tortoise path.",
+    "requirements": {
+      "minimum_comprehension": 18
+    },
+    "stat_modifiers": {
+      "attack": 28,
+      "defense": 7
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 2
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "weapon",
+      "sword_intent"
+    ],
+    "value": 845,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "white_tiger_whip",
+    "display_name": "White Tiger Whip",
+    "slot": "weapon",
+    "valid_slots": [
+      "weapon"
+    ],
+    "category": "martial_weapon",
+    "rarity": "earth_grade",
+    "description": "White Tiger Whip — an earth-grade treasure said to carry the aura of the white tiger path.",
+    "requirements": {
+      "minimum_comprehension": 22
+    },
+    "stat_modifiers": {
+      "attack": 44,
+      "defense": 11
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 3
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "weapon",
+      "sword_intent"
+    ],
+    "value": 1279,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "scarlet_sun_bow",
+    "display_name": "Scarlet Sun Bow",
+    "slot": "weapon",
+    "valid_slots": [
+      "weapon"
+    ],
+    "category": "martial_weapon",
+    "rarity": "heaven_grade",
+    "description": "Scarlet Sun Bow — a heaven-grade treasure said to carry the aura of the scarlet sun path.",
+    "requirements": {
+      "minimum_body_realm": "eight_gates_hidden_celestial_stems"
+    },
+    "stat_modifiers": {
+      "attack": 68,
+      "body_strength": 17
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 5
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "weapon",
+      "body_cultivation"
+    ],
+    "value": 3321,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "blazing_yang_staff",
+    "display_name": "Blazing Yang Staff",
+    "slot": "weapon",
+    "valid_slots": [
+      "weapon"
+    ],
+    "category": "martial_weapon",
+    "rarity": "dao_grade",
+    "description": "Blazing Yang Staff — a dao-grade treasure said to carry the aura of the blazing yang path.",
+    "requirements": {
+      "minimum_comprehension": 30
+    },
+    "stat_modifiers": {
+      "attack": 104,
+      "defense": 26
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 5
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "weapon",
+      "sword_intent"
+    ],
+    "value": 9527,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "blazing_yang_cuirass",
+    "display_name": "Blazing Yang Cuirass",
+    "slot": "armor",
+    "valid_slots": [
+      "armor"
+    ],
+    "category": "heavy_armor",
+    "rarity": "mortal_grade",
+    "description": "Blazing Yang Cuirass — a rough, mortal-forged treasure said to carry the aura of the blazing yang path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "defense": 3,
+      "max_hp": 8
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 0
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "armor",
+      "body_cultivation"
+    ],
+    "value": 28,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "silver_moon_battle_armor",
+    "display_name": "Silver Moon Battle Armor",
+    "slot": "armor",
+    "valid_slots": [
+      "armor"
+    ],
+    "category": "heavy_armor",
+    "rarity": "low_spirit_grade",
+    "description": "Silver Moon Battle Armor — a low-grade spirit treasure said to carry the aura of the silver moon path.",
+    "requirements": {
+      "minimum_body_realm": "flesh_training"
+    },
+    "stat_modifiers": {
+      "defense": 7,
+      "max_hp": 18,
+      "body_strength": 2
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 0
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "armor",
+      "body_cultivation"
+    ],
+    "value": 150,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "immortal_robe",
+    "display_name": "Immortal Robe",
+    "slot": "armor",
+    "valid_slots": [
+      "armor"
+    ],
+    "category": "robe",
+    "rarity": "middle_spirit_grade",
+    "description": "Immortal Robe — a refined spirit treasure said to carry the aura of the immortal path.",
+    "requirements": {
+      "minimum_comprehension": 14
+    },
+    "stat_modifiers": {
+      "defense": 4,
+      "max_qi": 24
+    },
+    "cultivation_modifiers": {
+      "essence_cultivation_flat_bonus": 2,
+      "essence_breakthrough_modifier": 0.02
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "robe",
+      "essence_cultivation"
+    ],
+    "value": 356,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "silver_moon_war_vestments",
+    "display_name": "Silver Moon War Vestments",
+    "slot": "armor",
+    "valid_slots": [
+      "armor"
+    ],
+    "category": "robe",
+    "rarity": "high_spirit_grade",
+    "description": "Silver Moon War Vestments — a high spirit-grade treasure said to carry the aura of the silver moon path.",
+    "requirements": {
+      "minimum_comprehension": 18
+    },
+    "stat_modifiers": {
+      "defense": 7,
+      "max_qi": 42
+    },
+    "cultivation_modifiers": {
+      "essence_cultivation_flat_bonus": 3,
+      "essence_breakthrough_modifier": 0.03
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "robe",
+      "essence_cultivation"
+    ],
+    "value": 612,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "ghost_flame_battle_armor",
+    "display_name": "Ghost Flame Battle Armor",
+    "slot": "armor",
+    "valid_slots": [
+      "armor"
+    ],
+    "category": "light_armor",
+    "rarity": "earth_grade",
+    "description": "Ghost Flame Battle Armor — an earth-grade treasure said to carry the aura of the ghost flame path.",
+    "requirements": {
+      "minimum_body_realm": "tempering_marrow"
+    },
+    "stat_modifiers": {
+      "defense": 33,
+      "max_hp": 88,
+      "body_strength": 11
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 3
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "armor",
+      "body_cultivation"
+    ],
+    "value": 1718,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "ancestral_war_vestments",
+    "display_name": "Ancestral War Vestments",
+    "slot": "armor",
+    "valid_slots": [
+      "armor"
+    ],
+    "category": "robe",
+    "rarity": "heaven_grade",
+    "description": "Ancestral War Vestments — a heaven-grade treasure said to carry the aura of the ancestral path.",
+    "requirements": {
+      "minimum_comprehension": 26
+    },
+    "stat_modifiers": {
+      "defense": 17,
+      "max_qi": 102
+    },
+    "cultivation_modifiers": {
+      "essence_cultivation_flat_bonus": 5,
+      "essence_breakthrough_modifier": 0.05
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "robe",
+      "essence_cultivation"
+    ],
+    "value": 3729,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "spirit_devouring_robe",
+    "display_name": "Spirit Devouring Robe",
+    "slot": "armor",
+    "valid_slots": [
+      "armor"
+    ],
+    "category": "robe",
+    "rarity": "dao_grade",
+    "description": "Spirit Devouring Robe — a dao-grade treasure said to carry the aura of the spirit devouring path.",
+    "requirements": {
+      "minimum_comprehension": 30
+    },
+    "stat_modifiers": {
+      "defense": 26,
+      "max_qi": 156
+    },
+    "cultivation_modifiers": {
+      "essence_cultivation_flat_bonus": 6,
+      "essence_breakthrough_modifier": 0.06
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "robe",
+      "essence_cultivation"
+    ],
+    "value": 9408,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "true_dragon_striders",
+    "display_name": "True Dragon Striders",
+    "slot": "boots",
+    "valid_slots": [
+      "boots"
+    ],
+    "category": "boots",
+    "rarity": "mortal_grade",
+    "description": "True Dragon Striders — a rough, mortal-forged treasure said to carry the aura of the true dragon path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "evasion": 2,
+      "speed": 1
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "travel_safety_bonus": 2
+    },
+    "tags": [
+      "movement",
+      "travel"
+    ],
+    "value": 30,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "falling_star_striders",
+    "display_name": "Falling Star Striders",
+    "slot": "boots",
+    "valid_slots": [
+      "boots"
+    ],
+    "category": "boots",
+    "rarity": "low_spirit_grade",
+    "description": "Falling Star Striders — a low-grade spirit treasure said to carry the aura of the falling star path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "evasion": 4,
+      "speed": 2
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "travel_safety_bonus": 4
+    },
+    "tags": [
+      "movement",
+      "travel"
+    ],
+    "value": 178,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "primordial_sabatons",
+    "display_name": "Primordial Sabatons",
+    "slot": "boots",
+    "valid_slots": [
+      "boots"
+    ],
+    "category": "boots",
+    "rarity": "middle_spirit_grade",
+    "description": "Primordial Sabatons — a refined spirit treasure said to carry the aura of the primordial path.",
+    "requirements": {
+      "minimum_essence_realm": "xiantian"
+    },
+    "stat_modifiers": {
+      "evasion": 8,
+      "speed": 4
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "travel_safety_bonus": 8
+    },
+    "tags": [
+      "movement",
+      "travel"
+    ],
+    "value": 424,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "radiant_dawn_sabatons",
+    "display_name": "Radiant Dawn Sabatons",
+    "slot": "boots",
+    "valid_slots": [
+      "boots"
+    ],
+    "category": "boots",
+    "rarity": "high_spirit_grade",
+    "description": "Radiant Dawn Sabatons — a high spirit-grade treasure said to carry the aura of the radiant dawn path.",
+    "requirements": {
+      "minimum_essence_realm": "revolving_core"
+    },
+    "stat_modifiers": {
+      "evasion": 14,
+      "speed": 7
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "travel_safety_bonus": 14
+    },
+    "tags": [
+      "movement",
+      "travel"
+    ],
+    "value": 619,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "white_tiger_greaves",
+    "display_name": "White Tiger Greaves",
+    "slot": "boots",
+    "valid_slots": [
+      "boots"
+    ],
+    "category": "boots",
+    "rarity": "earth_grade",
+    "description": "White Tiger Greaves — an earth-grade treasure said to carry the aura of the white tiger path.",
+    "requirements": {
+      "minimum_essence_realm": "divine_sea"
+    },
+    "stat_modifiers": {
+      "evasion": 22,
+      "speed": 11
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "travel_safety_bonus": 22
+    },
+    "tags": [
+      "movement",
+      "travel"
+    ],
+    "value": 1292,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "golden_body_striders",
+    "display_name": "Golden Body Striders",
+    "slot": "boots",
+    "valid_slots": [
+      "boots"
+    ],
+    "category": "boots",
+    "rarity": "heaven_grade",
+    "description": "Golden Body Striders — a heaven-grade treasure said to carry the aura of the golden body path.",
+    "requirements": {
+      "minimum_essence_realm": "life_destruction"
+    },
+    "stat_modifiers": {
+      "evasion": 34,
+      "speed": 17
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "travel_safety_bonus": 34,
+      "stealth_bonus": 34,
+      "ambush_avoidance_bonus": 17
+    },
+    "tags": [
+      "movement",
+      "stealth"
+    ],
+    "value": 3612,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "silver_moon_striders",
+    "display_name": "Silver Moon Striders",
+    "slot": "boots",
+    "valid_slots": [
+      "boots"
+    ],
+    "category": "boots",
+    "rarity": "dao_grade",
+    "description": "Silver Moon Striders — a dao-grade treasure said to carry the aura of the silver moon path.",
+    "requirements": {
+      "minimum_essence_realm": "divine_transformation"
+    },
+    "stat_modifiers": {
+      "evasion": 52,
+      "speed": 26
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "travel_safety_bonus": 52,
+      "stealth_bonus": 52,
+      "ambush_avoidance_bonus": 26
+    },
+    "tags": [
+      "movement",
+      "stealth"
+    ],
+    "value": 11074,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "ghost_flame_shroud",
+    "display_name": "Ghost Flame Shroud",
+    "slot": "cloak",
+    "valid_slots": [
+      "cloak"
+    ],
+    "category": "cloak",
+    "rarity": "mortal_grade",
+    "description": "Ghost Flame Shroud — a rough, mortal-forged treasure said to carry the aura of the ghost flame path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "evasion": 2,
+      "defense": 1
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "stealth_bonus": 6,
+      "ambush_avoidance_bonus": 3,
+      "travel_safety_bonus": 1
+    },
+    "tags": [
+      "stealth",
+      "exploration"
+    ],
+    "value": 36,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "scarlet_sun_cloak",
+    "display_name": "Scarlet Sun Cloak",
+    "slot": "cloak",
+    "valid_slots": [
+      "cloak"
+    ],
+    "category": "cloak",
+    "rarity": "low_spirit_grade",
+    "description": "Scarlet Sun Cloak — a low-grade spirit treasure said to carry the aura of the scarlet sun path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "evasion": 4,
+      "defense": 2
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "stealth_bonus": 13,
+      "ambush_avoidance_bonus": 7,
+      "travel_safety_bonus": 2
+    },
+    "tags": [
+      "stealth",
+      "exploration"
+    ],
+    "value": 172,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "heaven_splitting_shroud",
+    "display_name": "Heaven Splitting Shroud",
+    "slot": "cloak",
+    "valid_slots": [
+      "cloak"
+    ],
+    "category": "cloak",
+    "rarity": "middle_spirit_grade",
+    "description": "Heaven Splitting Shroud — a refined spirit treasure said to carry the aura of the heaven splitting path.",
+    "requirements": {
+      "minimum_comprehension": 14
+    },
+    "stat_modifiers": {
+      "evasion": 8,
+      "defense": 4
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "stealth_bonus": 24,
+      "ambush_avoidance_bonus": 12,
+      "travel_safety_bonus": 4
+    },
+    "tags": [
+      "stealth",
+      "exploration"
+    ],
+    "value": 329,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "vermilion_bird_cloak",
+    "display_name": "Vermilion Bird Cloak",
+    "slot": "cloak",
+    "valid_slots": [
+      "cloak"
+    ],
+    "category": "cloak",
+    "rarity": "high_spirit_grade",
+    "description": "Vermilion Bird Cloak — a high spirit-grade treasure said to carry the aura of the vermilion bird path.",
+    "requirements": {
+      "minimum_comprehension": 18
+    },
+    "stat_modifiers": {
+      "evasion": 14,
+      "defense": 7
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "stealth_bonus": 42,
+      "ambush_avoidance_bonus": 21,
+      "travel_safety_bonus": 7
+    },
+    "tags": [
+      "stealth",
+      "exploration"
+    ],
+    "value": 806,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "earth_vein_mantle",
+    "display_name": "Earth Vein Mantle",
+    "slot": "cloak",
+    "valid_slots": [
+      "cloak"
+    ],
+    "category": "cloak",
+    "rarity": "earth_grade",
+    "description": "Earth Vein Mantle — an earth-grade treasure said to carry the aura of the earth vein path.",
+    "requirements": {
+      "minimum_comprehension": 22
+    },
+    "stat_modifiers": {
+      "evasion": 22,
+      "defense": 11
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "stealth_bonus": 66,
+      "ambush_avoidance_bonus": 33,
+      "travel_safety_bonus": 11
+    },
+    "tags": [
+      "stealth",
+      "exploration"
+    ],
+    "value": 1660,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "profound_yin_mantle",
+    "display_name": "Profound Yin Mantle",
+    "slot": "cloak",
+    "valid_slots": [
+      "cloak"
+    ],
+    "category": "cloak",
+    "rarity": "heaven_grade",
+    "description": "Profound Yin Mantle — a heaven-grade treasure said to carry the aura of the profound yin path.",
+    "requirements": {
+      "minimum_comprehension": 26
+    },
+    "stat_modifiers": {
+      "evasion": 34,
+      "defense": 17
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "stealth_bonus": 102,
+      "ambush_avoidance_bonus": 51,
+      "travel_safety_bonus": 17
+    },
+    "tags": [
+      "stealth",
+      "exploration"
+    ],
+    "value": 3309,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "scarlet_sun_cloak_mk_2",
+    "display_name": "Scarlet Sun Cloak Mk 2",
+    "slot": "cloak",
+    "valid_slots": [
+      "cloak"
+    ],
+    "category": "cloak",
+    "rarity": "dao_grade",
+    "description": "Scarlet Sun Cloak Mk 2 — a dao-grade treasure said to carry the aura of the scarlet sun path.",
+    "requirements": {
+      "minimum_comprehension": 30
+    },
+    "stat_modifiers": {
+      "evasion": 52,
+      "defense": 26
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "stealth_bonus": 156,
+      "ambush_avoidance_bonus": 78,
+      "travel_safety_bonus": 26
+    },
+    "tags": [
+      "stealth",
+      "exploration"
+    ],
+    "value": 9680,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "inferno_signet",
+    "display_name": "Inferno Signet",
+    "slot": "ring",
+    "valid_slots": [
+      "ring_1",
+      "ring_2"
+    ],
+    "category": "ring",
+    "rarity": "mortal_grade",
+    "description": "Inferno Signet — a rough, mortal-forged treasure said to carry the aura of the inferno path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "body_strength": 2,
+      "max_hp": 6
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 1
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "ring",
+      "body_cultivation"
+    ],
+    "value": 35,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "nirvana_ring",
+    "display_name": "Nirvana Ring",
+    "slot": "ring",
+    "valid_slots": [
+      "ring_1",
+      "ring_2"
+    ],
+    "category": "ring",
+    "rarity": "low_spirit_grade",
+    "description": "Nirvana Ring — a low-grade spirit treasure said to carry the aura of the nirvana path.",
+    "requirements": {
+      "minimum_body_realm": "flesh_training"
+    },
+    "stat_modifiers": {
+      "body_strength": 4,
+      "max_hp": 13
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 1
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "ring",
+      "body_cultivation"
+    ],
+    "value": 137,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "ancestral_ring",
+    "display_name": "Ancestral Ring",
+    "slot": "ring",
+    "valid_slots": [
+      "ring_1",
+      "ring_2"
+    ],
+    "category": "ring",
+    "rarity": "middle_spirit_grade",
+    "description": "Ancestral Ring — a refined spirit treasure said to carry the aura of the ancestral path.",
+    "requirements": {
+      "minimum_body_realm": "bone_forging"
+    },
+    "stat_modifiers": {
+      "body_strength": 8,
+      "max_hp": 24
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 2
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "ring",
+      "body_cultivation"
+    ],
+    "value": 428,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "eternal_night_signet",
+    "display_name": "Eternal Night Signet",
+    "slot": "ring",
+    "valid_slots": [
+      "ring_1",
+      "ring_2"
+    ],
+    "category": "ring",
+    "rarity": "high_spirit_grade",
+    "description": "Eternal Night Signet — a high spirit-grade treasure said to carry the aura of the eternal night path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "max_qi": 56
+    },
+    "cultivation_modifiers": {
+      "essence_cultivation_flat_bonus": 3
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "ring",
+      "essence_cultivation"
+    ],
+    "value": 616,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "coiling_dragon_band",
+    "display_name": "Coiling Dragon Band",
+    "slot": "ring",
+    "valid_slots": [
+      "ring_1",
+      "ring_2"
+    ],
+    "category": "ring",
+    "rarity": "earth_grade",
+    "description": "Coiling Dragon Band — an earth-grade treasure said to carry the aura of the coiling dragon path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "max_qi": 88
+    },
+    "cultivation_modifiers": {
+      "essence_cultivation_flat_bonus": 4
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "ring",
+      "essence_cultivation"
+    ],
+    "value": 1666,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "iron_bone_ring",
+    "display_name": "Iron Bone Ring",
+    "slot": "ring",
+    "valid_slots": [
+      "ring_1",
+      "ring_2"
+    ],
+    "category": "ring",
+    "rarity": "heaven_grade",
+    "description": "Iron Bone Ring — a heaven-grade treasure said to carry the aura of the iron bone path.",
+    "requirements": {
+      "minimum_body_realm": "eight_gates_hidden_celestial_stems"
+    },
+    "stat_modifiers": {
+      "body_strength": 34,
+      "max_hp": 102
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 5
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "ring",
+      "body_cultivation"
+    ],
+    "value": 3767,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "nine_nether_circlet",
+    "display_name": "Nine Nether Circlet",
+    "slot": "ring",
+    "valid_slots": [
+      "ring_1",
+      "ring_2"
+    ],
+    "category": "ring",
+    "rarity": "dao_grade",
+    "description": "Nine Nether Circlet — a dao-grade treasure said to carry the aura of the nine nether path.",
+    "requirements": {
+      "minimum_body_realm": "nine_stars_dao_palace"
+    },
+    "stat_modifiers": {
+      "body_strength": 52,
+      "max_hp": 156
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 6
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "ring",
+      "body_cultivation"
+    ],
+    "value": 10031,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "vermilion_bird_medallion",
+    "display_name": "Vermilion Bird Medallion",
+    "slot": "amulet",
+    "valid_slots": [
+      "amulet"
+    ],
+    "category": "amulet",
+    "rarity": "mortal_grade",
+    "description": "Vermilion Bird Medallion — a rough, mortal-forged treasure said to carry the aura of the vermilion bird path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "max_qi": 6,
+      "comprehension": 1
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 1,
+      "foundation_stability_bonus": 3
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "amulet",
+      "comprehension"
+    ],
+    "value": 26,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "ghost_flame_charm",
+    "display_name": "Ghost Flame Charm",
+    "slot": "amulet",
+    "valid_slots": [
+      "amulet"
+    ],
+    "category": "amulet",
+    "rarity": "low_spirit_grade",
+    "description": "Ghost Flame Charm — a low-grade spirit treasure said to carry the aura of the ghost flame path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "max_qi": 13,
+      "comprehension": 1
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 1,
+      "foundation_stability_bonus": 7
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "amulet",
+      "comprehension"
+    ],
+    "value": 134,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "abyssal_charm",
+    "display_name": "Abyssal Charm",
+    "slot": "amulet",
+    "valid_slots": [
+      "amulet"
+    ],
+    "category": "amulet",
+    "rarity": "middle_spirit_grade",
+    "description": "Abyssal Charm — a refined spirit treasure said to carry the aura of the abyssal path.",
+    "requirements": {
+      "minimum_comprehension": 14
+    },
+    "stat_modifiers": {
+      "max_qi": 24,
+      "comprehension": 1
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 1,
+      "breakthrough_chance_modifier": 0.03,
+      "foundation_stability_bonus": 12
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "amulet",
+      "breakthrough"
+    ],
+    "value": 397,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "white_tiger_pendant",
+    "display_name": "White Tiger Pendant",
+    "slot": "amulet",
+    "valid_slots": [
+      "amulet"
+    ],
+    "category": "amulet",
+    "rarity": "high_spirit_grade",
+    "description": "White Tiger Pendant — a high spirit-grade treasure said to carry the aura of the white tiger path.",
+    "requirements": {
+      "minimum_comprehension": 18
+    },
+    "stat_modifiers": {
+      "max_qi": 42,
+      "comprehension": 2
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 2,
+      "breakthrough_chance_modifier": 0.04,
+      "foundation_stability_bonus": 21
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "amulet",
+      "breakthrough"
+    ],
+    "value": 800,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "nether_river_medallion",
+    "display_name": "Nether River Medallion",
+    "slot": "amulet",
+    "valid_slots": [
+      "amulet"
+    ],
+    "category": "amulet",
+    "rarity": "earth_grade",
+    "description": "Nether River Medallion — an earth-grade treasure said to carry the aura of the nether river path.",
+    "requirements": {
+      "minimum_comprehension": 22
+    },
+    "stat_modifiers": {
+      "max_qi": 66,
+      "comprehension": 3
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 3,
+      "breakthrough_chance_modifier": 0.05,
+      "foundation_stability_bonus": 33
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "amulet",
+      "breakthrough"
+    ],
+    "value": 1535,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "spirit_devouring_charm",
+    "display_name": "Spirit Devouring Charm",
+    "slot": "amulet",
+    "valid_slots": [
+      "amulet"
+    ],
+    "category": "amulet",
+    "rarity": "heaven_grade",
+    "description": "Spirit Devouring Charm — a heaven-grade treasure said to carry the aura of the spirit devouring path.",
+    "requirements": {
+      "minimum_comprehension": 26
+    },
+    "stat_modifiers": {
+      "max_qi": 102,
+      "comprehension": 4
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 4,
+      "breakthrough_chance_modifier": 0.06,
+      "foundation_stability_bonus": 51
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "amulet",
+      "breakthrough"
+    ],
+    "value": 3626,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "radiant_dawn_medallion",
+    "display_name": "Radiant Dawn Medallion",
+    "slot": "amulet",
+    "valid_slots": [
+      "amulet"
+    ],
+    "category": "amulet",
+    "rarity": "dao_grade",
+    "description": "Radiant Dawn Medallion — a dao-grade treasure said to carry the aura of the radiant dawn path.",
+    "requirements": {
+      "minimum_comprehension": 30
+    },
+    "stat_modifiers": {
+      "max_qi": 156,
+      "comprehension": 5
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 5,
+      "breakthrough_chance_modifier": 0.07,
+      "foundation_stability_bonus": 78
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "amulet",
+      "breakthrough"
+    ],
+    "value": 8810,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "earth_vein_talisman",
+    "display_name": "Earth Vein Talisman",
+    "slot": "talisman",
+    "valid_slots": [
+      "talisman"
+    ],
+    "category": "talisman",
+    "rarity": "mortal_grade",
+    "description": "Earth Vein Talisman — a rough, mortal-forged treasure said to carry the aura of the earth vein path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "defense": 2
+    },
+    "cultivation_modifiers": {
+      "breakthrough_chance_modifier": 0.02,
+      "foundation_stability_bonus": 3
+    },
+    "utility_modifiers": {
+      "corpse_qi_resistance": 4
+    },
+    "tags": [
+      "talisman",
+      "ward"
+    ],
+    "value": 31,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "verdant_emperor_sigil",
+    "display_name": "Verdant Emperor Sigil",
+    "slot": "talisman",
+    "valid_slots": [
+      "talisman"
+    ],
+    "category": "talisman",
+    "rarity": "low_spirit_grade",
+    "description": "Verdant Emperor Sigil — a low-grade spirit treasure said to carry the aura of the verdant emperor path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "defense": 4
+    },
+    "cultivation_modifiers": {
+      "breakthrough_chance_modifier": 0.03,
+      "foundation_stability_bonus": 7
+    },
+    "utility_modifiers": {
+      "corpse_qi_resistance": 9
+    },
+    "tags": [
+      "talisman",
+      "ward"
+    ],
+    "value": 157,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "jade_serpent_seal",
+    "display_name": "Jade Serpent Seal",
+    "slot": "talisman",
+    "valid_slots": [
+      "talisman"
+    ],
+    "category": "talisman",
+    "rarity": "middle_spirit_grade",
+    "description": "Jade Serpent Seal — a refined spirit treasure said to carry the aura of the jade serpent path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "defense": 8
+    },
+    "cultivation_modifiers": {
+      "breakthrough_chance_modifier": 0.04,
+      "foundation_stability_bonus": 12
+    },
+    "utility_modifiers": {
+      "ambush_avoidance_bonus": 8
+    },
+    "tags": [
+      "talisman",
+      "protection"
+    ],
+    "value": 347,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "golden_body_charm_paper",
+    "display_name": "Golden Body Charm Paper",
+    "slot": "talisman",
+    "valid_slots": [
+      "talisman"
+    ],
+    "category": "talisman",
+    "rarity": "high_spirit_grade",
+    "description": "Golden Body Charm Paper — a high spirit-grade treasure said to carry the aura of the golden body path.",
+    "requirements": {
+      "minimum_essence_realm": "revolving_core"
+    },
+    "stat_modifiers": {
+      "defense": 14
+    },
+    "cultivation_modifiers": {
+      "breakthrough_chance_modifier": 0.05,
+      "foundation_stability_bonus": 21
+    },
+    "utility_modifiers": {
+      "corpse_qi_resistance": 28
+    },
+    "tags": [
+      "talisman",
+      "ward"
+    ],
+    "value": 762,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "true_dragon_talisman",
+    "display_name": "True Dragon Talisman",
+    "slot": "talisman",
+    "valid_slots": [
+      "talisman"
+    ],
+    "category": "talisman",
+    "rarity": "earth_grade",
+    "description": "True Dragon Talisman — an earth-grade treasure said to carry the aura of the true dragon path.",
+    "requirements": {
+      "minimum_essence_realm": "divine_sea"
+    },
+    "stat_modifiers": {
+      "defense": 22
+    },
+    "cultivation_modifiers": {
+      "breakthrough_chance_modifier": 0.06,
+      "foundation_stability_bonus": 33
+    },
+    "utility_modifiers": {
+      "ambush_avoidance_bonus": 22
+    },
+    "tags": [
+      "talisman",
+      "protection"
+    ],
+    "value": 1297,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "earth_vein_sigil",
+    "display_name": "Earth Vein Sigil",
+    "slot": "talisman",
+    "valid_slots": [
+      "talisman"
+    ],
+    "category": "talisman",
+    "rarity": "heaven_grade",
+    "description": "Earth Vein Sigil — a heaven-grade treasure said to carry the aura of the earth vein path.",
+    "requirements": {
+      "minimum_essence_realm": "life_destruction"
+    },
+    "stat_modifiers": {
+      "defense": 34
+    },
+    "cultivation_modifiers": {
+      "breakthrough_chance_modifier": 0.07,
+      "foundation_stability_bonus": 51
+    },
+    "utility_modifiers": {
+      "ambush_avoidance_bonus": 34
+    },
+    "tags": [
+      "talisman",
+      "protection"
+    ],
+    "value": 4036,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "coiling_dragon_sigil",
+    "display_name": "Coiling Dragon Sigil",
+    "slot": "talisman",
+    "valid_slots": [
+      "talisman"
+    ],
+    "category": "talisman",
+    "rarity": "dao_grade",
+    "description": "Coiling Dragon Sigil — a dao-grade treasure said to carry the aura of the coiling dragon path.",
+    "requirements": {
+      "minimum_essence_realm": "divine_transformation"
+    },
+    "stat_modifiers": {
+      "defense": 52
+    },
+    "cultivation_modifiers": {
+      "breakthrough_chance_modifier": 0.08,
+      "foundation_stability_bonus": 78
+    },
+    "utility_modifiers": {
+      "ambush_avoidance_bonus": 52
+    },
+    "tags": [
+      "talisman",
+      "protection"
+    ],
+    "value": 9417,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "cloudpiercing_mirror",
+    "display_name": "Cloudpiercing Mirror",
+    "slot": "artifact",
+    "valid_slots": [
+      "artifact_1",
+      "artifact_2"
+    ],
+    "category": "artifact",
+    "rarity": "mortal_grade",
+    "description": "Cloudpiercing Mirror — a rough, mortal-forged treasure said to carry the aura of the cloudpiercing path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "defense": 3,
+      "max_hp": 10,
+      "max_qi": 8
+    },
+    "cultivation_modifiers": {
+      "foundation_stability_bonus": 4,
+      "essence_breakthrough_modifier": 0.0
+    },
+    "utility_modifiers": {
+      "rare_event_chance_bonus": 1
+    },
+    "tags": [
+      "artifact",
+      "treasure"
+    ],
+    "value": 29,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "myriad_star_bell",
+    "display_name": "Myriad Star Bell",
+    "slot": "artifact",
+    "valid_slots": [
+      "artifact_1",
+      "artifact_2"
+    ],
+    "category": "artifact",
+    "rarity": "low_spirit_grade",
+    "description": "Myriad Star Bell — a low-grade spirit treasure said to carry the aura of the myriad star path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "defense": 7,
+      "max_hp": 22,
+      "max_qi": 18
+    },
+    "cultivation_modifiers": {
+      "foundation_stability_bonus": 9,
+      "essence_breakthrough_modifier": 0.01
+    },
+    "utility_modifiers": {
+      "rare_event_chance_bonus": 1
+    },
+    "tags": [
+      "artifact",
+      "treasure"
+    ],
+    "value": 146,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "radiant_dawn_gourd",
+    "display_name": "Radiant Dawn Gourd",
+    "slot": "artifact",
+    "valid_slots": [
+      "artifact_1",
+      "artifact_2"
+    ],
+    "category": "artifact",
+    "rarity": "middle_spirit_grade",
+    "description": "Radiant Dawn Gourd — a refined spirit treasure said to carry the aura of the radiant dawn path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "defense": 12,
+      "max_hp": 40,
+      "max_qi": 32
+    },
+    "cultivation_modifiers": {
+      "foundation_stability_bonus": 16,
+      "essence_breakthrough_modifier": 0.02
+    },
+    "utility_modifiers": {
+      "rare_event_chance_bonus": 1
+    },
+    "tags": [
+      "artifact",
+      "treasure"
+    ],
+    "value": 364,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "demon_sealing_gourd",
+    "display_name": "Demon Sealing Gourd",
+    "slot": "artifact",
+    "valid_slots": [
+      "artifact_1",
+      "artifact_2"
+    ],
+    "category": "artifact",
+    "rarity": "high_spirit_grade",
+    "description": "Demon Sealing Gourd — a high spirit-grade treasure said to carry the aura of the demon sealing path.",
+    "requirements": {
+      "minimum_comprehension": 18
+    },
+    "stat_modifiers": {
+      "defense": 21,
+      "max_hp": 70,
+      "max_qi": 56
+    },
+    "cultivation_modifiers": {
+      "foundation_stability_bonus": 28,
+      "essence_breakthrough_modifier": 0.03
+    },
+    "utility_modifiers": {
+      "rare_event_chance_bonus": 2
+    },
+    "tags": [
+      "artifact",
+      "treasure"
+    ],
+    "value": 714,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "cloud_sea_gourd",
+    "display_name": "Cloud Sea Gourd",
+    "slot": "artifact",
+    "valid_slots": [
+      "artifact_1",
+      "artifact_2"
+    ],
+    "category": "artifact",
+    "rarity": "earth_grade",
+    "description": "Cloud Sea Gourd — an earth-grade treasure said to carry the aura of the cloud sea path.",
+    "requirements": {
+      "minimum_comprehension": 22
+    },
+    "stat_modifiers": {
+      "defense": 33,
+      "max_hp": 110,
+      "max_qi": 88
+    },
+    "cultivation_modifiers": {
+      "foundation_stability_bonus": 44,
+      "essence_breakthrough_modifier": 0.04
+    },
+    "utility_modifiers": {
+      "rare_event_chance_bonus": 3
+    },
+    "tags": [
+      "artifact",
+      "treasure"
+    ],
+    "value": 1387,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "verdant_emperor_seal",
+    "display_name": "Verdant Emperor Seal",
+    "slot": "artifact",
+    "valid_slots": [
+      "artifact_1",
+      "artifact_2"
+    ],
+    "category": "artifact",
+    "rarity": "heaven_grade",
+    "description": "Verdant Emperor Seal — a heaven-grade treasure said to carry the aura of the verdant emperor path.",
+    "requirements": {
+      "minimum_comprehension": 26
+    },
+    "stat_modifiers": {
+      "defense": 51,
+      "max_hp": 170,
+      "max_qi": 136
+    },
+    "cultivation_modifiers": {
+      "foundation_stability_bonus": 68,
+      "essence_breakthrough_modifier": 0.05
+    },
+    "utility_modifiers": {
+      "rare_event_chance_bonus": 4
+    },
+    "tags": [
+      "artifact",
+      "treasure"
+    ],
+    "value": 3404,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "thunder_mirror",
+    "display_name": "Thunder Mirror",
+    "slot": "artifact",
+    "valid_slots": [
+      "artifact_1",
+      "artifact_2"
+    ],
+    "category": "artifact",
+    "rarity": "dao_grade",
+    "description": "Thunder Mirror — a dao-grade treasure said to carry the aura of the thunder path.",
+    "requirements": {
+      "minimum_comprehension": 30
+    },
+    "stat_modifiers": {
+      "defense": 78,
+      "max_hp": 260,
+      "max_qi": 208
+    },
+    "cultivation_modifiers": {
+      "foundation_stability_bonus": 104,
+      "essence_breakthrough_modifier": 0.06
+    },
+    "utility_modifiers": {
+      "rare_event_chance_bonus": 5
+    },
+    "tags": [
+      "artifact",
+      "treasure"
+    ],
+    "value": 10247,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "jade_serpent_flying_sword",
+    "display_name": "Jade Serpent Flying Sword",
+    "slot": "flying_sword",
+    "valid_slots": [
+      "flying_sword"
+    ],
+    "category": "flying_sword",
+    "rarity": "mortal_grade",
+    "description": "Jade Serpent Flying Sword — a rough, mortal-forged treasure said to carry the aura of the jade serpent path.",
+    "requirements": {
+      "minimum_essence_realm": "xiantian",
+      "minimum_comprehension": 12
+    },
+    "stat_modifiers": {
+      "attack": 6,
+      "speed": 4,
+      "evasion": 2
+    },
+    "cultivation_modifiers": {
+      "essence_breakthrough_modifier": 0.01,
+      "comprehension_bonus": 1
+    },
+    "utility_modifiers": {
+      "travel_safety_bonus": 4
+    },
+    "tags": [
+      "sword",
+      "flying_sword"
+    ],
+    "value": 34,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "coiling_dragon_sword_slip",
+    "display_name": "Coiling Dragon Sword Slip",
+    "slot": "flying_sword",
+    "valid_slots": [
+      "flying_sword"
+    ],
+    "category": "flying_sword",
+    "rarity": "low_spirit_grade",
+    "description": "Coiling Dragon Sword Slip — a low-grade spirit treasure said to carry the aura of the coiling dragon path.",
+    "requirements": {
+      "minimum_essence_realm": "xiantian",
+      "minimum_comprehension": 16
+    },
+    "stat_modifiers": {
+      "attack": 13,
+      "speed": 9,
+      "evasion": 4
+    },
+    "cultivation_modifiers": {
+      "essence_breakthrough_modifier": 0.02,
+      "comprehension_bonus": 1
+    },
+    "utility_modifiers": {
+      "travel_safety_bonus": 9
+    },
+    "tags": [
+      "sword",
+      "flying_sword"
+    ],
+    "value": 139,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "scarlet_sun_sky_sword",
+    "display_name": "Scarlet Sun Sky Sword",
+    "slot": "flying_sword",
+    "valid_slots": [
+      "flying_sword"
+    ],
+    "category": "flying_sword",
+    "rarity": "middle_spirit_grade",
+    "description": "Scarlet Sun Sky Sword — a refined spirit treasure said to carry the aura of the scarlet sun path.",
+    "requirements": {
+      "minimum_essence_realm": "xiantian",
+      "minimum_comprehension": 20
+    },
+    "stat_modifiers": {
+      "attack": 24,
+      "speed": 16,
+      "evasion": 8
+    },
+    "cultivation_modifiers": {
+      "essence_breakthrough_modifier": 0.03,
+      "comprehension_bonus": 1
+    },
+    "utility_modifiers": {
+      "travel_safety_bonus": 16
+    },
+    "tags": [
+      "sword",
+      "flying_sword"
+    ],
+    "value": 399,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "demon_sealing_sky_sword",
+    "display_name": "Demon Sealing Sky Sword",
+    "slot": "flying_sword",
+    "valid_slots": [
+      "flying_sword"
+    ],
+    "category": "flying_sword",
+    "rarity": "high_spirit_grade",
+    "description": "Demon Sealing Sky Sword — a high spirit-grade treasure said to carry the aura of the demon sealing path.",
+    "requirements": {
+      "minimum_essence_realm": "revolving_core",
+      "minimum_comprehension": 24
+    },
+    "stat_modifiers": {
+      "attack": 42,
+      "speed": 28,
+      "evasion": 14
+    },
+    "cultivation_modifiers": {
+      "essence_breakthrough_modifier": 0.04,
+      "comprehension_bonus": 2
+    },
+    "utility_modifiers": {
+      "travel_safety_bonus": 28
+    },
+    "tags": [
+      "sword",
+      "flying_sword"
+    ],
+    "value": 870,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "frost_sky_sword",
+    "display_name": "Frost Sky Sword",
+    "slot": "flying_sword",
+    "valid_slots": [
+      "flying_sword"
+    ],
+    "category": "flying_sword",
+    "rarity": "earth_grade",
+    "description": "Frost Sky Sword — an earth-grade treasure said to carry the aura of the frost path.",
+    "requirements": {
+      "minimum_essence_realm": "divine_sea",
+      "minimum_comprehension": 28
+    },
+    "stat_modifiers": {
+      "attack": 66,
+      "speed": 44,
+      "evasion": 22
+    },
+    "cultivation_modifiers": {
+      "essence_breakthrough_modifier": 0.05,
+      "comprehension_bonus": 3
+    },
+    "utility_modifiers": {
+      "travel_safety_bonus": 44
+    },
+    "tags": [
+      "sword",
+      "flying_sword"
+    ],
+    "value": 1317,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "purple_cloud_sky_sword_mk_2",
+    "display_name": "Purple Cloud Sky Sword Mk 2",
+    "slot": "flying_sword",
+    "valid_slots": [
+      "flying_sword"
+    ],
+    "category": "flying_sword",
+    "rarity": "heaven_grade",
+    "description": "Purple Cloud Sky Sword Mk 2 — a heaven-grade treasure said to carry the aura of the purple cloud path.",
+    "requirements": {
+      "minimum_essence_realm": "life_destruction",
+      "minimum_comprehension": 32
+    },
+    "stat_modifiers": {
+      "attack": 102,
+      "speed": 68,
+      "evasion": 34
+    },
+    "cultivation_modifiers": {
+      "essence_breakthrough_modifier": 0.06,
+      "comprehension_bonus": 4
+    },
+    "utility_modifiers": {
+      "travel_safety_bonus": 68
+    },
+    "tags": [
+      "sword",
+      "flying_sword"
+    ],
+    "value": 2995,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "spirit_devouring_sword_slip",
+    "display_name": "Spirit Devouring Sword Slip",
+    "slot": "flying_sword",
+    "valid_slots": [
+      "flying_sword"
+    ],
+    "category": "flying_sword",
+    "rarity": "dao_grade",
+    "description": "Spirit Devouring Sword Slip — a dao-grade treasure said to carry the aura of the spirit devouring path.",
+    "requirements": {
+      "minimum_essence_realm": "divine_transformation",
+      "minimum_comprehension": 36
+    },
+    "stat_modifiers": {
+      "attack": 120,
+      "speed": 104,
+      "evasion": 52
+    },
+    "cultivation_modifiers": {
+      "essence_breakthrough_modifier": 0.07,
+      "comprehension_bonus": 5
+    },
+    "utility_modifiers": {
+      "travel_safety_bonus": 104
+    },
+    "tags": [
+      "sword",
+      "flying_sword"
+    ],
+    "value": 8638,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "heaven_splitting_whip",
+    "display_name": "Heaven Splitting Whip",
+    "slot": "weapon",
+    "valid_slots": [
+      "weapon"
+    ],
+    "category": "martial_weapon",
+    "rarity": "mortal_grade",
+    "description": "Heaven Splitting Whip — a rough, mortal-forged treasure said to carry the aura of the heaven splitting path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "attack": 4,
+      "body_strength": 1
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 1
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "weapon",
+      "body_cultivation"
+    ],
+    "value": 37,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "blazing_yang_trident",
+    "display_name": "Blazing Yang Trident",
+    "slot": "weapon",
+    "valid_slots": [
+      "weapon"
+    ],
+    "category": "martial_weapon",
+    "rarity": "low_spirit_grade",
+    "description": "Blazing Yang Trident — a low-grade spirit treasure said to carry the aura of the blazing yang path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "attack": 9,
+      "defense": 2
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 0
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "weapon",
+      "sect"
+    ],
+    "value": 180,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "eternal_night_staff",
+    "display_name": "Eternal Night Staff",
+    "slot": "weapon",
+    "valid_slots": [
+      "weapon"
+    ],
+    "category": "martial_weapon",
+    "rarity": "middle_spirit_grade",
+    "description": "Eternal Night Staff — a refined spirit treasure said to carry the aura of the eternal night path.",
+    "requirements": {
+      "minimum_comprehension": 14
+    },
+    "stat_modifiers": {
+      "attack": 16,
+      "defense": 4
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 1
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "weapon",
+      "sect"
+    ],
+    "value": 359,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "purple_cloud_sword",
+    "display_name": "Purple Cloud Sword",
+    "slot": "weapon",
+    "valid_slots": [
+      "weapon"
+    ],
+    "category": "martial_weapon",
+    "rarity": "high_spirit_grade",
+    "description": "Purple Cloud Sword — a high spirit-grade treasure said to carry the aura of the purple cloud path.",
+    "requirements": {
+      "minimum_body_realm": "viscera_training"
+    },
+    "stat_modifiers": {
+      "attack": 28,
+      "body_strength": 7
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 3
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "weapon",
+      "body_cultivation"
+    ],
+    "value": 836,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "void_saber",
+    "display_name": "Void Saber",
+    "slot": "weapon",
+    "valid_slots": [
+      "weapon"
+    ],
+    "category": "martial_weapon",
+    "rarity": "earth_grade",
+    "description": "Void Saber — an earth-grade treasure said to carry the aura of the void path.",
+    "requirements": {
+      "minimum_comprehension": 22
+    },
+    "stat_modifiers": {
+      "attack": 44,
+      "defense": 11
+    },
+    "cultivation_modifiers": {
+      "comprehension_bonus": 3
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "weapon",
+      "sword_intent"
+    ],
+    "value": 1231,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "blazing_yang_dagger",
+    "display_name": "Blazing Yang Dagger",
+    "slot": "weapon",
+    "valid_slots": [
+      "weapon"
+    ],
+    "category": "martial_weapon",
+    "rarity": "heaven_grade",
+    "description": "Blazing Yang Dagger — a heaven-grade treasure said to carry the aura of the blazing yang path.",
+    "requirements": {
+      "minimum_body_realm": "eight_gates_hidden_celestial_stems"
+    },
+    "stat_modifiers": {
+      "attack": 68,
+      "body_strength": 17
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 5
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "weapon",
+      "body_cultivation"
+    ],
+    "value": 3184,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "eternal_night_staff_mk_2",
+    "display_name": "Eternal Night Staff Mk 2",
+    "slot": "weapon",
+    "valid_slots": [
+      "weapon"
+    ],
+    "category": "martial_weapon",
+    "rarity": "dao_grade",
+    "description": "Eternal Night Staff Mk 2 — a dao-grade treasure said to carry the aura of the eternal night path.",
+    "requirements": {
+      "minimum_body_realm": "nine_stars_dao_palace"
+    },
+    "stat_modifiers": {
+      "attack": 104,
+      "body_strength": 26
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 6
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "weapon",
+      "body_cultivation"
+    ],
+    "value": 8543,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "cloud_sea_vestments",
+    "display_name": "Cloud Sea Vestments",
+    "slot": "armor",
+    "valid_slots": [
+      "armor"
+    ],
+    "category": "robe",
+    "rarity": "mortal_grade",
+    "description": "Cloud Sea Vestments — a rough, mortal-forged treasure said to carry the aura of the cloud sea path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "defense": 1,
+      "max_qi": 6
+    },
+    "cultivation_modifiers": {
+      "essence_cultivation_flat_bonus": 1
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "robe",
+      "essence_cultivation"
+    ],
+    "value": 33,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "profound_yin_cuirass",
+    "display_name": "Profound Yin Cuirass",
+    "slot": "armor",
+    "valid_slots": [
+      "armor"
+    ],
+    "category": "light_armor",
+    "rarity": "low_spirit_grade",
+    "description": "Profound Yin Cuirass — a low-grade spirit treasure said to carry the aura of the profound yin path.",
+    "requirements": {
+      "minimum_body_realm": "flesh_training"
+    },
+    "stat_modifiers": {
+      "defense": 7,
+      "max_hp": 18
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 0
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "armor",
+      "body_cultivation"
+    ],
+    "value": 145,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "radiant_dawn_war_vestments",
+    "display_name": "Radiant Dawn War Vestments",
+    "slot": "armor",
+    "valid_slots": [
+      "armor"
+    ],
+    "category": "robe",
+    "rarity": "middle_spirit_grade",
+    "description": "Radiant Dawn War Vestments — a refined spirit treasure said to carry the aura of the radiant dawn path.",
+    "requirements": {
+      "minimum_comprehension": 14
+    },
+    "stat_modifiers": {
+      "defense": 4,
+      "max_qi": 24
+    },
+    "cultivation_modifiers": {
+      "essence_cultivation_flat_bonus": 2,
+      "essence_breakthrough_modifier": 0.02
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "robe",
+      "essence_cultivation"
+    ],
+    "value": 377,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "heaven_splitting_vestments",
+    "display_name": "Heaven Splitting Vestments",
+    "slot": "armor",
+    "valid_slots": [
+      "armor"
+    ],
+    "category": "robe",
+    "rarity": "high_spirit_grade",
+    "description": "Heaven Splitting Vestments — a high spirit-grade treasure said to carry the aura of the heaven splitting path.",
+    "requirements": {
+      "minimum_comprehension": 18
+    },
+    "stat_modifiers": {
+      "defense": 7,
+      "max_qi": 42
+    },
+    "cultivation_modifiers": {
+      "essence_cultivation_flat_bonus": 3,
+      "essence_breakthrough_modifier": 0.03
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "robe",
+      "essence_cultivation"
+    ],
+    "value": 623,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "inferno_war_vestments",
+    "display_name": "Inferno War Vestments",
+    "slot": "armor",
+    "valid_slots": [
+      "armor"
+    ],
+    "category": "robe",
+    "rarity": "earth_grade",
+    "description": "Inferno War Vestments — an earth-grade treasure said to carry the aura of the inferno path.",
+    "requirements": {
+      "minimum_comprehension": 22
+    },
+    "stat_modifiers": {
+      "defense": 11,
+      "max_qi": 66
+    },
+    "cultivation_modifiers": {
+      "essence_cultivation_flat_bonus": 4,
+      "essence_breakthrough_modifier": 0.04
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "robe",
+      "essence_cultivation"
+    ],
+    "value": 1560,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "nirvana_battle_armor",
+    "display_name": "Nirvana Battle Armor",
+    "slot": "armor",
+    "valid_slots": [
+      "armor"
+    ],
+    "category": "heavy_armor",
+    "rarity": "heaven_grade",
+    "description": "Nirvana Battle Armor — a heaven-grade treasure said to carry the aura of the nirvana path.",
+    "requirements": {
+      "minimum_body_realm": "eight_gates_hidden_celestial_stems"
+    },
+    "stat_modifiers": {
+      "defense": 51,
+      "max_hp": 136,
+      "body_strength": 17
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 4
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "armor",
+      "body_cultivation"
+    ],
+    "value": 3606,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "iron_bone_battle_armor",
+    "display_name": "Iron Bone Battle Armor",
+    "slot": "armor",
+    "valid_slots": [
+      "armor"
+    ],
+    "category": "heavy_armor",
+    "rarity": "dao_grade",
+    "description": "Iron Bone Battle Armor — a dao-grade treasure said to carry the aura of the iron bone path.",
+    "requirements": {
+      "minimum_body_realm": "nine_stars_dao_palace"
+    },
+    "stat_modifiers": {
+      "defense": 78,
+      "max_hp": 208,
+      "body_strength": 26
+    },
+    "cultivation_modifiers": {
+      "body_cultivation_flat_bonus": 5
+    },
+    "utility_modifiers": {},
+    "tags": [
+      "armor",
+      "body_cultivation"
+    ],
+    "value": 8668,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "verdant_emperor_boots",
+    "display_name": "Verdant Emperor Boots",
+    "slot": "boots",
+    "valid_slots": [
+      "boots"
+    ],
+    "category": "boots",
+    "rarity": "mortal_grade",
+    "description": "Verdant Emperor Boots — a rough, mortal-forged treasure said to carry the aura of the verdant emperor path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "evasion": 2,
+      "speed": 1
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "travel_safety_bonus": 2
+    },
+    "tags": [
+      "movement",
+      "travel"
+    ],
+    "value": 37,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "blazing_yang_sabatons_mk_2",
+    "display_name": "Blazing Yang Sabatons Mk 2",
+    "slot": "boots",
+    "valid_slots": [
+      "boots"
+    ],
+    "category": "boots",
+    "rarity": "low_spirit_grade",
+    "description": "Blazing Yang Sabatons Mk 2 — a low-grade spirit treasure said to carry the aura of the blazing yang path.",
+    "requirements": {},
+    "stat_modifiers": {
+      "evasion": 4,
+      "speed": 2
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "travel_safety_bonus": 4
+    },
+    "tags": [
+      "movement",
+      "travel"
+    ],
+    "value": 184,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "white_tiger_boots",
+    "display_name": "White Tiger Boots",
+    "slot": "boots",
+    "valid_slots": [
+      "boots"
+    ],
+    "category": "boots",
+    "rarity": "middle_spirit_grade",
+    "description": "White Tiger Boots — a refined spirit treasure said to carry the aura of the white tiger path.",
+    "requirements": {
+      "minimum_essence_realm": "xiantian"
+    },
+    "stat_modifiers": {
+      "evasion": 8,
+      "speed": 4
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "travel_safety_bonus": 8
+    },
+    "tags": [
+      "movement",
+      "travel"
+    ],
+    "value": 388,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "true_dragon_greaves",
+    "display_name": "True Dragon Greaves",
+    "slot": "boots",
+    "valid_slots": [
+      "boots"
+    ],
+    "category": "boots",
+    "rarity": "high_spirit_grade",
+    "description": "True Dragon Greaves — a high spirit-grade treasure said to carry the aura of the true dragon path.",
+    "requirements": {
+      "minimum_essence_realm": "revolving_core"
+    },
+    "stat_modifiers": {
+      "evasion": 14,
+      "speed": 7
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "travel_safety_bonus": 14,
+      "stealth_bonus": 14,
+      "ambush_avoidance_bonus": 7
+    },
+    "tags": [
+      "movement",
+      "stealth"
+    ],
+    "value": 641,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "ancestral_sabatons",
+    "display_name": "Ancestral Sabatons",
+    "slot": "boots",
+    "valid_slots": [
+      "boots"
+    ],
+    "category": "boots",
+    "rarity": "earth_grade",
+    "description": "Ancestral Sabatons — an earth-grade treasure said to carry the aura of the ancestral path.",
+    "requirements": {
+      "minimum_essence_realm": "divine_sea"
+    },
+    "stat_modifiers": {
+      "evasion": 22,
+      "speed": 11
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "travel_safety_bonus": 22
+    },
+    "tags": [
+      "movement",
+      "travel"
+    ],
+    "value": 1509,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "phoenix_striders",
+    "display_name": "Phoenix Striders",
+    "slot": "boots",
+    "valid_slots": [
+      "boots"
+    ],
+    "category": "boots",
+    "rarity": "heaven_grade",
+    "description": "Phoenix Striders — a heaven-grade treasure said to carry the aura of the phoenix path.",
+    "requirements": {
+      "minimum_essence_realm": "life_destruction"
+    },
+    "stat_modifiers": {
+      "evasion": 34,
+      "speed": 17
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "travel_safety_bonus": 34,
+      "stealth_bonus": 34,
+      "ambush_avoidance_bonus": 17
+    },
+    "tags": [
+      "movement",
+      "stealth"
+    ],
+    "value": 3939,
+    "stackable": false,
+    "equippable": true
+  },
+  {
+    "id": "coiling_dragon_striders",
+    "display_name": "Coiling Dragon Striders",
+    "slot": "boots",
+    "valid_slots": [
+      "boots"
+    ],
+    "category": "boots",
+    "rarity": "dao_grade",
+    "description": "Coiling Dragon Striders — a dao-grade treasure said to carry the aura of the coiling dragon path.",
+    "requirements": {
+      "minimum_essence_realm": "divine_transformation"
+    },
+    "stat_modifiers": {
+      "evasion": 52,
+      "speed": 26
+    },
+    "cultivation_modifiers": {},
+    "utility_modifiers": {
+      "travel_safety_bonus": 52
+    },
+    "tags": [
+      "movement",
+      "travel"
+    ],
+    "value": 9452,
+    "stackable": false,
+    "equippable": true
+  }
+]

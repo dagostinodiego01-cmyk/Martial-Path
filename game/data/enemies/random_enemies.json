@@ -1,0 +1,5414 @@
+[
+  {
+    "id": "iron_wolf",
+    "name": "Iron-Fang Wolf",
+    "body_realm_id": "mortal",
+    "essence_realm_id": null,
+    "hp": 45,
+    "attack": 10,
+    "defense": 3,
+    "exp_reward": 15,
+    "loot_table": [
+      {
+        "item_id": "beast_core",
+        "chance": 0.5,
+        "count": 1
+      },
+      {
+        "item_id": "healing_pill",
+        "chance": 0.3,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "rogue_cultivator",
+    "name": "Rogue Cultivator",
+    "body_realm_id": "strength_training",
+    "essence_realm_id": "houtian",
+    "hp": 70,
+    "attack": 14,
+    "defense": 6,
+    "exp_reward": 30,
+    "loot_table": [
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.4,
+        "count": 1
+      },
+      {
+        "item_id": "qi_pill",
+        "chance": 0.3,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "corpse_demon",
+    "name": "Corpse Demon",
+    "body_realm_id": "flesh_training",
+    "essence_realm_id": "houtian",
+    "hp": 110,
+    "attack": 20,
+    "defense": 8,
+    "exp_reward": 55,
+    "loot_table": [
+      {
+        "item_id": "profound_pill",
+        "chance": 0.35,
+        "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.5,
+        "count": 2
+      }
+    ]
+  },
+  {
+    "id": "forest_horned_boar",
+    "name": "Forest Horned Boar",
+    "body_realm_id": "mortal",
+    "essence_realm_id": null,
+    "hp": 38,
+    "attack": 8,
+    "defense": 4,
+    "exp_reward": 12,
+    "loot_table": [
+      {
+        "item_id": "beast_core",
+        "chance": 0.45,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "azure_stream_bandit",
+    "name": "Azure Stream Bandit",
+    "body_realm_id": "mortal",
+    "essence_realm_id": null,
+    "hp": 52,
+    "attack": 11,
+    "defense": 4,
+    "exp_reward": 18,
+    "loot_table": [
+      {
+        "item_id": "healing_pill",
+        "chance": 0.25,
+        "count": 1
+      },
+      {
+        "item_id": "training_sword",
+        "chance": 0.08,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "road_cutpurse",
+    "name": "Road Cutpurse",
+    "body_realm_id": "mortal",
+    "essence_realm_id": null,
+    "hp": 48,
+    "attack": 12,
+    "defense": 3,
+    "exp_reward": 18,
+    "loot_table": [
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.15,
+        "count": 1
+      },
+      {
+        "item_id": "worn_travel_boots",
+        "chance": 0.08,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "black_pine_serpent",
+    "name": "Black Pine Serpent",
+    "body_realm_id": "strength_training",
+    "essence_realm_id": null,
+    "hp": 65,
+    "attack": 15,
+    "defense": 5,
+    "exp_reward": 28,
+    "loot_table": [
+      {
+        "item_id": "beast_core",
+        "chance": 0.55,
+        "count": 1
+      },
+      {
+        "item_id": "qi_pill",
+        "chance": 0.15,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "mist_jaw_leopard",
+    "name": "Mist-Jaw Leopard",
+    "body_realm_id": "strength_training",
+    "essence_realm_id": null,
+    "hp": 78,
+    "attack": 17,
+    "defense": 5,
+    "exp_reward": 35,
+    "loot_table": [
+      {
+        "item_id": "beast_core",
+        "chance": 0.6,
+        "count": 1
+      },
+      {
+        "item_id": "mist_concealment_cloak",
+        "chance": 0.04,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "shrine_bone_thrall",
+    "name": "Shrine Bone Thrall",
+    "body_realm_id": "flesh_training",
+    "essence_realm_id": null,
+    "hp": 95,
+    "attack": 18,
+    "defense": 9,
+    "exp_reward": 48,
+    "loot_table": [
+      {
+        "item_id": "corpse_qi_ward_talisman",
+        "chance": 0.08,
+        "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.35,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "grave_mist_wraith",
+    "name": "Grave Mist Wraith",
+    "body_realm_id": "flesh_training",
+    "essence_realm_id": "houtian",
+    "hp": 88,
+    "attack": 22,
+    "defense": 6,
+    "exp_reward": 58,
+    "loot_table": [
+      {
+        "item_id": "spirit_jade_amulet",
+        "chance": 0.06,
+        "count": 1
+      },
+      {
+        "item_id": "profound_pill",
+        "chance": 0.25,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "mountain_claw_bear",
+    "name": "Mountain Claw Bear",
+    "body_realm_id": "strength_training",
+    "essence_realm_id": null,
+    "hp": 90,
+    "attack": 18,
+    "defense": 8,
+    "exp_reward": 40,
+    "loot_table": [
+      {
+        "item_id": "beast_core",
+        "chance": 0.7,
+        "count": 1
+      },
+      {
+        "item_id": "beast_hide_vest",
+        "chance": 0.06,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "stonehide_bull",
+    "name": "Stonehide Bull",
+    "body_realm_id": "flesh_training",
+    "essence_realm_id": null,
+    "hp": 120,
+    "attack": 20,
+    "defense": 12,
+    "exp_reward": 55,
+    "loot_table": [
+      {
+        "item_id": "beast_core",
+        "chance": 0.75,
+        "count": 1
+      },
+      {
+        "item_id": "iron_body_ring",
+        "chance": 0.05,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "academy_rival_disciple",
+    "name": "Academy Rival Disciple",
+    "body_realm_id": "flesh_training",
+    "essence_realm_id": "houtian",
+    "hp": 100,
+    "attack": 19,
+    "defense": 9,
+    "exp_reward": 45,
+    "loot_table": [
+      {
+        "item_id": "qi_pill",
+        "chance": 0.35,
+        "count": 1
+      },
+      {
+        "item_id": "sect_disciple_sword",
+        "chance": 0.05,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "capital_shadow_agent",
+    "name": "Capital Shadow Agent",
+    "body_realm_id": "viscera_training",
+    "essence_realm_id": "houtian",
+    "hp": 125,
+    "attack": 24,
+    "defense": 10,
+    "exp_reward": 70,
+    "loot_table": [
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.45,
+        "count": 2
+      },
+      {
+        "item_id": "shadow_thread_cloak",
+        "chance": 0.04,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "valley_outer_challenger",
+    "name": "Valley Outer Challenger",
+    "body_realm_id": "altering_muscle",
+    "essence_realm_id": "houtian",
+    "hp": 145,
+    "attack": 27,
+    "defense": 12,
+    "exp_reward": 85,
+    "loot_table": [
+      {
+        "item_id": "clear_stream_ring",
+        "chance": 0.08,
+        "count": 1
+      },
+      {
+        "item_id": "qi_pill",
+        "chance": 0.45,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "valley_sword_puppet",
+    "name": "Valley Sword Puppet",
+    "body_realm_id": "altering_muscle",
+    "essence_realm_id": null,
+    "hp": 165,
+    "attack": 30,
+    "defense": 15,
+    "exp_reward": 95,
+    "loot_table": [
+      {
+        "item_id": "minor_breakthrough_talisman",
+        "chance": 0.08,
+        "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.45,
+        "count": 2
+      }
+    ]
+  },
+  {
+    "id": "forbidden_herb_guardian",
+    "name": "Forbidden Herb Guardian",
+    "body_realm_id": "bone_forging",
+    "essence_realm_id": "houtian",
+    "hp": 190,
+    "attack": 34,
+    "defense": 17,
+    "exp_reward": 120,
+    "loot_table": [
+      {
+        "item_id": "miniature_alchemy_cauldron",
+        "chance": 0.03,
+        "count": 1
+      },
+      {
+        "item_id": "profound_pill",
+        "chance": 0.45,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "south_horizon_sand_raider",
+    "name": "South Horizon Sand Raider",
+    "body_realm_id": "bone_forging",
+    "essence_realm_id": "houtian",
+    "hp": 185,
+    "attack": 36,
+    "defense": 15,
+    "exp_reward": 125,
+    "loot_table": [
+      {
+        "item_id": "cloudstep_boots",
+        "chance": 0.06,
+        "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.55,
+        "count": 2
+      }
+    ]
+  },
+  {
+    "id": "horizon_sea_lizard",
+    "name": "Horizon Sea Lizard",
+    "body_realm_id": "body_pulse_condensation",
+    "essence_realm_id": null,
+    "hp": 230,
+    "attack": 40,
+    "defense": 20,
+    "exp_reward": 150,
+    "loot_table": [
+      {
+        "item_id": "beast_core",
+        "chance": 0.85,
+        "count": 2
+      },
+      {
+        "item_id": "blood_heat_ring",
+        "chance": 0.05,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "phoenix_flame_sprite",
+    "name": "Phoenix Flame Sprite",
+    "body_realm_id": "body_pulse_condensation",
+    "essence_realm_id": "xiantian",
+    "hp": 210,
+    "attack": 44,
+    "defense": 16,
+    "exp_reward": 165,
+    "loot_table": [
+      {
+        "item_id": "profound_pill",
+        "chance": 0.5,
+        "count": 1
+      },
+      {
+        "item_id": "spirit_jade_amulet",
+        "chance": 0.08,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "mystic_realm_firebird",
+    "name": "Mystic Realm Firebird",
+    "body_realm_id": "tempering_marrow",
+    "essence_realm_id": "xiantian",
+    "hp": 280,
+    "attack": 52,
+    "defense": 22,
+    "exp_reward": 220,
+    "loot_table": [
+      {
+        "item_id": "azure_meridian_robes",
+        "chance": 0.04,
+        "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.7,
+        "count": 3
+      }
+    ]
+  },
+  {
+    "id": "south_sea_pirate_cultivator",
+    "name": "South Sea Pirate Cultivator",
+    "body_realm_id": "tempering_marrow",
+    "essence_realm_id": "xiantian",
+    "hp": 260,
+    "attack": 50,
+    "defense": 21,
+    "exp_reward": 210,
+    "loot_table": [
+      {
+        "item_id": "spirit_storage_ring",
+        "chance": 0.08,
+        "count": 1
+      },
+      {
+        "item_id": "profound_pill",
+        "chance": 0.45,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "central_region_duelist",
+    "name": "Central Region Duelist",
+    "body_realm_id": "eight_gates_hidden_celestial_stems",
+    "essence_realm_id": "xiantian",
+    "hp": 330,
+    "attack": 60,
+    "defense": 26,
+    "exp_reward": 280,
+    "loot_table": [
+      {
+        "item_id": "outer_disciple_flying_sword",
+        "chance": 0.03,
+        "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.7,
+        "count": 3
+      }
+    ]
+  },
+  {
+    "id": "vermillion_guard_captain",
+    "name": "Vermillion Guard Captain",
+    "body_realm_id": "eight_gates_hidden_celestial_stems",
+    "essence_realm_id": "revolving_core",
+    "hp": 360,
+    "attack": 64,
+    "defense": 30,
+    "exp_reward": 320,
+    "loot_table": [
+      {
+        "item_id": "bronze_spirit_mirror",
+        "chance": 0.04,
+        "count": 1
+      },
+      {
+        "item_id": "profound_pill",
+        "chance": 0.55,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "nine_furnace_fire_golem",
+    "name": "Nine Furnace Fire Golem",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "revolving_core",
+    "hp": 460,
+    "attack": 72,
+    "defense": 38,
+    "exp_reward": 420,
+    "loot_table": [
+      {
+        "item_id": "stone_skin_armor",
+        "chance": 0.05,
+        "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.8,
+        "count": 4
+      }
+    ]
+  },
+  {
+    "id": "asura_blood_guard",
+    "name": "Asura Blood Guard",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "revolving_core",
+    "hp": 430,
+    "attack": 78,
+    "defense": 34,
+    "exp_reward": 430,
+    "loot_table": [
+      {
+        "item_id": "blood_sealing_talisman",
+        "chance": 0.06,
+        "count": 1
+      },
+      {
+        "item_id": "profound_pill",
+        "chance": 0.65,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "zenlight_iron_monk",
+    "name": "Zenlight Iron Monk",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "life_destruction",
+    "hp": 520,
+    "attack": 82,
+    "defense": 42,
+    "exp_reward": 520,
+    "loot_table": [
+      {
+        "item_id": "heart_guard_amulet",
+        "chance": 0.06,
+        "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.85,
+        "count": 4
+      }
+    ]
+  },
+  {
+    "id": "southern_wilderness_shaman",
+    "name": "Southern Wilderness Shaman",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "life_destruction",
+    "hp": 480,
+    "attack": 88,
+    "defense": 34,
+    "exp_reward": 540,
+    "loot_table": [
+      {
+        "item_id": "nameless_bone_shard",
+        "chance": 0.04,
+        "count": 1
+      },
+      {
+        "item_id": "profound_pill",
+        "chance": 0.7,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "five_element_warder",
+    "name": "Five Element Warder",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "divine_sea",
+    "hp": 600,
+    "attack": 98,
+    "defense": 48,
+    "exp_reward": 700,
+    "loot_table": [
+      {
+        "item_id": "ancient_jade_slip",
+        "chance": 0.05,
+        "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.9,
+        "count": 5
+      }
+    ]
+  },
+  {
+    "id": "ancient_ruin_sentinel",
+    "name": "Ancient Ruin Sentinel",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "divine_transformation",
+    "hp": 720,
+    "attack": 112,
+    "defense": 55,
+    "exp_reward": 850,
+    "loot_table": [
+      {
+        "item_id": "cracked_black_pagoda",
+        "chance": 0.04,
+        "count": 1
+      },
+      {
+        "item_id": "cloudpiercer_sword",
+        "chance": 0.02,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "holy_demon_warfiend",
+    "name": "Holy Demon Warfiend",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "divine_lord",
+    "hp": 900,
+    "attack": 135,
+    "defense": 65,
+    "exp_reward": 1100,
+    "loot_table": [
+      {
+        "item_id": "cloudpiercer_sword",
+        "chance": 0.03,
+        "count": 1
+      },
+      {
+        "item_id": "profound_pill",
+        "chance": 0.95,
+        "count": 2
+      }
+    ]
+  },
+  {
+    "id": "field_bandit",
+    "name": "Field Bandit",
+    "body_realm_id": "strength_training",
+    "essence_realm_id": null,
+    "hp": 41,
+    "attack": 10,
+    "defense": 3,
+    "exp_reward": 15,
+    "loot_table": [
+      {
+        "item_id": "heaven_decoction",
+        "chance": 0.36,
+        "count": 1
+      },
+      {
+        "item_id": "iron_spear",
+        "chance": 0.06,
+        "count": 1
+      }
+    ],
+    "area": "Verdant Fields"
+  },
+  {
+    "id": "green_hollow_mantis",
+    "name": "Green Hollow Mantis",
+    "body_realm_id": "strength_training",
+    "essence_realm_id": "houtian",
+    "hp": 47,
+    "attack": 9,
+    "defense": 3,
+    "exp_reward": 15,
+    "loot_table": [
+      {
+        "item_id": "healing_pill",
+        "chance": 0.88,
+        "count": 1
+      },
+      {
+        "item_id": "earth_pellet_mortal",
+        "chance": 0.27,
+        "count": 1
+      },
+      {
+        "item_id": "purple_cloud_seal",
+        "chance": 0.07,
+        "count": 1
+      }
+    ],
+    "area": "Verdant Fields"
+  },
+  {
+    "id": "verdant_zealot",
+    "name": "Verdant Zealot",
+    "body_realm_id": "mortal",
+    "essence_realm_id": null,
+    "hp": 48,
+    "attack": 10,
+    "defense": 3,
+    "exp_reward": 15,
+    "loot_table": [
+      {
+        "item_id": "blood_quenching_pellet",
+        "chance": 0.47,
+        "count": 1
+      },
+      {
+        "item_id": "iron_bone_sigil",
+        "chance": 0.06,
+        "count": 1
+      }
+    ],
+    "area": "Verdant Fields"
+  },
+  {
+    "id": "green_hollow_wraith",
+    "name": "Green Hollow Wraith",
+    "body_realm_id": "strength_training",
+    "essence_realm_id": null,
+    "hp": 43,
+    "attack": 9,
+    "defense": 3,
+    "exp_reward": 16,
+    "loot_table": [
+      {
+        "item_id": "bone_forging_dan",
+        "chance": 0.4,
+        "count": 1
+      },
+      {
+        "item_id": "true_dragon_amulet",
+        "chance": 0.05,
+        "count": 1
+      }
+    ],
+    "area": "Verdant Fields"
+  },
+  {
+    "id": "verdant_scorpion",
+    "name": "Verdant Scorpion",
+    "body_realm_id": "mortal",
+    "essence_realm_id": null,
+    "hp": 47,
+    "attack": 11,
+    "defense": 3,
+    "exp_reward": 16,
+    "loot_table": [
+      {
+        "item_id": "purple_cloud_pill_mortal",
+        "chance": 0.42,
+        "count": 1
+      },
+      {
+        "item_id": "beast_core",
+        "chance": 0.5,
+        "count": 1
+      },
+      {
+        "item_id": "iron_bone_sigil",
+        "chance": 0.04,
+        "count": 1
+      }
+    ],
+    "area": "Verdant Fields"
+  },
+  {
+    "id": "field_tiger",
+    "name": "Field Tiger",
+    "body_realm_id": "mortal",
+    "essence_realm_id": null,
+    "hp": 47,
+    "attack": 10,
+    "defense": 3,
+    "exp_reward": 14,
+    "loot_table": [
+      {
+        "item_id": "qi_pill",
+        "chance": 0.79,
+        "count": 1
+      }
+    ],
+    "area": "Verdant Fields"
+  },
+  {
+    "id": "green_hollow_toad",
+    "name": "Green Hollow Toad",
+    "body_realm_id": "strength_training",
+    "essence_realm_id": null,
+    "hp": 47,
+    "attack": 11,
+    "defense": 3,
+    "exp_reward": 14,
+    "loot_table": [
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.8,
+        "count": 1
+      },
+      {
+        "item_id": "common_fruit",
+        "chance": 0.49,
+        "count": 1
+      },
+      {
+        "item_id": "cracked_protection_talisman",
+        "chance": 0.1,
+        "count": 1
+      }
+    ],
+    "area": "Verdant Fields"
+  },
+  {
+    "id": "green_hollow_wolf",
+    "name": "Green Hollow Wolf",
+    "body_realm_id": "mortal",
+    "essence_realm_id": "houtian",
+    "hp": 46,
+    "attack": 10,
+    "defense": 3,
+    "exp_reward": 15,
+    "loot_table": [
+      {
+        "item_id": "mystic_pellet",
+        "chance": 0.75,
+        "count": 1
+      },
+      {
+        "item_id": "profound_fang",
+        "chance": 0.46,
+        "count": 1
+      }
+    ],
+    "area": "Verdant Fields"
+  },
+  {
+    "id": "nether_warder",
+    "name": "Nether Warder",
+    "body_realm_id": "mortal",
+    "essence_realm_id": "houtian",
+    "hp": 47,
+    "attack": 10,
+    "defense": 3,
+    "exp_reward": 15,
+    "loot_table": [
+      {
+        "item_id": "common_feather",
+        "chance": 0.83,
+        "count": 1
+      },
+      {
+        "item_id": "iron_spear",
+        "chance": 0.07,
+        "count": 1
+      }
+    ],
+    "area": "Verdant Fields"
+  },
+  {
+    "id": "field_cutpurse",
+    "name": "Field Cutpurse",
+    "body_realm_id": "strength_training",
+    "essence_realm_id": "houtian",
+    "hp": 47,
+    "attack": 10,
+    "defense": 3,
+    "exp_reward": 14,
+    "loot_table": [
+      {
+        "item_id": "soul_nurturing_pill_mortal",
+        "chance": 0.83,
+        "count": 1
+      },
+      {
+        "item_id": "soul_nurturing_decoction",
+        "chance": 0.56,
+        "count": 1
+      }
+    ],
+    "area": "Verdant Fields"
+  },
+  {
+    "id": "green_hollow_leopard",
+    "name": "Green Hollow Leopard",
+    "body_realm_id": "mortal",
+    "essence_realm_id": "houtian",
+    "hp": 41,
+    "attack": 10,
+    "defense": 3,
+    "exp_reward": 15,
+    "loot_table": [
+      {
+        "item_id": "purple_cloud_dan",
+        "chance": 0.54,
+        "count": 1
+      },
+      {
+        "item_id": "profound_pill",
+        "chance": 0.26,
+        "count": 1
+      }
+    ],
+    "area": "Verdant Fields"
+  },
+  {
+    "id": "meadow_boar",
+    "name": "Meadow Boar",
+    "body_realm_id": "mortal",
+    "essence_realm_id": null,
+    "hp": 47,
+    "attack": 10,
+    "defense": 3,
+    "exp_reward": 14,
+    "loot_table": [
+      {
+        "item_id": "beast_core",
+        "chance": 0.89,
+        "count": 1
+      },
+      {
+        "item_id": "earth_pellet_mortal",
+        "chance": 0.56,
+        "count": 1
+      },
+      {
+        "item_id": "patched_leather_armor",
+        "chance": 0.09,
+        "count": 1
+      }
+    ],
+    "area": "Verdant Fields"
+  },
+  {
+    "id": "blood_monk",
+    "name": "Blood Monk",
+    "body_realm_id": "mortal",
+    "essence_realm_id": "houtian",
+    "hp": 50,
+    "attack": 12,
+    "defense": 4,
+    "exp_reward": 19,
+    "loot_table": [
+      {
+        "item_id": "qi_pill",
+        "chance": 0.7,
+        "count": 1
+      },
+      {
+        "item_id": "profound_pill",
+        "chance": 0.57,
+        "count": 1
+      },
+      {
+        "item_id": "cloud_sea_vestments",
+        "chance": 0.03,
+        "count": 1
+      }
+    ],
+    "area": "Azure Stream Village"
+  },
+  {
+    "id": "stream_captain",
+    "name": "Stream Captain",
+    "body_realm_id": "strength_training",
+    "essence_realm_id": "houtian",
+    "hp": 59,
+    "attack": 11,
+    "defense": 4,
+    "exp_reward": 21,
+    "loot_table": [
+      {
+        "item_id": "heaven_tonic",
+        "chance": 0.32,
+        "count": 1
+      },
+      {
+        "item_id": "cracked_protection_talisman",
+        "chance": 0.07,
+        "count": 1
+      }
+    ],
+    "area": "Azure Stream Village"
+  },
+  {
+    "id": "blood_panther",
+    "name": "Blood Panther",
+    "body_realm_id": "strength_training",
+    "essence_realm_id": "houtian",
+    "hp": 52,
+    "attack": 12,
+    "defense": 4,
+    "exp_reward": 20,
+    "loot_table": [
+      {
+        "item_id": "profound_pill",
+        "chance": 0.84,
+        "count": 1
+      }
+    ],
+    "area": "Azure Stream Village"
+  },
+  {
+    "id": "village_shaman",
+    "name": "Village Shaman",
+    "body_realm_id": "mortal",
+    "essence_realm_id": "houtian",
+    "hp": 60,
+    "attack": 12,
+    "defense": 4,
+    "exp_reward": 18,
+    "loot_table": [
+      {
+        "item_id": "vermilion_pill_no3",
+        "chance": 0.53,
+        "count": 1
+      }
+    ],
+    "area": "Azure Stream Village"
+  },
+  {
+    "id": "azure_qilin",
+    "name": "Azure Qilin",
+    "body_realm_id": "strength_training",
+    "essence_realm_id": null,
+    "hp": 51,
+    "attack": 13,
+    "defense": 4,
+    "exp_reward": 21,
+    "loot_table": [
+      {
+        "item_id": "heaven_bone",
+        "chance": 0.78,
+        "count": 1
+      },
+      {
+        "item_id": "profound_pill",
+        "chance": 0.44,
+        "count": 1
+      },
+      {
+        "item_id": "blazing_yang_saber",
+        "chance": 0.09,
+        "count": 1
+      }
+    ],
+    "area": "Azure Stream Village"
+  },
+  {
+    "id": "azure_ape",
+    "name": "Azure Ape",
+    "body_realm_id": "strength_training",
+    "essence_realm_id": "houtian",
+    "hp": 57,
+    "attack": 12,
+    "defense": 4,
+    "exp_reward": 22,
+    "loot_table": [
+      {
+        "item_id": "profound_pill",
+        "chance": 0.77,
+        "count": 1
+      },
+      {
+        "item_id": "minor_qi_ring",
+        "chance": 0.07,
+        "count": 1
+      }
+    ],
+    "area": "Azure Stream Village"
+  },
+  {
+    "id": "village_boar",
+    "name": "Village Boar",
+    "body_realm_id": "mortal",
+    "essence_realm_id": "houtian",
+    "hp": 60,
+    "attack": 11,
+    "defense": 4,
+    "exp_reward": 18,
+    "loot_table": [
+      {
+        "item_id": "healing_pill",
+        "chance": 0.63,
+        "count": 1
+      },
+      {
+        "item_id": "vermilion_tonic",
+        "chance": 0.57,
+        "count": 1
+      }
+    ],
+    "area": "Azure Stream Village"
+  },
+  {
+    "id": "flame_roc",
+    "name": "Flame Roc",
+    "body_realm_id": "mortal",
+    "essence_realm_id": null,
+    "hp": 51,
+    "attack": 11,
+    "defense": 4,
+    "exp_reward": 21,
+    "loot_table": [
+      {
+        "item_id": "profound_pill",
+        "chance": 0.75,
+        "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.26,
+        "count": 1
+      }
+    ],
+    "area": "Azure Stream Village"
+  },
+  {
+    "id": "stream_captain_no.2",
+    "name": "Stream Captain No.2",
+    "body_realm_id": "strength_training",
+    "essence_realm_id": "houtian",
+    "hp": 50,
+    "attack": 12,
+    "defense": 4,
+    "exp_reward": 19,
+    "loot_table": [
+      {
+        "item_id": "mystic_pellet",
+        "chance": 0.39,
+        "count": 1
+      }
+    ],
+    "area": "Azure Stream Village"
+  },
+  {
+    "id": "stream_rogue_cultivator",
+    "name": "Stream Rogue Cultivator",
+    "body_realm_id": "mortal",
+    "essence_realm_id": "houtian",
+    "hp": 58,
+    "attack": 11,
+    "defense": 4,
+    "exp_reward": 21,
+    "loot_table": [
+      {
+        "item_id": "blood_quenching_pill",
+        "chance": 0.73,
+        "count": 1
+      }
+    ],
+    "area": "Azure Stream Village"
+  },
+  {
+    "id": "stream_duelist",
+    "name": "Stream Duelist",
+    "body_realm_id": "mortal",
+    "essence_realm_id": null,
+    "hp": 55,
+    "attack": 12,
+    "defense": 4,
+    "exp_reward": 20,
+    "loot_table": [
+      {
+        "item_id": "heaven_fang",
+        "chance": 0.43,
+        "count": 1
+      }
+    ],
+    "area": "Azure Stream Village"
+  },
+  {
+    "id": "frost_warfiend",
+    "name": "Frost Warfiend",
+    "body_realm_id": "strength_training",
+    "essence_realm_id": null,
+    "hp": 56,
+    "attack": 13,
+    "defense": 4,
+    "exp_reward": 19,
+    "loot_table": [
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.57,
+        "count": 1
+      },
+      {
+        "item_id": "marrow_cleansing_dan",
+        "chance": 0.5,
+        "count": 1
+      },
+      {
+        "item_id": "heaven_splitting_spear",
+        "chance": 0.04,
+        "count": 1
+      }
+    ],
+    "area": "Azure Stream Village"
+  },
+  {
+    "id": "deepwood_golem",
+    "name": "Deepwood Golem",
+    "body_realm_id": "flesh_training",
+    "essence_realm_id": "houtian",
+    "hp": 79,
+    "attack": 15,
+    "defense": 6,
+    "exp_reward": 29,
+    "loot_table": [
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.31,
+        "count": 1
+      }
+    ],
+    "area": "Black Pine Forest"
+  },
+  {
+    "id": "deepwood_qilin",
+    "name": "Deepwood Qilin",
+    "body_realm_id": "strength_training",
+    "essence_realm_id": null,
+    "hp": 80,
+    "attack": 17,
+    "defense": 6,
+    "exp_reward": 32,
+    "loot_table": [
+      {
+        "item_id": "bone_forging_nectar_no3",
+        "chance": 0.63,
+        "count": 1
+      }
+    ],
+    "area": "Black Pine Forest"
+  },
+  {
+    "id": "thornwood_toad",
+    "name": "Thornwood Toad",
+    "body_realm_id": "flesh_training",
+    "essence_realm_id": null,
+    "hp": 77,
+    "attack": 16,
+    "defense": 6,
+    "exp_reward": 28,
+    "loot_table": [
+      {
+        "item_id": "dragon_blood_dan",
+        "chance": 0.51,
+        "count": 1
+      }
+    ],
+    "area": "Black Pine Forest"
+  },
+  {
+    "id": "stone_serpent",
+    "name": "Stone Serpent",
+    "body_realm_id": "strength_training",
+    "essence_realm_id": "houtian",
+    "hp": 70,
+    "attack": 14,
+    "defense": 6,
+    "exp_reward": 32,
+    "loot_table": [
+      {
+        "item_id": "profound_pill",
+        "chance": 0.72,
+        "count": 1
+      },
+      {
+        "item_id": "vermilion_dan_mortal",
+        "chance": 0.27,
+        "count": 1
+      },
+      {
+        "item_id": "spirit_jade_amulet",
+        "chance": 0.06,
+        "count": 1
+      }
+    ],
+    "area": "Black Pine Forest"
+  },
+  {
+    "id": "thornwood_mantis",
+    "name": "Thornwood Mantis",
+    "body_realm_id": "flesh_training",
+    "essence_realm_id": "houtian",
+    "hp": 73,
+    "attack": 16,
+    "defense": 6,
+    "exp_reward": 32,
+    "loot_table": [
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.34,
+        "count": 1
+      },
+      {
+        "item_id": "qi_pill",
+        "chance": 0.31,
+        "count": 1
+      },
+      {
+        "item_id": "clear_mind_amulet",
+        "chance": 0.03,
+        "count": 1
+      }
+    ],
+    "area": "Black Pine Forest"
+  },
+  {
+    "id": "stone_executioner",
+    "name": "Stone Executioner",
+    "body_realm_id": "flesh_training",
+    "essence_realm_id": "houtian",
+    "hp": 72,
+    "attack": 17,
+    "defense": 6,
+    "exp_reward": 33,
+    "loot_table": [
+      {
+        "item_id": "mystic_pill_no5",
+        "chance": 0.32,
+        "count": 1
+      },
+      {
+        "item_id": "myriad_star_bell",
+        "chance": 0.09,
+        "count": 1
+      }
+    ],
+    "area": "Black Pine Forest"
+  },
+  {
+    "id": "deepwood_wraith",
+    "name": "Deepwood Wraith",
+    "body_realm_id": "flesh_training",
+    "essence_realm_id": "houtian",
+    "hp": 77,
+    "attack": 15,
+    "defense": 6,
+    "exp_reward": 31,
+    "loot_table": [
+      {
+        "item_id": "beast_core",
+        "chance": 0.72,
+        "count": 1
+      },
+      {
+        "item_id": "mystic_pill",
+        "chance": 0.32,
+        "count": 1
+      },
+      {
+        "item_id": "bone_forged_blade",
+        "chance": 0.08,
+        "count": 1
+      }
+    ],
+    "area": "Black Pine Forest"
+  },
+  {
+    "id": "deepwood_assassin",
+    "name": "Deepwood Assassin",
+    "body_realm_id": "flesh_training",
+    "essence_realm_id": "houtian",
+    "hp": 75,
+    "attack": 15,
+    "defense": 6,
+    "exp_reward": 30,
+    "loot_table": [
+      {
+        "item_id": "qi_pill",
+        "chance": 0.37,
+        "count": 1
+      },
+      {
+        "item_id": "vermilion_bird_sabatons",
+        "chance": 0.09,
+        "count": 1
+      }
+    ],
+    "area": "Black Pine Forest"
+  },
+  {
+    "id": "shade_lizard",
+    "name": "Shade Lizard",
+    "body_realm_id": "strength_training",
+    "essence_realm_id": null,
+    "hp": 71,
+    "attack": 16,
+    "defense": 6,
+    "exp_reward": 28,
+    "loot_table": [
+      {
+        "item_id": "mystic_essence",
+        "chance": 0.84,
+        "count": 1
+      },
+      {
+        "item_id": "beast_core",
+        "chance": 0.35,
+        "count": 1
+      }
+    ],
+    "area": "Black Pine Forest"
+  },
+  {
+    "id": "thornwood_cutpurse",
+    "name": "Thornwood Cutpurse",
+    "body_realm_id": "strength_training",
+    "essence_realm_id": "houtian",
+    "hp": 78,
+    "attack": 16,
+    "defense": 6,
+    "exp_reward": 32,
+    "loot_table": [
+      {
+        "item_id": "beast_core",
+        "chance": 0.3,
+        "count": 1
+      }
+    ],
+    "area": "Black Pine Forest"
+  },
+  {
+    "id": "flame_bull",
+    "name": "Flame Bull",
+    "body_realm_id": "strength_training",
+    "essence_realm_id": "houtian",
+    "hp": 75,
+    "attack": 16,
+    "defense": 6,
+    "exp_reward": 32,
+    "loot_table": [
+      {
+        "item_id": "marrow_tempering_elixir",
+        "chance": 0.64,
+        "count": 1
+      },
+      {
+        "item_id": "mystic_decoction_mortal",
+        "chance": 0.5,
+        "count": 1
+      }
+    ],
+    "area": "Black Pine Forest"
+  },
+  {
+    "id": "thornwood_warder",
+    "name": "Thornwood Warder",
+    "body_realm_id": "strength_training",
+    "essence_realm_id": "houtian",
+    "hp": 73,
+    "attack": 15,
+    "defense": 6,
+    "exp_reward": 33,
+    "loot_table": [
+      {
+        "item_id": "beast_core",
+        "chance": 0.55,
+        "count": 1
+      },
+      {
+        "item_id": "iron_thread_boots",
+        "chance": 0.09,
+        "count": 1
+      }
+    ],
+    "area": "Black Pine Forest"
+  },
+  {
+    "id": "deepwood_qilin_no.2",
+    "name": "Deepwood Qilin No.2",
+    "body_realm_id": "flesh_training",
+    "essence_realm_id": "houtian",
+    "hp": 78,
+    "attack": 17,
+    "defense": 6,
+    "exp_reward": 28,
+    "loot_table": [
+      {
+        "item_id": "profound_pill",
+        "chance": 0.35,
+        "count": 1
+      },
+      {
+        "item_id": "vermilion_bird_sabatons",
+        "chance": 0.03,
+        "count": 1
+      }
+    ],
+    "area": "Black Pine Forest"
+  },
+  {
+    "id": "thornwood_bull",
+    "name": "Thornwood Bull",
+    "body_realm_id": "strength_training",
+    "essence_realm_id": null,
+    "hp": 68,
+    "attack": 17,
+    "defense": 6,
+    "exp_reward": 31,
+    "loot_table": [
+      {
+        "item_id": "vermilion_elixir",
+        "chance": 0.77,
+        "count": 1
+      },
+      {
+        "item_id": "dragon_blood_ore",
+        "chance": 0.51,
+        "count": 1
+      },
+      {
+        "item_id": "beast_hide_vest",
+        "chance": 0.04,
+        "count": 1
+      }
+    ],
+    "area": "Black Pine Forest"
+  },
+  {
+    "id": "nether_panther",
+    "name": "Nether Panther",
+    "body_realm_id": "viscera_training",
+    "essence_realm_id": "houtian",
+    "hp": 112,
+    "attack": 24,
+    "defense": 8,
+    "exp_reward": 54,
+    "loot_table": [
+      {
+        "item_id": "star_gathering_tonic",
+        "chance": 0.57,
+        "count": 1
+      },
+      {
+        "item_id": "profound_pill",
+        "chance": 0.56,
+        "count": 1
+      },
+      {
+        "item_id": "outer_disciple_flying_sword",
+        "chance": 0.09,
+        "count": 1
+      }
+    ],
+    "area": "Misty Valley"
+  },
+  {
+    "id": "fog_veiled_lizard",
+    "name": "Fog-Veiled Lizard",
+    "body_realm_id": "flesh_training",
+    "essence_realm_id": "houtian",
+    "hp": 106,
+    "attack": 24,
+    "defense": 8,
+    "exp_reward": 51,
+    "loot_table": [
+      {
+        "item_id": "profound_nectar",
+        "chance": 0.77,
+        "count": 1
+      },
+      {
+        "item_id": "profound_pill",
+        "chance": 0.24,
+        "count": 1
+      },
+      {
+        "item_id": "bone_tempering_ring",
+        "chance": 0.05,
+        "count": 1
+      }
+    ],
+    "area": "Misty Valley"
+  },
+  {
+    "id": "grave_mist_leopard",
+    "name": "Grave Mist Leopard",
+    "body_realm_id": "viscera_training",
+    "essence_realm_id": "houtian",
+    "hp": 104,
+    "attack": 21,
+    "defense": 9,
+    "exp_reward": 54,
+    "loot_table": [
+      {
+        "item_id": "soul_nurturing_pellet",
+        "chance": 0.41,
+        "count": 1
+      },
+      {
+        "item_id": "scarlet_sun_cloak",
+        "chance": 0.04,
+        "count": 1
+      }
+    ],
+    "area": "Misty Valley"
+  },
+  {
+    "id": "fog_veiled_assassin",
+    "name": "Fog-Veiled Assassin",
+    "body_realm_id": "flesh_training",
+    "essence_realm_id": "houtian",
+    "hp": 114,
+    "attack": 23,
+    "defense": 9,
+    "exp_reward": 49,
+    "loot_table": [
+      {
+        "item_id": "mystic_scale",
+        "chance": 0.71,
+        "count": 1
+      },
+      {
+        "item_id": "healing_pill",
+        "chance": 0.32,
+        "count": 1
+      }
+    ],
+    "area": "Misty Valley"
+  },
+  {
+    "id": "hollow_shaman",
+    "name": "Hollow Shaman",
+    "body_realm_id": "flesh_training",
+    "essence_realm_id": "houtian",
+    "hp": 102,
+    "attack": 22,
+    "defense": 9,
+    "exp_reward": 48,
+    "loot_table": [
+      {
+        "item_id": "beast_core",
+        "chance": 0.72,
+        "count": 1
+      },
+      {
+        "item_id": "healing_pill",
+        "chance": 0.35,
+        "count": 1
+      },
+      {
+        "item_id": "ancestral_boots",
+        "chance": 0.03,
+        "count": 1
+      }
+    ],
+    "area": "Misty Valley"
+  },
+  {
+    "id": "misty_elder",
+    "name": "Misty Elder",
+    "body_realm_id": "viscera_training",
+    "essence_realm_id": "houtian",
+    "hp": 107,
+    "attack": 22,
+    "defense": 9,
+    "exp_reward": 55,
+    "loot_table": [
+      {
+        "item_id": "mystic_elixir_mortal",
+        "chance": 0.31,
+        "count": 1
+      }
+    ],
+    "area": "Misty Valley"
+  },
+  {
+    "id": "hollow_wyrm",
+    "name": "Hollow Wyrm",
+    "body_realm_id": "viscera_training",
+    "essence_realm_id": "houtian",
+    "hp": 115,
+    "attack": 21,
+    "defense": 9,
+    "exp_reward": 46,
+    "loot_table": [
+      {
+        "item_id": "beast_core",
+        "chance": 0.7,
+        "count": 1
+      },
+      {
+        "item_id": "earth_bone",
+        "chance": 0.37,
+        "count": 1
+      }
+    ],
+    "area": "Misty Valley"
+  },
+  {
+    "id": "flame_disciple",
+    "name": "Flame Disciple",
+    "body_realm_id": "flesh_training",
+    "essence_realm_id": "houtian",
+    "hp": 111,
+    "attack": 20,
+    "defense": 9,
+    "exp_reward": 46,
+    "loot_table": [
+      {
+        "item_id": "beast_core",
+        "chance": 0.86,
+        "count": 1
+      },
+      {
+        "item_id": "profound_pill",
+        "chance": 0.33,
+        "count": 1
+      }
+    ],
+    "area": "Misty Valley"
+  },
+  {
+    "id": "misty_wyrm",
+    "name": "Misty Wyrm",
+    "body_realm_id": "viscera_training",
+    "essence_realm_id": "houtian",
+    "hp": 116,
+    "attack": 23,
+    "defense": 9,
+    "exp_reward": 51,
+    "loot_table": [
+      {
+        "item_id": "profound_pill",
+        "chance": 0.43,
+        "count": 1
+      }
+    ],
+    "area": "Misty Valley"
+  },
+  {
+    "id": "misty_boar",
+    "name": "Misty Boar",
+    "body_realm_id": "flesh_training",
+    "essence_realm_id": "houtian",
+    "hp": 117,
+    "attack": 21,
+    "defense": 9,
+    "exp_reward": 53,
+    "loot_table": [
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.53,
+        "count": 1
+      },
+      {
+        "item_id": "beast_core",
+        "chance": 0.27,
+        "count": 1
+      },
+      {
+        "item_id": "earth_vein_immortal_sword",
+        "chance": 0.04,
+        "count": 1
+      }
+    ],
+    "area": "Misty Valley"
+  },
+  {
+    "id": "blood_demon",
+    "name": "Blood Demon",
+    "body_realm_id": "viscera_training",
+    "essence_realm_id": "houtian",
+    "hp": 101,
+    "attack": 23,
+    "defense": 9,
+    "exp_reward": 50,
+    "loot_table": [
+      {
+        "item_id": "beast_core",
+        "chance": 0.71,
+        "count": 1
+      },
+      {
+        "item_id": "cloud_sea_signet",
+        "chance": 0.09,
+        "count": 1
+      }
+    ],
+    "area": "Misty Valley"
+  },
+  {
+    "id": "grave_mist_bull",
+    "name": "Grave Mist Bull",
+    "body_realm_id": "flesh_training",
+    "essence_realm_id": "houtian",
+    "hp": 120,
+    "attack": 23,
+    "defense": 9,
+    "exp_reward": 53,
+    "loot_table": [
+      {
+        "item_id": "beast_core",
+        "chance": 0.73,
+        "count": 1
+      },
+      {
+        "item_id": "healing_pill",
+        "chance": 0.32,
+        "count": 1
+      },
+      {
+        "item_id": "golden_body_talisman",
+        "chance": 0.05,
+        "count": 1
+      }
+    ],
+    "area": "Misty Valley"
+  },
+  {
+    "id": "fog_veiled_ape",
+    "name": "Fog-Veiled Ape",
+    "body_realm_id": "flesh_training",
+    "essence_realm_id": "houtian",
+    "hp": 99,
+    "attack": 22,
+    "defense": 10,
+    "exp_reward": 53,
+    "loot_table": [
+      {
+        "item_id": "profound_pill",
+        "chance": 0.89,
+        "count": 1
+      }
+    ],
+    "area": "Misty Valley"
+  },
+  {
+    "id": "grave_mist_hound",
+    "name": "Grave Mist Hound",
+    "body_realm_id": "viscera_training",
+    "essence_realm_id": "houtian",
+    "hp": 114,
+    "attack": 22,
+    "defense": 8,
+    "exp_reward": 54,
+    "loot_table": [
+      {
+        "item_id": "healing_pill",
+        "chance": 0.44,
+        "count": 1
+      },
+      {
+        "item_id": "qi_pill",
+        "chance": 0.21,
+        "count": 1
+      }
+    ],
+    "area": "Misty Valley"
+  },
+  {
+    "id": "fog_veiled_qilin",
+    "name": "Fog-Veiled Qilin",
+    "body_realm_id": "viscera_training",
+    "essence_realm_id": "houtian",
+    "hp": 115,
+    "attack": 22,
+    "defense": 9,
+    "exp_reward": 53,
+    "loot_table": [
+      {
+        "item_id": "frost_jade_tonic",
+        "chance": 0.56,
+        "count": 1
+      }
+    ],
+    "area": "Misty Valley"
+  },
+  {
+    "id": "flame_ape",
+    "name": "Flame Ape",
+    "body_realm_id": "flesh_training",
+    "essence_realm_id": "houtian",
+    "hp": 120,
+    "attack": 22,
+    "defense": 9,
+    "exp_reward": 48,
+    "loot_table": [
+      {
+        "item_id": "beast_core",
+        "chance": 0.82,
+        "count": 1
+      }
+    ],
+    "area": "Misty Valley"
+  },
+  {
+    "id": "crownguard_warfiend",
+    "name": "Crownguard Warfiend",
+    "body_realm_id": "viscera_training",
+    "essence_realm_id": "houtian",
+    "hp": 156,
+    "attack": 28,
+    "defense": 12,
+    "exp_reward": 77,
+    "loot_table": [
+      {
+        "item_id": "profound_pill",
+        "chance": 0.55,
+        "count": 2
+      },
+      {
+        "item_id": "coiling_dragon_glaive",
+        "chance": 0.04,
+        "count": 1
+      }
+    ],
+    "area": "Imperial Capital"
+  },
+  {
+    "id": "vermillion_duelist",
+    "name": "Vermillion Duelist",
+    "body_realm_id": "altering_muscle",
+    "essence_realm_id": "houtian",
+    "hp": 164,
+    "attack": 29,
+    "defense": 12,
+    "exp_reward": 76,
+    "loot_table": [
+      {
+        "item_id": "qi_pill",
+        "chance": 0.66,
+        "count": 2
+      },
+      {
+        "item_id": "healing_pill",
+        "chance": 0.44,
+        "count": 1
+      }
+    ],
+    "area": "Imperial Capital"
+  },
+  {
+    "id": "blood_vulture",
+    "name": "Blood Vulture",
+    "body_realm_id": "viscera_training",
+    "essence_realm_id": "xiantian",
+    "hp": 140,
+    "attack": 32,
+    "defense": 13,
+    "exp_reward": 74,
+    "loot_table": [
+      {
+        "item_id": "qi_pill",
+        "chance": 0.73,
+        "count": 2
+      },
+      {
+        "item_id": "purple_cloud_dan",
+        "chance": 0.25,
+        "count": 1
+      }
+    ],
+    "area": "Imperial Capital"
+  },
+  {
+    "id": "capital_toad",
+    "name": "Capital Toad",
+    "body_realm_id": "viscera_training",
+    "essence_realm_id": "xiantian",
+    "hp": 164,
+    "attack": 33,
+    "defense": 12,
+    "exp_reward": 79,
+    "loot_table": [
+      {
+        "item_id": "thunder_essence_herb",
+        "chance": 0.37,
+        "count": 2
+      },
+      {
+        "item_id": "star_gathering_decoction_mortal",
+        "chance": 0.59,
+        "count": 1
+      }
+    ],
+    "area": "Imperial Capital"
+  },
+  {
+    "id": "imperial_revenant",
+    "name": "Imperial Revenant",
+    "body_realm_id": "viscera_training",
+    "essence_realm_id": "xiantian",
+    "hp": 150,
+    "attack": 31,
+    "defense": 12,
+    "exp_reward": 84,
+    "loot_table": [
+      {
+        "item_id": "soul_nurturing_nectar_mortal",
+        "chance": 0.63,
+        "count": 2
+      },
+      {
+        "item_id": "thunder_essence_fruit",
+        "chance": 0.34,
+        "count": 1
+      },
+      {
+        "item_id": "scarlet_sun_lantern",
+        "chance": 0.07,
+        "count": 1
+      }
+    ],
+    "area": "Imperial Capital"
+  },
+  {
+    "id": "vermillion_hound",
+    "name": "Vermillion Hound",
+    "body_realm_id": "altering_muscle",
+    "essence_realm_id": "xiantian",
+    "hp": 136,
+    "attack": 28,
+    "defense": 14,
+    "exp_reward": 86,
+    "loot_table": [
+      {
+        "item_id": "healing_pill",
+        "chance": 0.82,
+        "count": 2
+      },
+      {
+        "item_id": "soul_nurturing_nectar_mortal",
+        "chance": 0.28,
+        "count": 1
+      }
+    ],
+    "area": "Imperial Capital"
+  },
+  {
+    "id": "stone_revenant",
+    "name": "Stone Revenant",
+    "body_realm_id": "altering_muscle",
+    "essence_realm_id": "houtian",
+    "hp": 148,
+    "attack": 28,
+    "defense": 12,
+    "exp_reward": 79,
+    "loot_table": [
+      {
+        "item_id": "healing_pill",
+        "chance": 0.37,
+        "count": 1
+      }
+    ],
+    "area": "Imperial Capital"
+  },
+  {
+    "id": "imperial_bear",
+    "name": "Imperial Bear",
+    "body_realm_id": "altering_muscle",
+    "essence_realm_id": "xiantian",
+    "hp": 161,
+    "attack": 28,
+    "defense": 13,
+    "exp_reward": 72,
+    "loot_table": [
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.7,
+        "count": 1
+      },
+      {
+        "item_id": "dragon_blood_dan",
+        "chance": 0.3,
+        "count": 1
+      }
+    ],
+    "area": "Imperial Capital"
+  },
+  {
+    "id": "vermillion_python",
+    "name": "Vermillion Python",
+    "body_realm_id": "viscera_training",
+    "essence_realm_id": "xiantian",
+    "hp": 143,
+    "attack": 30,
+    "defense": 14,
+    "exp_reward": 80,
+    "loot_table": [
+      {
+        "item_id": "mystic_root",
+        "chance": 0.73,
+        "count": 1
+      }
+    ],
+    "area": "Imperial Capital"
+  },
+  {
+    "id": "capital_cutpurse",
+    "name": "Capital Cutpurse",
+    "body_realm_id": "viscera_training",
+    "essence_realm_id": "xiantian",
+    "hp": 156,
+    "attack": 33,
+    "defense": 14,
+    "exp_reward": 85,
+    "loot_table": [
+      {
+        "item_id": "common_petal",
+        "chance": 0.38,
+        "count": 1
+      },
+      {
+        "item_id": "dao_enlightenment_pill_no3",
+        "chance": 0.51,
+        "count": 1
+      },
+      {
+        "item_id": "spirit_devouring_saber",
+        "chance": 0.04,
+        "count": 1
+      }
+    ],
+    "area": "Imperial Capital"
+  },
+  {
+    "id": "imperial_duelist",
+    "name": "Imperial Duelist",
+    "body_realm_id": "altering_muscle",
+    "essence_realm_id": "houtian",
+    "hp": 158,
+    "attack": 28,
+    "defense": 12,
+    "exp_reward": 75,
+    "loot_table": [
+      {
+        "item_id": "purple_cloud_nectar",
+        "chance": 0.78,
+        "count": 1
+      }
+    ],
+    "area": "Imperial Capital"
+  },
+  {
+    "id": "crownguard_qilin",
+    "name": "Crownguard Qilin",
+    "body_realm_id": "altering_muscle",
+    "essence_realm_id": "xiantian",
+    "hp": 141,
+    "attack": 28,
+    "defense": 14,
+    "exp_reward": 77,
+    "loot_table": [
+      {
+        "item_id": "star_gathering_pellet",
+        "chance": 0.87,
+        "count": 2
+      },
+      {
+        "item_id": "primordial_sabatons",
+        "chance": 0.08,
+        "count": 1
+      }
+    ],
+    "area": "Imperial Capital"
+  },
+  {
+    "id": "imperial_roc",
+    "name": "Imperial Roc",
+    "body_realm_id": "viscera_training",
+    "essence_realm_id": "xiantian",
+    "hp": 160,
+    "attack": 31,
+    "defense": 13,
+    "exp_reward": 74,
+    "loot_table": [
+      {
+        "item_id": "qi_pill",
+        "chance": 0.85,
+        "count": 2
+      },
+      {
+        "item_id": "foundation_stone_amulet",
+        "chance": 0.09,
+        "count": 1
+      }
+    ],
+    "area": "Imperial Capital"
+  },
+  {
+    "id": "blood_leopard",
+    "name": "Blood Leopard",
+    "body_realm_id": "viscera_training",
+    "essence_realm_id": "houtian",
+    "hp": 153,
+    "attack": 28,
+    "defense": 13,
+    "exp_reward": 78,
+    "loot_table": [
+      {
+        "item_id": "healing_pill",
+        "chance": 0.31,
+        "count": 2
+      },
+      {
+        "item_id": "abyssal_charm",
+        "chance": 0.04,
+        "count": 1
+      }
+    ],
+    "area": "Imperial Capital"
+  },
+  {
+    "id": "flame_thrall",
+    "name": "Flame Thrall",
+    "body_realm_id": "viscera_training",
+    "essence_realm_id": "houtian",
+    "hp": 136,
+    "attack": 27,
+    "defense": 12,
+    "exp_reward": 83,
+    "loot_table": [
+      {
+        "item_id": "blood_quenching_elixir",
+        "chance": 0.4,
+        "count": 2
+      },
+      {
+        "item_id": "ancestral_ring",
+        "chance": 0.03,
+        "count": 1
+      }
+    ],
+    "area": "Imperial Capital"
+  },
+  {
+    "id": "vermillion_puppet",
+    "name": "Vermillion Puppet",
+    "body_realm_id": "viscera_training",
+    "essence_realm_id": "houtian",
+    "hp": 158,
+    "attack": 30,
+    "defense": 12,
+    "exp_reward": 78,
+    "loot_table": [
+      {
+        "item_id": "profound_pill",
+        "chance": 0.58,
+        "count": 2
+      },
+      {
+        "item_id": "foundation_stone_amulet",
+        "chance": 0.04,
+        "count": 1
+      }
+    ],
+    "area": "Imperial Capital"
+  },
+  {
+    "id": "capital_warlock",
+    "name": "Capital Warlock",
+    "body_realm_id": "viscera_training",
+    "essence_realm_id": "xiantian",
+    "hp": 157,
+    "attack": 30,
+    "defense": 13,
+    "exp_reward": 86,
+    "loot_table": [
+      {
+        "item_id": "star_gathering_decoction",
+        "chance": 0.39,
+        "count": 2
+      },
+      {
+        "item_id": "void_spirit_dan",
+        "chance": 0.37,
+        "count": 1
+      },
+      {
+        "item_id": "vermilion_bird_immortal_sword",
+        "chance": 0.1,
+        "count": 1
+      }
+    ],
+    "area": "Imperial Capital"
+  },
+  {
+    "id": "vermillion_qilin",
+    "name": "Vermillion Qilin",
+    "body_realm_id": "altering_muscle",
+    "essence_realm_id": "houtian",
+    "hp": 145,
+    "attack": 29,
+    "defense": 14,
+    "exp_reward": 86,
+    "loot_table": [
+      {
+        "item_id": "nine_revolutions_pellet_mortal",
+        "chance": 0.55,
+        "count": 2
+      }
+    ],
+    "area": "Imperial Capital"
+  },
+  {
+    "id": "star_elder",
+    "name": "Star Elder",
+    "body_realm_id": "altering_muscle",
+    "essence_realm_id": "xiantian",
+    "hp": 209,
+    "attack": 42,
+    "defense": 18,
+    "exp_reward": 119,
+    "loot_table": [
+      {
+        "item_id": "celestial_elixir_mortal",
+        "chance": 0.53,
+        "count": 2
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.38,
+        "count": 3
+      },
+      {
+        "item_id": "void_cloak",
+        "chance": 0.08,
+        "count": 1
+      }
+    ],
+    "area": "South Horizon Desert"
+  },
+  {
+    "id": "sand_golem",
+    "name": "Sand Golem",
+    "body_realm_id": "altering_muscle",
+    "essence_realm_id": "xiantian",
+    "hp": 215,
+    "attack": 37,
+    "defense": 20,
+    "exp_reward": 120,
+    "loot_table": [
+      {
+        "item_id": "soul_nurturing_nectar",
+        "chance": 0.89,
+        "count": 1
+      },
+      {
+        "item_id": "profound_pill",
+        "chance": 0.21,
+        "count": 1
+      },
+      {
+        "item_id": "foundation_stone_amulet",
+        "chance": 0.02,
+        "count": 1
+      }
+    ],
+    "area": "South Horizon Desert"
+  },
+  {
+    "id": "star_panther",
+    "name": "Star Panther",
+    "body_realm_id": "bone_forging",
+    "essence_realm_id": "houtian",
+    "hp": 214,
+    "attack": 43,
+    "defense": 19,
+    "exp_reward": 129,
+    "loot_table": [
+      {
+        "item_id": "beast_core",
+        "chance": 0.42,
+        "count": 1
+      },
+      {
+        "item_id": "star_gathering_pellet",
+        "chance": 0.24,
+        "count": 1
+      }
+    ],
+    "area": "South Horizon Desert"
+  },
+  {
+    "id": "sun_scorched_warfiend",
+    "name": "Sun-Scorched Warfiend",
+    "body_realm_id": "altering_muscle",
+    "essence_realm_id": "xiantian",
+    "hp": 187,
+    "attack": 40,
+    "defense": 19,
+    "exp_reward": 132,
+    "loot_table": [
+      {
+        "item_id": "profound_pill",
+        "chance": 0.81,
+        "count": 2
+      },
+      {
+        "item_id": "nirvana_rebirth_decoction",
+        "chance": 0.52,
+        "count": 1
+      },
+      {
+        "item_id": "coiling_dragon_glaive",
+        "chance": 0.09,
+        "count": 1
+      }
+    ],
+    "area": "South Horizon Desert"
+  },
+  {
+    "id": "sand_mantis",
+    "name": "Sand Mantis",
+    "body_realm_id": "bone_forging",
+    "essence_realm_id": "houtian",
+    "hp": 211,
+    "attack": 36,
+    "defense": 18,
+    "exp_reward": 115,
+    "loot_table": [
+      {
+        "item_id": "profound_pill",
+        "chance": 0.35,
+        "count": 2
+      },
+      {
+        "item_id": "heaven_splitting_shroud",
+        "chance": 0.07,
+        "count": 1
+      }
+    ],
+    "area": "South Horizon Desert"
+  },
+  {
+    "id": "dune_python",
+    "name": "Dune Python",
+    "body_realm_id": "bone_forging",
+    "essence_realm_id": "xiantian",
+    "hp": 204,
+    "attack": 37,
+    "defense": 16,
+    "exp_reward": 125,
+    "loot_table": [
+      {
+        "item_id": "healing_pill",
+        "chance": 0.73,
+        "count": 1
+      },
+      {
+        "item_id": "dragon_blood_tonic",
+        "chance": 0.29,
+        "count": 2
+      },
+      {
+        "item_id": "demon_sealing_scale_mail",
+        "chance": 0.09,
+        "count": 1
+      }
+    ],
+    "area": "South Horizon Desert"
+  },
+  {
+    "id": "sun_scorched_ape",
+    "name": "Sun-Scorched Ape",
+    "body_realm_id": "bone_forging",
+    "essence_realm_id": "houtian",
+    "hp": 217,
+    "attack": 37,
+    "defense": 18,
+    "exp_reward": 113,
+    "loot_table": [
+      {
+        "item_id": "soul_nurturing_nectar_mortal",
+        "chance": 0.36,
+        "count": 2
+      },
+      {
+        "item_id": "healing_pill",
+        "chance": 0.6,
+        "count": 1
+      }
+    ],
+    "area": "South Horizon Desert"
+  },
+  {
+    "id": "south_horizon_mantis",
+    "name": "South Horizon Mantis",
+    "body_realm_id": "altering_muscle",
+    "essence_realm_id": "xiantian",
+    "hp": 198,
+    "attack": 44,
+    "defense": 17,
+    "exp_reward": 123,
+    "loot_table": [
+      {
+        "item_id": "beast_core",
+        "chance": 0.55,
+        "count": 2
+      },
+      {
+        "item_id": "ancient_jade_slip",
+        "chance": 0.09,
+        "count": 1
+      }
+    ],
+    "area": "South Horizon Desert"
+  },
+  {
+    "id": "sand_panther",
+    "name": "Sand Panther",
+    "body_realm_id": "altering_muscle",
+    "essence_realm_id": "xiantian",
+    "hp": 213,
+    "attack": 41,
+    "defense": 16,
+    "exp_reward": 118,
+    "loot_table": [
+      {
+        "item_id": "beast_core",
+        "chance": 0.58,
+        "count": 1
+      },
+      {
+        "item_id": "cloudpiercer_sword",
+        "chance": 0.07,
+        "count": 1
+      }
+    ],
+    "area": "South Horizon Desert"
+  },
+  {
+    "id": "star_roc",
+    "name": "Star Roc",
+    "body_realm_id": "bone_forging",
+    "essence_realm_id": "xiantian",
+    "hp": 204,
+    "attack": 43,
+    "defense": 17,
+    "exp_reward": 112,
+    "loot_table": [
+      {
+        "item_id": "profound_pill",
+        "chance": 0.65,
+        "count": 2
+      },
+      {
+        "item_id": "demon_sealing_whip",
+        "chance": 0.08,
+        "count": 1
+      }
+    ],
+    "area": "South Horizon Desert"
+  },
+  {
+    "id": "flame_warfiend",
+    "name": "Flame Warfiend",
+    "body_realm_id": "bone_forging",
+    "essence_realm_id": "xiantian",
+    "hp": 187,
+    "attack": 37,
+    "defense": 19,
+    "exp_reward": 124,
+    "loot_table": [
+      {
+        "item_id": "thunder_essence_herb",
+        "chance": 0.66,
+        "count": 2
+      },
+      {
+        "item_id": "frost_jade_nectar_mortal",
+        "chance": 0.41,
+        "count": 2
+      },
+      {
+        "item_id": "blood_heat_ring",
+        "chance": 0.04,
+        "count": 1
+      }
+    ],
+    "area": "South Horizon Desert"
+  },
+  {
+    "id": "blood_boar",
+    "name": "Blood Boar",
+    "body_realm_id": "bone_forging",
+    "essence_realm_id": "houtian",
+    "hp": 187,
+    "attack": 43,
+    "defense": 16,
+    "exp_reward": 122,
+    "loot_table": [
+      {
+        "item_id": "marrow_tempering_elixir",
+        "chance": 0.52,
+        "count": 2
+      },
+      {
+        "item_id": "profound_pill",
+        "chance": 0.27,
+        "count": 3
+      },
+      {
+        "item_id": "stone_skin_armor",
+        "chance": 0.03,
+        "count": 1
+      }
+    ],
+    "area": "South Horizon Desert"
+  },
+  {
+    "id": "blood_duelist",
+    "name": "Blood Duelist",
+    "body_realm_id": "altering_muscle",
+    "essence_realm_id": "houtian",
+    "hp": 201,
+    "attack": 39,
+    "defense": 20,
+    "exp_reward": 116,
+    "loot_table": [
+      {
+        "item_id": "dragon_blood_ore",
+        "chance": 0.39,
+        "count": 1
+      },
+      {
+        "item_id": "azure_meridian_robes",
+        "chance": 0.06,
+        "count": 1
+      }
+    ],
+    "area": "South Horizon Desert"
+  },
+  {
+    "id": "south_horizon_assassin",
+    "name": "South Horizon Assassin",
+    "body_realm_id": "bone_forging",
+    "essence_realm_id": "xiantian",
+    "hp": 196,
+    "attack": 40,
+    "defense": 18,
+    "exp_reward": 108,
+    "loot_table": [
+      {
+        "item_id": "thunder_essence_pill_no3",
+        "chance": 0.62,
+        "count": 2
+      }
+    ],
+    "area": "South Horizon Desert"
+  },
+  {
+    "id": "sun_scorched_thrall",
+    "name": "Sun-Scorched Thrall",
+    "body_realm_id": "bone_forging",
+    "essence_realm_id": "xiantian",
+    "hp": 201,
+    "attack": 40,
+    "defense": 18,
+    "exp_reward": 123,
+    "loot_table": [
+      {
+        "item_id": "qi_pill",
+        "chance": 0.8,
+        "count": 1
+      },
+      {
+        "item_id": "vermilion_bird_immortal_sword_mk_2",
+        "chance": 0.04,
+        "count": 1
+      }
+    ],
+    "area": "South Horizon Desert"
+  },
+  {
+    "id": "sun_scorched_bull",
+    "name": "Sun-Scorched Bull",
+    "body_realm_id": "bone_forging",
+    "essence_realm_id": "houtian",
+    "hp": 188,
+    "attack": 39,
+    "defense": 20,
+    "exp_reward": 129,
+    "loot_table": [
+      {
+        "item_id": "beast_core",
+        "chance": 0.4,
+        "count": 1
+      },
+      {
+        "item_id": "profound_pill",
+        "chance": 0.47,
+        "count": 2
+      },
+      {
+        "item_id": "eternal_night_staff",
+        "chance": 0.03,
+        "count": 1
+      }
+    ],
+    "area": "South Horizon Desert"
+  },
+  {
+    "id": "sun_scorched_panther",
+    "name": "Sun-Scorched Panther",
+    "body_realm_id": "altering_muscle",
+    "essence_realm_id": "xiantian",
+    "hp": 197,
+    "attack": 41,
+    "defense": 17,
+    "exp_reward": 111,
+    "loot_table": [
+      {
+        "item_id": "beast_core",
+        "chance": 0.41,
+        "count": 2
+      },
+      {
+        "item_id": "marrow_tempering_elixir",
+        "chance": 0.23,
+        "count": 2
+      }
+    ],
+    "area": "South Horizon Desert"
+  },
+  {
+    "id": "dune_warder",
+    "name": "Dune Warder",
+    "body_realm_id": "altering_muscle",
+    "essence_realm_id": "xiantian",
+    "hp": 202,
+    "attack": 40,
+    "defense": 16,
+    "exp_reward": 119,
+    "loot_table": [
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.55,
+        "count": 2
+      },
+      {
+        "item_id": "primordial_sabatons",
+        "chance": 0.09,
+        "count": 1
+      }
+    ],
+    "area": "South Horizon Desert"
+  },
+  {
+    "id": "sea_vulture",
+    "name": "Sea Vulture",
+    "body_realm_id": "body_pulse_condensation",
+    "essence_realm_id": "xiantian",
+    "hp": 288,
+    "attack": 47,
+    "defense": 24,
+    "exp_reward": 191,
+    "loot_table": [
+      {
+        "item_id": "qi_pill",
+        "chance": 0.52,
+        "count": 2
+      },
+      {
+        "item_id": "soul_nurturing_nectar",
+        "chance": 0.43,
+        "count": 3
+      }
+    ],
+    "area": "Sea of Miracles"
+  },
+  {
+    "id": "sea_mantis",
+    "name": "Sea Mantis",
+    "body_realm_id": "body_pulse_condensation",
+    "essence_realm_id": "xiantian",
+    "hp": 251,
+    "attack": 49,
+    "defense": 23,
+    "exp_reward": 186,
+    "loot_table": [
+      {
+        "item_id": "qi_pill",
+        "chance": 0.76,
+        "count": 3
+      },
+      {
+        "item_id": "healing_pill",
+        "chance": 0.44,
+        "count": 3
+      }
+    ],
+    "area": "Sea of Miracles"
+  },
+  {
+    "id": "tidal_ape",
+    "name": "Tidal Ape",
+    "body_realm_id": "body_pulse_condensation",
+    "essence_realm_id": "xiantian",
+    "hp": 278,
+    "attack": 51,
+    "defense": 26,
+    "exp_reward": 186,
+    "loot_table": [
+      {
+        "item_id": "vermilion_pellet_mortal",
+        "chance": 0.64,
+        "count": 2
+      }
+    ],
+    "area": "Sea of Miracles"
+  },
+  {
+    "id": "sea_zealot",
+    "name": "Sea Zealot",
+    "body_realm_id": "body_pulse_condensation",
+    "essence_realm_id": "xiantian",
+    "hp": 295,
+    "attack": 51,
+    "defense": 22,
+    "exp_reward": 172,
+    "loot_table": [
+      {
+        "item_id": "star_gathering_decoction_mortal",
+        "chance": 0.79,
+        "count": 3
+      },
+      {
+        "item_id": "eternal_night_staff",
+        "chance": 0.1,
+        "count": 1
+      }
+    ],
+    "area": "Sea of Miracles"
+  },
+  {
+    "id": "coral_golem",
+    "name": "Coral Golem",
+    "body_realm_id": "bone_forging",
+    "essence_realm_id": "xiantian",
+    "hp": 285,
+    "attack": 50,
+    "defense": 26,
+    "exp_reward": 158,
+    "loot_table": [
+      {
+        "item_id": "marrow_cleansing_pellet",
+        "chance": 0.79,
+        "count": 2
+      },
+      {
+        "item_id": "profound_pill",
+        "chance": 0.23,
+        "count": 2
+      },
+      {
+        "item_id": "bronze_spirit_mirror",
+        "chance": 0.1,
+        "count": 1
+      }
+    ],
+    "area": "Sea of Miracles"
+  },
+  {
+    "id": "golden_scorpion",
+    "name": "Golden Scorpion",
+    "body_realm_id": "bone_forging",
+    "essence_realm_id": "xiantian",
+    "hp": 279,
+    "attack": 50,
+    "defense": 26,
+    "exp_reward": 191,
+    "loot_table": [
+      {
+        "item_id": "qi_pill",
+        "chance": 0.66,
+        "count": 2
+      },
+      {
+        "item_id": "beast_core",
+        "chance": 0.57,
+        "count": 3
+      }
+    ],
+    "area": "Sea of Miracles"
+  },
+  {
+    "id": "coral_warlock",
+    "name": "Coral Warlock",
+    "body_realm_id": "body_pulse_condensation",
+    "essence_realm_id": "xiantian",
+    "hp": 257,
+    "attack": 50,
+    "defense": 23,
+    "exp_reward": 184,
+    "loot_table": [
+      {
+        "item_id": "star_gathering_decoction",
+        "chance": 0.55,
+        "count": 1
+      }
+    ],
+    "area": "Sea of Miracles"
+  },
+  {
+    "id": "abyssal_tiger",
+    "name": "Abyssal Tiger",
+    "body_realm_id": "bone_forging",
+    "essence_realm_id": "xiantian",
+    "hp": 291,
+    "attack": 54,
+    "defense": 25,
+    "exp_reward": 166,
+    "loot_table": [
+      {
+        "item_id": "healing_pill",
+        "chance": 0.89,
+        "count": 3
+      },
+      {
+        "item_id": "falling_star_charm_paper",
+        "chance": 0.04,
+        "count": 1
+      }
+    ],
+    "area": "Sea of Miracles"
+  },
+  {
+    "id": "tidal_serpent",
+    "name": "Tidal Serpent",
+    "body_realm_id": "body_pulse_condensation",
+    "essence_realm_id": "xiantian",
+    "hp": 245,
+    "attack": 50,
+    "defense": 25,
+    "exp_reward": 188,
+    "loot_table": [
+      {
+        "item_id": "bone_forging_petal",
+        "chance": 0.74,
+        "count": 3
+      },
+      {
+        "item_id": "ancestral_ring",
+        "chance": 0.08,
+        "count": 1
+      }
+    ],
+    "area": "Sea of Miracles"
+  },
+  {
+    "id": "coral_tiger",
+    "name": "Coral Tiger",
+    "body_realm_id": "bone_forging",
+    "essence_realm_id": "xiantian",
+    "hp": 250,
+    "attack": 50,
+    "defense": 22,
+    "exp_reward": 167,
+    "loot_table": [
+      {
+        "item_id": "celestial_nectar_mortal",
+        "chance": 0.32,
+        "count": 3
+      },
+      {
+        "item_id": "heaven_decoction",
+        "chance": 0.55,
+        "count": 2
+      },
+      {
+        "item_id": "scarlet_sun_lantern",
+        "chance": 0.05,
+        "count": 1
+      }
+    ],
+    "area": "Sea of Miracles"
+  },
+  {
+    "id": "tidal_python",
+    "name": "Tidal Python",
+    "body_realm_id": "bone_forging",
+    "essence_realm_id": "xiantian",
+    "hp": 258,
+    "attack": 54,
+    "defense": 23,
+    "exp_reward": 180,
+    "loot_table": [
+      {
+        "item_id": "vermilion_pill",
+        "chance": 0.46,
+        "count": 1
+      },
+      {
+        "item_id": "profound_pill",
+        "chance": 0.38,
+        "count": 3
+      },
+      {
+        "item_id": "spirit_devouring_shroud",
+        "chance": 0.08,
+        "count": 1
+      }
+    ],
+    "area": "Sea of Miracles"
+  },
+  {
+    "id": "abyssal_scorpion",
+    "name": "Abyssal Scorpion",
+    "body_realm_id": "body_pulse_condensation",
+    "essence_realm_id": "xiantian",
+    "hp": 261,
+    "attack": 55,
+    "defense": 23,
+    "exp_reward": 159,
+    "loot_table": [
+      {
+        "item_id": "frost_jade_pill_mortal",
+        "chance": 0.72,
+        "count": 3
+      },
+      {
+        "item_id": "myriad_star_medallion",
+        "chance": 0.06,
+        "count": 1
+      }
+    ],
+    "area": "Sea of Miracles"
+  },
+  {
+    "id": "tidal_vulture",
+    "name": "Tidal Vulture",
+    "body_realm_id": "bone_forging",
+    "essence_realm_id": "xiantian",
+    "hp": 280,
+    "attack": 51,
+    "defense": 22,
+    "exp_reward": 190,
+    "loot_table": [
+      {
+        "item_id": "dao_enlightenment_pill",
+        "chance": 0.59,
+        "count": 1
+      },
+      {
+        "item_id": "star_gathering_nectar",
+        "chance": 0.49,
+        "count": 1
+      },
+      {
+        "item_id": "white_tiger_gourd",
+        "chance": 0.02,
+        "count": 1
+      }
+    ],
+    "area": "Sea of Miracles"
+  },
+  {
+    "id": "coral_serpent",
+    "name": "Coral Serpent",
+    "body_realm_id": "bone_forging",
+    "essence_realm_id": "xiantian",
+    "hp": 281,
+    "attack": 50,
+    "defense": 25,
+    "exp_reward": 190,
+    "loot_table": [
+      {
+        "item_id": "profound_decoction",
+        "chance": 0.87,
+        "count": 3
+      }
+    ],
+    "area": "Sea of Miracles"
+  },
+  {
+    "id": "abyssal_golem",
+    "name": "Abyssal Golem",
+    "body_realm_id": "body_pulse_condensation",
+    "essence_realm_id": "xiantian",
+    "hp": 281,
+    "attack": 48,
+    "defense": 26,
+    "exp_reward": 180,
+    "loot_table": [
+      {
+        "item_id": "healing_pill",
+        "chance": 0.55,
+        "count": 1
+      }
+    ],
+    "area": "Sea of Miracles"
+  },
+  {
+    "id": "frost_leopard",
+    "name": "Frost Leopard",
+    "body_realm_id": "bone_forging",
+    "essence_realm_id": "xiantian",
+    "hp": 246,
+    "attack": 47,
+    "defense": 24,
+    "exp_reward": 163,
+    "loot_table": [
+      {
+        "item_id": "healing_pill",
+        "chance": 0.85,
+        "count": 1
+      },
+      {
+        "item_id": "purple_cloud_pill_mortal",
+        "chance": 0.41,
+        "count": 3
+      },
+      {
+        "item_id": "void_cloak",
+        "chance": 0.05,
+        "count": 1
+      }
+    ],
+    "area": "Sea of Miracles"
+  },
+  {
+    "id": "tidal_duelist",
+    "name": "Tidal Duelist",
+    "body_realm_id": "bone_forging",
+    "essence_realm_id": "xiantian",
+    "hp": 258,
+    "attack": 55,
+    "defense": 23,
+    "exp_reward": 173,
+    "loot_table": [
+      {
+        "item_id": "life_extending_pellet",
+        "chance": 0.33,
+        "count": 2
+      },
+      {
+        "item_id": "star_gathering_dan_mortal",
+        "chance": 0.39,
+        "count": 1
+      }
+    ],
+    "area": "Sea of Miracles"
+  },
+  {
+    "id": "tidal_leopard",
+    "name": "Tidal Leopard",
+    "body_realm_id": "bone_forging",
+    "essence_realm_id": "xiantian",
+    "hp": 276,
+    "attack": 54,
+    "defense": 25,
+    "exp_reward": 161,
+    "loot_table": [
+      {
+        "item_id": "thunder_essence_herb",
+        "chance": 0.43,
+        "count": 3
+      },
+      {
+        "item_id": "marrow_cleansing_spirit_stone",
+        "chance": 0.5,
+        "count": 3
+      }
+    ],
+    "area": "Sea of Miracles"
+  },
+  {
+    "id": "golden_tiger",
+    "name": "Golden Tiger",
+    "body_realm_id": "body_pulse_condensation",
+    "essence_realm_id": "xiantian",
+    "hp": 306,
+    "attack": 72,
+    "defense": 32,
+    "exp_reward": 230,
+    "loot_table": [
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.88,
+        "count": 1
+      },
+      {
+        "item_id": "vermilion_bird_cloak",
+        "chance": 0.05,
+        "count": 1
+      }
+    ],
+    "area": "Great Zen Region"
+  },
+  {
+    "id": "blood_captain",
+    "name": "Blood Captain",
+    "body_realm_id": "body_pulse_condensation",
+    "essence_realm_id": "revolving_core",
+    "hp": 351,
+    "attack": 61,
+    "defense": 33,
+    "exp_reward": 246,
+    "loot_table": [
+      {
+        "item_id": "dragon_blood_pellet",
+        "chance": 0.54,
+        "count": 3
+      },
+      {
+        "item_id": "phoenix_sabatons",
+        "chance": 0.1,
+        "count": 1
+      }
+    ],
+    "area": "Great Zen Region"
+  },
+  {
+    "id": "zen_boar",
+    "name": "Zen Boar",
+    "body_realm_id": "body_pulse_condensation",
+    "essence_realm_id": "xiantian",
+    "hp": 373,
+    "attack": 60,
+    "defense": 33,
+    "exp_reward": 257,
+    "loot_table": [
+      {
+        "item_id": "profound_pill",
+        "chance": 0.37,
+        "count": 2
+      }
+    ],
+    "area": "Great Zen Region"
+  },
+  {
+    "id": "zenlight_ape",
+    "name": "Zenlight Ape",
+    "body_realm_id": "body_pulse_condensation",
+    "essence_realm_id": "revolving_core",
+    "hp": 335,
+    "attack": 72,
+    "defense": 32,
+    "exp_reward": 262,
+    "loot_table": [
+      {
+        "item_id": "soul_nurturing_pill_mortal",
+        "chance": 0.42,
+        "count": 1
+      },
+      {
+        "item_id": "qi_pill",
+        "chance": 0.54,
+        "count": 2
+      },
+      {
+        "item_id": "demon_sealing_gourd",
+        "chance": 0.08,
+        "count": 1
+      }
+    ],
+    "area": "Great Zen Region"
+  },
+  {
+    "id": "zen_rogue_cultivator",
+    "name": "Zen Rogue Cultivator",
+    "body_realm_id": "tempering_marrow",
+    "essence_realm_id": "revolving_core",
+    "hp": 361,
+    "attack": 63,
+    "defense": 34,
+    "exp_reward": 267,
+    "loot_table": [
+      {
+        "item_id": "star_gathering_dan_mortal",
+        "chance": 0.31,
+        "count": 1
+      },
+      {
+        "item_id": "profound_pill",
+        "chance": 0.52,
+        "count": 3
+      }
+    ],
+    "area": "Great Zen Region"
+  },
+  {
+    "id": "cloud_temple_sprite",
+    "name": "Cloud Temple Sprite",
+    "body_realm_id": "body_pulse_condensation",
+    "essence_realm_id": "xiantian",
+    "hp": 327,
+    "attack": 65,
+    "defense": 32,
+    "exp_reward": 251,
+    "loot_table": [
+      {
+        "item_id": "profound_nectar_no3",
+        "chance": 0.85,
+        "count": 3
+      }
+    ],
+    "area": "Great Zen Region"
+  },
+  {
+    "id": "void_golem",
+    "name": "Void Golem",
+    "body_realm_id": "body_pulse_condensation",
+    "essence_realm_id": "xiantian",
+    "hp": 319,
+    "attack": 71,
+    "defense": 33,
+    "exp_reward": 227,
+    "loot_table": [
+      {
+        "item_id": "mystic_pill_no4",
+        "chance": 0.31,
+        "count": 1
+      }
+    ],
+    "area": "Great Zen Region"
+  },
+  {
+    "id": "zen_lizard",
+    "name": "Zen Lizard",
+    "body_realm_id": "tempering_marrow",
+    "essence_realm_id": "revolving_core",
+    "hp": 365,
+    "attack": 66,
+    "defense": 29,
+    "exp_reward": 226,
+    "loot_table": [
+      {
+        "item_id": "healing_pill",
+        "chance": 0.41,
+        "count": 2
+      },
+      {
+        "item_id": "purple_cloud_dan",
+        "chance": 0.44,
+        "count": 1
+      }
+    ],
+    "area": "Great Zen Region"
+  },
+  {
+    "id": "zen_rogue_cultivator_no.2",
+    "name": "Zen Rogue Cultivator No.2",
+    "body_realm_id": "body_pulse_condensation",
+    "essence_realm_id": "xiantian",
+    "hp": 368,
+    "attack": 64,
+    "defense": 30,
+    "exp_reward": 237,
+    "loot_table": [
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.6,
+        "count": 2
+      },
+      {
+        "item_id": "silver_moon_war_vestments",
+        "chance": 0.03,
+        "count": 1
+      }
+    ],
+    "area": "Great Zen Region"
+  },
+  {
+    "id": "zen_wolf",
+    "name": "Zen Wolf",
+    "body_realm_id": "tempering_marrow",
+    "essence_realm_id": "xiantian",
+    "hp": 313,
+    "attack": 69,
+    "defense": 33,
+    "exp_reward": 253,
+    "loot_table": [
+      {
+        "item_id": "star_gathering_pellet",
+        "chance": 0.58,
+        "count": 2
+      },
+      {
+        "item_id": "void_medallion",
+        "chance": 0.05,
+        "count": 1
+      }
+    ],
+    "area": "Great Zen Region"
+  },
+  {
+    "id": "cloud_temple_bear",
+    "name": "Cloud Temple Bear",
+    "body_realm_id": "tempering_marrow",
+    "essence_realm_id": "xiantian",
+    "hp": 340,
+    "attack": 70,
+    "defense": 35,
+    "exp_reward": 258,
+    "loot_table": [
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.82,
+        "count": 1
+      },
+      {
+        "item_id": "soul_nurturing_nectar",
+        "chance": 0.3,
+        "count": 1
+      }
+    ],
+    "area": "Great Zen Region"
+  },
+  {
+    "id": "zenlight_revenant",
+    "name": "Zenlight Revenant",
+    "body_realm_id": "body_pulse_condensation",
+    "essence_realm_id": "xiantian",
+    "hp": 365,
+    "attack": 60,
+    "defense": 32,
+    "exp_reward": 247,
+    "loot_table": [
+      {
+        "item_id": "heaven_tonic",
+        "chance": 0.43,
+        "count": 2
+      },
+      {
+        "item_id": "vermilion_bird_cloak",
+        "chance": 0.09,
+        "count": 1
+      }
+    ],
+    "area": "Great Zen Region"
+  },
+  {
+    "id": "thunder_demon",
+    "name": "Thunder Demon",
+    "body_realm_id": "tempering_marrow",
+    "essence_realm_id": "revolving_core",
+    "hp": 313,
+    "attack": 66,
+    "defense": 32,
+    "exp_reward": 272,
+    "loot_table": [
+      {
+        "item_id": "star_gathering_dan_mortal",
+        "chance": 0.53,
+        "count": 2
+      }
+    ],
+    "area": "Great Zen Region"
+  },
+  {
+    "id": "cloud_temple_reaver",
+    "name": "Cloud Temple Reaver",
+    "body_realm_id": "tempering_marrow",
+    "essence_realm_id": "revolving_core",
+    "hp": 371,
+    "attack": 61,
+    "defense": 32,
+    "exp_reward": 266,
+    "loot_table": [
+      {
+        "item_id": "healing_pill",
+        "chance": 0.31,
+        "count": 1
+      },
+      {
+        "item_id": "star_gathering_pill",
+        "chance": 0.31,
+        "count": 2
+      },
+      {
+        "item_id": "white_tiger_veil",
+        "chance": 0.09,
+        "count": 1
+      }
+    ],
+    "area": "Great Zen Region"
+  },
+  {
+    "id": "zenlight_panther",
+    "name": "Zenlight Panther",
+    "body_realm_id": "body_pulse_condensation",
+    "essence_realm_id": "revolving_core",
+    "hp": 345,
+    "attack": 67,
+    "defense": 32,
+    "exp_reward": 265,
+    "loot_table": [
+      {
+        "item_id": "dragon_blood_ore",
+        "chance": 0.54,
+        "count": 2
+      }
+    ],
+    "area": "Great Zen Region"
+  },
+  {
+    "id": "zen_toad",
+    "name": "Zen Toad",
+    "body_realm_id": "tempering_marrow",
+    "essence_realm_id": "revolving_core",
+    "hp": 362,
+    "attack": 65,
+    "defense": 35,
+    "exp_reward": 263,
+    "loot_table": [
+      {
+        "item_id": "golden_body_nectar",
+        "chance": 0.62,
+        "count": 2
+      }
+    ],
+    "area": "Great Zen Region"
+  },
+  {
+    "id": "iron_bell_bull",
+    "name": "Iron Bell Bull",
+    "body_realm_id": "tempering_marrow",
+    "essence_realm_id": "revolving_core",
+    "hp": 360,
+    "attack": 66,
+    "defense": 32,
+    "exp_reward": 265,
+    "loot_table": [
+      {
+        "item_id": "heaven_decoction",
+        "chance": 0.73,
+        "count": 2
+      }
+    ],
+    "area": "Great Zen Region"
+  },
+  {
+    "id": "iron_bell_warder",
+    "name": "Iron Bell Warder",
+    "body_realm_id": "body_pulse_condensation",
+    "essence_realm_id": "revolving_core",
+    "hp": 322,
+    "attack": 66,
+    "defense": 35,
+    "exp_reward": 269,
+    "loot_table": [
+      {
+        "item_id": "healing_pill",
+        "chance": 0.51,
+        "count": 3
+      },
+      {
+        "item_id": "silver_moon_war_vestments",
+        "chance": 0.09,
+        "count": 1
+      }
+    ],
+    "area": "Great Zen Region"
+  },
+  {
+    "id": "steppe_golem",
+    "name": "Steppe Golem",
+    "body_realm_id": "eight_gates_hidden_celestial_stems",
+    "essence_realm_id": "revolving_core",
+    "hp": 439,
+    "attack": 79,
+    "defense": 40,
+    "exp_reward": 311,
+    "loot_table": [
+      {
+        "item_id": "healing_pill",
+        "chance": 0.73,
+        "count": 2
+      },
+      {
+        "item_id": "profound_pill",
+        "chance": 0.3,
+        "count": 3
+      },
+      {
+        "item_id": "glacial_spear",
+        "chance": 0.03,
+        "count": 1
+      }
+    ],
+    "area": "Blood Slaughter Steppes"
+  },
+  {
+    "id": "steppe_elder",
+    "name": "Steppe Elder",
+    "body_realm_id": "eight_gates_hidden_celestial_stems",
+    "essence_realm_id": "revolving_core",
+    "hp": 423,
+    "attack": 78,
+    "defense": 43,
+    "exp_reward": 326,
+    "loot_table": [
+      {
+        "item_id": "thunder_essence_fruit",
+        "chance": 0.38,
+        "count": 2
+      },
+      {
+        "item_id": "qi_pill",
+        "chance": 0.21,
+        "count": 1
+      },
+      {
+        "item_id": "radiant_dawn_sabatons",
+        "chance": 0.08,
+        "count": 1
+      }
+    ],
+    "area": "Blood Slaughter Steppes"
+  },
+  {
+    "id": "slaughter_revenant",
+    "name": "Slaughter Revenant",
+    "body_realm_id": "tempering_marrow",
+    "essence_realm_id": "revolving_core",
+    "hp": 432,
+    "attack": 82,
+    "defense": 43,
+    "exp_reward": 344,
+    "loot_table": [
+      {
+        "item_id": "healing_pill",
+        "chance": 0.89,
+        "count": 3
+      }
+    ],
+    "area": "Blood Slaughter Steppes"
+  },
+  {
+    "id": "slaughter_zealot",
+    "name": "Slaughter Zealot",
+    "body_realm_id": "tempering_marrow",
+    "essence_realm_id": "revolving_core",
+    "hp": 418,
+    "attack": 84,
+    "defense": 38,
+    "exp_reward": 368,
+    "loot_table": [
+      {
+        "item_id": "purple_cloud_pill_mortal",
+        "chance": 0.7,
+        "count": 3
+      },
+      {
+        "item_id": "bone_forging_nectar_mortal",
+        "chance": 0.2,
+        "count": 2
+      }
+    ],
+    "area": "Blood Slaughter Steppes"
+  },
+  {
+    "id": "steppe_revenant",
+    "name": "Steppe Revenant",
+    "body_realm_id": "eight_gates_hidden_celestial_stems",
+    "essence_realm_id": "revolving_core",
+    "hp": 435,
+    "attack": 76,
+    "defense": 42,
+    "exp_reward": 313,
+    "loot_table": [
+      {
+        "item_id": "dragon_blood_tonic",
+        "chance": 0.65,
+        "count": 3
+      }
+    ],
+    "area": "Blood Slaughter Steppes"
+  },
+  {
+    "id": "blood_panther_no.2",
+    "name": "Blood Panther No.2",
+    "body_realm_id": "tempering_marrow",
+    "essence_realm_id": "revolving_core",
+    "hp": 467,
+    "attack": 76,
+    "defense": 40,
+    "exp_reward": 341,
+    "loot_table": [
+      {
+        "item_id": "healing_pill",
+        "chance": 0.54,
+        "count": 3
+      },
+      {
+        "item_id": "profound_pill",
+        "chance": 0.38,
+        "count": 3
+      },
+      {
+        "item_id": "heaven_splitting_vestments",
+        "chance": 0.04,
+        "count": 1
+      }
+    ],
+    "area": "Blood Slaughter Steppes"
+  },
+  {
+    "id": "slaughter_sprite",
+    "name": "Slaughter Sprite",
+    "body_realm_id": "tempering_marrow",
+    "essence_realm_id": "revolving_core",
+    "hp": 406,
+    "attack": 89,
+    "defense": 38,
+    "exp_reward": 355,
+    "loot_table": [
+      {
+        "item_id": "star_gathering_nectar",
+        "chance": 0.4,
+        "count": 2
+      },
+      {
+        "item_id": "beast_core",
+        "chance": 0.5,
+        "count": 2
+      },
+      {
+        "item_id": "void_medallion",
+        "chance": 0.03,
+        "count": 1
+      }
+    ],
+    "area": "Blood Slaughter Steppes"
+  },
+  {
+    "id": "blood_qilin",
+    "name": "Blood Qilin",
+    "body_realm_id": "eight_gates_hidden_celestial_stems",
+    "essence_realm_id": "revolving_core",
+    "hp": 390,
+    "attack": 83,
+    "defense": 38,
+    "exp_reward": 326,
+    "loot_table": [
+      {
+        "item_id": "heaven_decoction",
+        "chance": 0.44,
+        "count": 1
+      },
+      {
+        "item_id": "white_tiger_pendant",
+        "chance": 0.06,
+        "count": 1
+      }
+    ],
+    "area": "Blood Slaughter Steppes"
+  },
+  {
+    "id": "steppe_executioner",
+    "name": "Steppe Executioner",
+    "body_realm_id": "eight_gates_hidden_celestial_stems",
+    "essence_realm_id": "revolving_core",
+    "hp": 403,
+    "attack": 86,
+    "defense": 41,
+    "exp_reward": 357,
+    "loot_table": [
+      {
+        "item_id": "beast_core",
+        "chance": 0.66,
+        "count": 2
+      },
+      {
+        "item_id": "blazing_yang_sabatons",
+        "chance": 0.06,
+        "count": 1
+      }
+    ],
+    "area": "Blood Slaughter Steppes"
+  },
+  {
+    "id": "blood_golem",
+    "name": "Blood Golem",
+    "body_realm_id": "eight_gates_hidden_celestial_stems",
+    "essence_realm_id": "revolving_core",
+    "hp": 470,
+    "attack": 88,
+    "defense": 38,
+    "exp_reward": 333,
+    "loot_table": [
+      {
+        "item_id": "purple_cloud_dan",
+        "chance": 0.82,
+        "count": 2
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.31,
+        "count": 1
+      }
+    ],
+    "area": "Blood Slaughter Steppes"
+  },
+  {
+    "id": "slaughter_crane",
+    "name": "Slaughter Crane",
+    "body_realm_id": "eight_gates_hidden_celestial_stems",
+    "essence_realm_id": "revolving_core",
+    "hp": 471,
+    "attack": 80,
+    "defense": 40,
+    "exp_reward": 373,
+    "loot_table": [
+      {
+        "item_id": "soul_nurturing_nectar",
+        "chance": 0.55,
+        "count": 1
+      },
+      {
+        "item_id": "heaven_splitting_vestments",
+        "chance": 0.06,
+        "count": 1
+      }
+    ],
+    "area": "Blood Slaughter Steppes"
+  },
+  {
+    "id": "slaughter_rogue_cultivator",
+    "name": "Slaughter Rogue Cultivator",
+    "body_realm_id": "tempering_marrow",
+    "essence_realm_id": "revolving_core",
+    "hp": 431,
+    "attack": 77,
+    "defense": 39,
+    "exp_reward": 352,
+    "loot_table": [
+      {
+        "item_id": "dragon_blood_ore",
+        "chance": 0.8,
+        "count": 2
+      },
+      {
+        "item_id": "heaven_fang",
+        "chance": 0.33,
+        "count": 2
+      },
+      {
+        "item_id": "void_medallion",
+        "chance": 0.05,
+        "count": 1
+      }
+    ],
+    "area": "Blood Slaughter Steppes"
+  },
+  {
+    "id": "thunder_demon_no.2",
+    "name": "Thunder Demon No.2",
+    "body_realm_id": "tempering_marrow",
+    "essence_realm_id": "revolving_core",
+    "hp": 395,
+    "attack": 74,
+    "defense": 38,
+    "exp_reward": 356,
+    "loot_table": [
+      {
+        "item_id": "soul_nurturing_nectar_mortal",
+        "chance": 0.89,
+        "count": 1
+      }
+    ],
+    "area": "Blood Slaughter Steppes"
+  },
+  {
+    "id": "slaughter_serpent",
+    "name": "Slaughter Serpent",
+    "body_realm_id": "eight_gates_hidden_celestial_stems",
+    "essence_realm_id": "revolving_core",
+    "hp": 416,
+    "attack": 75,
+    "defense": 42,
+    "exp_reward": 355,
+    "loot_table": [
+      {
+        "item_id": "immortal_ascension_elixir",
+        "chance": 0.62,
+        "count": 3
+      },
+      {
+        "item_id": "beast_core",
+        "chance": 0.33,
+        "count": 2
+      },
+      {
+        "item_id": "phoenix_sabatons",
+        "chance": 0.07,
+        "count": 1
+      }
+    ],
+    "area": "Blood Slaughter Steppes"
+  },
+  {
+    "id": "steppe_hound",
+    "name": "Steppe Hound",
+    "body_realm_id": "tempering_marrow",
+    "essence_realm_id": "revolving_core",
+    "hp": 458,
+    "attack": 84,
+    "defense": 37,
+    "exp_reward": 330,
+    "loot_table": [
+      {
+        "item_id": "soul_nurturing_pill",
+        "chance": 0.61,
+        "count": 3
+      }
+    ],
+    "area": "Blood Slaughter Steppes"
+  },
+  {
+    "id": "crimson_thrall",
+    "name": "Crimson Thrall",
+    "body_realm_id": "eight_gates_hidden_celestial_stems",
+    "essence_realm_id": "revolving_core",
+    "hp": 397,
+    "attack": 76,
+    "defense": 42,
+    "exp_reward": 306,
+    "loot_table": [
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.35,
+        "count": 3
+      },
+      {
+        "item_id": "beast_core",
+        "chance": 0.43,
+        "count": 3
+      },
+      {
+        "item_id": "star_origin_lantern",
+        "chance": 0.03,
+        "count": 1
+      }
+    ],
+    "area": "Blood Slaughter Steppes"
+  },
+  {
+    "id": "five_element_qilin",
+    "name": "Five Element Qilin",
+    "body_realm_id": "eight_gates_hidden_celestial_stems",
+    "essence_realm_id": "life_destruction",
+    "hp": 559,
+    "attack": 109,
+    "defense": 53,
+    "exp_reward": 455,
+    "loot_table": [
+      {
+        "item_id": "qi_pill",
+        "chance": 0.39,
+        "count": 1
+      },
+      {
+        "item_id": "heaven_splitting_greaves",
+        "chance": 0.07,
+        "count": 1
+      }
+    ],
+    "area": "Five Element Temples"
+  },
+  {
+    "id": "five_element_ape",
+    "name": "Five Element Ape",
+    "body_realm_id": "eight_gates_hidden_celestial_stems",
+    "essence_realm_id": "life_destruction",
+    "hp": 533,
+    "attack": 92,
+    "defense": 53,
+    "exp_reward": 506,
+    "loot_table": [
+      {
+        "item_id": "nine_revolutions_pellet",
+        "chance": 0.61,
+        "count": 2
+      },
+      {
+        "item_id": "soul_nurturing_pill_mortal",
+        "chance": 0.58,
+        "count": 3
+      },
+      {
+        "item_id": "ghost_flame_battle_armor",
+        "chance": 0.05,
+        "count": 1
+      }
+    ],
+    "area": "Five Element Temples"
+  },
+  {
+    "id": "elemental_cutpurse",
+    "name": "Elemental Cutpurse",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "revolving_core",
+    "hp": 546,
+    "attack": 104,
+    "defense": 55,
+    "exp_reward": 431,
+    "loot_table": [
+      {
+        "item_id": "celestial_nectar",
+        "chance": 0.69,
+        "count": 1
+      },
+      {
+        "item_id": "profound_pill",
+        "chance": 0.56,
+        "count": 3
+      },
+      {
+        "item_id": "heaven_splitting_greaves",
+        "chance": 0.08,
+        "count": 1
+      }
+    ],
+    "area": "Five Element Temples"
+  },
+  {
+    "id": "blood_bandit",
+    "name": "Blood Bandit",
+    "body_realm_id": "eight_gates_hidden_celestial_stems",
+    "essence_realm_id": "revolving_core",
+    "hp": 526,
+    "attack": 108,
+    "defense": 47,
+    "exp_reward": 517,
+    "loot_table": [
+      {
+        "item_id": "nine_revolutions_essence",
+        "chance": 0.53,
+        "count": 3
+      }
+    ],
+    "area": "Five Element Temples"
+  },
+  {
+    "id": "rune_qilin",
+    "name": "Rune Qilin",
+    "body_realm_id": "eight_gates_hidden_celestial_stems",
+    "essence_realm_id": "life_destruction",
+    "hp": 571,
+    "attack": 102,
+    "defense": 50,
+    "exp_reward": 436,
+    "loot_table": [
+      {
+        "item_id": "qi_pill",
+        "chance": 0.56,
+        "count": 1
+      }
+    ],
+    "area": "Five Element Temples"
+  },
+  {
+    "id": "elemental_leopard",
+    "name": "Elemental Leopard",
+    "body_realm_id": "eight_gates_hidden_celestial_stems",
+    "essence_realm_id": "life_destruction",
+    "hp": 558,
+    "attack": 92,
+    "defense": 49,
+    "exp_reward": 481,
+    "loot_table": [
+      {
+        "item_id": "healing_pill",
+        "chance": 0.79,
+        "count": 3
+      },
+      {
+        "item_id": "heaven_splitting_fan",
+        "chance": 0.09,
+        "count": 1
+      }
+    ],
+    "area": "Five Element Temples"
+  },
+  {
+    "id": "temple_thrall",
+    "name": "Temple Thrall",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "life_destruction",
+    "hp": 512,
+    "attack": 103,
+    "defense": 51,
+    "exp_reward": 487,
+    "loot_table": [
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.67,
+        "count": 1
+      },
+      {
+        "item_id": "profound_pill",
+        "chance": 0.22,
+        "count": 3
+      },
+      {
+        "item_id": "nirvana_mirror",
+        "chance": 0.08,
+        "count": 1
+      }
+    ],
+    "area": "Five Element Temples"
+  },
+  {
+    "id": "thunder_tiger",
+    "name": "Thunder Tiger",
+    "body_realm_id": "eight_gates_hidden_celestial_stems",
+    "essence_realm_id": "life_destruction",
+    "hp": 520,
+    "attack": 97,
+    "defense": 51,
+    "exp_reward": 459,
+    "loot_table": [
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.55,
+        "count": 2
+      },
+      {
+        "item_id": "celestial_decoction_no3",
+        "chance": 0.47,
+        "count": 1
+      },
+      {
+        "item_id": "nirvana_mirror",
+        "chance": 0.06,
+        "count": 1
+      }
+    ],
+    "area": "Five Element Temples"
+  },
+  {
+    "id": "temple_hound",
+    "name": "Temple Hound",
+    "body_realm_id": "eight_gates_hidden_celestial_stems",
+    "essence_realm_id": "revolving_core",
+    "hp": 538,
+    "attack": 104,
+    "defense": 51,
+    "exp_reward": 479,
+    "loot_table": [
+      {
+        "item_id": "soul_nurturing_nectar_mortal",
+        "chance": 0.55,
+        "count": 4
+      },
+      {
+        "item_id": "beast_core",
+        "chance": 0.32,
+        "count": 1
+      },
+      {
+        "item_id": "sky_severing_immortal_sword",
+        "chance": 0.09,
+        "count": 1
+      }
+    ],
+    "area": "Five Element Temples"
+  },
+  {
+    "id": "temple_bandit",
+    "name": "Temple Bandit",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "revolving_core",
+    "hp": 579,
+    "attack": 97,
+    "defense": 53,
+    "exp_reward": 457,
+    "loot_table": [
+      {
+        "item_id": "soul_nurturing_nectar",
+        "chance": 0.3,
+        "count": 4
+      },
+      {
+        "item_id": "nine_nether_war_vestments",
+        "chance": 0.09,
+        "count": 1
+      }
+    ],
+    "area": "Five Element Temples"
+  },
+  {
+    "id": "stone_warder",
+    "name": "Stone Warder",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "life_destruction",
+    "hp": 541,
+    "attack": 101,
+    "defense": 52,
+    "exp_reward": 473,
+    "loot_table": [
+      {
+        "item_id": "golden_body_pellet",
+        "chance": 0.81,
+        "count": 4
+      },
+      {
+        "item_id": "spirit_devouring_flying_sword",
+        "chance": 0.03,
+        "count": 1
+      }
+    ],
+    "area": "Five Element Temples"
+  },
+  {
+    "id": "five_element_crane",
+    "name": "Five Element Crane",
+    "body_realm_id": "eight_gates_hidden_celestial_stems",
+    "essence_realm_id": "revolving_core",
+    "hp": 574,
+    "attack": 95,
+    "defense": 48,
+    "exp_reward": 503,
+    "loot_table": [
+      {
+        "item_id": "life_extending_nectar",
+        "chance": 0.87,
+        "count": 3
+      },
+      {
+        "item_id": "celestial_pellet",
+        "chance": 0.4,
+        "count": 1
+      },
+      {
+        "item_id": "radiant_dawn_seal",
+        "chance": 0.1,
+        "count": 1
+      }
+    ],
+    "area": "Five Element Temples"
+  },
+  {
+    "id": "elemental_warfiend",
+    "name": "Elemental Warfiend",
+    "body_realm_id": "eight_gates_hidden_celestial_stems",
+    "essence_realm_id": "revolving_core",
+    "hp": 522,
+    "attack": 107,
+    "defense": 53,
+    "exp_reward": 507,
+    "loot_table": [
+      {
+        "item_id": "profound_pill",
+        "chance": 0.57,
+        "count": 2
+      },
+      {
+        "item_id": "void_spirit_nectar",
+        "chance": 0.22,
+        "count": 3
+      }
+    ],
+    "area": "Five Element Temples"
+  },
+  {
+    "id": "five_element_qilin_no.2",
+    "name": "Five Element Qilin No.2",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "revolving_core",
+    "hp": 557,
+    "attack": 107,
+    "defense": 47,
+    "exp_reward": 479,
+    "loot_table": [
+      {
+        "item_id": "healing_pill",
+        "chance": 0.74,
+        "count": 2
+      }
+    ],
+    "area": "Five Element Temples"
+  },
+  {
+    "id": "rune_tiger",
+    "name": "Rune Tiger",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "life_destruction",
+    "hp": 535,
+    "attack": 100,
+    "defense": 49,
+    "exp_reward": 517,
+    "loot_table": [
+      {
+        "item_id": "dragon_blood_dan",
+        "chance": 0.85,
+        "count": 4
+      }
+    ],
+    "area": "Five Element Temples"
+  },
+  {
+    "id": "five_element_warder_no.2",
+    "name": "Five Element Warder No.2",
+    "body_realm_id": "eight_gates_hidden_celestial_stems",
+    "essence_realm_id": "life_destruction",
+    "hp": 533,
+    "attack": 105,
+    "defense": 45,
+    "exp_reward": 502,
+    "loot_table": [
+      {
+        "item_id": "healing_pill",
+        "chance": 0.34,
+        "count": 3
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.44,
+        "count": 1
+      },
+      {
+        "item_id": "vermilion_bird_battle_armor",
+        "chance": 0.09,
+        "count": 1
+      }
+    ],
+    "area": "Five Element Temples"
+  },
+  {
+    "id": "totem_demon",
+    "name": "Totem Demon",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "divine_sea",
+    "hp": 743,
+    "attack": 119,
+    "defense": 62,
+    "exp_reward": 646,
+    "loot_table": [
+      {
+        "item_id": "nine_revolutions_essence",
+        "chance": 0.76,
+        "count": 4
+      },
+      {
+        "item_id": "qi_pill",
+        "chance": 0.23,
+        "count": 1
+      }
+    ],
+    "area": "Southern Wilderness"
+  },
+  {
+    "id": "primal_guard",
+    "name": "Primal Guard",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "life_destruction",
+    "hp": 675,
+    "attack": 136,
+    "defense": 58,
+    "exp_reward": 626,
+    "loot_table": [
+      {
+        "item_id": "dao_enlightenment_spirit_stone",
+        "chance": 0.83,
+        "count": 3
+      }
+    ],
+    "area": "Southern Wilderness"
+  },
+  {
+    "id": "totem_warder",
+    "name": "Totem Warder",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "divine_sea",
+    "hp": 665,
+    "attack": 116,
+    "defense": 56,
+    "exp_reward": 652,
+    "loot_table": [
+      {
+        "item_id": "great_return_pellet_mortal",
+        "chance": 0.45,
+        "count": 2
+      }
+    ],
+    "area": "Southern Wilderness"
+  },
+  {
+    "id": "primal_qilin",
+    "name": "Primal Qilin",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "life_destruction",
+    "hp": 662,
+    "attack": 122,
+    "defense": 63,
+    "exp_reward": 607,
+    "loot_table": [
+      {
+        "item_id": "great_return_dan",
+        "chance": 0.89,
+        "count": 3
+      }
+    ],
+    "area": "Southern Wilderness"
+  },
+  {
+    "id": "totem_crane",
+    "name": "Totem Crane",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "divine_sea",
+    "hp": 657,
+    "attack": 118,
+    "defense": 55,
+    "exp_reward": 581,
+    "loot_table": [
+      {
+        "item_id": "nirvana_rebirth_elixir",
+        "chance": 0.81,
+        "count": 2
+      }
+    ],
+    "area": "Southern Wilderness"
+  },
+  {
+    "id": "totem_lizard",
+    "name": "Totem Lizard",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "life_destruction",
+    "hp": 722,
+    "attack": 132,
+    "defense": 66,
+    "exp_reward": 650,
+    "loot_table": [
+      {
+        "item_id": "beast_core",
+        "chance": 0.32,
+        "count": 1
+      },
+      {
+        "item_id": "immortal_ascension_nectar",
+        "chance": 0.4,
+        "count": 2
+      },
+      {
+        "item_id": "void_charm_paper",
+        "chance": 0.08,
+        "count": 1
+      }
+    ],
+    "area": "Southern Wilderness"
+  },
+  {
+    "id": "totem_duelist",
+    "name": "Totem Duelist",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "life_destruction",
+    "hp": 683,
+    "attack": 137,
+    "defense": 56,
+    "exp_reward": 632,
+    "loot_table": [
+      {
+        "item_id": "immortal_ascension_pill",
+        "chance": 0.46,
+        "count": 3
+      },
+      {
+        "item_id": "golden_body_band",
+        "chance": 0.06,
+        "count": 1
+      }
+    ],
+    "area": "Southern Wilderness"
+  },
+  {
+    "id": "wilderness_thrall",
+    "name": "Wilderness Thrall",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "life_destruction",
+    "hp": 719,
+    "attack": 134,
+    "defense": 63,
+    "exp_reward": 644,
+    "loot_table": [
+      {
+        "item_id": "celestial_elixir_mortal",
+        "chance": 0.41,
+        "count": 3
+      },
+      {
+        "item_id": "primordial_dan",
+        "chance": 0.46,
+        "count": 3
+      }
+    ],
+    "area": "Southern Wilderness"
+  },
+  {
+    "id": "totem_tiger",
+    "name": "Totem Tiger",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "divine_sea",
+    "hp": 751,
+    "attack": 129,
+    "defense": 55,
+    "exp_reward": 602,
+    "loot_table": [
+      {
+        "item_id": "primordial_decoction",
+        "chance": 0.63,
+        "count": 1
+      },
+      {
+        "item_id": "soul_nurturing_nectar_mortal",
+        "chance": 0.38,
+        "count": 3
+      },
+      {
+        "item_id": "spirit_devouring_flying_sword",
+        "chance": 0.08,
+        "count": 1
+      }
+    ],
+    "area": "Southern Wilderness"
+  },
+  {
+    "id": "wilderness_warfiend",
+    "name": "Wilderness Warfiend",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "life_destruction",
+    "hp": 665,
+    "attack": 136,
+    "defense": 55,
+    "exp_reward": 605,
+    "loot_table": [
+      {
+        "item_id": "golden_body_pellet_mortal",
+        "chance": 0.42,
+        "count": 3
+      },
+      {
+        "item_id": "ghost_flame_band",
+        "chance": 0.02,
+        "count": 1
+      }
+    ],
+    "area": "Southern Wilderness"
+  },
+  {
+    "id": "savage_guard",
+    "name": "Savage Guard",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "divine_sea",
+    "hp": 702,
+    "attack": 126,
+    "defense": 59,
+    "exp_reward": 635,
+    "loot_table": [
+      {
+        "item_id": "purple_cloud_dan",
+        "chance": 0.55,
+        "count": 4
+      },
+      {
+        "item_id": "life_extending_elixir",
+        "chance": 0.22,
+        "count": 2
+      }
+    ],
+    "area": "Southern Wilderness"
+  },
+  {
+    "id": "wilderness_wyrm",
+    "name": "Wilderness Wyrm",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "life_destruction",
+    "hp": 695,
+    "attack": 134,
+    "defense": 57,
+    "exp_reward": 659,
+    "loot_table": [
+      {
+        "item_id": "golden_body_pellet_mortal",
+        "chance": 0.33,
+        "count": 3
+      }
+    ],
+    "area": "Southern Wilderness"
+  },
+  {
+    "id": "primal_roc",
+    "name": "Primal Roc",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "divine_sea",
+    "hp": 732,
+    "attack": 135,
+    "defense": 61,
+    "exp_reward": 579,
+    "loot_table": [
+      {
+        "item_id": "nine_revolutions_nectar",
+        "chance": 0.36,
+        "count": 4
+      },
+      {
+        "item_id": "void_spirit_nectar",
+        "chance": 0.34,
+        "count": 2
+      },
+      {
+        "item_id": "vermilion_bird_battle_armor",
+        "chance": 0.05,
+        "count": 1
+      }
+    ],
+    "area": "Southern Wilderness"
+  },
+  {
+    "id": "wilderness_wolf",
+    "name": "Wilderness Wolf",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "life_destruction",
+    "hp": 692,
+    "attack": 135,
+    "defense": 60,
+    "exp_reward": 619,
+    "loot_table": [
+      {
+        "item_id": "immortal_ascension_pellet_mortal",
+        "chance": 0.64,
+        "count": 1
+      },
+      {
+        "item_id": "inferno_war_vestments",
+        "chance": 0.06,
+        "count": 1
+      }
+    ],
+    "area": "Southern Wilderness"
+  },
+  {
+    "id": "ruin_wyrm",
+    "name": "Ruin Wyrm",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "divine_transformation",
+    "hp": 982,
+    "attack": 173,
+    "defense": 80,
+    "exp_reward": 882,
+    "loot_table": [
+      {
+        "item_id": "star_gathering_pellet",
+        "chance": 0.5,
+        "count": 2
+      }
+    ],
+    "area": "Ancient Ruins"
+  },
+  {
+    "id": "astral_wraith",
+    "name": "Astral Wraith",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "divine_sea",
+    "hp": 949,
+    "attack": 153,
+    "defense": 75,
+    "exp_reward": 833,
+    "loot_table": [
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.75,
+        "count": 3
+      },
+      {
+        "item_id": "purple_cloud_sky_sword_mk_2",
+        "chance": 0.04,
+        "count": 1
+      }
+    ],
+    "area": "Ancient Ruins"
+  },
+  {
+    "id": "astral_bear",
+    "name": "Astral Bear",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "divine_transformation",
+    "hp": 1029,
+    "attack": 147,
+    "defense": 80,
+    "exp_reward": 806,
+    "loot_table": [
+      {
+        "item_id": "qi_pill",
+        "chance": 0.59,
+        "count": 4
+      },
+      {
+        "item_id": "nirvana_rebirth_feather",
+        "chance": 0.37,
+        "count": 2
+      },
+      {
+        "item_id": "iron_bone_ring",
+        "chance": 0.1,
+        "count": 1
+      }
+    ],
+    "area": "Ancient Ruins"
+  },
+  {
+    "id": "ancient_warlock",
+    "name": "Ancient Warlock",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "divine_transformation",
+    "hp": 855,
+    "attack": 159,
+    "defense": 72,
+    "exp_reward": 905,
+    "loot_table": [
+      {
+        "item_id": "healing_pill",
+        "chance": 0.59,
+        "count": 1
+      },
+      {
+        "item_id": "profound_pill",
+        "chance": 0.45,
+        "count": 3
+      },
+      {
+        "item_id": "heaven_splitting_boots",
+        "chance": 0.06,
+        "count": 1
+      }
+    ],
+    "area": "Ancient Ruins"
+  },
+  {
+    "id": "ruin_shaman",
+    "name": "Ruin Shaman",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "divine_sea",
+    "hp": 939,
+    "attack": 160,
+    "defense": 83,
+    "exp_reward": 843,
+    "loot_table": [
+      {
+        "item_id": "immortal_ascension_pill",
+        "chance": 0.54,
+        "count": 1
+      },
+      {
+        "item_id": "blazing_yang_circlet",
+        "chance": 0.08,
+        "count": 1
+      }
+    ],
+    "area": "Ancient Ruins"
+  },
+  {
+    "id": "ancient_duelist",
+    "name": "Ancient Duelist",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "divine_sea",
+    "hp": 948,
+    "attack": 151,
+    "defense": 72,
+    "exp_reward": 899,
+    "loot_table": [
+      {
+        "item_id": "nirvana_rebirth_feather",
+        "chance": 0.63,
+        "count": 4
+      },
+      {
+        "item_id": "blazing_yang_talisman",
+        "chance": 0.06,
+        "count": 1
+      }
+    ],
+    "area": "Ancient Ruins"
+  },
+  {
+    "id": "ruin_hound",
+    "name": "Ruin Hound",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "divine_sea",
+    "hp": 904,
+    "attack": 172,
+    "defense": 76,
+    "exp_reward": 917,
+    "loot_table": [
+      {
+        "item_id": "profound_pill",
+        "chance": 0.37,
+        "count": 2
+      }
+    ],
+    "area": "Ancient Ruins"
+  },
+  {
+    "id": "ruin_captain",
+    "name": "Ruin Captain",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "divine_sea",
+    "hp": 1017,
+    "attack": 148,
+    "defense": 78,
+    "exp_reward": 928,
+    "loot_table": [
+      {
+        "item_id": "immortal_ascension_nectar_no3",
+        "chance": 0.77,
+        "count": 3
+      }
+    ],
+    "area": "Ancient Ruins"
+  },
+  {
+    "id": "ruin_tiger",
+    "name": "Ruin Tiger",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "divine_sea",
+    "hp": 993,
+    "attack": 171,
+    "defense": 84,
+    "exp_reward": 806,
+    "loot_table": [
+      {
+        "item_id": "beast_core",
+        "chance": 0.55,
+        "count": 3
+      }
+    ],
+    "area": "Ancient Ruins"
+  },
+  {
+    "id": "nether_elder",
+    "name": "Nether Elder",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "divine_sea",
+    "hp": 966,
+    "attack": 166,
+    "defense": 72,
+    "exp_reward": 807,
+    "loot_table": [
+      {
+        "item_id": "beast_core",
+        "chance": 0.56,
+        "count": 3
+      },
+      {
+        "item_id": "purple_cloud_pill",
+        "chance": 0.51,
+        "count": 1
+      }
+    ],
+    "area": "Ancient Ruins"
+  },
+  {
+    "id": "ruin_leopard",
+    "name": "Ruin Leopard",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "divine_sea",
+    "hp": 1023,
+    "attack": 170,
+    "defense": 85,
+    "exp_reward": 793,
+    "loot_table": [
+      {
+        "item_id": "celestial_nectar",
+        "chance": 0.63,
+        "count": 1
+      },
+      {
+        "item_id": "beast_core",
+        "chance": 0.48,
+        "count": 2
+      },
+      {
+        "item_id": "earth_vein_sigil",
+        "chance": 0.02,
+        "count": 1
+      }
+    ],
+    "area": "Ancient Ruins"
+  },
+  {
+    "id": "astral_rogue_cultivator",
+    "name": "Astral Rogue Cultivator",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "divine_transformation",
+    "hp": 921,
+    "attack": 146,
+    "defense": 82,
+    "exp_reward": 951,
+    "loot_table": [
+      {
+        "item_id": "healing_pill",
+        "chance": 0.89,
+        "count": 4
+      }
+    ],
+    "area": "Ancient Ruins"
+  },
+  {
+    "id": "gate_duelist",
+    "name": "Gate Duelist",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "divine_lord",
+    "hp": 1257,
+    "attack": 219,
+    "defense": 94,
+    "exp_reward": 1472,
+    "loot_table": [
+      {
+        "item_id": "phoenix_marrow_tonic",
+        "chance": 0.42,
+        "count": 5
+      },
+      {
+        "item_id": "dragon_blood_dan",
+        "chance": 0.24,
+        "count": 1
+      },
+      {
+        "item_id": "frost_sigil",
+        "chance": 0.07,
+        "count": 1
+      }
+    ],
+    "area": "Planetary Gate Array"
+  },
+  {
+    "id": "gate_warder",
+    "name": "Gate Warder",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "divine_transformation",
+    "hp": 1346,
+    "attack": 210,
+    "defense": 90,
+    "exp_reward": 1471,
+    "loot_table": [
+      {
+        "item_id": "healing_pill",
+        "chance": 0.36,
+        "count": 3
+      },
+      {
+        "item_id": "nine_nether_circlet",
+        "chance": 0.06,
+        "count": 1
+      }
+    ],
+    "area": "Planetary Gate Array"
+  },
+  {
+    "id": "gate_wolf",
+    "name": "Gate Wolf",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "divine_lord",
+    "hp": 1184,
+    "attack": 197,
+    "defense": 91,
+    "exp_reward": 1683,
+    "loot_table": [
+      {
+        "item_id": "immortal_ascension_elixir",
+        "chance": 0.47,
+        "count": 3
+      },
+      {
+        "item_id": "star_gathering_pill",
+        "chance": 0.31,
+        "count": 3
+      },
+      {
+        "item_id": "scarlet_sun_cloak_mk_2",
+        "chance": 0.04,
+        "count": 1
+      }
+    ],
+    "area": "Planetary Gate Array"
+  },
+  {
+    "id": "planetary_vulture",
+    "name": "Planetary Vulture",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "divine_lord",
+    "hp": 1358,
+    "attack": 214,
+    "defense": 100,
+    "exp_reward": 1648,
+    "loot_table": [
+      {
+        "item_id": "qi_pill",
+        "chance": 0.35,
+        "count": 2
+      },
+      {
+        "item_id": "eternal_night_treads",
+        "chance": 0.04,
+        "count": 1
+      }
+    ],
+    "area": "Planetary Gate Array"
+  },
+  {
+    "id": "planetary_sprite",
+    "name": "Planetary Sprite",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "divine_lord",
+    "hp": 1177,
+    "attack": 213,
+    "defense": 99,
+    "exp_reward": 1615,
+    "loot_table": [
+      {
+        "item_id": "nine_revolutions_essence",
+        "chance": 0.47,
+        "count": 3
+      },
+      {
+        "item_id": "profound_pill",
+        "chance": 0.47,
+        "count": 2
+      }
+    ],
+    "area": "Planetary Gate Array"
+  },
+  {
+    "id": "star_severing_rogue_cultivator",
+    "name": "Star Severing Rogue Cultivator",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "divine_transformation",
+    "hp": 1311,
+    "attack": 209,
+    "defense": 87,
+    "exp_reward": 1603,
+    "loot_table": [
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.76,
+        "count": 5
+      }
+    ],
+    "area": "Planetary Gate Array"
+  },
+  {
+    "id": "planetary_warlock",
+    "name": "Planetary Warlock",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "divine_transformation",
+    "hp": 1239,
+    "attack": 198,
+    "defense": 94,
+    "exp_reward": 1551,
+    "loot_table": [
+      {
+        "item_id": "beast_core",
+        "chance": 0.32,
+        "count": 2
+      }
+    ],
+    "area": "Planetary Gate Array"
+  },
+  {
+    "id": "nether_duelist",
+    "name": "Nether Duelist",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "divine_lord",
+    "hp": 1407,
+    "attack": 220,
+    "defense": 89,
+    "exp_reward": 1541,
+    "loot_table": [
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.45,
+        "count": 2
+      },
+      {
+        "item_id": "eternal_night_treads",
+        "chance": 0.06,
+        "count": 1
+      }
+    ],
+    "area": "Planetary Gate Array"
+  },
+  {
+    "id": "holy_demon_serpent",
+    "name": "Holy Demon Serpent",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "divine_lord",
+    "hp": 1415,
+    "attack": 206,
+    "defense": 92,
+    "exp_reward": 1680,
+    "loot_table": [
+      {
+        "item_id": "healing_pill",
+        "chance": 0.38,
+        "count": 2
+      },
+      {
+        "item_id": "demon_sealing_spear",
+        "chance": 0.07,
+        "count": 1
+      }
+    ],
+    "area": "Planetary Gate Array"
+  },
+  {
+    "id": "planetary_sprite_no.2",
+    "name": "Planetary Sprite No.2",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "divine_transformation",
+    "hp": 1342,
+    "attack": 221,
+    "defense": 95,
+    "exp_reward": 1686,
+    "loot_table": [
+      {
+        "item_id": "primordial_pellet",
+        "chance": 0.54,
+        "count": 2
+      }
+    ],
+    "area": "Planetary Gate Array"
+  },
+  {
+    "id": "planetary_leopard",
+    "name": "Planetary Leopard",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "divine_lord",
+    "hp": 1327,
+    "attack": 217,
+    "defense": 100,
+    "exp_reward": 1475,
+    "loot_table": [
+      {
+        "item_id": "void_spirit_root",
+        "chance": 0.36,
+        "count": 1
+      },
+      {
+        "item_id": "beast_core",
+        "chance": 0.35,
+        "count": 1
+      }
+    ],
+    "area": "Planetary Gate Array"
+  },
+  {
+    "id": "field_captain",
+    "name": "Field Captain",
+    "body_realm_id": "mortal",
+    "essence_realm_id": "houtian",
+    "hp": 44,
+    "attack": 10,
+    "defense": 3,
+    "exp_reward": 16,
+    "loot_table": [
+      {
+        "item_id": "beast_core",
+        "chance": 0.69,
+        "count": 1
+      },
+      {
+        "item_id": "plain_traveller_cloak",
+        "chance": 0.06,
+        "count": 1
+      }
+    ],
+    "area": "Verdant Fields"
+  },
+  {
+    "id": "field_scorpion",
+    "name": "Field Scorpion",
+    "body_realm_id": "strength_training",
+    "essence_realm_id": "houtian",
+    "hp": 44,
+    "attack": 9,
+    "defense": 3,
+    "exp_reward": 16,
+    "loot_table": [
+      {
+        "item_id": "bone_forging_nectar",
+        "chance": 0.36,
+        "count": 1
+      }
+    ],
+    "area": "Verdant Fields"
+  },
+  {
+    "id": "golden_leopard",
+    "name": "Golden Leopard",
+    "body_realm_id": "mortal",
+    "essence_realm_id": null,
+    "hp": 48,
+    "attack": 10,
+    "defense": 3,
+    "exp_reward": 16,
+    "loot_table": [
+      {
+        "item_id": "healing_pill",
+        "chance": 0.69,
+        "count": 1
+      }
+    ],
+    "area": "Verdant Fields"
+  },
+  {
+    "id": "meadow_ape",
+    "name": "Meadow Ape",
+    "body_realm_id": "mortal",
+    "essence_realm_id": null,
+    "hp": 49,
+    "attack": 11,
+    "defense": 3,
+    "exp_reward": 16,
+    "loot_table": [
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.38,
+        "count": 1
+      },
+      {
+        "item_id": "frost_jade_nectar_mortal",
+        "chance": 0.37,
+        "count": 1
+      },
+      {
+        "item_id": "cracked_protection_talisman",
+        "chance": 0.06,
+        "count": 1
+      }
+    ],
+    "area": "Verdant Fields"
+  },
+  {
+    "id": "meadow_ape_no.2",
+    "name": "Meadow Ape No.2",
+    "body_realm_id": "mortal",
+    "essence_realm_id": null,
+    "hp": 42,
+    "attack": 10,
+    "defense": 3,
+    "exp_reward": 16,
+    "loot_table": [
+      {
+        "item_id": "thunder_essence_fruit",
+        "chance": 0.88,
+        "count": 1
+      },
+      {
+        "item_id": "bone_forging_dan",
+        "chance": 0.48,
+        "count": 1
+      }
+    ],
+    "area": "Verdant Fields"
+  },
+  {
+    "id": "verdant_zealot_no.2",
+    "name": "Verdant Zealot No.2",
+    "body_realm_id": "mortal",
+    "essence_realm_id": null,
+    "hp": 43,
+    "attack": 10,
+    "defense": 3,
+    "exp_reward": 14,
+    "loot_table": [
+      {
+        "item_id": "healing_pill",
+        "chance": 0.69,
+        "count": 1
+      },
+      {
+        "item_id": "beast_core",
+        "chance": 0.5,
+        "count": 1
+      }
+    ],
+    "area": "Verdant Fields"
+  },
+  {
+    "id": "field_wyrm",
+    "name": "Field Wyrm",
+    "body_realm_id": "mortal",
+    "essence_realm_id": "houtian",
+    "hp": 48,
+    "attack": 9,
+    "defense": 3,
+    "exp_reward": 15,
+    "loot_table": [
+      {
+        "item_id": "profound_pill",
+        "chance": 0.43,
+        "count": 1
+      },
+      {
+        "item_id": "profound_decoction_mortal",
+        "chance": 0.42,
+        "count": 1
+      },
+      {
+        "item_id": "iron_body_ring",
+        "chance": 0.09,
+        "count": 1
+      }
+    ],
+    "area": "Verdant Fields"
+  },
+  {
+    "id": "green_hollow_qilin",
+    "name": "Green Hollow Qilin",
+    "body_realm_id": "strength_training",
+    "essence_realm_id": null,
+    "hp": 41,
+    "attack": 9,
+    "defense": 3,
+    "exp_reward": 16,
+    "loot_table": [
+      {
+        "item_id": "vermilion_pill_no4",
+        "chance": 0.55,
+        "count": 1
+      },
+      {
+        "item_id": "heaven_splitting_spear",
+        "chance": 0.06,
+        "count": 1
+      }
+    ],
+    "area": "Verdant Fields"
+  },
+  {
+    "id": "green_hollow_thrall",
+    "name": "Green Hollow Thrall",
+    "body_realm_id": "mortal",
+    "essence_realm_id": null,
+    "hp": 41,
+    "attack": 9,
+    "defense": 3,
+    "exp_reward": 14,
+    "loot_table": [
+      {
+        "item_id": "marrow_cleansing_elixir_mortal",
+        "chance": 0.4,
+        "count": 1
+      },
+      {
+        "item_id": "qi_pill",
+        "chance": 0.5,
+        "count": 1
+      },
+      {
+        "item_id": "minor_qi_ring",
+        "chance": 0.08,
+        "count": 1
+      }
+    ],
+    "area": "Verdant Fields"
+  },
+  {
+    "id": "meadow_revenant",
+    "name": "Meadow Revenant",
+    "body_realm_id": "strength_training",
+    "essence_realm_id": null,
+    "hp": 44,
+    "attack": 10,
+    "defense": 3,
+    "exp_reward": 16,
+    "loot_table": [
+      {
+        "item_id": "healing_pill",
+        "chance": 0.63,
+        "count": 1
+      },
+      {
+        "item_id": "beast_core",
+        "chance": 0.24,
+        "count": 1
+      }
+    ],
+    "area": "Verdant Fields"
+  }
+]

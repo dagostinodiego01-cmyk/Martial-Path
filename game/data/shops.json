@@ -1,0 +1,50 @@
+[
+  {
+    "id": "azure_stream_market",
+    "display_name": "Azure Stream Market",
+    "location_ids": ["azure_village", "starting_village"],
+    "description": "A modest village market selling basic weapons, travel gear, and recovery pills.",
+    "stock": [
+      {"item_id": "training_sword", "price": {"gold": 25}, "stock": 1},
+      {"item_id": "wooden_staff", "price": {"gold": 20}, "stock": 1},
+      {"item_id": "patched_leather_armor", "price": {"gold": 35}, "stock": 1},
+      {"item_id": "plain_traveller_cloak", "price": {"gold": 18}, "stock": 1},
+      {"item_id": "worn_travel_boots", "price": {"gold": 20}, "stock": 1},
+      {"item_id": "healing_pill", "price": {"gold": 10}},
+      {"item_id": "qi_pill", "price": {"gold": 12}}
+    ]
+  },
+  {
+    "id": "sky_fortune_cultivator_market",
+    "display_name": "Sky Fortune Cultivator Market",
+    "location_ids": ["sky_fortune_capital", "south_horizon_city"],
+    "description": "A cultivator market where spirit stones buy low-grade treasures and breakthrough aids.",
+    "stock": [
+      {"item_id": "bone_forged_blade", "price": {"spirit_stone": 3}, "stock": 1},
+      {"item_id": "sect_disciple_sword", "price": {"spirit_stone": 3}, "stock": 1},
+      {"item_id": "beast_hide_vest", "price": {"spirit_stone": 2}, "stock": 1},
+      {"item_id": "cloudstep_boots", "price": {"spirit_stone": 2}, "stock": 1},
+      {"item_id": "mist_concealment_cloak", "price": {"spirit_stone": 2}, "stock": 1},
+      {"item_id": "minor_qi_ring", "price": {"spirit_stone": 2}, "stock": 1},
+      {"item_id": "iron_body_ring", "price": {"spirit_stone": 2}, "stock": 1},
+      {"item_id": "spirit_jade_amulet", "price": {"spirit_stone": 3}, "stock": 1},
+      {"item_id": "clear_mind_amulet", "price": {"spirit_stone": 3}, "stock": 1},
+      {"item_id": "minor_breakthrough_talisman", "price": {"spirit_stone": 4}, "stock": 1}
+    ]
+  },
+  {
+    "id": "nine_furnace_auction_house",
+    "display_name": "Nine Furnace Auction House",
+    "location_ids": ["nine_furnace_kingdom", "rival_divine_kingdom"],
+    "description": "A high-value auction house with rarer defensive treasures and flying swords.",
+    "stock": [
+      {"item_id": "stone_skin_armor", "price": {"spirit_stone": 8}, "stock": 1},
+      {"item_id": "azure_meridian_robes", "price": {"spirit_stone": 7}, "stock": 1},
+      {"item_id": "heart_guard_amulet", "price": {"spirit_stone": 7}, "stock": 1},
+      {"item_id": "bronze_spirit_mirror", "price": {"spirit_stone": 12}, "stock": 1},
+      {"item_id": "ancient_jade_slip", "price": {"spirit_stone": 13}, "stock": 1},
+      {"item_id": "rusted_flying_sword", "price": {"spirit_stone": 5}, "stock": 1},
+      {"item_id": "outer_disciple_flying_sword", "price": {"spirit_stone": 10}, "stock": 1}
+    ]
+  }
+]

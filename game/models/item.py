@@ -1,0 +1,58 @@
+"""Item model.
+
+Items are data-driven (see ``data/items.json``). The model holds the definition;
+the inventory system interprets ``effect``/``magnitude`` when an item is used.
+"""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from typing import Any, Dict, List
+
+
+@dataclass
+class Item:
+    """A carryable object.
+
+    Attributes:
+        id: Stable identifier used in data files and inventories.
+        name: Human-readable name (content, displayed by the UI).
+        type: ``"consumable"``, ``"material"``, or ``"equipment"``.
+        effect: Effect identifier the inventory system interprets.
+        magnitude: Numeric strength of the effect.
+        description: Flavour/help text (content, displayed by the UI).
+        consumed_on_use: Whether using the item removes one from the stack.
+    """
+
+    id: str
+    name: str
+    type: str
+    effect: str
+    magnitude: int
+    description: str = ""
+    consumed_on_use: bool = False
+    category: str = ""
+    rarity: str = ""
+    valid_slots: List[str] = field(default_factory=list)
+    skill_id: str = ""
+
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any]) -> "Item":
+        """Build an item from a raw data-file entry."""
+        item_type = data.get("type", "material")
+        return cls(
+            id=data["id"],
+            name=data.get("name", data.get("display_name", data["id"])),
+            type=item_type,
+            effect=data.get("effect", "none"),
+            magnitude=int(data.get("magnitude", 0)),
+            description=data.get("description", ""),
+            consumed_on_use=bool(data.get("consumed_on_use", item_type == "consumable")),
+            category=str(data.get("category", "")),
+            rarity=str(data.get("rarity", "")),
+            valid_slots=[str(slot) for slot in data.get("valid_slots", [])],
+            skill_id=str(data.get("skill_id", "")),
+        )
+
+    def is_consumable(self) -> bool:
+        """Return ``True`` if using the item should consume one from the stack."""
+        return self.consumed_on_use

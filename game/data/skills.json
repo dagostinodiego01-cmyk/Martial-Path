@@ -1,0 +1,2082 @@
+[
+  {
+    "id": "iron_fist",
+    "name": "Iron Fist",
+    "type": "active",
+    "effect": "damage",
+    "scaling": 1.5,
+    "cooldown": 2,
+    "qi_cost": 10,
+    "description": "A heavy body-tempering strike dealing 150% of your attack as damage."
+  },
+  {
+    "id": "spirit_palm",
+    "name": "Spirit-Severing Palm",
+    "type": "active",
+    "effect": "damage",
+    "scaling": 2.0,
+    "cooldown": 3,
+    "qi_cost": 20,
+    "description": "Channel Qi into a devastating palm strike dealing 200% of your attack."
+  },
+  {
+    "id": "flowing_step",
+    "name": "Flowing Step",
+    "type": "passive",
+    "effect": "buff_defense",
+    "scaling": 1.2,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A footwork art that passively raises your defense by 20%."
+  },
+  {
+    "id": "windless_roar",
+    "name": "Windless Roar",
+    "type": "active",
+    "effect": "debuff_attack",
+    "scaling": 1.15,
+    "cooldown": 3,
+    "qi_cost": 10,
+    "description": "Suppresses the enemy's momentum, lowering their attack by 15% for 2 turns."
+  },
+  {
+    "id": "thunderclap_chant",
+    "name": "Thunderclap Chant",
+    "type": "passive",
+    "effect": "hp_regen",
+    "scaling": 6,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A recovery chant that restores 6 HP each turn."
+  },
+  {
+    "id": "nine_yang_guard",
+    "name": "Nine Yang Guard",
+    "type": "passive",
+    "effect": "buff_evasion",
+    "scaling": 1.4,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "An evasive guard that passively raises your evasion by 40%."
+  },
+  {
+    "id": "great_sun_domain",
+    "name": "Great Sun Domain",
+    "type": "active",
+    "effect": "execute",
+    "scaling": 5.63,
+    "cooldown": 6,
+    "qi_cost": 78,
+    "description": "A killing domain dealing 563% of your attack, bonus damage to low-HP foes."
+  },
+  {
+    "id": "nether_eye",
+    "name": "Nether Eye",
+    "type": "passive",
+    "effect": "buff_defense",
+    "scaling": 1.9,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A defensive eye that passively raises your defense by 90%."
+  },
+  {
+    "id": "shadowless_body",
+    "name": "Shadowless Body",
+    "type": "passive",
+    "effect": "buff_defense",
+    "scaling": 2.3,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A defensive body that passively raises your defense by 130%."
+  },
+  {
+    "id": "true_dragon_sword_intent",
+    "name": "True Dragon Sword Intent",
+    "type": "active",
+    "effect": "damage",
+    "scaling": 12.93,
+    "cooldown": 2,
+    "qi_cost": 433,
+    "description": "A focused sword intent strike dealing 1293% of your attack as damage."
+  },
+  {
+    "id": "earth_vein_saber_art",
+    "name": "Earth Vein Saber Art",
+    "type": "active",
+    "effect": "debuff_attack",
+    "scaling": 1.15,
+    "cooldown": 4,
+    "qi_cost": 9,
+    "description": "Suppresses the enemy's momentum, lowering their attack by 15% for 2 turns."
+  },
+  {
+    "id": "windless_palm",
+    "name": "Windless Palm",
+    "type": "active",
+    "effect": "counter",
+    "scaling": 2.3,
+    "cooldown": 4,
+    "qi_cost": 23,
+    "description": "Turns the enemy's force back, countering for 229% of your attack when struck."
+  },
+  {
+    "id": "nether_palm",
+    "name": "Nether Palm",
+    "type": "active",
+    "effect": "debuff_defense",
+    "scaling": 1.4,
+    "cooldown": 3,
+    "qi_cost": 44,
+    "description": "Shatters the enemy's guard, lowering their defense by 40% for 2 turns."
+  },
+  {
+    "id": "myriad_sword_body",
+    "name": "Myriad Sword Body",
+    "type": "passive",
+    "effect": "buff_max_qi",
+    "scaling": 1.6,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A Qi-nurturing body that passively raises your max Qi by 60%."
+  },
+  {
+    "id": "blood_sea_roar",
+    "name": "Blood Sea Roar",
+    "type": "active",
+    "effect": "debuff_defense",
+    "scaling": 1.9,
+    "cooldown": 3,
+    "qi_cost": 183,
+    "description": "Shatters the enemy's guard, lowering their defense by 90% for 2 turns."
+  },
+  {
+    "id": "star_shattering_fist_intent",
+    "name": "Star Shattering Fist Intent",
+    "type": "active",
+    "effect": "true_damage",
+    "scaling": 7.14,
+    "cooldown": 4,
+    "qi_cost": 247,
+    "description": "Pierces all defenses, dealing 714% of your attack as true damage."
+  },
+  {
+    "id": "void_sutra",
+    "name": "Void Sutra",
+    "type": "passive",
+    "effect": "buff_max_qi",
+    "scaling": 2.9,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A Qi-nurturing sutra that passively raises your max Qi by 190%."
+  },
+  {
+    "id": "iron_body",
+    "name": "Iron Body",
+    "type": "passive",
+    "effect": "crit_damage",
+    "scaling": 1.15,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A ferocious body that passively raises your critical damage by 15%."
+  },
+  {
+    "id": "white_tiger_chant",
+    "name": "White Tiger Chant",
+    "type": "passive",
+    "effect": "qi_regen",
+    "scaling": 4,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A circulation chant that restores 4 Qi each turn."
+  },
+  {
+    "id": "mountain_crushing_sword_art",
+    "name": "Mountain Crushing Sword Art",
+    "type": "active",
+    "effect": "counter",
+    "scaling": 3.17,
+    "cooldown": 4,
+    "qi_cost": 54,
+    "description": "Turns the enemy's force back, countering for 317% of your attack when struck."
+  },
+  {
+    "id": "purple_cloud_sword_art",
+    "name": "Purple Cloud Sword Art",
+    "type": "active",
+    "effect": "damage",
+    "scaling": 4.69,
+    "cooldown": 3,
+    "qi_cost": 84,
+    "description": "A focused sword art strike dealing 469% of your attack as damage."
+  },
+  {
+    "id": "purple_cloud_constitution",
+    "name": "Purple Cloud Constitution",
+    "type": "passive",
+    "effect": "buff_max_hp",
+    "scaling": 1.9,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A body-forging constitution that passively raises your max HP by 90%."
+  },
+  {
+    "id": "mountain_crushing_fist",
+    "name": "Mountain Crushing Fist",
+    "type": "active",
+    "effect": "dot_damage",
+    "scaling": 4.45,
+    "cooldown": 4,
+    "qi_cost": 238,
+    "description": "Sears the target, dealing 445% of your attack per turn for 3 turns."
+  },
+  {
+    "id": "nirvana_scripture",
+    "name": "Nirvana Scripture",
+    "type": "passive",
+    "effect": "buff_attack",
+    "scaling": 2.9,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A martial scripture that passively raises your attack by 190%."
+  },
+  {
+    "id": "roaring_tide_fist_intent",
+    "name": "Roaring Tide Fist Intent",
+    "type": "active",
+    "effect": "life_steal",
+    "scaling": 1.3,
+    "cooldown": 4,
+    "qi_cost": 9,
+    "description": "Drains the enemy for 130% of your attack, healing you for half the damage."
+  },
+  {
+    "id": "roaring_tide_roar",
+    "name": "Roaring Tide Roar",
+    "type": "active",
+    "effect": "shield",
+    "scaling": 2.15,
+    "cooldown": 4,
+    "qi_cost": 22,
+    "description": "Weaves a Qi barrier absorbing damage equal to 215% of your attack for 2 turns."
+  },
+  {
+    "id": "thunderclap_sword_intent",
+    "name": "Thunderclap Sword Intent",
+    "type": "active",
+    "effect": "life_steal",
+    "scaling": 2.76,
+    "cooldown": 3,
+    "qi_cost": 53,
+    "description": "Drains the enemy for 276% of your attack, healing you for half the damage."
+  },
+  {
+    "id": "black_tortoise_guard",
+    "name": "Black Tortoise Guard",
+    "type": "passive",
+    "effect": "hp_regen",
+    "scaling": 22,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A recovery guard that restores 22 HP each turn."
+  },
+  {
+    "id": "blood_sea_palm",
+    "name": "Blood Sea Palm",
+    "type": "active",
+    "effect": "aoe_damage",
+    "scaling": 5.68,
+    "cooldown": 4,
+    "qi_cost": 138,
+    "description": "A sweeping palm that hits all enemies for 568% of your attack."
+  },
+  {
+    "id": "primordial_chaos_meditation",
+    "name": "Primordial Chaos Meditation",
+    "type": "passive",
+    "effect": "crit_chance",
+    "scaling": 1.3,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A keen meditation that passively raises your critical chance by 30%."
+  },
+  {
+    "id": "dao_heart_meditation",
+    "name": "Dao Heart Meditation",
+    "type": "passive",
+    "effect": "qi_regen",
+    "scaling": 64,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A circulation meditation that restores 64 Qi each turn."
+  },
+  {
+    "id": "vermilion_bird_palm",
+    "name": "Vermilion Bird Palm",
+    "type": "active",
+    "effect": "dot_damage",
+    "scaling": 0.76,
+    "cooldown": 3,
+    "qi_cost": 9,
+    "description": "Sears the target, dealing 76% of your attack per turn for 3 turns."
+  },
+  {
+    "id": "nine_yang_domain",
+    "name": "Nine Yang Domain",
+    "type": "active",
+    "effect": "damage",
+    "scaling": 2.16,
+    "cooldown": 2,
+    "qi_cost": 22,
+    "description": "A focused domain strike dealing 216% of your attack as damage."
+  },
+  {
+    "id": "glacial_saber_art",
+    "name": "Glacial Saber Art",
+    "type": "active",
+    "effect": "stun",
+    "scaling": 2,
+    "cooldown": 4,
+    "qi_cost": 50,
+    "description": "A jarring saber art that stuns the target for 2 turn(s)."
+  },
+  {
+    "id": "blood_sea_kick",
+    "name": "Blood Sea Kick",
+    "type": "active",
+    "effect": "execute",
+    "scaling": 5.41,
+    "cooldown": 5,
+    "qi_cost": 96,
+    "description": "A killing kick dealing 541% of your attack, bonus damage to low-HP foes."
+  },
+  {
+    "id": "purple_cloud_guard",
+    "name": "Purple Cloud Guard",
+    "type": "passive",
+    "effect": "buff_speed",
+    "scaling": 1.9,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A swift guard that passively raises your speed by 90%."
+  },
+  {
+    "id": "blood_sea_body",
+    "name": "Blood Sea Body",
+    "type": "passive",
+    "effect": "hp_regen",
+    "scaling": 64,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A recovery body that restores 64 HP each turn."
+  },
+  {
+    "id": "dao_heart_scripture",
+    "name": "Dao Heart Scripture",
+    "type": "passive",
+    "effect": "comprehension_gain",
+    "scaling": 26,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "An enlightening scripture that passively grants +26 comprehension."
+  },
+  {
+    "id": "white_tiger_palm",
+    "name": "White Tiger Palm",
+    "type": "active",
+    "effect": "aoe_damage",
+    "scaling": 1.23,
+    "cooldown": 4,
+    "qi_cost": 10,
+    "description": "A sweeping palm that hits all enemies for 123% of your attack."
+  },
+  {
+    "id": "vermilion_bird_ward",
+    "name": "Vermilion Bird Ward",
+    "type": "passive",
+    "effect": "comprehension_gain",
+    "scaling": 2,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "An enlightening ward that passively grants +2 comprehension."
+  },
+  {
+    "id": "earth_vein_kick",
+    "name": "Earth Vein Kick",
+    "type": "active",
+    "effect": "aoe_damage",
+    "scaling": 2.86,
+    "cooldown": 5,
+    "qi_cost": 53,
+    "description": "A sweeping kick that hits all enemies for 286% of your attack."
+  },
+  {
+    "id": "iron_guard",
+    "name": "Iron Guard",
+    "type": "passive",
+    "effect": "hp_regen",
+    "scaling": 22,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A recovery guard that restores 22 HP each turn."
+  },
+  {
+    "id": "primordial_chaos_claw",
+    "name": "Primordial Chaos Claw",
+    "type": "active",
+    "effect": "shield",
+    "scaling": 6.33,
+    "cooldown": 4,
+    "qi_cost": 137,
+    "description": "Weaves a Qi barrier absorbing damage equal to 633% of your attack for 2 turns."
+  },
+  {
+    "id": "myriad_sword_aura",
+    "name": "Myriad Sword Aura",
+    "type": "passive",
+    "effect": "comprehension_gain",
+    "scaling": 17,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "An enlightening aura that passively grants +17 comprehension."
+  },
+  {
+    "id": "dao_heart_roar",
+    "name": "Dao Heart Roar",
+    "type": "active",
+    "effect": "debuff_attack",
+    "scaling": 2.9,
+    "cooldown": 3,
+    "qi_cost": 441,
+    "description": "Suppresses the enemy's momentum, lowering their attack by 190% for 2 turns."
+  },
+  {
+    "id": "azure_dragon_roar",
+    "name": "Azure Dragon Roar",
+    "type": "active",
+    "effect": "damage",
+    "scaling": 1.58,
+    "cooldown": 3,
+    "qi_cost": 9,
+    "description": "A focused roar strike dealing 158% of your attack as damage."
+  },
+  {
+    "id": "earth_vein_guard",
+    "name": "Earth Vein Guard",
+    "type": "passive",
+    "effect": "buff_evasion",
+    "scaling": 1.25,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "An evasive guard that passively raises your evasion by 25%."
+  },
+  {
+    "id": "vermilion_bird_meditation",
+    "name": "Vermilion Bird Meditation",
+    "type": "passive",
+    "effect": "buff_max_hp",
+    "scaling": 1.4,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A body-forging meditation that passively raises your max HP by 40%."
+  },
+  {
+    "id": "inferno_bloodline",
+    "name": "Inferno Bloodline",
+    "type": "passive",
+    "effect": "buff_max_hp",
+    "scaling": 1.6,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A body-forging bloodline that passively raises your max HP by 60%."
+  },
+  {
+    "id": "golden_body_chant",
+    "name": "Golden Body Chant",
+    "type": "passive",
+    "effect": "crit_damage",
+    "scaling": 1.9,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A ferocious chant that passively raises your critical damage by 90%."
+  },
+  {
+    "id": "soul_severing_kick",
+    "name": "Soul Severing Kick",
+    "type": "active",
+    "effect": "debuff_defense",
+    "scaling": 2.3,
+    "cooldown": 4,
+    "qi_cost": 273,
+    "description": "Shatters the enemy's guard, lowering their defense by 130% for 2 turns."
+  },
+  {
+    "id": "true_dragon_constitution",
+    "name": "True Dragon Constitution",
+    "type": "passive",
+    "effect": "crit_chance",
+    "scaling": 1.38,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A keen constitution that passively raises your critical chance by 38%."
+  },
+  {
+    "id": "glacial_sword_art",
+    "name": "Glacial Sword Art",
+    "type": "active",
+    "effect": "dot_damage",
+    "scaling": 0.72,
+    "cooldown": 3,
+    "qi_cost": 9,
+    "description": "Sears the target, dealing 72% of your attack per turn for 3 turns."
+  },
+  {
+    "id": "nine_yin_sutra",
+    "name": "Nine Yin Sutra",
+    "type": "passive",
+    "effect": "buff_attack",
+    "scaling": 1.25,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A martial sutra that passively raises your attack by 25%."
+  },
+  {
+    "id": "windless_sword_art",
+    "name": "Windless Sword Art",
+    "type": "active",
+    "effect": "debuff_defense",
+    "scaling": 1.4,
+    "cooldown": 4,
+    "qi_cost": 48,
+    "description": "Shatters the enemy's guard, lowering their defense by 40% for 2 turns."
+  },
+  {
+    "id": "star_shattering_guard",
+    "name": "Star Shattering Guard",
+    "type": "passive",
+    "effect": "buff_speed",
+    "scaling": 1.6,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A swift guard that passively raises your speed by 60%."
+  },
+  {
+    "id": "blood_sea_saber_art",
+    "name": "Blood Sea Saber Art",
+    "type": "active",
+    "effect": "shield",
+    "scaling": 6.58,
+    "cooldown": 5,
+    "qi_cost": 138,
+    "description": "Weaves a Qi barrier absorbing damage equal to 658% of your attack for 2 turns."
+  },
+  {
+    "id": "purple_cloud_fist_intent",
+    "name": "Purple Cloud Fist Intent",
+    "type": "active",
+    "effect": "dot_damage",
+    "scaling": 4.44,
+    "cooldown": 4,
+    "qi_cost": 253,
+    "description": "Sears the target, dealing 444% of your attack per turn for 3 turns."
+  },
+  {
+    "id": "primordial_chaos_fist",
+    "name": "Primordial Chaos Fist",
+    "type": "active",
+    "effect": "execute",
+    "scaling": 15.41,
+    "cooldown": 7,
+    "qi_cost": 354,
+    "description": "A killing fist dealing 1541% of your attack, bonus damage to low-HP foes."
+  },
+  {
+    "id": "black_tortoise_breathing_method",
+    "name": "Black Tortoise Breathing Method",
+    "type": "passive",
+    "effect": "buff_attack",
+    "scaling": 1.15,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A martial breathing method that passively raises your attack by 15%."
+  },
+  {
+    "id": "nine_yang_guard_no2",
+    "name": "Nine Yang Guard No.2",
+    "type": "passive",
+    "effect": "buff_evasion",
+    "scaling": 1.25,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "An evasive guard that passively raises your evasion by 25%."
+  },
+  {
+    "id": "iron_roar",
+    "name": "Iron Roar",
+    "type": "active",
+    "effect": "heal_self",
+    "scaling": 3.07,
+    "cooldown": 5,
+    "qi_cost": 58,
+    "description": "Circulates Qi to mend wounds, healing for 307% of your attack."
+  },
+  {
+    "id": "great_sun_ward",
+    "name": "Great Sun Ward",
+    "type": "passive",
+    "effect": "qi_regen",
+    "scaling": 14,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A circulation ward that restores 14 Qi each turn."
+  },
+  {
+    "id": "nether_claw",
+    "name": "Nether Claw",
+    "type": "active",
+    "effect": "counter",
+    "scaling": 6.33,
+    "cooldown": 4,
+    "qi_cost": 179,
+    "description": "Turns the enemy's force back, countering for 633% of your attack when struck."
+  },
+  {
+    "id": "phoenix_sword_art",
+    "name": "Phoenix Sword Art",
+    "type": "active",
+    "effect": "execute",
+    "scaling": 10.56,
+    "cooldown": 7,
+    "qi_cost": 290,
+    "description": "A killing sword art dealing 1056% of your attack, bonus damage to low-HP foes."
+  },
+  {
+    "id": "immortal_binding_roar",
+    "name": "Immortal Binding Roar",
+    "type": "active",
+    "effect": "stun",
+    "scaling": 3,
+    "cooldown": 4,
+    "qi_cost": 418,
+    "description": "A jarring roar that stuns the target for 3 turn(s)."
+  },
+  {
+    "id": "inferno_palm",
+    "name": "Inferno Palm",
+    "type": "active",
+    "effect": "true_damage",
+    "scaling": 1.29,
+    "cooldown": 5,
+    "qi_cost": 10,
+    "description": "Pierces all defenses, dealing 129% of your attack as true damage."
+  },
+  {
+    "id": "vermilion_bird_fist",
+    "name": "Vermilion Bird Fist",
+    "type": "active",
+    "effect": "stun",
+    "scaling": 1,
+    "cooldown": 5,
+    "qi_cost": 25,
+    "description": "A jarring fist that stuns the target for 1 turn(s)."
+  },
+  {
+    "id": "windless_roar_no2",
+    "name": "Windless Roar No.2",
+    "type": "active",
+    "effect": "damage",
+    "scaling": 3.35,
+    "cooldown": 3,
+    "qi_cost": 46,
+    "description": "A focused roar strike dealing 335% of your attack as damage."
+  },
+  {
+    "id": "glacial_bloodline",
+    "name": "Glacial Bloodline",
+    "type": "passive",
+    "effect": "buff_speed",
+    "scaling": 1.6,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A swift bloodline that passively raises your speed by 60%."
+  },
+  {
+    "id": "great_sun_guard",
+    "name": "Great Sun Guard",
+    "type": "passive",
+    "effect": "buff_max_hp",
+    "scaling": 1.9,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A body-forging guard that passively raises your max HP by 90%."
+  },
+  {
+    "id": "nirvana_chant",
+    "name": "Nirvana Chant",
+    "type": "passive",
+    "effect": "comprehension_gain",
+    "scaling": 17,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "An enlightening chant that passively grants +17 comprehension."
+  },
+  {
+    "id": "dao_heart_sword_intent",
+    "name": "Dao Heart Sword Intent",
+    "type": "active",
+    "effect": "counter",
+    "scaling": 12.89,
+    "cooldown": 4,
+    "qi_cost": 350,
+    "description": "Turns the enemy's force back, countering for 1289% of your attack when struck."
+  },
+  {
+    "id": "windless_chant",
+    "name": "Windless Chant",
+    "type": "passive",
+    "effect": "buff_max_hp",
+    "scaling": 1.15,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A body-forging chant that passively raises your max HP by 15%."
+  },
+  {
+    "id": "windless_saber_art",
+    "name": "Windless Saber Art",
+    "type": "active",
+    "effect": "true_damage",
+    "scaling": 1.91,
+    "cooldown": 6,
+    "qi_cost": 26,
+    "description": "Pierces all defenses, dealing 191% of your attack as true damage."
+  },
+  {
+    "id": "nine_yin_seal",
+    "name": "Nine Yin Seal",
+    "type": "active",
+    "effect": "heal_self",
+    "scaling": 3.2,
+    "cooldown": 5,
+    "qi_cost": 51,
+    "description": "Circulates Qi to mend wounds, healing for 320% of your attack."
+  },
+  {
+    "id": "mountain_crushing_fist_no2",
+    "name": "Mountain Crushing Fist No.2",
+    "type": "active",
+    "effect": "shield",
+    "scaling": 4.52,
+    "cooldown": 4,
+    "qi_cost": 87,
+    "description": "Weaves a Qi barrier absorbing damage equal to 451% of your attack for 2 turns."
+  },
+  {
+    "id": "primordial_chaos_seal",
+    "name": "Primordial Chaos Seal",
+    "type": "active",
+    "effect": "shield",
+    "scaling": 6.34,
+    "cooldown": 4,
+    "qi_cost": 142,
+    "description": "Weaves a Qi barrier absorbing damage equal to 634% of your attack for 2 turns."
+  },
+  {
+    "id": "dao_heart_roar_no2",
+    "name": "Dao Heart Roar No.2",
+    "type": "active",
+    "effect": "debuff_defense",
+    "scaling": 2.3,
+    "cooldown": 4,
+    "qi_cost": 293,
+    "description": "Shatters the enemy's guard, lowering their defense by 130% for 2 turns."
+  },
+  {
+    "id": "dao_heart_roar_no3",
+    "name": "Dao Heart Roar No.3",
+    "type": "active",
+    "effect": "dot_damage",
+    "scaling": 6.58,
+    "cooldown": 4,
+    "qi_cost": 381,
+    "description": "Sears the target, dealing 658% of your attack per turn for 3 turns."
+  },
+  {
+    "id": "azure_dragon_sword_art",
+    "name": "Azure Dragon Sword Art",
+    "type": "active",
+    "effect": "debuff_defense",
+    "scaling": 1.15,
+    "cooldown": 3,
+    "qi_cost": 10,
+    "description": "Shatters the enemy's guard, lowering their defense by 15% for 2 turns."
+  },
+  {
+    "id": "iron_body_no2",
+    "name": "Iron Body No.2",
+    "type": "passive",
+    "effect": "buff_max_qi",
+    "scaling": 1.25,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A Qi-nurturing body that passively raises your max Qi by 25%."
+  },
+  {
+    "id": "iron_fist_intent",
+    "name": "Iron Fist Intent",
+    "type": "active",
+    "effect": "true_damage",
+    "scaling": 2.51,
+    "cooldown": 6,
+    "qi_cost": 47,
+    "description": "Pierces all defenses, dealing 250% of your attack as true damage."
+  },
+  {
+    "id": "shadowless_domain",
+    "name": "Shadowless Domain",
+    "type": "active",
+    "effect": "shield",
+    "scaling": 4.5,
+    "cooldown": 5,
+    "qi_cost": 80,
+    "description": "Weaves a Qi barrier absorbing damage equal to 450% of your attack for 2 turns."
+  },
+  {
+    "id": "nirvana_aura",
+    "name": "Nirvana Aura",
+    "type": "passive",
+    "effect": "buff_defense",
+    "scaling": 1.9,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A defensive aura that passively raises your defense by 90%."
+  },
+  {
+    "id": "true_dragon_seal",
+    "name": "True Dragon Seal",
+    "type": "active",
+    "effect": "shield",
+    "scaling": 8.88,
+    "cooldown": 4,
+    "qi_cost": 233,
+    "description": "Weaves a Qi barrier absorbing damage equal to 888% of your attack for 2 turns."
+  },
+  {
+    "id": "primordial_chaos_sword_art",
+    "name": "Primordial Chaos Sword Art",
+    "type": "active",
+    "effect": "counter",
+    "scaling": 12.94,
+    "cooldown": 3,
+    "qi_cost": 415,
+    "description": "Turns the enemy's force back, countering for 1294% of your attack when struck."
+  },
+  {
+    "id": "glacial_sword_art_no2",
+    "name": "Glacial Sword Art No.2",
+    "type": "active",
+    "effect": "life_steal",
+    "scaling": 1.24,
+    "cooldown": 3,
+    "qi_cost": 11,
+    "description": "Drains the enemy for 124% of your attack, healing you for half the damage."
+  },
+  {
+    "id": "nine_yang_finger",
+    "name": "Nine Yang Finger",
+    "type": "active",
+    "effect": "counter",
+    "scaling": 2.16,
+    "cooldown": 4,
+    "qi_cost": 22,
+    "description": "Turns the enemy's force back, countering for 216% of your attack when struck."
+  },
+  {
+    "id": "purple_cloud_bloodline",
+    "name": "Purple Cloud Bloodline",
+    "type": "passive",
+    "effect": "qi_cost_reduction",
+    "scaling": 0.88,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "An efficient bloodline that reduces the Qi cost of all skills by 12%."
+  },
+  {
+    "id": "inferno_aura",
+    "name": "Inferno Aura",
+    "type": "passive",
+    "effect": "lifespan",
+    "scaling": 400,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A life-extending aura that increases lifespan by 400 years."
+  },
+  {
+    "id": "purple_cloud_scripture",
+    "name": "Purple Cloud Scripture",
+    "type": "passive",
+    "effect": "buff_max_qi",
+    "scaling": 1.9,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A Qi-nurturing scripture that passively raises your max Qi by 90%."
+  },
+  {
+    "id": "void_kick",
+    "name": "Void Kick",
+    "type": "active",
+    "effect": "aoe_damage",
+    "scaling": 7.7,
+    "cooldown": 5,
+    "qi_cost": 276,
+    "description": "A sweeping kick that hits all enemies for 770% of your attack."
+  },
+  {
+    "id": "true_dragon_palm",
+    "name": "True Dragon Palm",
+    "type": "active",
+    "effect": "debuff_attack",
+    "scaling": 2.9,
+    "cooldown": 4,
+    "qi_cost": 353,
+    "description": "Suppresses the enemy's momentum, lowering their attack by 190% for 2 turns."
+  },
+  {
+    "id": "white_tiger_palm_no2",
+    "name": "White Tiger Palm No.2",
+    "type": "active",
+    "effect": "life_steal",
+    "scaling": 1.23,
+    "cooldown": 4,
+    "qi_cost": 9,
+    "description": "Drains the enemy for 123% of your attack, healing you for half the damage."
+  },
+  {
+    "id": "azure_dragon_eye",
+    "name": "Azure Dragon Eye",
+    "type": "passive",
+    "effect": "buff_defense",
+    "scaling": 1.25,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A defensive eye that passively raises your defense by 25%."
+  },
+  {
+    "id": "myriad_sword_roar",
+    "name": "Myriad Sword Roar",
+    "type": "active",
+    "effect": "aoe_damage",
+    "scaling": 2.66,
+    "cooldown": 5,
+    "qi_cost": 54,
+    "description": "A sweeping roar that hits all enemies for 266% of your attack."
+  },
+  {
+    "id": "vermilion_bird_claw",
+    "name": "Vermilion Bird Claw",
+    "type": "active",
+    "effect": "life_steal",
+    "scaling": 3.87,
+    "cooldown": 3,
+    "qi_cost": 93,
+    "description": "Drains the enemy for 387% of your attack, healing you for half the damage."
+  },
+  {
+    "id": "nether_aura",
+    "name": "Nether Aura",
+    "type": "passive",
+    "effect": "crit_damage",
+    "scaling": 1.9,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A ferocious aura that passively raises your critical damage by 90%."
+  },
+  {
+    "id": "void_claw",
+    "name": "Void Claw",
+    "type": "active",
+    "effect": "life_steal",
+    "scaling": 7.95,
+    "cooldown": 3,
+    "qi_cost": 268,
+    "description": "Drains the enemy for 795% of your attack, healing you for half the damage."
+  },
+  {
+    "id": "void_domain",
+    "name": "Void Domain",
+    "type": "active",
+    "effect": "execute",
+    "scaling": 15.63,
+    "cooldown": 5,
+    "qi_cost": 453,
+    "description": "A killing domain dealing 1563% of your attack, bonus damage to low-HP foes."
+  },
+  {
+    "id": "glacial_saber_art_no2",
+    "name": "Glacial Saber Art No.2",
+    "type": "active",
+    "effect": "true_damage",
+    "scaling": 1.28,
+    "cooldown": 4,
+    "qi_cost": 11,
+    "description": "Pierces all defenses, dealing 128% of your attack as true damage."
+  },
+  {
+    "id": "inferno_sutra",
+    "name": "Inferno Sutra",
+    "type": "passive",
+    "effect": "buff_speed",
+    "scaling": 1.25,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A swift sutra that passively raises your speed by 25%."
+  },
+  {
+    "id": "heaven_splitting_breathing_method",
+    "name": "Heaven Splitting Breathing Method",
+    "type": "passive",
+    "effect": "qi_cost_reduction",
+    "scaling": 0.88,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "An efficient breathing method that reduces the Qi cost of all skills by 12%."
+  },
+  {
+    "id": "glacial_claw",
+    "name": "Glacial Claw",
+    "type": "active",
+    "effect": "life_steal",
+    "scaling": 3.9,
+    "cooldown": 4,
+    "qi_cost": 96,
+    "description": "Drains the enemy for 390% of your attack, healing you for half the damage."
+  },
+  {
+    "id": "mountain_crushing_fist_no3",
+    "name": "Mountain Crushing Fist No.3",
+    "type": "active",
+    "effect": "stun",
+    "scaling": 2,
+    "cooldown": 4,
+    "qi_cost": 184,
+    "description": "A jarring fist that stuns the target for 2 turn(s)."
+  },
+  {
+    "id": "heaven_splitting_kick",
+    "name": "Heaven Splitting Kick",
+    "type": "active",
+    "effect": "life_steal",
+    "scaling": 8.13,
+    "cooldown": 3,
+    "qi_cost": 272,
+    "description": "Drains the enemy for 813% of your attack, healing you for half the damage."
+  },
+  {
+    "id": "dao_heart_fist_intent",
+    "name": "Dao Heart Fist Intent",
+    "type": "active",
+    "effect": "life_steal",
+    "scaling": 11.79,
+    "cooldown": 3,
+    "qi_cost": 424,
+    "description": "Drains the enemy for 1179% of your attack, healing you for half the damage."
+  },
+  {
+    "id": "azure_dragon_domain",
+    "name": "Azure Dragon Domain",
+    "type": "active",
+    "effect": "life_steal",
+    "scaling": 1.31,
+    "cooldown": 3,
+    "qi_cost": 9,
+    "description": "Drains the enemy for 131% of your attack, healing you for half the damage."
+  },
+  {
+    "id": "earth_vein_aura",
+    "name": "Earth Vein Aura",
+    "type": "passive",
+    "effect": "buff_defense",
+    "scaling": 1.25,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A defensive aura that passively raises your defense by 25%."
+  },
+  {
+    "id": "windless_saber_art_no2",
+    "name": "Windless Saber Art No.2",
+    "type": "active",
+    "effect": "stun",
+    "scaling": 2,
+    "cooldown": 4,
+    "qi_cost": 51,
+    "description": "A jarring saber art that stuns the target for 2 turn(s)."
+  },
+  {
+    "id": "soul_severing_scripture",
+    "name": "Soul Severing Scripture",
+    "type": "passive",
+    "effect": "qi_regen",
+    "scaling": 14,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A circulation scripture that restores 14 Qi each turn."
+  },
+  {
+    "id": "blood_sea_aura",
+    "name": "Blood Sea Aura",
+    "type": "passive",
+    "effect": "buff_max_hp",
+    "scaling": 1.9,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A body-forging aura that passively raises your max HP by 90%."
+  },
+  {
+    "id": "nether_roar",
+    "name": "Nether Roar",
+    "type": "active",
+    "effect": "heal_self",
+    "scaling": 8.82,
+    "cooldown": 5,
+    "qi_cost": 295,
+    "description": "Circulates Qi to mend wounds, healing for 882% of your attack."
+  },
+  {
+    "id": "nirvana_sword_intent",
+    "name": "Nirvana Sword Intent",
+    "type": "active",
+    "effect": "true_damage",
+    "scaling": 10.33,
+    "cooldown": 6,
+    "qi_cost": 384,
+    "description": "Pierces all defenses, dealing 1033% of your attack as true damage."
+  },
+  {
+    "id": "nine_yin_fist_intent",
+    "name": "Nine Yin Fist Intent",
+    "type": "active",
+    "effect": "counter",
+    "scaling": 1.31,
+    "cooldown": 3,
+    "qi_cost": 11,
+    "description": "Turns the enemy's force back, countering for 131% of your attack when struck."
+  },
+  {
+    "id": "earth_vein_sutra",
+    "name": "Earth Vein Sutra",
+    "type": "passive",
+    "effect": "crit_chance",
+    "scaling": 1.08,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A keen sutra that passively raises your critical chance by 8%."
+  },
+  {
+    "id": "black_tortoise_body",
+    "name": "Black Tortoise Body",
+    "type": "passive",
+    "effect": "buff_speed",
+    "scaling": 1.4,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A swift body that passively raises your speed by 40%."
+  },
+  {
+    "id": "azure_dragon_eye_no2",
+    "name": "Azure Dragon Eye No.2",
+    "type": "passive",
+    "effect": "comprehension_gain",
+    "scaling": 7,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "An enlightening eye that passively grants +7 comprehension."
+  },
+  {
+    "id": "shadowless_footwork",
+    "name": "Shadowless Footwork",
+    "type": "passive",
+    "effect": "buff_max_qi",
+    "scaling": 1.9,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A Qi-nurturing footwork that passively raises your max Qi by 90%."
+  },
+  {
+    "id": "immortal_binding_saber_art",
+    "name": "Immortal Binding Saber Art",
+    "type": "active",
+    "effect": "life_steal",
+    "scaling": 7.96,
+    "cooldown": 4,
+    "qi_cost": 225,
+    "description": "Drains the enemy for 796% of your attack, healing you for half the damage."
+  },
+  {
+    "id": "true_dragon_sword_intent_no2",
+    "name": "True Dragon Sword Intent No.2",
+    "type": "active",
+    "effect": "counter",
+    "scaling": 13.05,
+    "cooldown": 4,
+    "qi_cost": 354,
+    "description": "Turns the enemy's force back, countering for 1305% of your attack when struck."
+  },
+  {
+    "id": "iron_kick",
+    "name": "Iron Kick",
+    "type": "active",
+    "effect": "heal_self",
+    "scaling": 1.45,
+    "cooldown": 4,
+    "qi_cost": 9,
+    "description": "Circulates Qi to mend wounds, healing for 145% of your attack."
+  },
+  {
+    "id": "thunderclap_eye",
+    "name": "Thunderclap Eye",
+    "type": "passive",
+    "effect": "buff_evasion",
+    "scaling": 1.25,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "An evasive eye that passively raises your evasion by 25%."
+  },
+  {
+    "id": "myriad_sword_aura_no2",
+    "name": "Myriad Sword Aura No.2",
+    "type": "passive",
+    "effect": "buff_speed",
+    "scaling": 1.4,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A swift aura that passively raises your speed by 40%."
+  },
+  {
+    "id": "mountain_crushing_sutra",
+    "name": "Mountain Crushing Sutra",
+    "type": "passive",
+    "effect": "buff_evasion",
+    "scaling": 1.6,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "An evasive sutra that passively raises your evasion by 60%."
+  },
+  {
+    "id": "soul_severing_guard",
+    "name": "Soul Severing Guard",
+    "type": "passive",
+    "effect": "buff_attack",
+    "scaling": 1.9,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A martial guard that passively raises your attack by 90%."
+  },
+  {
+    "id": "heaven_splitting_seal",
+    "name": "Heaven Splitting Seal",
+    "type": "active",
+    "effect": "shield",
+    "scaling": 8.91,
+    "cooldown": 4,
+    "qi_cost": 287,
+    "description": "Weaves a Qi barrier absorbing damage equal to 891% of your attack for 2 turns."
+  },
+  {
+    "id": "true_dragon_constitution_no2",
+    "name": "True Dragon Constitution No.2",
+    "type": "passive",
+    "effect": "buff_max_qi",
+    "scaling": 2.9,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A Qi-nurturing constitution that passively raises your max Qi by 190%."
+  },
+  {
+    "id": "earth_vein_sword_art",
+    "name": "Earth Vein Sword Art",
+    "type": "active",
+    "effect": "execute",
+    "scaling": 1.59,
+    "cooldown": 6,
+    "qi_cost": 9,
+    "description": "A killing sword art dealing 159% of your attack, bonus damage to low-HP foes."
+  },
+  {
+    "id": "iron_sword_intent",
+    "name": "Iron Sword Intent",
+    "type": "active",
+    "effect": "damage",
+    "scaling": 2.22,
+    "cooldown": 2,
+    "qi_cost": 22,
+    "description": "A focused sword intent strike dealing 222% of your attack as damage."
+  },
+  {
+    "id": "myriad_sword_sutra",
+    "name": "Myriad Sword Sutra",
+    "type": "passive",
+    "effect": "qi_regen",
+    "scaling": 8,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A circulation sutra that restores 8 Qi each turn."
+  },
+  {
+    "id": "vermilion_bird_roar",
+    "name": "Vermilion Bird Roar",
+    "type": "active",
+    "effect": "debuff_attack",
+    "scaling": 1.6,
+    "cooldown": 4,
+    "qi_cost": 86,
+    "description": "Suppresses the enemy's momentum, lowering their attack by 60% for 2 turns."
+  },
+  {
+    "id": "shadowless_footwork_no2",
+    "name": "Shadowless Footwork No.2",
+    "type": "passive",
+    "effect": "buff_attack",
+    "scaling": 1.9,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A martial footwork that passively raises your attack by 90%."
+  },
+  {
+    "id": "star_shattering_roar",
+    "name": "Star Shattering Roar",
+    "type": "active",
+    "effect": "debuff_defense",
+    "scaling": 2.3,
+    "cooldown": 3,
+    "qi_cost": 279,
+    "description": "Shatters the enemy's guard, lowering their defense by 130% for 2 turns."
+  },
+  {
+    "id": "immortal_binding_saber_art_no2",
+    "name": "Immortal Binding Saber Art No.2",
+    "type": "active",
+    "effect": "heal_self",
+    "scaling": 13.13,
+    "cooldown": 4,
+    "qi_cost": 474,
+    "description": "Circulates Qi to mend wounds, healing for 1313% of your attack."
+  },
+  {
+    "id": "glacial_sword_intent",
+    "name": "Glacial Sword Intent",
+    "type": "active",
+    "effect": "aoe_damage",
+    "scaling": 1.22,
+    "cooldown": 6,
+    "qi_cost": 10,
+    "description": "A sweeping sword intent that hits all enemies for 122% of your attack."
+  },
+  {
+    "id": "roaring_tide_sword_intent",
+    "name": "Roaring Tide Sword Intent",
+    "type": "active",
+    "effect": "debuff_attack",
+    "scaling": 1.25,
+    "cooldown": 3,
+    "qi_cost": 27,
+    "description": "Suppresses the enemy's momentum, lowering their attack by 25% for 2 turns."
+  },
+  {
+    "id": "inferno_fist_intent",
+    "name": "Inferno Fist Intent",
+    "type": "active",
+    "effect": "shield",
+    "scaling": 3.12,
+    "cooldown": 5,
+    "qi_cost": 44,
+    "description": "Weaves a Qi barrier absorbing damage equal to 312% of your attack for 2 turns."
+  },
+  {
+    "id": "nine_yin_sword_art",
+    "name": "Nine Yin Sword Art",
+    "type": "active",
+    "effect": "stun",
+    "scaling": 2,
+    "cooldown": 4,
+    "qi_cost": 94,
+    "description": "A jarring sword art that stuns the target for 2 turn(s)."
+  },
+  {
+    "id": "phoenix_sword_intent",
+    "name": "Phoenix Sword Intent",
+    "type": "active",
+    "effect": "shield",
+    "scaling": 6.68,
+    "cooldown": 5,
+    "qi_cost": 180,
+    "description": "Weaves a Qi barrier absorbing damage equal to 668% of your attack for 2 turns."
+  },
+  {
+    "id": "heaven_splitting_roar",
+    "name": "Heaven Splitting Roar",
+    "type": "active",
+    "effect": "stun",
+    "scaling": 3,
+    "cooldown": 4,
+    "qi_cost": 238,
+    "description": "A jarring roar that stuns the target for 3 turn(s)."
+  },
+  {
+    "id": "immortal_binding_fist",
+    "name": "Immortal Binding Fist",
+    "type": "active",
+    "effect": "stun",
+    "scaling": 3,
+    "cooldown": 4,
+    "qi_cost": 421,
+    "description": "A jarring fist that stuns the target for 3 turn(s)."
+  },
+  {
+    "id": "glacial_footwork",
+    "name": "Glacial Footwork",
+    "type": "passive",
+    "effect": "crit_chance",
+    "scaling": 1.05,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A keen footwork that passively raises your critical chance by 5%."
+  },
+  {
+    "id": "roaring_tide_sword_intent_no2",
+    "name": "Roaring Tide Sword Intent No.2",
+    "type": "active",
+    "effect": "dot_damage",
+    "scaling": 1.15,
+    "cooldown": 4,
+    "qi_cost": 23,
+    "description": "Sears the target, dealing 114% of your attack per turn for 3 turns."
+  },
+  {
+    "id": "thunderclap_bloodline",
+    "name": "Thunderclap Bloodline",
+    "type": "passive",
+    "effect": "buff_defense",
+    "scaling": 1.4,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A defensive bloodline that passively raises your defense by 40%."
+  },
+  {
+    "id": "nether_saber_art",
+    "name": "Nether Saber Art",
+    "type": "active",
+    "effect": "damage",
+    "scaling": 4.62,
+    "cooldown": 2,
+    "qi_cost": 94,
+    "description": "A focused saber art strike dealing 462% of your attack as damage."
+  },
+  {
+    "id": "heaven_splitting_footwork",
+    "name": "Heaven Splitting Footwork",
+    "type": "passive",
+    "effect": "qi_regen",
+    "scaling": 24,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A circulation footwork that restores 24 Qi each turn."
+  },
+  {
+    "id": "shadowless_saber_art",
+    "name": "Shadowless Saber Art",
+    "type": "active",
+    "effect": "counter",
+    "scaling": 8.93,
+    "cooldown": 3,
+    "qi_cost": 229,
+    "description": "Turns the enemy's force back, countering for 893% of your attack when struck."
+  },
+  {
+    "id": "primordial_chaos_scripture",
+    "name": "Primordial Chaos Scripture",
+    "type": "passive",
+    "effect": "comprehension_gain",
+    "scaling": 26,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "An enlightening scripture that passively grants +26 comprehension."
+  },
+  {
+    "id": "inferno_constitution",
+    "name": "Inferno Constitution",
+    "type": "passive",
+    "effect": "comprehension_gain",
+    "scaling": 1,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "An enlightening constitution that passively grants +1 comprehension."
+  },
+  {
+    "id": "black_tortoise_seal",
+    "name": "Black Tortoise Seal",
+    "type": "active",
+    "effect": "stun",
+    "scaling": 1,
+    "cooldown": 5,
+    "qi_cost": 27,
+    "description": "A jarring seal that stuns the target for 1 turn(s)."
+  },
+  {
+    "id": "earth_vein_chant",
+    "name": "Earth Vein Chant",
+    "type": "passive",
+    "effect": "buff_max_hp",
+    "scaling": 1.4,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A body-forging chant that passively raises your max HP by 40%."
+  },
+  {
+    "id": "great_sun_domain_no2",
+    "name": "Great Sun Domain No.2",
+    "type": "active",
+    "effect": "aoe_damage",
+    "scaling": 3.97,
+    "cooldown": 5,
+    "qi_cost": 96,
+    "description": "A sweeping domain that hits all enemies for 397% of your attack."
+  },
+  {
+    "id": "void_body",
+    "name": "Void Body",
+    "type": "passive",
+    "effect": "qi_cost_reduction",
+    "scaling": 0.8,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "An efficient body that reduces the Qi cost of all skills by 19%."
+  },
+  {
+    "id": "shadowless_roar",
+    "name": "Shadowless Roar",
+    "type": "active",
+    "effect": "heal_self",
+    "scaling": 9.01,
+    "cooldown": 4,
+    "qi_cost": 298,
+    "description": "Circulates Qi to mend wounds, healing for 901% of your attack."
+  },
+  {
+    "id": "nirvana_aura_no2",
+    "name": "Nirvana Aura No.2",
+    "type": "passive",
+    "effect": "buff_max_hp",
+    "scaling": 2.9,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A body-forging aura that passively raises your max HP by 190%."
+  },
+  {
+    "id": "white_tiger_fist_intent",
+    "name": "White Tiger Fist Intent",
+    "type": "active",
+    "effect": "debuff_defense",
+    "scaling": 1.15,
+    "cooldown": 4,
+    "qi_cost": 11,
+    "description": "Shatters the enemy's guard, lowering their defense by 15% for 2 turns."
+  },
+  {
+    "id": "nine_yin_saber_art",
+    "name": "Nine Yin Saber Art",
+    "type": "active",
+    "effect": "damage",
+    "scaling": 2.29,
+    "cooldown": 3,
+    "qi_cost": 25,
+    "description": "A focused saber art strike dealing 229% of your attack as damage."
+  },
+  {
+    "id": "glacial_body",
+    "name": "Glacial Body",
+    "type": "passive",
+    "effect": "qi_cost_reduction",
+    "scaling": 0.88,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "An efficient body that reduces the Qi cost of all skills by 12%."
+  },
+  {
+    "id": "nether_roar_no2",
+    "name": "Nether Roar No.2",
+    "type": "active",
+    "effect": "damage",
+    "scaling": 4.38,
+    "cooldown": 3,
+    "qi_cost": 85,
+    "description": "A focused roar strike dealing 438% of your attack as damage."
+  },
+  {
+    "id": "soul_severing_sword_intent",
+    "name": "Soul Severing Sword Intent",
+    "type": "active",
+    "effect": "counter",
+    "scaling": 6.5,
+    "cooldown": 4,
+    "qi_cost": 159,
+    "description": "Turns the enemy's force back, countering for 650% of your attack when struck."
+  },
+  {
+    "id": "myriad_sword_claw",
+    "name": "Myriad Sword Claw",
+    "type": "active",
+    "effect": "dot_damage",
+    "scaling": 4.59,
+    "cooldown": 4,
+    "qi_cost": 292,
+    "description": "Sears the target, dealing 459% of your attack per turn for 3 turns."
+  },
+  {
+    "id": "dao_heart_aura",
+    "name": "Dao Heart Aura",
+    "type": "passive",
+    "effect": "buff_speed",
+    "scaling": 2.9,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A swift aura that passively raises your speed by 190%."
+  },
+  {
+    "id": "black_tortoise_scripture",
+    "name": "Black Tortoise Scripture",
+    "type": "passive",
+    "effect": "crit_damage",
+    "scaling": 1.15,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A ferocious scripture that passively raises your critical damage by 15%."
+  },
+  {
+    "id": "inferno_body",
+    "name": "Inferno Body",
+    "type": "passive",
+    "effect": "buff_max_qi",
+    "scaling": 1.25,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A Qi-nurturing body that passively raises your max Qi by 25%."
+  },
+  {
+    "id": "black_tortoise_bloodline",
+    "name": "Black Tortoise Bloodline",
+    "type": "passive",
+    "effect": "qi_cost_reduction",
+    "scaling": 0.88,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "An efficient bloodline that reduces the Qi cost of all skills by 12%."
+  },
+  {
+    "id": "windless_fist",
+    "name": "Windless Fist",
+    "type": "active",
+    "effect": "execute",
+    "scaling": 5.59,
+    "cooldown": 6,
+    "qi_cost": 101,
+    "description": "A killing fist dealing 559% of your attack, bonus damage to low-HP foes."
+  },
+  {
+    "id": "phoenix_footwork",
+    "name": "Phoenix Footwork",
+    "type": "passive",
+    "effect": "buff_max_qi",
+    "scaling": 1.9,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A Qi-nurturing footwork that passively raises your max Qi by 90%."
+  },
+  {
+    "id": "nether_aura_no2",
+    "name": "Nether Aura No.2",
+    "type": "passive",
+    "effect": "buff_max_hp",
+    "scaling": 2.3,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A body-forging aura that passively raises your max HP by 130%."
+  },
+  {
+    "id": "primordial_chaos_meditation_no2",
+    "name": "Primordial Chaos Meditation No.2",
+    "type": "passive",
+    "effect": "cultivation_speed",
+    "scaling": 2.9,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A profound meditation that passively increases cultivation speed by 190%."
+  },
+  {
+    "id": "white_tiger_chant_no2",
+    "name": "White Tiger Chant No.2",
+    "type": "passive",
+    "effect": "comprehension_gain",
+    "scaling": 1,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "An enlightening chant that passively grants +1 comprehension."
+  },
+  {
+    "id": "nine_yin_bloodline",
+    "name": "Nine Yin Bloodline",
+    "type": "passive",
+    "effect": "qi_regen",
+    "scaling": 4,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A circulation bloodline that restores 4 Qi each turn."
+  },
+  {
+    "id": "nether_finger",
+    "name": "Nether Finger",
+    "type": "active",
+    "effect": "damage",
+    "scaling": 3.37,
+    "cooldown": 2,
+    "qi_cost": 46,
+    "description": "A focused finger strike dealing 337% of your attack as damage."
+  },
+  {
+    "id": "white_tiger_breathing_method",
+    "name": "White Tiger Breathing Method",
+    "type": "passive",
+    "effect": "buff_evasion",
+    "scaling": 1.6,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "An evasive breathing method that passively raises your evasion by 60%."
+  },
+  {
+    "id": "nirvana_scripture_no2",
+    "name": "Nirvana Scripture No.2",
+    "type": "passive",
+    "effect": "crit_damage",
+    "scaling": 1.9,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A ferocious scripture that passively raises your critical damage by 90%."
+  },
+  {
+    "id": "shadowless_ward",
+    "name": "Shadowless Ward",
+    "type": "passive",
+    "effect": "hp_regen",
+    "scaling": 64,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A recovery ward that restores 64 HP each turn."
+  },
+  {
+    "id": "phoenix_fist",
+    "name": "Phoenix Fist",
+    "type": "active",
+    "effect": "life_steal",
+    "scaling": 11.85,
+    "cooldown": 3,
+    "qi_cost": 390,
+    "description": "Drains the enemy for 1185% of your attack, healing you for half the damage."
+  },
+  {
+    "id": "thunderclap_constitution",
+    "name": "Thunderclap Constitution",
+    "type": "passive",
+    "effect": "buff_defense",
+    "scaling": 1.15,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A defensive constitution that passively raises your defense by 15%."
+  },
+  {
+    "id": "windless_roar_no3",
+    "name": "Windless Roar No.3",
+    "type": "active",
+    "effect": "dot_damage",
+    "scaling": 1.19,
+    "cooldown": 4,
+    "qi_cost": 28,
+    "description": "Sears the target, dealing 119% of your attack per turn for 3 turns."
+  },
+  {
+    "id": "white_tiger_seal",
+    "name": "White Tiger Seal",
+    "type": "active",
+    "effect": "true_damage",
+    "scaling": 2.61,
+    "cooldown": 4,
+    "qi_cost": 57,
+    "description": "Pierces all defenses, dealing 261% of your attack as true damage."
+  },
+  {
+    "id": "myriad_sword_finger",
+    "name": "Myriad Sword Finger",
+    "type": "active",
+    "effect": "aoe_damage",
+    "scaling": 3.88,
+    "cooldown": 6,
+    "qi_cost": 95,
+    "description": "A sweeping finger that hits all enemies for 388% of your attack."
+  },
+  {
+    "id": "mountain_crushing_chant",
+    "name": "Mountain Crushing Chant",
+    "type": "passive",
+    "effect": "crit_damage",
+    "scaling": 1.9,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A ferocious chant that passively raises your critical damage by 90%."
+  },
+  {
+    "id": "primordial_chaos_domain",
+    "name": "Primordial Chaos Domain",
+    "type": "active",
+    "effect": "counter",
+    "scaling": 8.92,
+    "cooldown": 3,
+    "qi_cost": 258,
+    "description": "Turns the enemy's force back, countering for 892% of your attack when struck."
+  },
+  {
+    "id": "golden_body_domain",
+    "name": "Golden Body Domain",
+    "type": "active",
+    "effect": "life_steal",
+    "scaling": 11.57,
+    "cooldown": 4,
+    "qi_cost": 448,
+    "description": "Drains the enemy for 1157% of your attack, healing you for half the damage."
+  },
+  {
+    "id": "vermilion_bird_meditation_no2",
+    "name": "Vermilion Bird Meditation No.2",
+    "type": "passive",
+    "effect": "buff_speed",
+    "scaling": 1.15,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A swift meditation that passively raises your speed by 15%."
+  },
+  {
+    "id": "windless_chant_no2",
+    "name": "Windless Chant No.2",
+    "type": "passive",
+    "effect": "buff_attack",
+    "scaling": 1.25,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A martial chant that passively raises your attack by 25%."
+  },
+  {
+    "id": "inferno_claw",
+    "name": "Inferno Claw",
+    "type": "active",
+    "effect": "counter",
+    "scaling": 3.12,
+    "cooldown": 4,
+    "qi_cost": 44,
+    "description": "Turns the enemy's force back, countering for 312% of your attack when struck."
+  },
+  {
+    "id": "soul_severing_kick_no2",
+    "name": "Soul Severing Kick No.2",
+    "type": "active",
+    "effect": "debuff_attack",
+    "scaling": 1.6,
+    "cooldown": 3,
+    "qi_cost": 99,
+    "description": "Suppresses the enemy's momentum, lowering their attack by 60% for 2 turns."
+  },
+  {
+    "id": "great_sun_chant",
+    "name": "Great Sun Chant",
+    "type": "passive",
+    "effect": "lifespan",
+    "scaling": 1000,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A life-extending chant that increases lifespan by 1000 years."
+  },
+  {
+    "id": "nether_constitution",
+    "name": "Nether Constitution",
+    "type": "passive",
+    "effect": "crit_chance",
+    "scaling": 1.3,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A keen constitution that passively raises your critical chance by 30%."
+  },
+  {
+    "id": "dao_heart_sword_intent_no2",
+    "name": "Dao Heart Sword Intent No.2",
+    "type": "active",
+    "effect": "counter",
+    "scaling": 12.89,
+    "cooldown": 3,
+    "qi_cost": 351,
+    "description": "Turns the enemy's force back, countering for 1289% of your attack when struck."
+  },
+  {
+    "id": "inferno_aura_no2",
+    "name": "Inferno Aura No.2",
+    "type": "passive",
+    "effect": "qi_cost_reduction",
+    "scaling": 0.95,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "An efficient aura that reduces the Qi cost of all skills by 5%."
+  },
+  {
+    "id": "inferno_seal",
+    "name": "Inferno Seal",
+    "type": "active",
+    "effect": "dot_damage",
+    "scaling": 1.15,
+    "cooldown": 4,
+    "qi_cost": 26,
+    "description": "Sears the target, dealing 114% of your attack per turn for 3 turns."
+  },
+  {
+    "id": "purple_cloud_sword_intent",
+    "name": "Purple Cloud Sword Intent",
+    "type": "active",
+    "effect": "damage",
+    "scaling": 3.25,
+    "cooldown": 3,
+    "qi_cost": 53,
+    "description": "A focused sword intent strike dealing 325% of your attack as damage."
+  },
+  {
+    "id": "thunderclap_chant_no2",
+    "name": "Thunderclap Chant No.2",
+    "type": "passive",
+    "effect": "hp_regen",
+    "scaling": 22,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A recovery chant that restores 22 HP each turn."
+  },
+  {
+    "id": "myriad_sword_kick",
+    "name": "Myriad Sword Kick",
+    "type": "active",
+    "effect": "life_steal",
+    "scaling": 5.9,
+    "cooldown": 3,
+    "qi_cost": 152,
+    "description": "Drains the enemy for 590% of your attack, healing you for half the damage."
+  },
+  {
+    "id": "star_shattering_seal",
+    "name": "Star Shattering Seal",
+    "type": "active",
+    "effect": "stun",
+    "scaling": 3,
+    "cooldown": 4,
+    "qi_cost": 283,
+    "description": "A jarring seal that stuns the target for 3 turn(s)."
+  },
+  {
+    "id": "phoenix_seal",
+    "name": "Phoenix Seal",
+    "type": "active",
+    "effect": "life_steal",
+    "scaling": 11.7,
+    "cooldown": 3,
+    "qi_cost": 382,
+    "description": "Drains the enemy for 1170% of your attack, healing you for half the damage."
+  },
+  {
+    "id": "nine_yang_seal",
+    "name": "Nine Yang Seal",
+    "type": "active",
+    "effect": "counter",
+    "scaling": 1.67,
+    "cooldown": 3,
+    "qi_cost": 11,
+    "description": "Turns the enemy's force back, countering for 167% of your attack when struck."
+  },
+  {
+    "id": "nine_yang_footwork",
+    "name": "Nine Yang Footwork",
+    "type": "passive",
+    "effect": "buff_attack",
+    "scaling": 1.25,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "A martial footwork that passively raises your attack by 25%."
+  },
+  {
+    "id": "shadowless_sword_intent",
+    "name": "Shadowless Sword Intent",
+    "type": "active",
+    "effect": "debuff_defense",
+    "scaling": 1.4,
+    "cooldown": 4,
+    "qi_cost": 53,
+    "description": "Shatters the enemy's guard, lowering their defense by 40% for 2 turns."
+  },
+  {
+    "id": "nine_yang_roar",
+    "name": "Nine Yang Roar",
+    "type": "active",
+    "effect": "counter",
+    "scaling": 4.66,
+    "cooldown": 3,
+    "qi_cost": 80,
+    "description": "Turns the enemy's force back, countering for 466% of your attack when struck."
+  },
+  {
+    "id": "myriad_sword_finger_no2",
+    "name": "Myriad Sword Finger No.2",
+    "type": "active",
+    "effect": "counter",
+    "scaling": 6.63,
+    "cooldown": 3,
+    "qi_cost": 184,
+    "description": "Turns the enemy's force back, countering for 663% of your attack when struck."
+  },
+  {
+    "id": "purple_cloud_saber_art",
+    "name": "Purple Cloud Saber Art",
+    "type": "active",
+    "effect": "execute",
+    "scaling": 10.68,
+    "cooldown": 7,
+    "qi_cost": 291,
+    "description": "A killing saber art dealing 1068% of your attack, bonus damage to low-HP foes."
+  },
+  {
+    "id": "primordial_chaos_finger",
+    "name": "Primordial Chaos Finger",
+    "type": "active",
+    "effect": "shield",
+    "scaling": 12.83,
+    "cooldown": 4,
+    "qi_cost": 406,
+    "description": "Weaves a Qi barrier absorbing damage equal to 1283% of your attack for 2 turns."
+  },
+  {
+    "id": "black_tortoise_fist_intent",
+    "name": "Black Tortoise Fist Intent",
+    "type": "active",
+    "effect": "dot_damage",
+    "scaling": 0.78,
+    "cooldown": 4,
+    "qi_cost": 9,
+    "description": "Sears the target, dealing 78% of your attack per turn for 3 turns."
+  },
+  {
+    "id": "earth_vein_footwork",
+    "name": "Earth Vein Footwork",
+    "type": "passive",
+    "effect": "qi_cost_reduction",
+    "scaling": 0.92,
+    "cooldown": 0,
+    "qi_cost": 0,
+    "description": "An efficient footwork that reduces the Qi cost of all skills by 7%."
+  }
+]

@@ -1,0 +1,66 @@
+# Changelog
+
+## Unreleased
+
+- Added content-discovery systems so authored skills, items, and equipment are reachable in-game. Skills are now learnable two ways: **technique manuals** (a learn-skill item auto-generated for every skill, `id "<skill_id>_manual"`; `USE_ITEM` teaches and consumes it) with optional per-skill overrides in `data/technique_manuals.json`, and **trainers** (`data/trainers.json`) — location-bound masters that teach skills for Gold/Spirit Stones via `TRAINERS`/`LEARN_SKILL`. Exploration finds now draw a rarity-weighted, danger-gated item/equipment reward from the whole catalogue (`events.json` `find_config`), so higher-`danger_level` areas surface rarer gear. New `SkillSystem`, `TrainerSystem`, and `FindSystem`, a shared `currency` helper (shared with shops), central validation for trainers/manual-overrides/find_config, and a Godot "Masters" action to learn techniques.
+- Gave Essence Gathering its own fatigue (`cultivation_strain`) and stability (`foundation_stability`) system mirroring Body Transformation: Essence training builds strain, Essence breakthroughs are gated by `max_strain_for_breakthrough` and `required_foundation_stability`, failed Essence breakthroughs raise strain and lower stability, successful ones relieve strain, and a new `STABILISE_ESSENCE` action (with `stabilise_essence` time cost) settles Essence strain and restores Essence foundation stability. Tuning lives in a new `essence_progression` config block (centrally validated); the Godot frontend shows Essence Strain/Stability and a Stabilise Essence action.
+- Fixed exploration always surfacing named characters at their location: the encounter is now gated by a data-driven `character_encounter_chance` (`data/events.json`, default `0.35`), so exploring a location with named cultivators still rolls combat, loot, special, and quiet events instead of only the character encounter.
+- Added normalized world-map coordinates to every location and a Godot World Map popup using `Sky Spill Continent Map.png`; the popup places a current-location marker from backend `location.map_position` state.
+- Added data-driven shops and equipment purchasing: `game/data/shops.json` defines location-bound markets with stock and prices, `ShopSystem` validates `SHOP`/`BUY_ITEM` actions, Gold and Spirit Stones can be spent as currencies, and the Godot frontend now exposes a Market action that buys through the backend.
+- Replaced the Spiritual Root and Physique traits with a unified two-track Talent system: new games roll an independent Martial Talent (essence aptitude) and Body Talent (body aptitude) from `cultivation/martial_talents.json` and `cultivation/body_talents.json`, named per the talent ladder grades (Common Grade splits into three sub-talents). Existing cultivation multipliers, weights, and upgrade hooks carried over unchanged; the player now stores `martial_talent_id`/`body_talent_id`.
+- Added lifespan tracking: characters start at age 12 and age by a data-driven per-action time cost (`cultivation_config.json` `lifespan.time_costs`). Maximum lifespan follows the current Essence Gathering realm (`max_lifespan_years` per realm; mortal base 100), so breakthroughs extend it and `beyond_divinity` is effectively immortal. Reaching the cap ends the run with a `PLAYER_DIED` game-over. A pure `LifespanSystem` exposes read-only age/remaining-years views.
+- Equipment now gates on actual cultivation (realm/stats) rather than talent: removed the `minimum_spiritual_root_rank` / `minimum_physique_rank` requirement checks.
+- Bumped the save schema to version 2 (talent IDs + `age_years`); version-1 saves are rejected on load.
+- Updated the Godot frontend to show Martial/Body Talent, current age/lifespan, and an old-age death screen.
+- Added a data-driven two-track talent tier ladder (`cultivation/talents.json`): 20 tiers plus an Apex tier, each sharing one index across the Martial and Body-cultivation tracks and mapping to a reachable cultivation realm and maximum lifespan (canon lifespans flagged vs extrapolated). Loaded by `GameDataRegistry`, cross-checked by the central validator (unique ids/tiers, known essence-realm references, valid source flags, exactly one apex), and resolved through a pure read-only `TalentSystem` exposed as `engine.talents`.
+- Added encounter-driven named character interactions: exploration can surface local named characters with Talk/Spar/Duel options; Talk returns dialogue context, while Spar/Duel validate character hooks and spawn named foe combat entries.
+- Reworked enemies to use cultivation realms instead of numeric levels, expanded the random enemy roster with realm-based enemies, and made combat encounter pools location-specific across the world map.
+- Added a data-driven equipment system with weapons, armor, boots, cloaks, rings, amulets, talismans, artifacts, and flying swords; equip/unequip actions validate inventory ownership, slots, requirements, and aggregate derived stat/cultivation modifiers without mutating base stats.
+- Added data-driven starting fate: new games automatically roll and assign a Spiritual Root and Physique, save stable trait IDs, and apply trait multipliers to cultivation base gains, breakthrough odds, Body breakthrough stat gains, and strain/comprehension effects.
+- Reworked cultivation pacing: Body and Essence realms now use data-driven increasing progress requirements; Body training builds strain and same-day diminishing returns, foundation stability gates breakthroughs, Stabilise Foundation recovers strain/stability, and permanent body stat gains are awarded only on successful breakthroughs.
+- Added dual cultivation progression with separate Body Transformation and Essence Gathering tracks.
+- Added data-driven cultivation realm files and shared cultivation config.
+- Added pure cultivation state dataclasses with save-ready serialization.
+- Added `CultivationService` as a thin coordination layer for player cultivation actions.
+- Updated CLI and PySide GUI surfaces to display both cultivation tracks and send explicit body/essence commands.
+- Added cultivation validation and tests for independent progression, Pulse Condensation placement, save/load state preservation, derived stats, and invalid realm detection.
+- Corrected Pulse Condensation so it belongs only to Body Transformation; Essence Gathering now starts at Houtian and remains locked until Body Pulse Condensation is completed.
+- Added `Mortal` as the Body Transformation starting pre-realm (base HP bonus 5); new games begin as a Mortal and can only Body Temper until clearing Pulse Condensation, which opens Essence Gathering without advancing Houtian. Exposed `essence_unlocked` in cultivation state for UI.
+- Fixed Essence Gathering unlock checks so a completed Body Pulse Condensation threshold enables Essence training immediately, matching the UI's unlocked state.
+
+### Martial Path dashboard UI (PySide6)
+
+- Redesigned the PySide6 GUI (`game/ui/gui_interface.py`) into the dark-fantasy dashboard from `martial_path_final_ui_implementation_brief.md`: a top status bar, a left Character panel (identity / cultivation / combat), a centre Location panel (artwork placeholder, description, danger/qi/resources, exits) with an Actions card grid below, a right tabbed panel (Inventory / Journal / Status / Techniques), and a full-width Event Log.
+- Enforced the brief's information-ownership rules (Gold only in Inventory, Body/Essence only in the Character panel, full location text only in the Location panel, HP/Qi in the top bar) so no value is duplicated across panels.
+- Retagged `ui/ui_theme.py` to the charcoal/gold palette (red HP, blue Qi, green Body, purple Essence); the theme is still consumed only by the GUI, so the CLI/API surfaces are unaffected.
+- Kept the Pokemon-style combat loop intact: entering combat swaps the Actions panel to the FIGHT/BAG/STATS/RUN menu and shows an enemy strip in the Location panel.
+- Action cards read locked/disabled state from the engine (e.g. `essence_unlocked`) rather than computing rules; added a data-driven `CultivationSystem.get_essence_unlock_requirement()` surfaced through `CultivationService` so the UI can show the unlock hint as plain state.
+- Notes: the top-bar day/period and the inventory capacity readout are cosmetic placeholders (no calendar or capacity system exists in the engine yet).
+
+### Godot frontend dashboard + artwork
+
+- Rebuilt the Godot client (`frontend-godot/scripts/MainController.gd`) into the same dashboard as the desktop GUI (slim top bar, left Character panel, centre Location + 8-card Actions grid, right Inventory/Journal/Status/Techniques tabs, full-width Event Log) with the charcoal/gold palette and the same anti-duplication rules; Save/Load/New Game/Quit live in a Settings popup and Travel is a popup.
+- Added an `inventory_items` view-model (id/name/type/count/description) to `GameEngine.get_game_state()` so HTTP/Godot clients get item names and descriptions without recomputing anything (desktop GUI and CLI unaffected).
+- Added per-location artwork: source images live at `frontend-godot/assets/locations/<location_id>.png` and render in the Location panel via a `TextureRect` (aspect-covered, with a centred name-label fallback for locations that have no image yet). Added the Martial Path emblem to the top bar and `frontend-godot/icon.png` for the window icon; the world map is staged at `frontend-godot/assets/world_map.jpg`. Open the project in the Godot editor once so it imports the new textures.
+- Short Godot `Label`s use `AUTOWRAP_OFF` so header/footer text (Inventory, Event Log, Gold, ...) stays horizontal instead of collapsing to one character per line.
+
+### World map expansion (Sky Spill Continent)
+
+- Expanded `data/locations.json` from the 4 starter nodes to 29 by adding the Sky Spill Continent map: Sky Fortune Kingdom (village, road, Beast Mountain, Lin Academy, capital), Seven Profound Valleys (outer gate, inner valley, forbidden back mountain), the South Horizon Region (route, city, Divine Phoenix Island + mystic realm), the Southern Sea port, the Central Region's four great kingdoms, Great Zen, Southern Wilderness, Five Element, the Planetary Gate Array, and the Holy Demon Continent.
+- Bridged the existing starter hub (`azure_village`) to the new world via `sky_fortune_road`, keeping the whole map reachable from the `outer_forest` start.
+- Anchored NPCs to each location by `character_id` only (no new characters added); every reference resolves against the shipped roster.
+- Gated late/endgame zones with Body Transformation and Essence Gathering realm minimums so they surface as locked (not hidden) until the player is strong enough; early Sky Fortune Kingdom stays open.
+- Added `docs/MAP_SYSTEM.md` and `tests/test_locations_data.py` (full-map reachability, V1 core presence, and cultivation-gate allow/block checks).
+
+### Codebase optimisation pass
+
+- Added import and JSON-parse smoke tests, and ignored `frontend-godot/.godot/` editor cache.
+- Added a central data validation layer (`game/validation/`) with `validate_all_game_data()` checking unique IDs and every item/enemy/character/location/encounter cross-reference; covered by `tests/test_all_game_data_valid.py`.
+- Added `GameDataRegistry` (`game/data/registry.py`) as the single load point for all static content; `GameEngine.new_game` now builds from it and accepts an injected registry.
+- Split large content into merge-on-load folders: `data/characters/*.json` (by faction), `data/enemies/random_enemies.json`, and `data/character_enemies/named_foes.json`; added `load_collection()` to the data loader.
+- Migrated `locations.json` to the node-based schema (`display_name`, `zone`, numeric `danger_level`/`qi_density`, `connected_locations`, `npc_ids`, `requirements`, ...) and added a `TravelService` with requirement gating (realm/item/reputation) and reachable/locked destination listing.
+- Added location-scoped encounter pools (`data/encounter_pools.json`); `EventSystem` now selects area-specific combat/loot/special content and falls back to global pools.
+- Added a `CharacterService` coordinating NPC availability, dialogue context, morality band, and relationship tier; wired `MoralitySystem`/`RelationshipSystem` into the engine and exposed `location_characters` in game state.
+- Moved passive skills from baked-in base stats to on-demand effective stats (`StatsSystem.effective_defense`); removed the `passives_applied` flag.
+- Split save persistence into `SaveRepository` (I/O) and `SaveService` (versioning/validation); removed `systems/save_system.py`.
+- Added typed result models (`game/core/results.py`); converted `Action`/`EventType` to `StrEnum`; refactored engine action dispatch to lookup tables and the command router to a data-driven argument map; fixed the GUI escape helper to use `html.escape`.

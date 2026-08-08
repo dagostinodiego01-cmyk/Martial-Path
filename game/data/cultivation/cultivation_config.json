@@ -1,0 +1,245 @@
+{
+  "lifespan": {
+    "starting_age_years": 12,
+    "mortal_base_lifespan_years": 100,
+    "time_costs": {
+      "train_body": 0.125,
+      "train_essence": 0.125,
+      "body_breakthrough": 0.25,
+      "essence_breakthrough": 0.25,
+      "stabilise": 0.1,
+      "stabilise_essence": 0.1,
+      "rest": 0.05,
+      "meditate": 0.1
+    }
+  },
+  "body_training_methods": {
+    "train_body": {
+      "action_id": "train_body",
+      "display_name": "Train Body",
+      "base_gain": 8.0,
+      "foundation_gain": 0.5,
+      "body_strength_gain": 3.0,
+      "fatigue_gain": 3.0,
+      "message": "Your body grows sturdier as physical strain tempers your foundation."
+    },
+    "temper_flesh": {
+      "action_id": "temper_flesh",
+      "display_name": "Temper Flesh",
+      "base_gain": 7.0,
+      "foundation_gain": 0.7,
+      "body_strength_gain": 2.5,
+      "fatigue_gain": 2.0,
+      "message": "Careful conditioning toughens your flesh without shaking your foundation."
+    },
+    "strengthen_viscera": {
+      "action_id": "strengthen_viscera",
+      "display_name": "Strengthen Viscera",
+      "base_gain": 7.5,
+      "foundation_gain": 0.8,
+      "body_strength_gain": 2.0,
+      "fatigue_gain": 2.5,
+      "message": "Measured breaths and heavy strain harden your inner organs."
+    },
+    "forge_bones": {
+      "action_id": "forge_bones",
+      "display_name": "Forge Bones",
+      "base_gain": 8.5,
+      "foundation_gain": 0.6,
+      "body_strength_gain": 3.5,
+      "fatigue_gain": 3.5,
+      "message": "Each impact rings through your bones and leaves them denser than before."
+    },
+    "condense_pulses": {
+      "action_id": "condense_pulses",
+      "display_name": "Condense Pulses",
+      "base_gain": 7.0,
+      "foundation_gain": 0.9,
+      "body_strength_gain": 2.0,
+      "fatigue_gain": 2.0,
+      "message": "Your blood and pulse settle into a steadier martial rhythm."
+    },
+    "refine_marrow": {
+      "action_id": "refine_marrow",
+      "display_name": "Refine Marrow",
+      "base_gain": 6.5,
+      "foundation_gain": 1.0,
+      "body_strength_gain": 4.0,
+      "fatigue_gain": 4.0,
+      "message": "A deep heat moves through your marrow and leaves your frame renewed."
+    },
+    "open_gate": {
+      "action_id": "open_gate",
+      "display_name": "Open Gate",
+      "base_gain": 5.0,
+      "foundation_gain": 1.2,
+      "body_strength_gain": 5.0,
+      "fatigue_gain": 5.0,
+      "message": "You test the hidden gates within your body and steady the strain."
+    },
+    "ignite_dao_palace_star": {
+      "action_id": "ignite_dao_palace_star",
+      "display_name": "Ignite Dao Palace Star",
+      "base_gain": 4.0,
+      "foundation_gain": 1.5,
+      "body_strength_gain": 6.0,
+      "fatigue_gain": 6.0,
+      "message": "A faint star-mark answers your will within the Dao Palace."
+    }
+  },
+  "essence_training_methods": {
+    "gather_essence": {
+      "action_id": "gather_essence",
+      "display_name": "Gather Essence",
+      "base_gain": 8.0,
+      "foundation_gain": 0.5,
+      "density_gain": 0.6,
+      "capacity_gain": 2.0,
+      "stability_gain": 0.8,
+      "message": "You draw spiritual energy through your meridians and settle it within your dantian."
+    },
+    "circulate_qi": {
+      "action_id": "circulate_qi",
+      "display_name": "Circulate Qi",
+      "base_gain": 6.5,
+      "foundation_gain": 0.8,
+      "density_gain": 0.4,
+      "capacity_gain": 1.0,
+      "stability_gain": 1.5,
+      "message": "Your true essence circles smoothly and leaves fewer turbulent traces."
+    },
+    "stabilise_dantian": {
+      "action_id": "stabilise_dantian",
+      "display_name": "Stabilise Dantian",
+      "base_gain": 5.5,
+      "foundation_gain": 1.0,
+      "density_gain": 0.3,
+      "capacity_gain": 2.5,
+      "stability_gain": 1.8,
+      "message": "You quiet the dantian until its stored essence rests without ripples."
+    },
+    "condense_core": {
+      "action_id": "condense_core",
+      "display_name": "Condense Core",
+      "base_gain": 7.0,
+      "foundation_gain": 0.7,
+      "density_gain": 1.2,
+      "capacity_gain": 1.5,
+      "stability_gain": 0.7,
+      "message": "Dense essence gathers around a steady center in your dantian."
+    },
+    "undergo_life_destruction": {
+      "action_id": "undergo_life_destruction",
+      "display_name": "Undergo Life Destruction",
+      "base_gain": 4.5,
+      "foundation_gain": 1.2,
+      "density_gain": 1.0,
+      "capacity_gain": 3.0,
+      "stability_gain": 0.5,
+      "message": "You brush against destruction and return with a sharper vessel."
+    },
+    "expand_divine_sea": {
+      "action_id": "expand_divine_sea",
+      "display_name": "Expand Divine Sea",
+      "base_gain": 6.0,
+      "foundation_gain": 0.8,
+      "density_gain": 0.8,
+      "capacity_gain": 4.0,
+      "stability_gain": 1.0,
+      "message": "The sea of essence within you widens by a quiet margin."
+    },
+    "transform_inner_world": {
+      "action_id": "transform_inner_world",
+      "display_name": "Transform Inner World",
+      "base_gain": 5.0,
+      "foundation_gain": 1.0,
+      "density_gain": 1.0,
+      "capacity_gain": 3.0,
+      "stability_gain": 1.2,
+      "inner_world_gain": 2.0,
+      "message": "Your inner world answers the rhythm of your true essence."
+    }
+  },
+  "combined_actions": {
+    "balance_body_and_essence": "Balance Body and Essence",
+    "harmonise_foundation": "Harmonise Foundation",
+    "stabilise_backlash": "Stabilise Backlash",
+    "prepare_dual_breakthrough": "Prepare Dual Breakthrough"
+  },
+  "body_progression": {
+    "training_strain_gain": 12.0,
+    "max_strain_for_breakthrough": 45.0,
+    "required_foundation_stability": 70.0,
+    "successful_breakthrough_strain_reduction": 8.0,
+    "failed_breakthrough_strain_gain": 20.0,
+    "failed_breakthrough_foundation_loss": 10.0,
+    "failed_breakthrough_progress_ratio": 0.85,
+    "daily_cultivation_multipliers": [1.0, 0.85, 0.7, 0.5, 0.3],
+    "stabilise": {
+      "strain_reduction": 18.0,
+      "foundation_stability_gain": 4.0,
+      "comprehension_gain": 1,
+      "progress_gain": 0.0,
+      "message": "You slow your breathing and settle the restless force in your meridians."
+    }
+  },
+  "essence_progression": {
+    "training_strain_gain": 10.0,
+    "max_strain_for_breakthrough": 45.0,
+    "required_foundation_stability": 70.0,
+    "successful_breakthrough_strain_reduction": 8.0,
+    "failed_breakthrough_strain_gain": 18.0,
+    "failed_breakthrough_foundation_loss": 10.0,
+    "stabilise": {
+      "strain_reduction": 18.0,
+      "foundation_stability_gain": 4.0,
+      "comprehension_gain": 1,
+      "progress_gain": 0.0,
+      "message": "You calm your churning true essence and let it settle evenly through your meridians."
+    }
+  },
+  "sequence_display_names": {
+    "gate_of_healing": "Gate of Healing",
+    "gate_of_limit": "Gate of Limit",
+    "gate_of_wonder": "Gate of Wonder",
+    "gate_of_pain": "Gate of Pain",
+    "gate_of_opening": "Gate of Opening",
+    "gate_of_view": "Gate of View",
+    "gate_of_life": "Gate of Life",
+    "gate_of_death": "Gate of Death",
+    "army_breaker_star": "Army Breaker Star",
+    "ravenous_wolf_star": "Ravenous Wolf Star",
+    "cherished_kismet_star": "Cherished Kismet Star",
+    "daevic_eye_star": "Daevic Eye Star",
+    "titan_gate_star": "Titan Gate Star",
+    "martial_song_star": "Martial Song Star",
+    "ardent_virtue_star": "Ardent Virtue Star",
+    "bright_channel": "Bright Channel",
+    "hidden_origins": "Hidden Origins"
+  },
+  "failure_messages": {
+    "INSUFFICIENT_PROGRESS": "Your cultivation has not yet reached the required threshold.",
+    "INSUFFICIENT_FOUNDATION": "Your foundation is too unstable. Train more carefully before attempting a breakthrough.",
+    "MISSING_RESOURCE": "You lack a required resource for this breakthrough.",
+    "STRAIN_TOO_HIGH": "Cultivation strain is too high. Stabilise your foundation before attempting a breakthrough.",
+    "FOUNDATION_UNSTABLE": "Your foundation stability is too low. Stabilise before attempting a breakthrough.",
+    "BODY_TOO_WEAK": "Your body cannot withstand the strain of this breakthrough.",
+    "ESSENCE_LOCKED_BY_BODY_PULSE": "Your body must complete Pulse Condensation before Essence Gathering can begin.",
+    "ESSENCE_UNSTABLE": "Your true essence is unstable. Circulate your qi and stabilise your dantian first.",
+    "INJURY_TOO_SEVERE": "Your injuries are too severe for a safe breakthrough.",
+    "FATIGUE_TOO_HIGH": "Fatigue clouds your control. Rest before attempting this breakthrough.",
+    "REALM_LOCKED": "This realm cannot be reached in the current build.",
+    "INVALID_REALM": "The cultivation realm data is invalid.",
+    "ALREADY_AT_PEAK": "You have reached the current peak of this path."
+  },
+  "known_resource_ids": [
+    "marrow_tempering_elixir",
+    "celestial_gate_essence",
+    "dao_palace_star_core"
+  ],
+  "balance_thresholds": {
+    "harmonised": 1,
+    "leaning": 3,
+    "unstable": 5
+  }
+}
