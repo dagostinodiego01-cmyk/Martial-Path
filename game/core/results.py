@@ -176,6 +176,7 @@ class CharacterInteractionResult(Result):
     dialogue_context: Dict[str, Any]
     player_message: str
     choices: Optional[List[Dict[str, Any]]] = None
+    speech_notes: Optional[str] = None
 
 
 @dataclass(frozen=True)
@@ -221,3 +222,76 @@ class BoonResult(Result):
     player_message: str
     reward: Dict[str, Any]
     wallet: Optional[Dict[str, int]] = None
+
+
+@dataclass(frozen=True)
+class TechniquesResult(Result):
+    """The player's known techniques (active + passive)."""
+
+    EVENT: ClassVar[str] = EventType.TECHNIQUES
+    skills: List[Dict[str, Any]]
+
+
+@dataclass(frozen=True)
+class TalentsResult(Result):
+    """The player's current Martial/Body talents and their upgrade paths."""
+
+    EVENT: ClassVar[str] = EventType.TALENTS
+    martial_talent: Dict[str, Any]
+    body_talent: Dict[str, Any]
+    martial_upgrades: List[Dict[str, Any]]
+    body_upgrades: List[Dict[str, Any]]
+
+
+@dataclass(frozen=True)
+class TalentUpgradedResult(Result):
+    """Outcome of upgrading a Martial or Body talent."""
+
+    EVENT: ClassVar[str] = EventType.TALENT_UPGRADED
+    track: str
+    talent_id: str
+    display_name: str
+    player_message: str
+    wallet: Optional[Dict[str, int]] = None
+
+
+@dataclass(frozen=True)
+class ClosedDoorResult(Result):
+    """Outcome of a deliberate multi-year closed-door cultivation session."""
+
+    EVENT: ClassVar[str] = EventType.CLOSED_DOOR_RESULT
+    years: float
+    progress_gained: float
+    progress: float
+    player_message: str
+    lifespan: Optional[Dict[str, Any]] = None
+
+
+@dataclass(frozen=True)
+class RepairResult(Result):
+    """Outcome of repairing a piece of worn equipment."""
+
+    EVENT: ClassVar[str] = EventType.REPAIR_RESULT
+    item_id: str
+    durability: int
+    player_message: str
+    wallet: Optional[Dict[str, int]] = None
+
+
+@dataclass(frozen=True)
+class SaveExportedResult(Result):
+    """A portable JSON snapshot of the current session."""
+
+    EVENT: ClassVar[str] = EventType.SAVE_EXPORTED
+    payload: str
+    player_message: str
+
+
+@dataclass(frozen=True)
+class SaveImportedResult(Result):
+    """Outcome of importing a portable JSON snapshot."""
+
+    EVENT: ClassVar[str] = EventType.SAVE_IMPORTED
+    success: bool
+    player_message: str
+    slot: Optional[str] = None

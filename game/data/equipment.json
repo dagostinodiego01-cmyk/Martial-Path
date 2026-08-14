@@ -21,7 +21,8 @@
     ],
     "value": 25,
     "stackable": false,
-    "equippable": true
+    "equippable": true,
+    "durability": 40
   },
   {
     "id": "iron_spear",
@@ -151,7 +152,8 @@
     ],
     "value": 35,
     "stackable": false,
-    "equippable": true
+    "equippable": true,
+    "durability": 50
   },
   {
     "id": "plain_cultivator_robe",
@@ -292,7 +294,8 @@
     ],
     "value": 20,
     "stackable": false,
-    "equippable": true
+    "equippable": true,
+    "durability": 35
   },
   {
     "id": "cloudstep_boots",
@@ -1237,7 +1240,26 @@
     ],
     "value": 302,
     "stackable": false,
-    "equippable": true
+    "equippable": true,
+    "set_id": "spirit_devouring",
+    "set_bonuses": [
+      {
+        "pieces_required": 2,
+        "stat_modifiers": {
+          "attack": 8,
+          "max_hp": 40
+        }
+      },
+      {
+        "pieces_required": 3,
+        "stat_modifiers": {
+          "attack": 20,
+          "defense": 8,
+          "max_hp": 100
+        }
+      }
+    ],
+    "durability": 60
   },
   {
     "id": "blood_moon_halberd",
@@ -1852,7 +1874,26 @@
     ],
     "value": 402,
     "stackable": false,
-    "equippable": true
+    "equippable": true,
+    "set_id": "spirit_devouring",
+    "set_bonuses": [
+      {
+        "pieces_required": 2,
+        "stat_modifiers": {
+          "attack": 8,
+          "max_hp": 40
+        }
+      },
+      {
+        "pieces_required": 3,
+        "stat_modifiers": {
+          "attack": 20,
+          "defense": 8,
+          "max_hp": 100
+        }
+      }
+    ],
+    "durability": 50
   },
   {
     "id": "white_tiger_veil",
@@ -2063,7 +2104,26 @@
     ],
     "value": 345,
     "stackable": false,
-    "equippable": true
+    "equippable": true,
+    "set_id": "spirit_devouring",
+    "set_bonuses": [
+      {
+        "pieces_required": 2,
+        "stat_modifiers": {
+          "attack": 8,
+          "max_hp": 40
+        }
+      },
+      {
+        "pieces_required": 3,
+        "stat_modifiers": {
+          "attack": 20,
+          "defense": 8,
+          "max_hp": 100
+        }
+      }
+    ],
+    "durability": 40
   },
   {
     "id": "phoenix_signet",

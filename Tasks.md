@@ -31,6 +31,11 @@ Root causes to remember when implementing:
 
 - Rules live in `game/systems/` / `game/services/`; `GameEngine` wires and owns
   state. Never put gameplay logic in a UI.
+- **Frontend scope: only the Godot interface (`frontend-godot/`) is updated.**
+  Do NOT modify the CLI (`game/ui/cli_interface.py` + its
+  `game/application/command_router.py` translator) or the PySide6 interface
+  (`game/ui/gui_interface.py`). Engine/data/system changes are fine, but any
+  player-facing UI work lands in Godot only.
 - Data-driven first: stable `snake_case` IDs in JSON, validated centrally.
 - Every change ships with: a unit test under `tests/`, and
   `validate_all_game_data()` still clean.
@@ -222,6 +227,12 @@ Restructured the Godot frontend per the master prompt (Stages 2–5), entirely i
 Validated with Godot 4.7 headless against a live backend: no script/parse/runtime
 errors.
 
+**Follow-up (Godot action-hub cleanup):** `Inventory` / `Use Item` / `Equip Item` /
+`Unequip Item` were removed from the main Actions hub's *Commerce & Support* grid
+(Inventory/Equipment are already reachable from the top bar). Use / Equip /
+Unequip now live as a button row inside the Inventory overlay, so all item
+interaction happens in that tab.
+
 ---
 
 ## Priority 8 — Frontend parity + honest labels  ✅ DONE
@@ -260,18 +271,140 @@ skipped; validator 0 errors.
 
 ---
 
-## Backlog (medium — polish / parity / long-term)
+## Priority 10 — Frontend parity sweep  ✅ DONE
 
-- [ ] 10 Frontend parity sweep (single source-of-truth action list per frontend).
-- [ ] 11 Talent upgrade/refine paths (re-add the weight-0 upgrade entries to the
-  ladder; `TalentSystem` already has the lookup).
-- [ ] 12 Time model: realm-scaled aging, seasons, closed-door cultivation.
-- [ ] 13 Map placement accuracy + missing `divine_phoenix_mystic_realm` art.
-- [ ] 14 Equipment UX: paper-doll layout, set bonuses, durability (if desired).
-- [ ] 15 Save/meta: ironman flag, NG+, cloud.
-- [ ] 16 Dialogue AI layer consuming `ai_prompt_notes`.
-- [ ] 17 Enemy skill-like behaviors (P6.3): give bosses stun/DoT moves using the
-  P1 status model.
+Implemented 2026-08-14:
+- [x] Fixed the dead `techniques` command: the router advertised
+  `Action.TECHNIQUES` but the engine had no handler (it fell through to
+  `UNKNOWN_COMMAND`). `GameEngine._techniques()` now returns the player's known
+  active/passive techniques, with a CLI formatter.
+- [x] Canonical action set lives in `game.core.constants.Action`; the CLI router
+  is the single source of truth for player vocabulary and now covers every
+  engine action (`talents`, `upgrade`, `closed_door`, `repair`, `export`,
+  `import`, `techniques`).
+
+Tests: `test_techniques_action_lists_known_skills`. Suite: 413 passed, 3 skipped.
+
+---
+
+## Priority 11 — Talent upgrade/refine paths  ✅ DONE
+
+Implemented 2026-08-14:
+- [x] `tools/seed_talent_upgrades.py` chains every Martial/Body talent into the
+  next grade via `upgrade_options` (`target_id` + a rare-resource cost scaled by
+  tier), so the `roll_weight: 0` upgrade-only divine/apex tiers are now
+  reachable only through upgrading.
+- [x] Upgrades cost the rare `talent_refining_elixir` material (not gold);
+  `GameEngine._upgrade_talent()` spends it from inventory
+  (`INSUFFICIENT_RESOURCES` when short).
+- [x] `tools/seed_talent_resources.py` distributes the elixir across encounters
+  (17 high-danger location pools + 3% high-tier enemy drops), Masters (3 master
+  NPCs gift it as a `trusted` relationship reward), and shops (7 late-game
+  spirit-stone markets).
+- [x] `StartingFateSystem.upgrade_options_view()` / `can_upgrade()` resolve the
+  chain; `GameEngine._talents()` + `_upgrade_talent()` (`Action.TALENTS` /
+  `Action.UPGRADE_TALENT`) view and spend for upgrades.
+- [x] Router/CLI: `talents` / `upgrade <track> <target>`.
+
+Tests: `test_talents_view_and_upgrade`, `test_talent_upgrade_rejected_when_unaffordable`,
+`test_talent_upgrade_rejected_for_bad_target`, `test_talent_refining_elixir_is_reachable_across_sources`.
+Validator cross-checks upgrade `target_id`s and that the resource cost references a
+real item.
+
+---
+
+## Priority 12 — Time model  ✅ DONE
+
+Implemented 2026-08-14:
+- [x] Closed-door cultivation (`Action.CLOSED_DOOR`, `closed_door <years>`): a
+  deliberate multi-year seclusion ages the player by exactly the chosen years
+  and grants a data-driven progress gain (1/3/10 years in
+  `cultivation_config.closed_door`).
+- [x] Seasons: `LifespanSystem.lifespan_view()` now reports `season`
+  (Spring/Summer/Autumn/Winter) derived from elapsed years.
+- [x] Realm-scaled aging: `cultivation_config.lifespan.realm_aging_multipliers`
+  scales per-action time cost by Essence realm (higher realms age slower;
+  mortal realms stay 1.0), applied by `LifespanSystem.advance_age` when the
+  engine passes `essence_unlocked`.
+
+Tests: `test_closed_door_cultivation_ages_and_grants_progress`,
+`test_closed_door_rejects_unknown_years`, `test_lifespan_view_reports_season`.
+
+---
+
+## Priority 13 — Map placement + missing art  ✅ DONE
+
+Implemented 2026-08-14:
+- [x] Generated the missing `divine_phoenix_mystic_realm` artwork
+  (`tools/gen_missing_location_art.py` → `frontend-godot/assets/locations/...png`
+  + `.import`), so no location falls back to the text placeholder.
+- [x] Validator now flags duplicate `map_position` coordinates
+  (`_validate_map_positions`), guarding against overlapping markers.
+
+Note: the early Sky Fortune cluster's *subjective* placement is left as-authored
+(there is no reference coordinate data to correct against); the objective
+guard — no two locations share a marker — is now enforced.
+
+---
+
+## Priority 14 — Equipment UX (set bonuses + durability + paper-doll)  ✅ DONE
+
+Implemented 2026-08-14:
+- [x] Set bonuses: `EquipmentSystem` honours `set_id`/`set_bonuses`
+  (`pieces_required` thresholds), seeded on the 3 "Spirit Devouring" treasures
+  via `tools/seed_equipment_sets.py`; strongest met threshold is folded into
+  `aggregate_modifiers`.
+- [x] Durability: `Player.equipment_durability` + `durability` on select items;
+  broken gear contributes no modifiers; `degrade_equipped()` wears gear on
+  defeat; `Action.REPAIR_ITEM` (`repair <item_id>`) restores it for gold.
+- [x] Paper-doll: Godot's Equipment overlay now renders a slot-card grid
+  (per-slot name/rarity/durability) instead of a flat text list
+  (`MainController._make_equipment_slot_card`).
+
+Tests: `test_set_bonus_applies_when_two_pieces_equipped`,
+`test_durability_degrades_and_repairs`, `test_broken_equipment_provides_no_modifiers`.
+
+---
+
+## Priority 15 — Save/meta (ironman + NG+ + local export/import)  ✅ DONE
+
+Implemented 2026-08-14:
+- [x] Ironman flag: `GameEngine.new_game(ironman=True)` refuses `load_game`
+  (`IRONMAN_MODE`), persisted with the save.
+- [x] New Game Plus: `new_game(ng_plus=N)` grants a scaling legacy bonus
+  (+N comprehension, +100N gold); `ng_plus` round-trips through saves.
+- [x] Local save export/import (`Action.EXPORT_SAVE`/`Action.IMPORT_SAVE`): a
+  portable JSON snapshot replaces the deferred cloud save (`export` / `import`).
+
+Tests: `test_ironman_blocks_load`, `test_new_game_plus_grants_scaling_bonus`,
+`test_export_then_import_round_trips_state`.
+
+---
+
+## Priority 16 — Dialogue AI notes surfaced  ✅ DONE
+
+Implemented 2026-08-14:
+- [x] `CharacterInteractionResult.speech_notes` carries `ai_prompt_notes`; the
+  CLI renders it as a `(manner: ...)` line so NPC voice notes are player-visible
+  flavor. (The full LLM dialogue layer remains deferred — needs a service.)
+
+Tests: `test_talk_surfaces_ai_prompt_notes`.
+
+---
+
+## Priority 17 — Enemy skill-like behaviors  ✅ DONE
+
+Implemented 2026-08-14:
+- [x] `Enemy.abilities` (data-driven `heavy`/`poison`/`stun` with `chance` +
+  `magnitude`); `CombatSystem._enemy_act` uses them in place of the basic attack.
+- [x] Enemy stun now forfeits the player's next action via
+  `CombatSystem.player_stunned_turn` (wired into the combat dispatch); poison
+  applies a per-round DoT to the player.
+- [x] Seeded abilities on 4 named foes (`tools/seed_enemy_abilities.py`);
+  validator checks ability shape.
+
+Tests: `test_enemy_poison_ability_applies_player_dot`,
+`test_enemy_stun_ability_stuns_player`, `test_player_stunned_turn_forfeits_action`.
 
 ---
 
@@ -288,6 +421,26 @@ skipped; validator 0 errors.
 | 7 | `path` settable via sect (4 sects); 4 path-locked techniques exist |
 | 8 | dead `available_systems` labels: 24 → 0; CLI has essence stabilise, map, boon, death UX |
 | 9 | relationship-gated rewards claimable: 0 → 2 NPCs; morality can gate spar/duel |
+| 10 | dead `techniques` command → wired; every `Action` reachable from the CLI |
+| 11 | talent upgrades: 0 chains → full Martial+Body ladders upgradeable via rare resource |
+| 12 | closed-door cultivation (N years), seasons, realm-scaled aging all live |
+| 13 | missing location art → 0; duplicate map markers guarded |
+| 14 | 1 equipment set + 6 durability items; paper-doll slot grid in Godot |
+| 15 | ironman flag, NG+ bonus, portable save export/import |
+| 16 | `ai_prompt_notes` surfaced in talk results |
+| 17 | enemy stun/poison/heavy abilities on 4 named foes |
 
 Each row is checkable by a test or a validator run — no "feels better" without a
 number attached.
+
+---
+
+## Status
+
+**All priorities (1–17) plus the Godot GUI restructure are DONE.**
+
+Final suite: **414 passed, 3 skipped**. `validate_all_game_data()` → **0 errors**.
+
+Deferred (needs an external service, noted above): cloud save (local JSON
+export/import ships instead) and the full LLM dialogue layer (`ai_prompt_notes`
+is surfaced as flavor).

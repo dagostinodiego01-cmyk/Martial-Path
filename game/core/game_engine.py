@@ -12,6 +12,7 @@ CLI for a web/GUI/API frontend requires no changes to this file.
 """
 from __future__ import annotations
 
+import json
 from typing import Any, Dict, List, Optional
 
 from game.core.constants import (
@@ -23,15 +24,22 @@ from game.core.results import (
     BoonResult,
     CharacterEncounterResult,
     CharacterInteractionResult,
+    ClosedDoorResult,
     DialogueChoiceResult,
     HelpResult,
     MapResult,
     MeditateResult,
     PlayerDiedResult,
     QuitResult,
+    RepairResult,
     RestResult,
+    SaveExportedResult,
+    SaveImportedResult,
     StartingFateAcceptedResult,
     StartingFateRolledResult,
+    TalentUpgradedResult,
+    TalentsResult,
+    TechniquesResult,
 )
 from game.data.registry import GameDataRegistry
 from game.models.enemy import Enemy
@@ -40,7 +48,7 @@ from game.models.player import Player
 from game.models.skill import Skill
 from game.services.character_service import CharacterService
 from game.services.cultivation_service import CultivationService
-from game.services.save_service import SaveError, SaveService
+from game.services.save_service import SAVE_VERSION, SaveError, SaveService
 from game.services.travel_service import TravelService
 from game.systems.combat_system import CombatSystem
 from game.systems.cultivation_system import CultivationSystem
@@ -99,8 +107,12 @@ class GameEngine:
         talents: Optional[Dict[str, Any]] = None,
         trainers: Optional[List[Dict[str, Any]]] = None,
         sects: Optional[List[Dict[str, Any]]] = None,
+        ironman: bool = False,
+        ng_plus: int = 0,
     ) -> None:
         self._log = get_logger("engine")
+        self._ironman = bool(ironman)
+        self._ng_plus = max(0, int(ng_plus))
         self.player = player
         self._rng = rng
         self._items = items
@@ -190,6 +202,8 @@ class GameEngine:
         player_name: str = "Daoist",
         seed: Optional[int] = None,
         registry: Optional["GameDataRegistry"] = None,
+        ironman: bool = False,
+        ng_plus: int = 0,
     ) -> "GameEngine":
         """Build a fully-loaded engine from the central data registry.
 
@@ -228,8 +242,14 @@ class GameEngine:
             registry.talents,
             registry.trainers,
             registry.sects,
+            ironman=ironman,
+            ng_plus=ng_plus,
         )
         engine._assign_new_game_fate()
+        # New Game Plus carries a modest legacy forward into the next run.
+        if ng_plus > 0:
+            engine.player.comprehension += int(ng_plus)
+            engine.player.gold += int(ng_plus) * 100
         return engine
 
     @staticmethod
@@ -343,6 +363,8 @@ class GameEngine:
             Action.STATUS: lambda action: self._status(),
             Action.INVENTORY: lambda action: self.inventory.list_inventory(self.player),
             Action.MAP: lambda action: self._map(),
+            Action.TECHNIQUES: lambda action: self._techniques(),
+            Action.TALENTS: lambda action: self._talents(),
             Action.HELP: lambda action: HelpResult().to_dict(),
             Action.QUIT: lambda action: self._quit(),
         }
@@ -378,6 +400,11 @@ class GameEngine:
             Action.LEARN_SKILL: lambda action: self._learn_skill(action),
             Action.SECTS: lambda action: self.sects.sect_view(self.player, action.get("sect_id", "")),
             Action.JOIN_SECT: lambda action: self._join_sect(action.get("sect_id", "")),
+            Action.UPGRADE_TALENT: lambda action: self._upgrade_talent(action.get("track", ""), action.get("target_id", "")),
+            Action.CLOSED_DOOR: lambda action: self._closed_door(action.get("years", 0)),
+            Action.REPAIR_ITEM: lambda action: self._repair_item(action.get("item_id", "")),
+            Action.EXPORT_SAVE: lambda action: self._export_save(),
+            Action.IMPORT_SAVE: lambda action: self._import_save(action.get("payload", ""), action.get("slot", "default")),
             Action.SAVE: lambda action: self.save_game(action.get("slot") or "default"),
             Action.LOAD: lambda action: self.load_game(action.get("slot") or "default"),
             Action.USE_ITEM: lambda action: self._use_item(action.get("item_id", "")),
@@ -407,6 +434,12 @@ class GameEngine:
         if self._current_enemy is None:
             self._mode = MODE_EXPLORE
             return {"event": EventType.ERROR, "reason": "NOT_IN_COMBAT"}
+        if self.player.statuses.get("stun"):
+            result = self.combat.player_stunned_turn(self.player, self._current_enemy, spar=self._combat_is_spar)
+            self._tick_cooldowns()
+            if result.get("event") == EventType.COMBAT_END:
+                return self._end_combat(result)
+            return result
         if name == Action.ATTACK:
             result = self.combat.attack(self.player, self._current_enemy, spar=self._combat_is_spar)
             self._tick_cooldowns()
@@ -597,6 +630,90 @@ class GameEngine:
             destinations=self.travel.get_available_destinations(self.player),
         ).to_dict()
 
+    def _techniques(self) -> Dict[str, Any]:
+        """Return the player's known techniques (active + passive)."""
+        return TechniquesResult(skills=self.get_known_skills()).to_dict()
+
+    def _talents(self) -> Dict[str, Any]:
+        """Return the player's Martial/Body talents and their upgrade paths."""
+        return TalentsResult(
+            martial_talent=self.starting_fate.martial_talent_view(self.player.martial_talent_id),
+            body_talent=self.starting_fate.body_talent_view(self.player.body_talent_id),
+            martial_upgrades=self.starting_fate.upgrade_options_view("martial", self.player.martial_talent_id),
+            body_upgrades=self.starting_fate.upgrade_options_view("body", self.player.body_talent_id),
+        ).to_dict()
+
+    def _upgrade_talent(self, track: str, target_id: str) -> Dict[str, Any]:
+        """Upgrade a Martial or Body talent to the next grade, spending its cost."""
+        if track not in ("martial", "body"):
+            return {"event": EventType.ERROR, "reason": "INVALID_TALENT_TRACK", "track": track}
+        current_id = self.player.martial_talent_id if track == "martial" else self.player.body_talent_id
+        options = self.starting_fate.upgrade_options_view(track, current_id)
+        target = next((option for option in options if option.get("target_id") == target_id), None)
+        if target is None:
+            return {"event": EventType.ERROR, "reason": "INVALID_UPGRADE_TARGET", "target_id": target_id}
+        cost = target.get("cost") or {}
+        missing = {}
+        for item_id, quantity in cost.items():
+            needed = int(quantity)
+            if int(self.player.inventory.get(item_id, 0)) < needed:
+                missing[item_id] = needed - int(self.player.inventory.get(item_id, 0))
+        if missing:
+            return {
+                "event": EventType.ERROR,
+                "reason": "INSUFFICIENT_RESOURCES",
+                "required": {str(item_id): int(quantity) for item_id, quantity in cost.items()},
+                "missing": missing,
+                "inventory": dict(self.player.inventory),
+            }
+        for item_id, quantity in cost.items():
+            self.inventory.remove_item(self.player, item_id, int(quantity))
+        if track == "martial":
+            self.player.martial_talent_id = target_id
+        else:
+            self.player.body_talent_id = target_id
+        first_resource = next(iter(cost), "")
+        return TalentUpgradedResult(
+            track=track,
+            talent_id=target_id,
+            display_name=str(target.get("target_name", target_id)),
+            player_message=f"Your {track} talent advances to {target.get('target_name', target_id)}.",
+            wallet={first_resource: int(self.player.inventory.get(first_resource, 0))},
+        ).to_dict()
+
+    def _closed_door(self, years: Any) -> Dict[str, Any]:
+        """Deliberately cultivate in seclusion for ``years``, ageing accordingly."""
+        config = self._cultivation_config.get("closed_door", {})
+        options = config.get("options", [])
+        chosen = None
+        for option in options:
+            if isinstance(option, dict) and option.get("years") == years:
+                chosen = option
+                break
+        if chosen is None:
+            return {"event": EventType.ERROR, "reason": "INVALID_CLOSED_DOOR_YEARS", "years": years}
+        gain = float(chosen.get("progress_gain", 0.0))
+        body = self.player.cultivation_state.body
+        body.progress = round(float(body.progress) + gain, 2)
+        self.player.progress = body.progress
+        # A deliberate seclusion ages the player by exactly the chosen years.
+        self.player.age_years = round(float(self.player.age_years) + float(years), 4)
+        # A multi-year seclusion restores the body to full vigour.
+        self.player.heal(self.player.max_hp)
+        self.player.restore_qi(self.player.max_qi)
+        essence_unlocked = self.cultivation.is_essence_unlocked(self.player)
+        lifespan = self.lifespan.lifespan_view(self.player, essence_unlocked)
+        result = ClosedDoorResult(
+            years=float(years),
+            progress_gained=gain,
+            progress=body.progress,
+            player_message=f"You seclude yourself for {years} year(s), and your body's foundation deepens.",
+            lifespan=lifespan,
+        ).to_dict()
+        if self.lifespan.is_expired(self.player, essence_unlocked):
+            return self._die_of_old_age(result)
+        return result
+
     def _after_breakthrough(self, result: Dict[str, Any]) -> Dict[str, Any]:
         """Notify quests on a successful breakthrough and attach any updates."""
         if result.get("success"):
@@ -630,6 +747,7 @@ class GameEngine:
             dialogue_context=context,
             player_message=message,
             choices=self.character_service.dialogue_choices(character_id, self.player),
+            speech_notes=context.get("ai_prompt_notes") or None,
         ).to_dict()
 
     def _dialogue_choose(self, action: Dict[str, Any]) -> Dict[str, Any]:
@@ -790,6 +908,15 @@ class GameEngine:
             result["inventory_items"] = self.inventory.list_inventory(self.player)["items"]
         return result
 
+    def _repair_item(self, item_id: str) -> Dict[str, Any]:
+        """Repair an equipped piece of worn gear, spending gold per durability point."""
+        result = self.equipment.repair_item(self.player, item_id)
+        if result.get("event") == EventType.REPAIR_RESULT:
+            result["equipment_details"] = self.equipment.equipment_details(self.player)
+            result["effective_stats"] = self.stats.effective_stats(self.player)
+            result["wallet"] = {"gold": self.player.gold}
+        return result
+
     def _use_item(self, item_id: str) -> Dict[str, Any]:
         """Use an item in exploration; technique manuals teach their skill instead."""
         item = self._items.get(item_id)
@@ -838,8 +965,8 @@ class GameEngine:
         """Age the player by an action's time cost and enforce lifespan limits."""
         if result.get("event") == EventType.ERROR:
             return result
-        self.lifespan.advance_age(self.player, action_key)
         essence_unlocked = self.cultivation.is_essence_unlocked(self.player)
+        self.lifespan.advance_age(self.player, action_key, essence_unlocked)
         result["lifespan"] = self.lifespan.lifespan_view(self.player, essence_unlocked)
         if self.lifespan.is_expired(self.player, essence_unlocked):
             return self._die_of_old_age(result)
@@ -923,20 +1050,57 @@ class GameEngine:
         setattr(self.player, "equipment_modifiers", lambda: self.equipment.aggregate_modifiers(self.player))
 
     # -- persistence -----------------------------------------------------
-    def save_game(self, slot: str = "default") -> Dict[str, Any]:
-        """Persist the current session to a named save slot."""
-        snapshot = {
+    def _session_snapshot(self) -> Dict[str, Any]:
+        return {
             "player": self.player.to_save_dict(),
             "quests": self.quests.export_state(),
+            "ng_plus": self._ng_plus,
+            "ironman": self._ironman,
         }
+
+    def save_game(self, slot: str = "default") -> Dict[str, Any]:
+        """Persist the current session to a named save slot."""
         try:
-            self.saves.write(slot or "default", snapshot)
+            self.saves.write(slot or "default", self._session_snapshot())
         except SaveError as exc:
             return {"event": EventType.SAVE_RESULT, "success": False, "reason": exc.code, "slot": slot}
         return {"event": EventType.SAVE_RESULT, "success": True, "slot": slot or "default"}
 
+    def _export_save(self) -> Dict[str, Any]:
+        """Return the current session as a portable JSON string (cloud substitute)."""
+        snapshot = self._session_snapshot()
+        snapshot["version"] = SAVE_VERSION
+        payload = json.dumps(snapshot, sort_keys=True)
+        return SaveExportedResult(
+            payload=payload,
+            player_message="Your journey has been transcribed into a portable record.",
+        ).to_dict()
+
+    def _import_save(self, payload: str, slot: str) -> Dict[str, Any]:
+        """Restore a session from a portable JSON string into ``slot``."""
+        if not payload:
+            return {"event": EventType.ERROR, "reason": "IMPORT_EMPTY"}
+        try:
+            data = json.loads(payload)
+        except (ValueError, TypeError):
+            return {"event": EventType.ERROR, "reason": "IMPORT_INVALID"}
+        if not isinstance(data, dict) or "player" not in data:
+            return {"event": EventType.ERROR, "reason": "IMPORT_INVALID"}
+        try:
+            self.saves.write(slot or "default", data)
+        except SaveError as exc:
+            return {"event": EventType.ERROR, "reason": exc.code}
+        loaded = self.load_game(slot or "default")
+        return SaveImportedResult(
+            success=bool(loaded.get("success")),
+            slot=slot or "default",
+            player_message="Your journey has been restored from the portable record.",
+        ).to_dict()
+
     def load_game(self, slot: str = "default") -> Dict[str, Any]:
         """Restore a session from a named save slot, replacing current state."""
+        if self._ironman:
+            return {"event": EventType.LOAD_RESULT, "success": False, "reason": "IRONMAN_MODE", "slot": slot}
         try:
             data = self.saves.read(slot or "default")
         except SaveError as exc:
@@ -945,6 +1109,8 @@ class GameEngine:
         self._bind_equipment_modifiers()
         self.cultivation_service = CultivationService({"player": self.player}, self.cultivation)
         self.quests.import_state(data.get("quests", {}))
+        self._ng_plus = max(0, int(data.get("ng_plus", 0)))
+        self._ironman = bool(data.get("ironman", False))
         self._mode = MODE_EXPLORE
         self._current_enemy = None
         self._cooldowns = {}
@@ -1062,7 +1228,11 @@ class GameEngine:
         self.player.progress = body.progress
         self.player.hp = max(1, int(self.player.max_hp * hp_ratio))
         self.player.qi = int(self.player.max_qi * qi_ratio)
-        result["penalty"] = {"progress_lost": lost, "revived_hp": self.player.hp}
+        degraded = self.equipment.degrade_equipped(self.player, 1)
+        penalty = {"progress_lost": lost, "revived_hp": self.player.hp}
+        if degraded:
+            penalty["equipment_degraded"] = degraded
+        result["penalty"] = penalty
 
     def _tick_cooldowns(self) -> None:
         for skill_id in list(self._cooldowns.keys()):

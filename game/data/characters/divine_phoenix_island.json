@@ -448,7 +448,17 @@
       "enemy_id": "",
       "quest_ids": [],
       "teaches_skills": [],
-      "relationship_rewards": []
+      "relationship_rewards": [
+        {
+          "min_tier": "trusted",
+          "reward": {
+            "item_id": "talent_refining_elixir",
+            "count": 2,
+            "message": "In recognition of your bond, the master parts with a rare elixir that tempers innate talent."
+          },
+          "once": true
+        }
+      ]
     },
     "intro_text": "The legendary founder of Divine Phoenix Island, remembered in echoes, murals, and inherited will.",
     "repeat_text": "The memory of Divine Phoenix Island Founder seems to watch over the isle.",

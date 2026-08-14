@@ -72,6 +72,11 @@ class Player:
     gold: int = 0
     inventory: Dict[str, int] = field(default_factory=dict)
     equipment: Dict[str, str | None] = field(default_factory=empty_equipment_slots)
+    # Per-slot current durability for equipment that declares a ``durability``
+    # maximum. Missing/0 means the item is indestructible or has no durability
+    # model; a value of 0 with a non-zero max means the item is broken (provides
+    # no modifiers until repaired).
+    equipment_durability: Dict[str, int] = field(default_factory=dict)
     skills: List[str] = field(default_factory=list)
     # Per-NPC relationship store: {npc_id: {relationship_score, trust, fear, ...}}.
     # Interpreted by the RelationshipSystem; the model only holds the data.
@@ -149,6 +154,7 @@ class Player:
             "gold": self.gold,
             "inventory": dict(self.inventory),
             "equipment": dict(self.equipment),
+            "equipment_durability": dict(self.equipment_durability),
             "skills": list(self.skills),
             "relationships": {
                 npc_id: dict(state) for npc_id, state in self.relationships.items()
@@ -188,6 +194,7 @@ class Player:
             "gold": self.gold,
             "inventory": dict(self.inventory),
             "equipment": dict(self.equipment),
+            "equipment_durability": dict(self.equipment_durability),
             "skills": list(self.skills),
             "relationships": {
                 npc_id: dict(state) for npc_id, state in self.relationships.items()
@@ -227,6 +234,10 @@ class Player:
             gold=int(data.get("gold", 0)),
             inventory=dict(data.get("inventory", {})),
             equipment=_equipment_from_save(data.get("equipment", {})),
+            equipment_durability={
+                str(slot): int(value)
+                for slot, value in data.get("equipment_durability", {}).items()
+            },
             skills=list(data.get("skills", [])),
             relationships={
                 npc_id: dict(state) for npc_id, state in data.get("relationships", {}).items()

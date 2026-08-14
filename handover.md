@@ -4,7 +4,8 @@ A data-driven cultivation (xianxia) RPG. The authoritative game logic is a Pytho
 engine in `game/`; several frontends render its state and send commands. **All
 gameplay rules live in the engine — never in a UI.**
 
-Last updated: 2026-07-09. Test suite: **329 passing** (`pytest -q`). Data validation: clean.
+Last updated: 2026-08-14. Test suite: **414 passing, 3 skipped** (`pytest -q`).
+Data validation: clean (**0 errors**).
 
 ---
 
@@ -16,9 +17,9 @@ Use the project virtual environment at `.venv`.
 |---|---|---|
 | **Godot client** (primary) | See below | Talks to the FastAPI backend over HTTP |
 | FastAPI backend | `& ".venv\Scripts\python.exe" -m uvicorn game.api.server:app --host 127.0.0.1 --port 8000` | Required for Godot |
-| CLI | `& ".venv\Scripts\python.exe" main.py` | Text frontend |
-| PySide6 desktop GUI | `& ".venv\Scripts\python.exe" gui_main.py` | Dark-fantasy dashboard |
-| Tests | `& ".venv\Scripts\python.exe" -m pytest -q` | 329 tests |
+| CLI | `& ".venv\Scripts\python.exe" main.py` | Text frontend (frozen — see Conventions) |
+| PySide6 desktop GUI | `& ".venv\Scripts\python.exe" gui_main.py` | Dark-fantasy dashboard (frozen — see Conventions) |
+| Tests | `& ".venv\Scripts\python.exe" -m pytest -q` | 414 tests |
 | Data validation | `& ".venv\Scripts\python.exe" -c "from game.validation import validate_all_game_data as v; print(v().is_valid)"` | Cross-reference check |
 
 ### Godot (Godot 4.7)
@@ -57,129 +58,61 @@ ui/ (+ frontends)  ->  application/  ->  core/  ->  services/  ->  systems/  -> 
 - `game/core/results.py` / `constants.py` — typed result dataclasses + `Action` /
   `EventType` StrEnums (the UI contract).
 
-Detailed rules live in `.github/instructions/00`–`12` and `.github/skills/`.
-
 ---
 
-## 3. Recent work
+## 3. Recent work (2026-08-14, the GROK-review close-out)
 
-### This session
+This session executed the full **17-priority roadmap** derived from a code review
+(see `Tasks.md` for the measurable criteria and evidence of each). Summary by theme:
 
-#### Exploration fix
-- Named-character encounters are now **chance-gated** (`events.json`
-  `character_encounter_chance`, default `0.35`): exploring a location with named
-  NPCs still rolls combat/loot/special/nothing instead of *only* surfacing the
-  characters.
+### Combat & skills
+- **All 26 skill effect types now do something.** `CombatSystem` resolves
+  `damage`, `true_damage`, `aoe_damage`, `execute`, `life_steal`, `heal_self`,
+  `stun`, `dot_damage`, `shield`, `counter`, `debuff_attack`, `debuff_defense`
+  plus a shield/status model; `StatsSystem` honours the full passive set
+  (`buff_*`, `crit_*`, regen, `qi_cost_reduction`). Meta-passives
+  (`comprehension_gain`, `lifespan`, `cultivation_speed`) are wired into
+  learn/lifespan/cultivation.
+- **Spar vs duel are distinct.** Spars end at 25% HP with no loot/exp/penalty;
+  duels/exploration keep full stakes.
+- **Defeat penalty is data-driven** (`cultivation_config.defeat_penalty`): 25%
+  body-progress loss + revive ratios, not a wipe.
+- **Enemy abilities** (`heavy`/`poison`/`stun` with chance+magnitude) on 4 named
+  foes; enemy stun forfeits the player's turn.
 
-#### Essence fatigue + stability (mirrors the body track)
-- `EssenceCultivationState` gained `cultivation_strain` (fatigue) and
-  `foundation_stability` (starts 100). `train_essence` builds strain; Essence
-  breakthroughs are gated by `STRAIN_TOO_HIGH` / `FOUNDATION_UNSTABLE`; failed
-  attempts raise strain + lower stability; success relieves strain.
-- New **`STABILISE_ESSENCE`** action (mirrors `STABILISE_FOUNDATION`). Tuning lives
-  in `cultivation_config.json` → **`essence_progression`**. Godot shows Essence
-  Strain/Stability and a **Stabilise Essence** card.
+### Martial growth economy
+- Every skill has an auto-generated manual; `tools/seed_techniques.py` seeds them
+  into enemy loot, shops, and encounter pools — **0 unreachable skills** (was 205).
+- `trainers.json` (8 trainers) teaches all 208 skills; 4 path-locked secret arts.
+- **Talent upgrades** (`talents` / `upgrade <track> <target>`) chain every talent
+  into the next grade, gated by the rare **`talent_refining_elixir`** (not gold).
+  The elixir is reachable through encounters (high-danger pools + enemy drops),
+  Masters (relationship reward), and late-game shops.
 
-#### Content discovery (skills / items / gear are now findable)
-- **Technique manuals**: a learn-skill manual is **auto-generated for every skill**
-  (`<skill_id>_manual`, `effect: learn_skill`). `USE_ITEM` on a manual learns +
-  consumes it. `game/data/technique_manuals.json` = *optional* per-skill overrides
-  (name/rarity/description) matched by `skill_id`. New pure `SkillSystem`.
-- **Trainers**: `game/data/trainers.json` — location-bound masters teach skills for
-  Gold / Spirit Stones. `TRAINERS` lists a location's offerings; `LEARN_SKILL`
-  pays + learns. New `TrainerSystem`; Godot **Masters** card. Currency spending is
-  shared with shops via `game/systems/currency.py`.
-- **Exploration finds**: when a location has no curated loot pool, a `LOOT` event
-  draws a **rarity-weighted, danger-gated** reward from the whole item/equipment
-  catalogue via `events.json` → **`find_config`** (7-grade ladder
-  `mortal_grade`→`dao_grade`; a location's `danger_level` caps the rarity). New
-  `FindSystem`. Enemy loot + shops remain the curated channels.
+### Social & faction
+- **Dialogue choices** (`dialogue.choices[]`) mutate relationship/morality/
+  reputation; `TALK_TO_CHARACTER` returns available choices.
+- **Relationship-gated rewards** (`relationship_rewards`) are claimable one-time
+  boons via `RECEIVE_BOON`, tracked in NPC memory flags.
+- **Sects** (`sects.json`, 4 sects): `JOIN_SECT` sets `player.path`; joining
+  gates on realm + reputation.
 
-#### Use Item (Godot)
-- New **Use Item** action card + popup for consumables and technique manuals
-  (sends `USE_ITEM`). The backend inventory view now returns `usable` / `effect`
-  per item so the UI only offers items that actually do something.
+### World & progression
+- **Quest chains**: 3 → 9 quests with `requires` gates (completed quests,
+  reputation, location) and skill/manual rewards.
+- **Economy**: `SELL_ITEM`, 3 → 12 shops, spirit-stone sinks.
+- **Time model**: `closed_door <years>` seclusion, seasons, realm-scaled aging.
+- **Save/meta**: ironman flag, NG+ scaling bonus, portable `export`/`import`
+  (cloud substitute).
 
-#### Equipment data + validator fix
-- Aligned the equipment rarity validator to the canonical 7-grade ladder (added
-  `dao_grade`, dropped unused `profound_grade` / `divine_grade`).
-- Corrected 24 stale realm requirements in `equipment.json`:
-  `marrow_refining`→`tempering_marrow`, `blood_transformation`→
-  `eight_gates_hidden_celestial_stems`, `golden_body`→`nine_stars_dao_palace`,
-  `mortal_shedding`→`divine_transformation`. Data validation is clean again.
-
-### Prior session (established baseline)
-
-### Talent system (replaces Spiritual Root + Physique)
-- New games roll **two independent talents**: a **Martial Talent** (essence
-  aptitude) and a **Body Talent** (body aptitude), from
-  `game/data/cultivation/martial_talents.json` and `body_talents.json`.
-- Grades follow the `talent_system_update_prompt.md` ladder names; **Martial
-  "Common Grade" is split into three sub-talents** (Common Grade (1)/(2)/(3),
-  each slightly better), all mapping to tier 2.
-- The player stores `martial_talent_id` / `body_talent_id`. Cultivation
-  multipliers, roll weights, and upgrade hooks were migrated 1:1 (no rebalance).
-- `game/data/cultivation/talents.json` is the shared 20-tier + Apex **ladder**
-  (grade names, reachable realm, lifespan potential, canon/extrapolated source).
-  Each rollable talent carries a `tier` linking into it. `TalentSystem`
-  (`game/systems/talent_system.py`) is a pure read-only lookup over the ladder.
-- `StartingFateSystem` now rolls the two talent tables (kept its name +
-  `ROLL_STARTING_FATE` / `STARTING_FATE_ROLLED` plumbing to avoid CLI churn).
-
-### Lifespan tracking
-- `game/systems/lifespan_system.py` (pure). Characters start at **age 12**
-  (`age_years`) and age by a **data-driven per-action time cost**
-  (`cultivation_config.json` → `lifespan.time_costs`, in years).
-- **Maximum lifespan follows the current Essence Gathering realm**
-  (`max_lifespan_years` per realm in `essence_gathering_realms.json`; pre-essence
-  characters use `lifespan.mortal_base_lifespan_years` = 100). Breakthroughs
-  extend the cap; `beyond_divinity` is `null` = effectively immortal.
-- Reaching the cap returns `EventType.PLAYER_DIED` and stops the run
-  (`_die_of_old_age` in the engine).
-- The player view exposes a read-only `lifespan` block: `age_years`, `year`
-  (elapsed years since spawn; year 0 at start), `max_lifespan_years`,
-  `remaining_years`, `immortal`, `display`.
-
-### Equipment
-- Equipment now gates on **actual cultivation (realm/stats)**, not talent. The
-  `minimum_spiritual_root_rank` / `minimum_physique_rank` checks were removed;
-  `EquipmentSystem` no longer takes the trait tables.
-
-### Shops / spending
-- Added **data-driven shops** in `game/data/shops.json`, loaded by
-  `GameDataRegistry` and validated by the central data validator.
-- New engine actions: `SHOP` lists the current-location market stock;
-  `BUY_ITEM` purchases an item from available stock.
-- `ShopSystem` (`game/systems/shop_system.py`) spends **Gold** from `player.gold`
-  and **Spirit Stones** from the player's `spirit_stone` inventory count, then
-  adds the purchased item to inventory. Buying equipment does **not** auto-equip;
-  the existing `EQUIP_ITEM` flow still owns slot/requirement validation.
-- Godot now shows a **Market** action card when `state.shops` is non-empty. It
-  opens backend-returned stock/prices and sends `BUY_ITEM` for the selected ware.
-
-### Save
-- `SAVE_VERSION = 2` (talent IDs + `age_years`). Version-1 saves are rejected on load.
-
-### Godot frontend (`frontend-godot/scripts/MainController.gd`)
-- Character/Status panels show **Martial Talent**, **Body Talent**, and **Lifespan**.
-- Top-right readout is now a **Year** counter (Year 0 at spawn, same year units as
-  the lifespan system) instead of "Day / Morning".
-- New **World Map** action opens `frontend-godot/assets/sky_spill_continent_map.png`
-  and overlays the player's current location marker using backend
-  `location.map_position` coordinates (normalized `x`/`y` in `0.0..1.0`, validated
-  centrally). Placement math is `_position_world_map_marker` /
-  `_world_map_content_rect` (assumes a 1.5 map aspect). Labeled landmarks sit on
-  their markers; the early Sky Fortune cluster is a best-fit in the western region.
-- New **Equipment** tab (order: Inventory | Equipment | Journal | Status |
-  Techniques) listing all 11 gear slots (equipped item + rarity, or `(empty)`).
-  The EQUIPPED block was removed from the Inventory tab.
-- Old-age death shows a **"Your Dao Ends"** screen (`PLAYER_DIED`).
-
-### Location art
-- Added 8 missing location images to `frontend-godot/assets/locations/`
-  (`ancient_ruins`, `blood_slaughter_steppes`, `five_element_temples`,
-  `holy_demon_continent`, `planetary_gate_array`, `rival_divine_kingdom`,
-  `southern_wilderness`, `zenlight_monastery`). Source art lives in `Images/`.
+### Frontend (Godot only)
+- Full GUI restructure per `Martial_Path_GUI_Master_Prompt_Final.md`: top bar
+  (Year + tabs), 3-column body with a permanent event log, floating tab overlays,
+  monogram portrait, location chips + clickable exits, grouped actions, paper-doll
+  equipment slot grid.
+- Item interaction consolidated into the **Inventory** overlay (Use/Equip/Unequip
+  buttons); the main Actions hub's *Commerce & Support* grid keeps only Market +
+  Masters.
 
 ---
 
@@ -187,72 +120,63 @@ Detailed rules live in `.github/instructions/00`–`12` and `.github/skills/`.
 
 | File | Purpose |
 |---|---|
-| `game/data/cultivation/martial_talents.json` | Rollable Martial (essence) talents |
-| `game/data/cultivation/body_talents.json` | Rollable Body talents |
-| `game/data/cultivation/talents.json` | 20-tier + Apex talent ladder (names/realm/lifespan potential) |
+| `game/data/cultivation/martial_talents.json` / `body_talents.json` | Rollable Martial/Body talents (with `upgrade_options` chains) |
+| `game/data/cultivation/talents.json` | 20-tier + Apex talent ladder |
 | `game/data/cultivation/essence_gathering_realms.json` | Essence realms + per-realm `max_lifespan_years` |
-| `game/data/cultivation/body_transformation_realms.json` | Body realms |
-| `game/data/cultivation/cultivation_config.json` | Training methods, **`body_progression` + `essence_progression`** (strain/stability tuning), `lifespan` block (starting age, mortal base, time_costs) |
-| `game/data/locations.json` | 29 world-map locations (art + `map_position` marker coords keyed by `id`) |
-| `frontend-godot/assets/sky_spill_continent_map.png` | World map image used by the Godot marker popup |
-| `game/data/equipment.json` | Equipment (gated by realm/stats) |
-| `game/data/shops.json` | Location-bound markets and item/equipment prices |
-| `game/data/trainers.json` | Location-bound skill trainers (teach skills for currency) |
-| `game/data/technique_manuals.json` | Optional per-skill manual overrides (manuals auto-generated otherwise) |
-| `game/data/events.json` | Encounter weights, `character_encounter_chance`, and `find_config` (rarity-weighted exploration finds) |
+| `game/data/cultivation/cultivation_config.json` | Training methods, strain/stability, `lifespan`, `defeat_penalty`, `closed_door`, realm aging |
+| `game/data/locations.json` | 29 world-map locations (art + `map_position`) |
+| `game/data/sects.json` | 4 sects (path, join requirements, contribution ranks) |
+| `game/data/encounter_pools.json` | Location loot pools |
+| `game/data/character_enemies/named_foes.json` | Named foes (abilities) |
+| `game/data/equipment.json` | Equipment (realm-gated; some with `set_id` + durability) |
+| `game/data/items.json` | Items incl. `talent_refining_elixir` |
+| `game/data/shops.json` | 12 location-bound markets |
+| `game/data/trainers.json` | Skill trainers (teach for currency; `required_path`) |
+| `game/data/technique_manuals.json` | Optional per-skill manual overrides |
+| `game/data/events.json` | Encounter weights, `character_encounter_chance`, `find_config` |
+| `frontend-godot/assets/sky_spill_continent_map.png` | World map image |
+
+Seed generators live in `tools/` (all deterministic + idempotent):
+`seed_techniques.py`, `seed_shops.py`, `seed_talent_upgrades.py`,
+`seed_talent_resources.py`, `seed_equipment_sets.py`, `seed_enemy_abilities.py`,
+`normalize_available_systems.py`, `gen_missing_location_art.py`.
 
 Docs: `game/docs/ARCHITECTURE.md`, `CULTIVATION_SYSTEM.md`, `DATA_SCHEMA.md`,
-`SAVE_SYSTEM.md`, `EQUIPMENT_SYSTEM.md`, `CHANGELOG.md`.
+`SAVE_SYSTEM.md`, `EQUIPMENT_SYSTEM.md`, `CHANGELOG.md`. Roadmap: `Tasks.md`.
 
 ---
 
 ## 5. Testing & validation
 
-- `pytest -q` — full suite (329). Newest: `tests/test_skill_system.py`,
-  `tests/test_trainer_system.py`, `tests/test_find_system.py` (plus prior
-  `test_lifespan_system.py`, `test_talent_system.py`, `test_shop_system.py`).
-- `validate_all_game_data()` — validates talent tracks, realm lifespans, the
-  talent ladder, equipment (rarity ladder + realm refs), shops, **trainers**,
-  **technique-manual overrides**, **`find_config`**, **`essence_progression`**,
-  normalized map positions, and all cross-references.
+- `pytest -q` — **414 passed, 3 skipped**. Newer files: `test_medium_priority.py`
+  (the P10–P17 close-out), `test_sell_system.py`, `test_sect_system.py`,
+  `test_relationship_rewards.py`, plus combat/trainer/find/lifespan/talent/shop.
+- `validate_all_game_data()` — validates skills/effects, talents + upgrade chains
+  + elixir costs, trainers (+ `required_path`), shops, sects, quests, equipment
+  (rarity, realm, sets, durability), items, enemy abilities, encounter pools,
+  normalized `available_systems`, and map-position duplicates. **0 errors.**
 - Systems are testable without a UI (inject data + a seeded `RNG`).
 
 ---
 
 ## 6. Known follow-ups / open items
 
-- **Manuals not yet in the wild**: a manual exists for every skill, but none are
-  referenced in loot tables or shops yet. Add `<skill_id>_manual` ids to enemy
-  `loot_table`s / `shops.json` to make specific techniques findable/buyable.
-- **Equipment realm mappings**: two of the four corrected realm requirements were
-  judgment calls (`blood_transformation`→`eight_gates_hidden_celestial_stems`,
-  `mortal_shedding`→`divine_transformation`, chosen with the user). Re-tune in
-  `equipment.json` if the gating tier feels off.
-- **CLI / PySide parity**: the new Use Item, Trainers/Masters, manual-learning, and
-  essence Stabilise flows are engine-wired but only surfaced in the Godot client
-  (plus CLI verbs `learn` / `masters`). The desktop GUIs weren't updated.
-- **`divine_phoenix_mystic_realm` has no artwork** (no source image). It shows the
-  name-label fallback; could reuse the Divine Phoenix Island art.
-- **Talent upgrade paths**: the weight-0 upgrade trait entries were dropped in the
-  migration. Re-add later (mapped to the ladder) for a "refine your talent" feature.
-- **Realm-scaled time costs**: aging cost is currently flat per action; could scale
-  by realm.
-- **CLI/PySide talent labels**: those frontends were intentionally left untouched
-  (UI work was Godot-only). The fate roll result keeps legacy `spiritual_root` /
-  `physique` keys as a compatibility shim, so CLI still shows the old labels. Also
-  the cultivation system's private helper names (`_spiritual_root_float`,
-  `_spiritual_roots_by_id`) were kept — they now hold talent data.
-- **Backend `--reload`**: not enabled; restart uvicorn manually after engine edits.
-- **Godot equipment layout**: currently a slot **list**; a paper-doll/grid layout
-  is a possible future enhancement.
-- **Shop depth**: current shop stock is static and location-bound. Dynamic stock
-  depletion, sell-back, sect contribution stores, and auction bidding are future
-  enhancements.
-- **World-map marker accuracy**: labeled landmarks (Seven Profound Valleys, Divine
-  Phoenix Island, the four kingdoms, Zenlight, Five Element, Holy Demon, etc.) sit
-  on their markers, but the early Sky Fortune cluster is not individually drawn on
-  the continental map and is placed as a best-fit in the west. Nudge individual
-  `map_position` values in `locations.json` if a spot looks off.
+- **Deferred (needs an external service):** cloud save (local `export`/`import`
+  ships instead) and a full LLM dialogue layer (`ai_prompt_notes` is surfaced as
+  a `(manner: …)` line, but no generated dialogue).
+- **Untested at runtime here:** PySide6 (`gui_main.py`) and the Godot paper-doll
+  render — both compile/parse clean but weren't executed against a display.
+- **New engine actions not yet surfaced as dedicated Godot widgets:** `talents`,
+  `closed_door`, `repair`, `export`, `import` work through the API/state but have
+  no bespoke Godot buttons/panels yet (Godot renders them via generic handling).
+- **`BOON` narration gap in Godot:** the "Receive Reward" button appears from the
+  backend `options`, but `MainController._render_event` has no `BOON` case, so the
+  reward result isn't logged visually (it is granted by the backend).
+- **Sect contribution ranks** exist as data but there is no contribution-earning
+  mechanic yet (tasks, inner/outer disciple progression, sect store).
+- **Subjective map placement:** the early Sky Fortune cluster is a best-fit (no
+  reference coordinates); the objective guard (no duplicate markers) is enforced.
+- **Backend `--reload`:** not enabled; restart uvicorn manually after engine edits.
 
 ---
 
@@ -260,6 +184,36 @@ Docs: `game/docs/ARCHITECTURE.md`, `CULTIVATION_SYSTEM.md`, `DATA_SCHEMA.md`,
 
 - Data-driven first: JSON + stable snake_case IDs over hard-coded values.
 - Keep gameplay logic out of UIs; UIs display state and send commands only.
+- **Frontend scope: only the Godot interface (`frontend-godot/`) is updated.**
+  Do NOT modify the CLI (`game/ui/cli_interface.py` + its
+  `game/application/command_router.py` translator) or the PySide6 interface
+  (`game/ui/gui_interface.py`). Engine/data/system changes are fine, but any
+  player-facing UI work lands in Godot only.
 - ASCII only inside player-facing printed strings (Windows console is cp1252).
-- Update the relevant `game/docs/` files and `CHANGELOG.md` alongside changes.
-- Original lore only — no copyrighted names/sects/techniques.
+- Update `Tasks.md` / `handover.md` and the relevant `game/docs/` files alongside
+  changes.
+
+---
+
+## 8. Next steps (proposed)
+
+Priority-ordered ideas to progress the game further (none started):
+
+1. **Sect contribution loop** — earn contribution via sect tasks / sparring,
+   spend it at a sect store, promote inner/outer disciple ranks that unlock
+   path-locked techniques and higher trainers.
+2. **Alchemy / gathering loop** — make `gather` a real verb at herb-rich
+   locations, then refine herbs (with the `talent_refining_elixir` as a template)
+   into pills that feed cultivation and combat.
+3. **Multi-enemy & boss-fight combat** — formations/positioning and phased boss
+   encounters to break the 1v1 monotony; tie named foes to quests.
+4. **Companion / relationship depth** — let bonded NPCs travel and fight with the
+   player, and gate more content on relationship tiers.
+5. **Sect tournament / arena ladder** — a recurring ranked sparring event as a
+   mid-game loop and a reputation/contribution sink.
+6. **Seasonal weather effects** — P12 added seasons as display; make seasons
+   modify travel, gathering, and encounter odds for real texture.
+7. **Surface the new actions in Godot** — bespoke widgets for `talents`,
+   `closed_door`, `repair`, `export`/`import`, and the `BOON` result narration.
+8. **Cloud save + LLM dialogue** — once an external service is chosen, wire the
+   two deferred items from §6.

@@ -29,6 +29,7 @@ class LifespanSystem:
         self._starting_age = float(lifespan_config.get("starting_age_years", 12))
         self._mortal_base = float(lifespan_config.get("mortal_base_lifespan_years", 100))
         self._time_costs = dict(lifespan_config.get("time_costs", {}))
+        self._aging_multipliers = dict(lifespan_config.get("realm_aging_multipliers", {}))
 
     def current_max_lifespan(self, player: Player, essence_unlocked: bool) -> Optional[float]:
         """Return the current maximum lifespan in years, or ``None`` if immortal.
@@ -51,12 +52,25 @@ class LifespanSystem:
         """Return the age (in years) a given action consumes."""
         return float(self._time_costs.get(action_key, 0.0))
 
-    def advance_age(self, player: Player, action_key: str) -> float:
-        """Advance the player's age by the action's time cost; return years added."""
+    def advance_age(self, player: Player, action_key: str, essence_unlocked: Optional[bool] = None) -> float:
+        """Advance the player's age by the action's time cost; return years added.
+
+        When ``essence_unlocked`` is provided, the time cost is scaled by the
+        current Essence realm's ``realm_aging_multiplier`` (higher realms age
+        more slowly). A bare call keeps the flat per-action cost.
+        """
         cost = self.time_cost(action_key)
+        if essence_unlocked is not None:
+            cost = cost * self._aging_multiplier(player, essence_unlocked)
         if cost:
             player.age_years = round(float(player.age_years) + cost, 4)
         return cost
+
+    def _aging_multiplier(self, player: Player, essence_unlocked: bool) -> float:
+        if not essence_unlocked:
+            return 1.0
+        realm_id = player.cultivation_state.essence.realm_id
+        return float(self._aging_multipliers.get(realm_id, 1.0))
 
     def remaining_years(self, player: Player, essence_unlocked: bool) -> Optional[float]:
         """Return years left before old-age death, or ``None`` when immortal."""
@@ -81,11 +95,16 @@ class LifespanSystem:
         return {
             "age_years": round(float(player.age_years), 1),
             "year": self.elapsed_years(player),
+            "season": self.season(player),
             "max_lifespan_years": None if max_lifespan is None else int(max_lifespan),
             "remaining_years": None if remaining is None else round(remaining, 1),
             "immortal": max_lifespan is None,
             "display": self._format(float(player.age_years), max_lifespan),
         }
+
+    def season(self, player: Player) -> str:
+        """Return the current season, derived from whole years elapsed since spawn."""
+        return ("Spring", "Summer", "Autumn", "Winter")[self.elapsed_years(player) % 4]
 
     @staticmethod
     def _format(age: float, max_lifespan: Optional[float]) -> str:

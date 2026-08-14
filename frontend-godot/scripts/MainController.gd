@@ -106,7 +106,7 @@ var _active_tab := -1
 # Tab content refs (inside the floating overlay).
 var _inventory_text: RichTextLabel
 var _inventory_count: Label
-var _equipment_text: RichTextLabel
+var _equipment_slots: GridContainer
 var _equipment_count: Label
 var _gold_label: Label
 var _stones_label: Label
@@ -487,10 +487,6 @@ func _render_actions(player: Dictionary) -> void:
 
 	_support_grid.add_child(_make_action_card("Market", "Buy supplies and equipment", func(): _send("SHOP"), _has_available_shop(), "No market is available here."))
 	_support_grid.add_child(_make_action_card("Masters", "Learn techniques", func(): _send("TRAINERS"), _has_available_trainer(), "No technique master is here."))
-	_support_grid.add_child(_make_action_card("Inventory", "Manage your items", func(): _focus_tab(0)))
-	_support_grid.add_child(_make_action_card("Use Item", "Use a pill or manual", Callable(self, "_open_use_popup"), _has_usable_item(), "No usable items in inventory."))
-	_support_grid.add_child(_make_action_card("Equip Item", "Wear owned equipment", Callable(self, "_open_equip_popup"), _has_equipment_inventory(), "No equippable items in inventory."))
-	_support_grid.add_child(_make_action_card("Unequip Item", "Clear an equipment slot", Callable(self, "_open_unequip_popup"), _has_equipped_items(), "No equipment is currently worn."))
 
 
 func _make_action_card(title: String, subtitle: String, cb: Callable, enabled: bool = true, locked_reason: String = "") -> Button:
@@ -999,6 +995,13 @@ func _build_inventory_page() -> void:
 	header.add_child(_inventory_count)
 	box.add_child(header)
 
+	var actions := HBoxContainer.new()
+	actions.add_theme_constant_override("separation", 8)
+	box.add_child(actions)
+	actions.add_child(_make_button("Use Item", Callable(self, "_open_use_popup"), "Use a pill or manual from your inventory."))
+	actions.add_child(_make_button("Equip Item", Callable(self, "_open_equip_popup"), "Wear owned equipment."))
+	actions.add_child(_make_button("Unequip Item", Callable(self, "_open_unequip_popup"), "Clear an equipment slot."))
+
 	_inventory_text = RichTextLabel.new()
 	_inventory_text.bbcode_enabled = true
 	_inventory_text.fit_content = true
@@ -1038,12 +1041,14 @@ func _build_equipment_page() -> void:
 	header.add_child(_equipment_count)
 	box.add_child(header)
 
-	_equipment_text = RichTextLabel.new()
-	_equipment_text.bbcode_enabled = true
-	_equipment_text.fit_content = true
-	_equipment_text.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	_equipment_text.add_theme_color_override("default_color", COLOR_PRIMARY_TEXT)
-	box.add_child(_equipment_text)
+	# Paper-doll: a grid of slot cards, one cell per equipment slot.
+	_equipment_slots = GridContainer.new()
+	_equipment_slots.columns = 2
+	_equipment_slots.add_theme_constant_override("h_separation", 8)
+	_equipment_slots.add_theme_constant_override("v_separation", 8)
+	_equipment_slots.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_equipment_slots.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	box.add_child(_equipment_slots)
 
 
 func _add_text_page(title: String) -> RichTextLabel:
@@ -1469,25 +1474,40 @@ func _render_inventory(state: Dictionary) -> void:
 func _render_equipment(player: Dictionary) -> void:
 	var slots: Dictionary = player.get("equipment", {})
 	var details: Dictionary = player.get("equipment_details", {})
-	var lines := ""
+	_clear_row(_equipment_slots)
 	var worn := 0
 	for pair in EQUIPMENT_SLOT_ORDER:
 		var slot_id := str(pair[0])
 		var slot_label := str(pair[1])
 		var item_id = slots.get(slot_id, null)
+		var info: Dictionary = details.get(slot_id, {})
 		if item_id == null or str(item_id) == "":
-			lines += "[color=#C7BCA8]%s[/color]  [color=#5A554C](empty)[/color]\n" % slot_label
+			_equipment_slots.add_child(_make_equipment_slot_card(slot_label, "(empty)", "", COLOR_MUTED, -1, -1))
 		else:
 			worn += 1
-			var info: Dictionary = details.get(slot_id, {})
-			var item_name := str(info.get("display_name", item_id))
-			var rarity := str(info.get("rarity", "")).replace("_", " ").capitalize()
-			lines += "[color=#C7BCA8]%s[/color]  [color=#F2E8D5][b]%s[/b][/color]" % [slot_label, item_name]
-			if rarity != "":
-				lines += "  [color=#D6A64A](%s)[/color]" % rarity
-			lines += "\n"
-	_set_rich_text(_equipment_text, lines.strip_edges())
+			var durability: Variant = info.get("durability", null)
+			var max_durability: Variant = info.get("max_durability", null)
+			var broken := bool(info.get("broken", false))
+			var name_color := COLOR_PRIMARY_TEXT if not broken else COLOR_DANGER
+			_equipment_slots.add_child(_make_equipment_slot_card(slot_label, str(info.get("display_name", item_id)), str(info.get("rarity", "")), name_color, durability, max_durability))
 	_equipment_count.text = "%d / %d worn" % [worn, EQUIPMENT_SLOT_ORDER.size()]
+
+
+func _make_equipment_slot_card(slot_label: String, item_name: String, rarity: String, name_color: Color, durability: Variant, max_durability: Variant) -> PanelContainer:
+	var card := PanelContainer.new()
+	card.add_theme_stylebox_override("panel", _make_button_style(COLOR_PANEL_SOFT, COLOR_BORDER))
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 2)
+	card.add_child(box)
+	box.add_child(_make_label(slot_label.to_upper(), 10, COLOR_ANTIQUE_GOLD))
+	var name_label := _make_label(item_name, 13, name_color)
+	name_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	box.add_child(name_label)
+	if rarity != "":
+		box.add_child(_make_label(rarity.replace("_", " ").capitalize(), 10, COLOR_MUTED))
+	if typeof(durability) == TYPE_INT and typeof(max_durability) == TYPE_INT and int(max_durability) > 0:
+		box.add_child(_make_label("Durability %s/%s" % [durability, max_durability], 10, COLOR_WARNING if int(durability) <= 0 else COLOR_MUTED))
+	return card
 
 
 func _render_status_summary(player: Dictionary) -> void:

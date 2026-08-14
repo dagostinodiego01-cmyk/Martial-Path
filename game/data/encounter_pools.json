@@ -94,6 +94,10 @@
       {
         "item_id": "purple_cloud_sword_art_manual",
         "weight": 1
+      },
+      {
+        "item_id": "talent_refining_elixir",
+        "weight": 1
       }
     ],
     "special": [
@@ -133,6 +137,10 @@
       },
       {
         "item_id": "blood_sea_body_manual",
+        "weight": 1
+      },
+      {
+        "item_id": "talent_refining_elixir",
         "weight": 1
       }
     ],
@@ -418,6 +426,10 @@
       {
         "item_id": "heaven_splitting_kick_manual",
         "weight": 1
+      },
+      {
+        "item_id": "talent_refining_elixir",
+        "weight": 1
       }
     ],
     "special": [
@@ -453,6 +465,10 @@
       },
       {
         "item_id": "purple_cloud_scripture_manual",
+        "weight": 1
+      },
+      {
+        "item_id": "talent_refining_elixir",
         "weight": 1
       }
     ],
@@ -554,6 +570,10 @@
       {
         "item_id": "star_shattering_seal_manual",
         "weight": 1
+      },
+      {
+        "item_id": "talent_refining_elixir",
+        "weight": 1
       }
     ],
     "special": [
@@ -585,6 +605,10 @@
       },
       {
         "item_id": "nirvana_aura_no2_manual",
+        "weight": 1
+      },
+      {
+        "item_id": "talent_refining_elixir",
         "weight": 1
       }
     ],
@@ -622,6 +646,10 @@
       {
         "item_id": "soul_severing_sword_intent_manual",
         "weight": 1
+      },
+      {
+        "item_id": "talent_refining_elixir",
+        "weight": 1
       }
     ],
     "special": [
@@ -653,6 +681,10 @@
       },
       {
         "item_id": "shadowless_ward_manual",
+        "weight": 1
+      },
+      {
+        "item_id": "talent_refining_elixir",
         "weight": 1
       }
     ],
@@ -686,6 +718,10 @@
       {
         "item_id": "primordial_chaos_domain_manual",
         "weight": 1
+      },
+      {
+        "item_id": "talent_refining_elixir",
+        "weight": 1
       }
     ],
     "special": [
@@ -717,6 +753,10 @@
       },
       {
         "item_id": "star_shattering_fist_intent_manual",
+        "weight": 1
+      },
+      {
+        "item_id": "talent_refining_elixir",
         "weight": 1
       }
     ],
@@ -753,6 +793,10 @@
       },
       {
         "item_id": "mountain_crushing_fist_manual",
+        "weight": 1
+      },
+      {
+        "item_id": "talent_refining_elixir",
         "weight": 1
       }
     ],
@@ -818,6 +862,10 @@
       {
         "item_id": "blood_sea_body_manual",
         "weight": 1
+      },
+      {
+        "item_id": "talent_refining_elixir",
+        "weight": 1
       }
     ],
     "special": [
@@ -850,6 +898,10 @@
       {
         "item_id": "nether_roar_manual",
         "weight": 1
+      },
+      {
+        "item_id": "talent_refining_elixir",
+        "weight": 1
       }
     ],
     "special": [
@@ -881,6 +933,10 @@
       },
       {
         "item_id": "nirvana_sword_intent_manual",
+        "weight": 1
+      },
+      {
+        "item_id": "talent_refining_elixir",
         "weight": 1
       }
     ],
@@ -918,6 +974,10 @@
       {
         "item_id": "true_dragon_sword_intent_no2_manual",
         "weight": 1
+      },
+      {
+        "item_id": "talent_refining_elixir",
+        "weight": 1
       }
     ],
     "special": [
@@ -950,6 +1010,10 @@
       {
         "item_id": "true_dragon_seal_manual",
         "weight": 1
+      },
+      {
+        "item_id": "talent_refining_elixir",
+        "weight": 1
       }
     ],
     "special": [
@@ -981,6 +1045,10 @@
       },
       {
         "item_id": "immortal_binding_saber_art_no2_manual",
+        "weight": 1
+      },
+      {
+        "item_id": "talent_refining_elixir",
         "weight": 1
       }
     ],

@@ -105,7 +105,7 @@ class CombatSystem:
             }
         events: List[TurnEvent] = [
             {"actor": "PLAYER", "action": "FLEE_FAILED"},
-            self._enemy_attack(player, enemy),
+            self._enemy_act(player, enemy),
         ]
         if spar:
             return self._spar_round_end(player, enemy, events)
@@ -218,8 +218,47 @@ class CombatSystem:
             events.append({"actor": "ENEMY", "action": "STUNNED", "enemy_name": enemy.name})
             self._expire(enemy, "stun")
         else:
-            events.append(self._enemy_attack(player, enemy))
+            events.append(self._enemy_act(player, enemy))
         self._tick_enemy_statuses(enemy, events)
+        self._tick_player_statuses(player, events)
+
+    def player_stunned_turn(self, player: Player, enemy: Enemy, spar: bool = False) -> Dict[str, Any]:
+        """Resolve a round where the player is stunned and must forfeit their turn."""
+        events: List[TurnEvent] = [{"actor": "PLAYER", "action": "STUNNED"}]
+        self._expire(player, "stun")
+        self._enemy_phase(player, enemy, events)
+        if spar:
+            return self._spar_round_end(player, enemy, events)
+        if not enemy.is_alive():
+            return self._victory(player, enemy, events)
+        if not player.is_alive():
+            return self._defeat(enemy, events)
+        return self._turn(player, enemy, events)
+
+    def _enemy_act(self, player: Player, enemy: Enemy) -> TurnEvent:
+        """Choose the enemy's action, preferring a data-driven ability by chance."""
+        for ability in enemy.abilities:
+            if self._rng.chance(float(ability.get("chance", 0.0))):
+                return self._enemy_ability(player, enemy, ability)
+        return self._enemy_attack(player, enemy)
+
+    def _enemy_ability(self, player: Player, enemy: Enemy, ability: Dict[str, Any]) -> TurnEvent:
+        kind = ability.get("type")
+        magnitude = ability.get("magnitude", 0)
+        if kind == "stun":
+            turns = max(1, int(magnitude))
+            self._apply_status(player, "stun", turns, 0.0)
+            return {"actor": "ENEMY", "action": "STUN", "turns": turns, "enemy_name": enemy.name}
+        if kind == "poison":
+            tick = max(1, int(magnitude))
+            self._apply_status(player, "dot_damage", DOT_TURNS, float(tick))
+            return {"actor": "ENEMY", "action": "POISON", "dot": tick, "turns": DOT_TURNS, "enemy_name": enemy.name}
+        if kind == "heavy":
+            dealt, _ = self._deal_damage(
+                player, self._damage(int(self._enemy_attack_value(enemy) * 1.5), self._player_defense(player))
+            )
+            return {"actor": "ENEMY", "action": "HEAVY_ATTACK", "damage": dealt, "target_hp": player.hp, "enemy_name": enemy.name}
+        return self._enemy_attack(player, enemy)
 
     def _enemy_attack(self, player: Player, enemy: Enemy) -> TurnEvent:
         dealt, _ = self._deal_damage(player, self._damage(self._enemy_attack_value(enemy), self._player_defense(player)))
@@ -243,6 +282,14 @@ class CombatSystem:
                 dealt, _ = self._deal_damage(enemy, int(enemy.statuses[effect]["magnitude"]))
                 events.append({"actor": "ENEMY", "action": "DOT", "damage": dealt, "target_hp": enemy.hp, "enemy_name": enemy.name})
             self._expire(enemy, effect)
+
+    def _tick_player_statuses(self, player: Player, events: List[TurnEvent]) -> None:
+        """Apply per-turn player effects (enemy-inflicted poison) once a round."""
+        for effect in list(player.statuses):
+            if effect == "dot_damage":
+                dealt = player.take_damage(int(player.statuses[effect]["magnitude"]))
+                events.append({"actor": "PLAYER", "action": "DOT", "damage": dealt, "target_hp": player.hp})
+                self._expire(player, effect)
 
     # -- status helpers --------------------------------------------------
     def _apply_status(self, target: Any, effect: str, turns: int, magnitude: float) -> None:

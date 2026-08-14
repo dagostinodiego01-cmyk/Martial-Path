@@ -11,7 +11,28 @@
       "stabilise_essence": 0.1,
       "rest": 0.05,
       "meditate": 0.1
+    },
+    "realm_aging_multipliers": {
+      "houtian": 1.0,
+      "xiantian": 1.0,
+      "revolving_core": 0.95,
+      "life_destruction": 0.9,
+      "divine_sea": 0.85,
+      "divine_transformation": 0.7,
+      "divine_lord": 0.6,
+      "holy_lord": 0.5,
+      "world_king": 0.4,
+      "empyrean": 0.3,
+      "true_divinity": 0.2,
+      "beyond_divinity": 0.1
     }
+  },
+  "closed_door": {
+    "options": [
+      { "years": 1, "progress_gain": 25.0 },
+      { "years": 3, "progress_gain": 75.0 },
+      { "years": 10, "progress_gain": 250.0 }
+    ]
   },
   "body_training_methods": {
     "train_body": {

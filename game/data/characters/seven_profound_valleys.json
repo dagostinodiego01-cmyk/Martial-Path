@@ -318,7 +318,17 @@
       "enemy_id": "",
       "quest_ids": [],
       "teaches_skills": [],
-      "relationship_rewards": []
+      "relationship_rewards": [
+        {
+          "min_tier": "trusted",
+          "reward": {
+            "item_id": "talent_refining_elixir",
+            "count": 2,
+            "message": "In recognition of your bond, the master parts with a rare elixir that tempers innate talent."
+          },
+          "once": true
+        }
+      ]
     },
     "intro_text": "A rule-bound gatekeeper of Seven Profound Valleys who measures every applicant against the code.",
     "repeat_text": "Seven Profound Valleys Elder peers over his records, awaiting your credentials.",

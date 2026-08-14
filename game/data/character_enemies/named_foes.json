@@ -20,6 +20,13 @@
         "chance": 0.05,
         "count": 1
       }
+    ],
+    "abilities": [
+      {
+        "type": "poison",
+        "chance": 0.25,
+        "magnitude": 3
+      }
     ]
   },
   {
@@ -47,6 +54,13 @@
         "item_id": "nether_eye_manual",
         "chance": 0.05,
         "count": 1
+      }
+    ],
+    "abilities": [
+      {
+        "type": "heavy",
+        "chance": 0.3,
+        "magnitude": 1
       }
     ]
   },
@@ -443,6 +457,18 @@
         "chance": 0.05,
         "count": 1
       }
+    ],
+    "abilities": [
+      {
+        "type": "stun",
+        "chance": 0.3,
+        "magnitude": 1
+      },
+      {
+        "type": "heavy",
+        "chance": 0.2,
+        "magnitude": 1
+      }
     ]
   },
   {
@@ -470,6 +496,13 @@
         "item_id": "immortal_binding_saber_art_no2_manual",
         "chance": 0.05,
         "count": 1
+      }
+    ],
+    "abilities": [
+      {
+        "type": "poison",
+        "chance": 0.3,
+        "magnitude": 6
       }
     ]
   },

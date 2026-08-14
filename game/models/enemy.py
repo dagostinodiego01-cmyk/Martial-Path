@@ -24,6 +24,10 @@ class Enemy:
     defense: int
     exp_reward: int = 0
     loot_table: List[Dict[str, Any]] = field(default_factory=list)
+    # Optional data-driven abilities the enemy uses in place of (or in addition
+    # to) its basic attack. Each entry: {"type": heavy|poison|stun, "chance":
+    # 0..1, "magnitude": number}.
+    abilities: List[Dict[str, Any]] = field(default_factory=list)
     # Transient combat state (never persisted): a damage-absorption shield and
     # timed status effects applied by the player (stun, dot, debuffs).
     shield: int = 0
@@ -44,6 +48,7 @@ class Enemy:
             defense=int(data.get("defense", 0)),
             exp_reward=int(data.get("exp_reward", 0)),
             loot_table=list(data.get("loot_table", [])),
+            abilities=[dict(ability) for ability in data.get("abilities", []) if isinstance(ability, dict)],
         )
 
     def is_alive(self) -> bool:

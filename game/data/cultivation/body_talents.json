@@ -11,7 +11,15 @@
     "injury_resistance_multiplier": 0.8,
     "body_strain_gain_multiplier": 1.25,
     "description": "A weak mortal frame. It can improve, but every tempering session bites deep.",
-    "upgrade_options": []
+    "upgrade_options": [
+      {
+        "target_id": "iron_skin_grade",
+        "target_name": "Iron Skin Grade",
+        "cost": {
+          "talent_refining_elixir": 1
+        }
+      }
+    ]
   },
   {
     "id": "iron_skin_grade",
@@ -25,7 +33,15 @@
     "injury_resistance_multiplier": 1.0,
     "body_strain_gain_multiplier": 1.0,
     "description": "A common mortal body. Neither frail nor remarkable.",
-    "upgrade_options": []
+    "upgrade_options": [
+      {
+        "target_id": "forged_body_grade",
+        "target_name": "Forged Body Grade",
+        "cost": {
+          "talent_refining_elixir": 1
+        }
+      }
+    ]
   },
   {
     "id": "forged_body_grade",
@@ -39,7 +55,15 @@
     "injury_resistance_multiplier": 1.1,
     "body_strain_gain_multiplier": 0.95,
     "description": "A body already familiar with hardship, quick to answer disciplined training.",
-    "upgrade_options": []
+    "upgrade_options": [
+      {
+        "target_id": "marrow_cleansed_grade",
+        "target_name": "Marrow-Cleansed Grade",
+        "cost": {
+          "talent_refining_elixir": 1
+        }
+      }
+    ]
   },
   {
     "id": "marrow_cleansed_grade",
@@ -53,7 +77,15 @@
     "injury_resistance_multiplier": 1.25,
     "body_strain_gain_multiplier": 0.85,
     "description": "Your bones carry a hidden metallic density, eager for pressure and impact.",
-    "upgrade_options": []
+    "upgrade_options": [
+      {
+        "target_id": "open_gate_grade",
+        "target_name": "Open Gate Grade",
+        "cost": {
+          "talent_refining_elixir": 1
+        }
+      }
+    ]
   },
   {
     "id": "open_gate_grade",
@@ -67,7 +99,15 @@
     "injury_resistance_multiplier": 1.35,
     "body_strain_gain_multiplier": 0.8,
     "description": "A fierce pulse lives in your blood, turning pain into a savage kind of growth.",
-    "upgrade_options": []
+    "upgrade_options": [
+      {
+        "target_id": "life_gate_grade",
+        "target_name": "Life-Gate Grade",
+        "cost": {
+          "talent_refining_elixir": 1
+        }
+      }
+    ]
   },
   {
     "id": "life_gate_grade",
@@ -81,7 +121,15 @@
     "injury_resistance_multiplier": 1.5,
     "body_strain_gain_multiplier": 0.7,
     "description": "Conflict sharpens your flesh. The harsher the tempering, the more fiercely the body answers.",
-    "upgrade_options": []
+    "upgrade_options": [
+      {
+        "target_id": "death_gate_grade",
+        "target_name": "Death-Gate Grade",
+        "cost": {
+          "talent_refining_elixir": 1
+        }
+      }
+    ]
   },
   {
     "id": "death_gate_grade",
@@ -95,7 +143,15 @@
     "injury_resistance_multiplier": 1.75,
     "body_strain_gain_multiplier": 0.6,
     "description": "A sliver of ancient draconic force coils through your marrow and sinews.",
-    "upgrade_options": []
+    "upgrade_options": [
+      {
+        "target_id": "dao_palace_grade",
+        "target_name": "Dao Palace Grade",
+        "cost": {
+          "talent_refining_elixir": 1
+        }
+      }
+    ]
   },
   {
     "id": "dao_palace_grade",
@@ -109,7 +165,15 @@
     "injury_resistance_multiplier": 2.0,
     "body_strain_gain_multiplier": 0.5,
     "description": "Your body holds the echo of a first vessel, shaped for impossible refinement.",
-    "upgrade_options": []
+    "upgrade_options": [
+      {
+        "target_id": "star_kindling_genius",
+        "target_name": "Star-Kindling Genius",
+        "cost": {
+          "talent_refining_elixir": 1
+        }
+      }
+    ]
   },
   {
     "id": "star_kindling_genius",
@@ -123,7 +187,15 @@
     "injury_resistance_multiplier": 2.5,
     "body_strain_gain_multiplier": 0.45,
     "description": "The Nine Stars of your Dao Palace begin to kindle, flooding your flesh with radiant vigour.",
-    "upgrade_options": []
+    "upgrade_options": [
+      {
+        "target_id": "dark_star_talent",
+        "target_name": "Dark Star Talent",
+        "cost": {
+          "talent_refining_elixir": 2
+        }
+      }
+    ]
   },
   {
     "id": "dark_star_talent",
@@ -137,7 +209,15 @@
     "injury_resistance_multiplier": 3.0,
     "body_strain_gain_multiplier": 0.4,
     "description": "The two dark stars ignite in secret, and your body drinks power from places others cannot see.",
-    "upgrade_options": []
+    "upgrade_options": [
+      {
+        "target_id": "nascent_saint_body_talent",
+        "target_name": "Nascent Saint Body Talent",
+        "cost": {
+          "talent_refining_elixir": 2
+        }
+      }
+    ]
   },
   {
     "id": "nascent_saint_body_talent",
@@ -151,7 +231,15 @@
     "injury_resistance_multiplier": 3.6,
     "body_strain_gain_multiplier": 0.36,
     "description": "Your body sheds the last of its mortal clay, taking the first step onto the Saint Body path.",
-    "upgrade_options": []
+    "upgrade_options": [
+      {
+        "target_id": "true_saint_body_talent",
+        "target_name": "True Saint Body Talent",
+        "cost": {
+          "talent_refining_elixir": 2
+        }
+      }
+    ]
   },
   {
     "id": "true_saint_body_talent",
@@ -165,7 +253,15 @@
     "injury_resistance_multiplier": 4.2,
     "body_strain_gain_multiplier": 0.32,
     "description": "A true Divine Saint physique forms, flesh humming like tempered divine gold.",
-    "upgrade_options": []
+    "upgrade_options": [
+      {
+        "target_id": "hallowed_body_talent",
+        "target_name": "Hallowed Body Talent",
+        "cost": {
+          "talent_refining_elixir": 2
+        }
+      }
+    ]
   },
   {
     "id": "hallowed_body_talent",
@@ -179,7 +275,15 @@
     "injury_resistance_multiplier": 5.0,
     "body_strain_gain_multiplier": 0.28,
     "description": "Holy strength saturates every fibre; blows that would fell armies barely mark your skin.",
-    "upgrade_options": []
+    "upgrade_options": [
+      {
+        "target_id": "sovereign_body_talent",
+        "target_name": "Sovereign Body Talent",
+        "cost": {
+          "talent_refining_elixir": 2
+        }
+      }
+    ]
   },
   {
     "id": "sovereign_body_talent",
@@ -193,7 +297,15 @@
     "injury_resistance_multiplier": 6.0,
     "body_strain_gain_multiplier": 0.24,
     "description": "Your flesh rivals a World King's — a near-indestructible vessel that carries a world within.",
-    "upgrade_options": []
+    "upgrade_options": [
+      {
+        "target_id": "empyrean_body_talent",
+        "target_name": "Empyrean Body Talent",
+        "cost": {
+          "talent_refining_elixir": 3
+        }
+      }
+    ]
   },
   {
     "id": "empyrean_body_talent",
@@ -207,7 +319,15 @@
     "injury_resistance_multiplier": 7.5,
     "body_strain_gain_multiplier": 0.2,
     "description": "Your body stands equal to an Empyrean, its every cell singing in tune with the Laws.",
-    "upgrade_options": []
+    "upgrade_options": [
+      {
+        "target_id": "beyond_empyrean_body",
+        "target_name": "Beyond Empyrean Body",
+        "cost": {
+          "talent_refining_elixir": 3
+        }
+      }
+    ]
   },
   {
     "id": "beyond_empyrean_body",
@@ -221,7 +341,15 @@
     "injury_resistance_multiplier": 9.0,
     "body_strain_gain_multiplier": 0.16,
     "description": "A half-step transcendent physique, poised on the threshold of a truly divine body.",
-    "upgrade_options": []
+    "upgrade_options": [
+      {
+        "target_id": "divine_body_talent",
+        "target_name": "Divine Body Talent",
+        "cost": {
+          "talent_refining_elixir": 3
+        }
+      }
+    ]
   },
   {
     "id": "divine_body_talent",
@@ -235,7 +363,15 @@
     "injury_resistance_multiplier": 12.0,
     "body_strain_gain_multiplier": 0.12,
     "description": "Flesh, soul and Law fuse into one — a True-Divinity body that treats stars as pebbles.",
-    "upgrade_options": []
+    "upgrade_options": [
+      {
+        "target_id": "upper_divine_body_talent",
+        "target_name": "Upper Divine Body Talent",
+        "cost": {
+          "talent_refining_elixir": 3
+        }
+      }
+    ]
   },
   {
     "id": "upper_divine_body_talent",
@@ -249,7 +385,15 @@
     "injury_resistance_multiplier": 15.0,
     "body_strain_gain_multiplier": 0.1,
     "description": "Among divine bodies yours stands higher, sinew and bone woven from unbreakable order.",
-    "upgrade_options": []
+    "upgrade_options": [
+      {
+        "target_id": "limit_divine_body_talent",
+        "target_name": "Limit Divine Body Talent",
+        "cost": {
+          "talent_refining_elixir": 3
+        }
+      }
+    ]
   },
   {
     "id": "limit_divine_body_talent",
@@ -263,7 +407,15 @@
     "injury_resistance_multiplier": 19.0,
     "body_strain_gain_multiplier": 0.08,
     "description": "Your body strains against the final limit of True Divinity, force coiled at the edge of transcendence.",
-    "upgrade_options": []
+    "upgrade_options": [
+      {
+        "target_id": "immortal_godbody",
+        "target_name": "Immortal Godbody",
+        "cost": {
+          "talent_refining_elixir": 4
+        }
+      }
+    ]
   },
   {
     "id": "immortal_godbody",
@@ -277,7 +429,15 @@
     "injury_resistance_multiplier": 25.0,
     "body_strain_gain_multiplier": 0.05,
     "description": "An indestructible divine physique that has stepped beyond True Divinity into the undying.",
-    "upgrade_options": []
+    "upgrade_options": [
+      {
+        "target_id": "undying_godbody",
+        "target_name": "Undying Godbody",
+        "cost": {
+          "talent_refining_elixir": 4
+        }
+      }
+    ]
   },
   {
     "id": "undying_godbody",

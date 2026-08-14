@@ -1,5 +1,16 @@
 [
   {
+    "id": "talent_refining_elixir",
+    "name": "Talent Refining Elixir",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "consumed_on_use": false,
+    "rarity": "heaven_grade",
+    "value": 200,
+    "description": "A rare elixir that tempers innate talent, letting a cultivator refine their spiritual root or physique to a higher grade."
+  },
+  {
     "id": "healing_pill",
     "name": "Healing Pill",
     "type": "consumable",

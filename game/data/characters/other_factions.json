@@ -383,7 +383,17 @@
       "enemy_id": "steppes_master_trial",
       "quest_ids": [],
       "teaches_skills": [],
-      "relationship_rewards": []
+      "relationship_rewards": [
+        {
+          "min_tier": "trusted",
+          "reward": {
+            "item_id": "talent_refining_elixir",
+            "count": 2,
+            "message": "In recognition of your bond, the master parts with a rare elixir that tempers innate talent."
+          },
+          "once": true
+        }
+      ]
     },
     "intro_text": "The trial-master of the Blood Slaughter Steppes, who respects only strength earned in blood.",
     "repeat_text": "Steppes Master thumps his chest, daring you to face the trials again.",

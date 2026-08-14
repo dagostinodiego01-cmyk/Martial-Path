@@ -24,6 +24,15 @@ class EquipmentSystem:
         self._equipment = {entry["id"]: dict(entry) for entry in equipment_data}
         self._body_order = self._realm_orders(body_realms.get("realms", []))
         self._essence_order = self._realm_orders(essence_realms.get("realms", []))
+        self._set_bonuses_by_id: Dict[str, List[Dict[str, Any]]] = {}
+        for entry in equipment_data:
+            set_id = entry.get("set_id")
+            if not set_id:
+                continue
+            bonuses = self._set_bonuses_by_id.setdefault(set_id, [])
+            for bonus in entry.get("set_bonuses", []):
+                if isinstance(bonus, dict) and bonus not in bonuses:
+                    bonuses.append(dict(bonus))
 
     def equip_item(self, player: Player, item_id: str, slot: str) -> Dict[str, Any]:
         if not item_id:
@@ -46,6 +55,9 @@ class EquipmentSystem:
 
         previous_item_id = player.equipment.get(slot)
         player.equipment[slot] = item_id
+        max_durability = self._max_durability(item)
+        if max_durability:
+            player.equipment_durability[slot] = max_durability
         return {
             "event": EventType.EQUIP_ITEM_RESULT,
             "success": True,
@@ -86,15 +98,35 @@ class EquipmentSystem:
             "cultivation_modifiers": {},
             "utility_modifiers": {},
         }
-        for item in self._equipped_items(player):
-            for group in totals:
-                for key, value in item.get(group, {}).items():
-                    number = float(value)
-                    if key.endswith("_multiplier"):
-                        totals[group][key] = totals[group].get(key, 1.0) * number
-                    else:
-                        totals[group][key] = totals[group].get(key, 0.0) + number
+        for item in self._equipped_items(player, include_broken=False):
+            self._merge_modifiers(totals, item)
+        self._apply_set_bonuses(player, totals)
         return totals
+
+    def _merge_modifiers(self, totals: Dict[str, Dict[str, float]], item: Dict[str, Any]) -> None:
+        for group in totals:
+            for key, value in item.get(group, {}).items():
+                number = float(value)
+                if key.endswith("_multiplier"):
+                    totals[group][key] = totals[group].get(key, 1.0) * number
+                else:
+                    totals[group][key] = totals[group].get(key, 0.0) + number
+
+    def _apply_set_bonuses(self, player: Player, totals: Dict[str, Dict[str, float]]) -> None:
+        """Fold in the strongest met set-bonus threshold for each equipped set."""
+        counts: Dict[str, int] = {}
+        for item in self._equipped_items(player, include_broken=False):
+            set_id = item.get("set_id")
+            if set_id:
+                counts[set_id] = counts.get(set_id, 0) + 1
+        for set_id, worn in counts.items():
+            bonuses = self._set_bonuses_by_id.get(set_id, [])
+            best = None
+            for bonus in bonuses:
+                if int(bonus.get("pieces_required", 0)) <= worn:
+                    best = bonus
+            if best is not None:
+                self._merge_modifiers(totals, best)
 
     def equipment_details(self, player: Player) -> Dict[str, Dict[str, Any]]:
         details: Dict[str, Dict[str, Any]] = {}
@@ -104,6 +136,8 @@ class EquipmentSystem:
             item = self._equipment.get(item_id)
             if item is None:
                 continue
+            max_durability = self._max_durability(item)
+            current = player.equipment_durability.get(slot, max_durability)
             details[slot] = {
                 "id": item_id,
                 "display_name": item.get("display_name", item_id),
@@ -113,6 +147,10 @@ class EquipmentSystem:
                 "stat_modifiers": dict(item.get("stat_modifiers", {})),
                 "cultivation_modifiers": dict(item.get("cultivation_modifiers", {})),
                 "utility_modifiers": dict(item.get("utility_modifiers", {})),
+                "set_id": item.get("set_id"),
+                "durability": None if not max_durability else current,
+                "max_durability": None if not max_durability else max_durability,
+                "broken": bool(max_durability and current <= 0),
             }
         return details
 
@@ -120,8 +158,89 @@ class EquipmentSystem:
         item = self._equipment.get(item_id)
         return dict(item) if item else None
 
-    def _equipped_items(self, player: Player) -> List[Dict[str, Any]]:
-        return [self._equipment[item_id] for item_id in player.equipment.values() if item_id in self._equipment]
+    def _equipped_items(self, player: Player, include_broken: bool = True) -> List[Dict[str, Any]]:
+        items: List[Dict[str, Any]] = []
+        for slot, item_id in player.equipment.items():
+            if not item_id or item_id not in self._equipment:
+                continue
+            item = self._equipment[item_id]
+            if not include_broken and self._is_broken(player, slot, item):
+                continue
+            items.append(item)
+        return items
+
+    # -- durability -------------------------------------------------------
+    def _max_durability(self, item: Dict[str, Any]) -> int:
+        """Return the item's durability ceiling, or 0 when it has no durability model."""
+        return max(0, int(item.get("durability", 0) or 0))
+
+    def _is_broken(self, player: Player, slot: str, item: Dict[str, Any]) -> bool:
+        max_durability = self._max_durability(item)
+        if not max_durability:
+            return False
+        return player.equipment_durability.get(slot, max_durability) <= 0
+
+    def degrade_equipped(self, player: Player, amount: int = 1) -> Dict[str, int]:
+        """Reduce each equipped destructible item's durability by ``amount``.
+
+        Returns ``{slot: new_durability}`` for every item that degraded. Called on
+        defeat so worn gear visibly weathers without being destroyed outright.
+        """
+        degraded: Dict[str, int] = {}
+        for slot, item_id in player.equipment.items():
+            if not item_id or item_id not in self._equipment:
+                continue
+            item = self._equipment[item_id]
+            max_durability = self._max_durability(item)
+            if not max_durability:
+                continue
+            current = player.equipment_durability.get(slot, max_durability)
+            new_value = max(0, current - amount)
+            player.equipment_durability[slot] = new_value
+            degraded[slot] = new_value
+        return degraded
+
+    def repair_item(self, player: Player, item_id: str, cost_per_point: int = 2) -> Dict[str, Any]:
+        """Restore a piece of equipped, destructible gear to full durability for gold.
+
+        ``item_id`` may be the equipment id or the slot it occupies. Broken gear
+        still occupies its slot, so repair is how it becomes useful again.
+        """
+        slot = item_id if item_id in player.equipment else self._slot_for_item(player, item_id)
+        if not slot or slot not in player.equipment:
+            return self._error("ITEM_NOT_EQUIPPED", item_id=item_id)
+        equipped_id = player.equipment.get(slot)
+        if not equipped_id:
+            return self._error("EQUIPMENT_SLOT_EMPTY", item_id=item_id, slot=slot)
+        item = self._equipment.get(equipped_id, {})
+        max_durability = self._max_durability(item)
+        if not max_durability:
+            return self._error("NOT_REPAIRABLE", item_id=equipped_id, slot=slot)
+        current = player.equipment_durability.get(slot, max_durability)
+        if current >= max_durability:
+            return self._error("NOTHING_TO_REPAIR", item_id=equipped_id, slot=slot)
+        points = max_durability - current
+        cost = points * cost_per_point
+        if player.gold < cost:
+            return {
+                "event": EventType.ERROR,
+                "reason": "INSUFFICIENT_FUNDS",
+                "required": cost,
+                "gold": player.gold,
+                "item_id": equipped_id,
+                "slot": slot,
+            }
+        player.gold -= cost
+        player.equipment_durability[slot] = max_durability
+        return {
+            "event": EventType.REPAIR_RESULT,
+            "item_id": equipped_id,
+            "slot": slot,
+            "display_name": item.get("display_name", equipped_id),
+            "durability": max_durability,
+            "cost": cost,
+            "player_message": f"You restore {item.get('display_name', equipped_id)} to full condition.",
+        }
 
     def _valid_slots(self, item: Dict[str, Any]) -> List[str]:
         slots = item.get("valid_slots")

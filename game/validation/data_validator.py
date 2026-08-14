@@ -32,10 +32,13 @@ def validate_all_game_data(registry: Optional[GameDataRegistry] = None) -> Valid
     _validate_character_hooks(registry, result)
     _validate_locations(registry, result)
     _validate_encounter_pools(registry, result)
+    _validate_map_positions(registry, result)
+    _validate_enemy_abilities(registry, result)
     _validate_cultivation_schema(registry, result)
     _validate_defeat_penalty(registry, result)
     _validate_realm_lifespans(registry, result)
     _validate_talent_tracks(registry, result)
+    _validate_talent_upgrade_costs(registry, result)
     _validate_talent_ladder(registry, result)
     _validate_equipment_data(registry, result)
     _validate_shop_data(registry, result)
@@ -271,6 +274,46 @@ def _check_map_position(location_id: Any, value: Any, result: ValidationResult) 
 
 
 # -- encounter pools -----------------------------------------------------
+def _validate_map_positions(registry: GameDataRegistry, result: ValidationResult) -> None:
+    """Flag locations whose map markers sit exactly on top of another's."""
+    seen: Dict[str, str] = {}
+    for location in registry.locations:
+        position = location.get("map_position")
+        if not isinstance(position, dict):
+            continue
+        key = (round(float(position.get("x", 0)), 3), round(float(position.get("y", 0)), 3))
+        if key in seen:
+            result.add(
+                "duplicate_map_position",
+                f"locations '{seen[key]}' and '{location.get('id')}' share map position {key}",
+            )
+        else:
+            seen[key] = location.get("id")
+
+
+def _validate_enemy_abilities(registry: GameDataRegistry, result: ValidationResult) -> None:
+    """Check enemy ``abilities`` entries are well-formed."""
+    valid_types = {"heavy", "poison", "stun"}
+    for collection_name, enemies in (
+        ("enemy", registry.enemies),
+        ("character_enemy", registry.character_enemies),
+    ):
+        for enemy in enemies:
+            abilities = enemy.get("abilities", [])
+            if not isinstance(abilities, list):
+                result.add("bad_enemy_ability", f"{collection_name} '{enemy.get('id')}' abilities must be a list")
+                continue
+            for ability in abilities:
+                if not isinstance(ability, dict):
+                    result.add("bad_enemy_ability", f"{collection_name} '{enemy.get('id')}' has a non-object ability")
+                    continue
+                if ability.get("type") not in valid_types:
+                    result.add("bad_enemy_ability", f"{collection_name} '{enemy.get('id')}' has unknown ability type '{ability.get('type')}'")
+                chance = ability.get("chance")
+                if not isinstance(chance, (int, float)) or isinstance(chance, bool) or not 0 <= chance <= 1:
+                    result.add("bad_enemy_ability", f"{collection_name} '{enemy.get('id')}' ability chance must be between 0 and 1")
+
+
 def _validate_encounter_pools(registry: GameDataRegistry, result: ValidationResult) -> None:
     if not registry.encounter_pools:
         return
@@ -466,6 +509,29 @@ def _validate_trait_collection(
                 result.add("bad_fate_trait", f"{label} '{entry_id}' upgrade target cannot be itself")
 
 
+def _validate_talent_upgrade_costs(registry: GameDataRegistry, result: ValidationResult) -> None:
+    """Check talent upgrade costs reference real items with positive quantities."""
+    item_ids = _id_set(registry.items) | _id_set(registry.equipment) | registry.manual_item_ids()
+    for label, entries in (
+        ("martial_talent", registry.martial_talents),
+        ("body_talent", registry.body_talents),
+    ):
+        for entry in entries:
+            entry_id = entry.get("id")
+            for upgrade in entry.get("upgrade_options", []):
+                if not isinstance(upgrade, dict):
+                    continue
+                cost = upgrade.get("cost", {})
+                if not isinstance(cost, dict) or not cost:
+                    result.add("bad_fate_trait", f"{label} '{entry_id}' upgrade cost must be a non-empty object")
+                    continue
+                for item_id, amount in cost.items():
+                    if item_id not in item_ids:
+                        result.add("bad_fate_trait", f"{label} '{entry_id}' upgrade cost references missing item '{item_id}'")
+                    if not isinstance(amount, int) or isinstance(amount, bool) or amount <= 0:
+                        result.add("bad_fate_trait", f"{label} '{entry_id}' upgrade cost '{item_id}' must be a positive integer")
+
+
 # -- talent ladder ------------------------------------------------------
 def _validate_talent_ladder(registry: GameDataRegistry, result: ValidationResult) -> None:
     tiers = registry.talents.get("tiers", [])
@@ -555,6 +621,19 @@ def _validate_equipment_data(registry: GameDataRegistry, result: ValidationResul
         _validate_modifier_group(item_id, "stat_modifiers", item.get("stat_modifiers", {}), stat_keys, result)
         _validate_modifier_group(item_id, "cultivation_modifiers", item.get("cultivation_modifiers", {}), cultivation_keys, result)
         _validate_modifier_group(item_id, "utility_modifiers", item.get("utility_modifiers", {}), utility_keys, result)
+        set_id = item.get("set_id")
+        if set_id is not None and (not isinstance(set_id, str) or not set_id):
+            result.add("bad_equipment", f"equipment '{item_id}' set_id must be a non-empty string")
+        for bonus in item.get("set_bonuses", []) or []:
+            if not isinstance(bonus, dict) or not isinstance(bonus.get("pieces_required"), int) or isinstance(bonus.get("pieces_required"), bool) or bonus["pieces_required"] <= 0:
+                result.add("bad_equipment", f"equipment '{item_id}' set bonus pieces_required must be a positive integer")
+                continue
+            for group in ("stat_modifiers", "cultivation_modifiers", "utility_modifiers"):
+                if group in bonus and not isinstance(bonus[group], dict):
+                    result.add("bad_equipment", f"equipment '{item_id}' set bonus {group} must be an object")
+        durability = item.get("durability")
+        if durability is not None and (not isinstance(durability, int) or isinstance(durability, bool) or durability <= 0):
+            result.add("bad_equipment", f"equipment '{item_id}' durability must be a positive integer")
         requirements = item.get("requirements", {}) or {}
         if requirements.get("minimum_body_realm") and requirements["minimum_body_realm"] not in body_ids:
             result.add("bad_equipment", f"equipment '{item_id}' minimum_body_realm is unknown")

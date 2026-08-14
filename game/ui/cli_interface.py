@@ -42,6 +42,13 @@ class CLIInterface:
             EventType.SECT_JOINED: self._fmt_sect_joined,
             EventType.MAP: self._fmt_map,
             EventType.BOON: self._fmt_boon,
+            EventType.TECHNIQUES: self._fmt_techniques,
+            EventType.TALENTS: self._fmt_talents,
+            EventType.TALENT_UPGRADED: self._fmt_talent_upgraded,
+            EventType.CLOSED_DOOR_RESULT: self._fmt_closed_door,
+            EventType.REPAIR_RESULT: self._fmt_repair,
+            EventType.SAVE_EXPORTED: self._fmt_exported,
+            EventType.SAVE_IMPORTED: self._fmt_imported,
             EventType.PLAYER_DIED: self._fmt_died,
             EventType.HELP: self._fmt_help,
             EventType.ERROR: self._fmt_error,
@@ -252,6 +259,9 @@ class CLIInterface:
         self._hr()
         self._p(f"{result.get('name', result.get('character_id', 'Someone'))}:")
         self._p(result.get("player_message", "They acknowledge you."))
+        notes = result.get("speech_notes") or result.get("dialogue_context", {}).get("ai_prompt_notes")
+        if notes:
+            self._p(f"  (manner: {notes})")
         self._hr()
 
     def _fmt_sects(self, result: Dict[str, Any]) -> None:
@@ -289,6 +299,63 @@ class CLIInterface:
         else:
             self._p("  Nowhere to travel from here.")
         self._hr()
+
+    def _fmt_techniques(self, result: Dict[str, Any]) -> None:
+        skills = result.get("skills", [])
+        self._hr()
+        if not skills:
+            self._p("You have learned no techniques yet.")
+        else:
+            self._p("Known techniques:")
+            for skill in skills:
+                cost = f", {skill.get('qi_cost', 0)} qi" if skill.get("type") == "active" else ""
+                self._p(f"  - {skill['name']} [{skill.get('type', '?')}{cost}] - {skill.get('description', '')}")
+        self._hr()
+
+    def _fmt_talents(self, result: Dict[str, Any]) -> None:
+        self._hr()
+        martial = result.get("martial_talent", {})
+        body = result.get("body_talent", {})
+        self._p(f"Martial Talent : {martial.get('display_name', '-')} (essence x{martial.get('essence_cultivation_multiplier', '?')})")
+        self._p(f"Body Talent    : {body.get('display_name', '-')} (body x{body.get('body_cultivation_multiplier', '?')})")
+        self._p("Upgrade paths:")
+        self._p("  Martial:")
+        if not result.get("martial_upgrades"):
+            self._p("    - none (apex)")
+        for option in result.get("martial_upgrades", []):
+            cost = ", ".join(f"{amount}x {item}" for item, amount in option.get("cost", {}).items())
+            self._p(f"    - {option.get('target_name')} ({cost})")
+        self._p("  Body:")
+        if not result.get("body_upgrades"):
+            self._p("    - none (apex)")
+        for option in result.get("body_upgrades", []):
+            cost = ", ".join(f"{amount}x {item}" for item, amount in option.get("cost", {}).items())
+            self._p(f"    - {option.get('target_name')} ({cost})")
+        self._hr()
+
+    def _fmt_talent_upgraded(self, result: Dict[str, Any]) -> None:
+        self._p(result.get("player_message", "Your talent advances."))
+        wallet = result.get("wallet", {})
+        for item_id, amount in wallet.items():
+            self._p(f"  {item_id} remaining: {amount}.")
+
+    def _fmt_closed_door(self, result: Dict[str, Any]) -> None:
+        self._p(result.get("player_message", "You seclude yourself."))
+        self._p(f"  Body progress +{result.get('progress_gained')}% (now {result.get('progress')}%).")
+        lifespan = result.get("lifespan", {})
+        if lifespan:
+            self._p(f"  {lifespan.get('display', '')}".strip())
+
+    def _fmt_repair(self, result: Dict[str, Any]) -> None:
+        self._p(result.get("player_message", "Equipment restored."))
+        self._p(f"  Durability {result.get('durability')} | Cost {result.get('cost')} gold.")
+
+    def _fmt_exported(self, result: Dict[str, Any]) -> None:
+        self._p(result.get("player_message", "Save exported."))
+        self._p(result.get("payload", ""))
+
+    def _fmt_imported(self, result: Dict[str, Any]) -> None:
+        self._p(result.get("player_message", "Save imported."))
 
     def _fmt_boon(self, result: Dict[str, Any]) -> None:
         self._p(result.get("player_message", "You receive a gift."))
@@ -386,6 +453,17 @@ class CLIInterface:
             "RELATIONSHIP_TOO_LOW": lambda: "Your relationship with them is not close enough yet.",
             "MORALITY_BAND_MISMATCH": lambda: "Your alignment does not permit that interaction.",
             "NO_REWARD_AVAILABLE": lambda: "That character has no reward to offer you right now.",
+            "INVALID_TALENT_TRACK": lambda: "Track must be 'martial' or 'body'.",
+            "INVALID_UPGRADE_TARGET": lambda: f"'{result.get('target_id')}' is not a valid upgrade target.",
+            "INSUFFICIENT_FUNDS": lambda: "You cannot afford that.",
+            "INSUFFICIENT_RESOURCES": lambda: "You lack the rare resources required for this upgrade.",
+            "INVALID_CLOSED_DOOR_YEARS": lambda: "Choose a valid number of years for seclusion.",
+            "NOT_REPAIRABLE": lambda: "That item has no durability and cannot be repaired.",
+            "NOTHING_TO_REPAIR": lambda: "That item is already in perfect condition.",
+            "ITEM_NOT_EQUIPPED": lambda: "That item is not currently equipped.",
+            "IRONMAN_MODE": lambda: "Ironman mode forbids reloading a save.",
+            "IMPORT_EMPTY": lambda: "Provide a save record to import.",
+            "IMPORT_INVALID": lambda: "That save record could not be read.",
         }
         builder = messages.get(reason)
         return builder() if builder else f"Something went wrong ({reason})."
