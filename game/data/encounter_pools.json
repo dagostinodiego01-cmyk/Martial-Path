@@ -1,31 +1,994 @@
 {
-  "outer_forest": {"combat":[{"enemy_id":"iron_wolf","weight":5},{"enemy_id":"forest_horned_boar","weight":4},{"enemy_id":"black_pine_serpent","weight":1}],"loot":[{"item_id":"healing_pill","weight":3},{"item_id":"beast_core","weight":2}],"special":[{"special_id":"ancient_manual","weight":1}]},
-  "azure_village": {"combat":[{"enemy_id":"azure_stream_bandit","weight":1}],"loot":[{"item_id":"healing_pill","weight":3},{"item_id":"qi_pill","weight":2}],"special":[{"special_id":"spirit_spring","weight":1}]},
-  "misty_gorge": {"combat":[{"enemy_id":"black_pine_serpent","weight":3},{"enemy_id":"mist_jaw_leopard","weight":3},{"enemy_id":"rogue_cultivator","weight":2},{"enemy_id":"corpse_demon","weight":1}],"loot":[{"item_id":"spirit_stone","weight":2},{"item_id":"qi_pill","weight":2}],"special":[{"special_id":"old_master","weight":1}]},
-  "ruined_shrine": {"combat":[{"enemy_id":"shrine_bone_thrall","weight":4},{"enemy_id":"grave_mist_wraith","weight":2},{"enemy_id":"corpse_demon","weight":3}],"loot":[{"item_id":"spirit_stone","weight":3},{"item_id":"profound_pill","weight":1},{"item_id":"corpse_qi_ward_talisman","weight":1}],"special":[{"special_id":"ancient_manual","weight":1}]},
-  "sky_fortune_road": {"combat":[{"enemy_id":"road_cutpurse","weight":4},{"enemy_id":"azure_stream_bandit","weight":3},{"enemy_id":"rogue_cultivator","weight":1}],"loot":[{"item_id":"healing_pill","weight":3},{"item_id":"worn_travel_boots","weight":1}],"special":[{"special_id":"spirit_spring","weight":1}]},
-  "starting_village": {"combat":[{"enemy_id":"azure_stream_bandit","weight":1}],"loot":[{"item_id":"healing_pill","weight":2}],"special":[{"special_id":"spirit_spring","weight":1}]},
-  "beast_mountain": {"combat":[{"enemy_id":"mountain_claw_bear","weight":4},{"enemy_id":"stonehide_bull","weight":3},{"enemy_id":"black_pine_serpent","weight":2},{"enemy_id":"rogue_cultivator","weight":1}],"loot":[{"item_id":"beast_core","weight":4},{"item_id":"spirit_stone","weight":2},{"item_id":"beast_hide_vest","weight":1}],"special":[{"special_id":"old_master","weight":1}]},
-  "lin_academy": {"combat":[{"enemy_id":"academy_rival_disciple","weight":5},{"enemy_id":"rogue_cultivator","weight":1}],"loot":[{"item_id":"qi_pill","weight":3},{"item_id":"sect_disciple_sword","weight":1}],"special":[{"special_id":"old_master","weight":1}]},
-  "sky_fortune_capital": {"combat":[{"enemy_id":"capital_shadow_agent","weight":3},{"enemy_id":"academy_rival_disciple","weight":2},{"enemy_id":"rogue_cultivator","weight":1}],"loot":[{"item_id":"spirit_stone","weight":3},{"item_id":"shadow_thread_cloak","weight":1}],"special":[{"special_id":"ancient_manual","weight":1}]},
-  "seven_profound_valleys_gate": {"combat":[{"enemy_id":"valley_outer_challenger","weight":5},{"enemy_id":"valley_sword_puppet","weight":2},{"enemy_id":"capital_shadow_agent","weight":1}],"loot":[{"item_id":"clear_stream_ring","weight":1},{"item_id":"qi_pill","weight":3}],"special":[{"special_id":"old_master","weight":1}]},
-  "seven_profound_valleys_inner": {"combat":[{"enemy_id":"valley_outer_challenger","weight":3},{"enemy_id":"valley_sword_puppet","weight":4},{"enemy_id":"forbidden_herb_guardian","weight":1}],"loot":[{"item_id":"minor_breakthrough_talisman","weight":1},{"item_id":"spirit_stone","weight":4}],"special":[{"special_id":"ancient_manual","weight":1}]},
-  "forbidden_back_mountain": {"combat":[{"enemy_id":"forbidden_herb_guardian","weight":5},{"enemy_id":"grave_mist_wraith","weight":2},{"enemy_id":"valley_sword_puppet","weight":2}],"loot":[{"item_id":"profound_pill","weight":3},{"item_id":"miniature_alchemy_cauldron","weight":1},{"item_id":"nameless_bone_shard","weight":1}],"special":[{"special_id":"ancient_manual","weight":1}]},
-  "south_horizon_road": {"combat":[{"enemy_id":"south_horizon_sand_raider","weight":5},{"enemy_id":"horizon_sea_lizard","weight":2},{"enemy_id":"valley_outer_challenger","weight":1}],"loot":[{"item_id":"spirit_stone","weight":4},{"item_id":"cloudstep_boots","weight":1}],"special":[{"special_id":"spirit_spring","weight":1}]},
-  "south_horizon_city": {"combat":[{"enemy_id":"south_horizon_sand_raider","weight":3},{"enemy_id":"south_sea_pirate_cultivator","weight":1}],"loot":[{"item_id":"qi_pill","weight":3},{"item_id":"spirit_storage_ring","weight":1}],"special":[{"special_id":"old_master","weight":1}]},
-  "divine_phoenix_island": {"combat":[{"enemy_id":"phoenix_flame_sprite","weight":5},{"enemy_id":"horizon_sea_lizard","weight":2},{"enemy_id":"mystic_realm_firebird","weight":1}],"loot":[{"item_id":"profound_pill","weight":3},{"item_id":"spirit_jade_amulet","weight":1}],"special":[{"special_id":"spirit_spring","weight":1}]},
-  "divine_phoenix_mystic_realm": {"combat":[{"enemy_id":"mystic_realm_firebird","weight":5},{"enemy_id":"phoenix_flame_sprite","weight":2}],"loot":[{"item_id":"azure_meridian_robes","weight":1},{"item_id":"spirit_stone","weight":5}],"special":[{"special_id":"ancient_manual","weight":1}]},
-  "south_sea_port": {"combat":[{"enemy_id":"south_sea_pirate_cultivator","weight":5},{"enemy_id":"horizon_sea_lizard","weight":2}],"loot":[{"item_id":"spirit_storage_ring","weight":1},{"item_id":"profound_pill","weight":3}],"special":[{"special_id":"spirit_spring","weight":1}]},
-  "central_region_road": {"combat":[{"enemy_id":"central_region_duelist","weight":4},{"enemy_id":"south_sea_pirate_cultivator","weight":2},{"enemy_id":"vermillion_guard_captain","weight":1}],"loot":[{"item_id":"spirit_stone","weight":5},{"item_id":"outer_disciple_flying_sword","weight":1}],"special":[{"special_id":"old_master","weight":1}]},
-  "vermillion_bird_kingdom": {"combat":[{"enemy_id":"vermillion_guard_captain","weight":5},{"enemy_id":"central_region_duelist","weight":2}],"loot":[{"item_id":"bronze_spirit_mirror","weight":1},{"item_id":"profound_pill","weight":4}],"special":[{"special_id":"ancient_manual","weight":1}]},
-  "nine_furnace_kingdom": {"combat":[{"enemy_id":"nine_furnace_fire_golem","weight":5},{"enemy_id":"vermillion_guard_captain","weight":2}],"loot":[{"item_id":"stone_skin_armor","weight":1},{"item_id":"spirit_stone","weight":6}],"special":[{"special_id":"ancient_manual","weight":1}]},
-  "asura_divine_kingdom": {"combat":[{"enemy_id":"asura_blood_guard","weight":5},{"enemy_id":"central_region_duelist","weight":2}],"loot":[{"item_id":"blood_sealing_talisman","weight":1},{"item_id":"profound_pill","weight":5}],"special":[{"special_id":"old_master","weight":1}]},
-  "rival_divine_kingdom": {"combat":[{"enemy_id":"central_region_duelist","weight":3},{"enemy_id":"vermillion_guard_captain","weight":3},{"enemy_id":"asura_blood_guard","weight":1}],"loot":[{"item_id":"spirit_stone","weight":5},{"item_id":"heart_guard_amulet","weight":1}],"special":[{"special_id":"ancient_manual","weight":1}]},
-  "zenlight_monastery": {"combat":[{"enemy_id":"zenlight_iron_monk","weight":5},{"enemy_id":"five_element_warder","weight":1}],"loot":[{"item_id":"heart_guard_amulet","weight":1},{"item_id":"spirit_stone","weight":5}],"special":[{"special_id":"old_master","weight":1}]},
-  "southern_wilderness": {"combat":[{"enemy_id":"southern_wilderness_shaman","weight":5},{"enemy_id":"asura_blood_guard","weight":1}],"loot":[{"item_id":"nameless_bone_shard","weight":1},{"item_id":"profound_pill","weight":4}],"special":[{"special_id":"spirit_spring","weight":1}]},
-  "blood_slaughter_steppes": {"combat":[{"enemy_id":"asura_blood_guard","weight":5},{"enemy_id":"southern_wilderness_shaman","weight":2}],"loot":[{"item_id":"blood_sealing_talisman","weight":1},{"item_id":"spirit_stone","weight":6}],"special":[{"special_id":"old_master","weight":1}]},
-  "five_element_temples": {"combat":[{"enemy_id":"five_element_warder","weight":5},{"enemy_id":"zenlight_iron_monk","weight":2}],"loot":[{"item_id":"ancient_jade_slip","weight":1},{"item_id":"spirit_stone","weight":6}],"special":[{"special_id":"ancient_manual","weight":1}]},
-  "ancient_ruins": {"combat":[{"enemy_id":"ancient_ruin_sentinel","weight":5},{"enemy_id":"five_element_warder","weight":2}],"loot":[{"item_id":"cracked_black_pagoda","weight":1},{"item_id":"cloudpiercer_sword","weight":1},{"item_id":"spirit_stone","weight":8}],"special":[{"special_id":"ancient_manual","weight":1}]},
-  "planetary_gate_array": {"combat":[{"enemy_id":"ancient_ruin_sentinel","weight":4},{"enemy_id":"holy_demon_warfiend","weight":1}],"loot":[{"item_id":"cloudpiercer_sword","weight":1},{"item_id":"profound_pill","weight":5}],"special":[{"special_id":"ancient_manual","weight":1}]},
-  "holy_demon_continent": {"combat":[{"enemy_id":"holy_demon_warfiend","weight":6},{"enemy_id":"ancient_ruin_sentinel","weight":2}],"loot":[{"item_id":"cloudpiercer_sword","weight":1},{"item_id":"profound_pill","weight":8}],"special":[{"special_id":"old_master","weight":1}]}
+  "outer_forest": {
+    "combat": [
+      {
+        "enemy_id": "iron_wolf",
+        "weight": 5
+      },
+      {
+        "enemy_id": "forest_horned_boar",
+        "weight": 4
+      },
+      {
+        "enemy_id": "black_pine_serpent",
+        "weight": 1
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "healing_pill",
+        "weight": 3
+      },
+      {
+        "item_id": "beast_core",
+        "weight": 2
+      },
+      {
+        "item_id": "nine_yang_guard_manual",
+        "weight": 1
+      }
+    ],
+    "special": [
+      {
+        "special_id": "ancient_manual",
+        "weight": 1
+      }
+    ]
+  },
+  "azure_village": {
+    "combat": [
+      {
+        "enemy_id": "azure_stream_bandit",
+        "weight": 1
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "healing_pill",
+        "weight": 3
+      },
+      {
+        "item_id": "qi_pill",
+        "weight": 2
+      },
+      {
+        "item_id": "spirit_palm_manual",
+        "weight": 1
+      }
+    ],
+    "special": [
+      {
+        "special_id": "spirit_spring",
+        "weight": 1
+      }
+    ]
+  },
+  "misty_gorge": {
+    "combat": [
+      {
+        "enemy_id": "black_pine_serpent",
+        "weight": 3
+      },
+      {
+        "enemy_id": "mist_jaw_leopard",
+        "weight": 3
+      },
+      {
+        "enemy_id": "rogue_cultivator",
+        "weight": 2
+      },
+      {
+        "enemy_id": "corpse_demon",
+        "weight": 1
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "spirit_stone",
+        "weight": 2
+      },
+      {
+        "item_id": "qi_pill",
+        "weight": 2
+      },
+      {
+        "item_id": "purple_cloud_sword_art_manual",
+        "weight": 1
+      }
+    ],
+    "special": [
+      {
+        "special_id": "old_master",
+        "weight": 1
+      }
+    ]
+  },
+  "ruined_shrine": {
+    "combat": [
+      {
+        "enemy_id": "shrine_bone_thrall",
+        "weight": 4
+      },
+      {
+        "enemy_id": "grave_mist_wraith",
+        "weight": 2
+      },
+      {
+        "enemy_id": "corpse_demon",
+        "weight": 3
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "spirit_stone",
+        "weight": 3
+      },
+      {
+        "item_id": "profound_pill",
+        "weight": 1
+      },
+      {
+        "item_id": "corpse_qi_ward_talisman",
+        "weight": 1
+      },
+      {
+        "item_id": "blood_sea_body_manual",
+        "weight": 1
+      }
+    ],
+    "special": [
+      {
+        "special_id": "ancient_manual",
+        "weight": 1
+      }
+    ]
+  },
+  "sky_fortune_road": {
+    "combat": [
+      {
+        "enemy_id": "road_cutpurse",
+        "weight": 4
+      },
+      {
+        "enemy_id": "azure_stream_bandit",
+        "weight": 3
+      },
+      {
+        "enemy_id": "rogue_cultivator",
+        "weight": 1
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "healing_pill",
+        "weight": 3
+      },
+      {
+        "item_id": "worn_travel_boots",
+        "weight": 1
+      },
+      {
+        "item_id": "thunderclap_chant_manual",
+        "weight": 1
+      }
+    ],
+    "special": [
+      {
+        "special_id": "spirit_spring",
+        "weight": 1
+      }
+    ]
+  },
+  "starting_village": {
+    "combat": [
+      {
+        "enemy_id": "azure_stream_bandit",
+        "weight": 1
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "healing_pill",
+        "weight": 2
+      },
+      {
+        "item_id": "earth_vein_saber_art_manual",
+        "weight": 1
+      }
+    ],
+    "special": [
+      {
+        "special_id": "spirit_spring",
+        "weight": 1
+      }
+    ]
+  },
+  "beast_mountain": {
+    "combat": [
+      {
+        "enemy_id": "mountain_claw_bear",
+        "weight": 4
+      },
+      {
+        "enemy_id": "stonehide_bull",
+        "weight": 3
+      },
+      {
+        "enemy_id": "black_pine_serpent",
+        "weight": 2
+      },
+      {
+        "enemy_id": "rogue_cultivator",
+        "weight": 1
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "beast_core",
+        "weight": 4
+      },
+      {
+        "item_id": "spirit_stone",
+        "weight": 2
+      },
+      {
+        "item_id": "beast_hide_vest",
+        "weight": 1
+      },
+      {
+        "item_id": "primordial_chaos_meditation_manual",
+        "weight": 1
+      }
+    ],
+    "special": [
+      {
+        "special_id": "old_master",
+        "weight": 1
+      }
+    ]
+  },
+  "lin_academy": {
+    "combat": [
+      {
+        "enemy_id": "academy_rival_disciple",
+        "weight": 5
+      },
+      {
+        "enemy_id": "rogue_cultivator",
+        "weight": 1
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "qi_pill",
+        "weight": 3
+      },
+      {
+        "item_id": "sect_disciple_sword",
+        "weight": 1
+      },
+      {
+        "item_id": "iron_body_manual",
+        "weight": 1
+      }
+    ],
+    "special": [
+      {
+        "special_id": "old_master",
+        "weight": 1
+      }
+    ]
+  },
+  "sky_fortune_capital": {
+    "combat": [
+      {
+        "enemy_id": "capital_shadow_agent",
+        "weight": 3
+      },
+      {
+        "enemy_id": "academy_rival_disciple",
+        "weight": 2
+      },
+      {
+        "enemy_id": "rogue_cultivator",
+        "weight": 1
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "spirit_stone",
+        "weight": 3
+      },
+      {
+        "item_id": "shadow_thread_cloak",
+        "weight": 1
+      },
+      {
+        "item_id": "earth_vein_kick_manual",
+        "weight": 1
+      }
+    ],
+    "special": [
+      {
+        "special_id": "ancient_manual",
+        "weight": 1
+      }
+    ]
+  },
+  "seven_profound_valleys_gate": {
+    "combat": [
+      {
+        "enemy_id": "valley_outer_challenger",
+        "weight": 5
+      },
+      {
+        "enemy_id": "valley_sword_puppet",
+        "weight": 2
+      },
+      {
+        "enemy_id": "capital_shadow_agent",
+        "weight": 1
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "clear_stream_ring",
+        "weight": 1
+      },
+      {
+        "item_id": "qi_pill",
+        "weight": 3
+      },
+      {
+        "item_id": "iron_guard_manual",
+        "weight": 1
+      }
+    ],
+    "special": [
+      {
+        "special_id": "old_master",
+        "weight": 1
+      }
+    ]
+  },
+  "seven_profound_valleys_inner": {
+    "combat": [
+      {
+        "enemy_id": "valley_outer_challenger",
+        "weight": 3
+      },
+      {
+        "enemy_id": "valley_sword_puppet",
+        "weight": 4
+      },
+      {
+        "enemy_id": "forbidden_herb_guardian",
+        "weight": 1
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "minor_breakthrough_talisman",
+        "weight": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "weight": 4
+      },
+      {
+        "item_id": "vermilion_bird_meditation_manual",
+        "weight": 1
+      }
+    ],
+    "special": [
+      {
+        "special_id": "ancient_manual",
+        "weight": 1
+      }
+    ]
+  },
+  "forbidden_back_mountain": {
+    "combat": [
+      {
+        "enemy_id": "forbidden_herb_guardian",
+        "weight": 5
+      },
+      {
+        "enemy_id": "grave_mist_wraith",
+        "weight": 2
+      },
+      {
+        "enemy_id": "valley_sword_puppet",
+        "weight": 2
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "profound_pill",
+        "weight": 3
+      },
+      {
+        "item_id": "miniature_alchemy_cauldron",
+        "weight": 1
+      },
+      {
+        "item_id": "nameless_bone_shard",
+        "weight": 1
+      },
+      {
+        "item_id": "heaven_splitting_kick_manual",
+        "weight": 1
+      }
+    ],
+    "special": [
+      {
+        "special_id": "ancient_manual",
+        "weight": 1
+      }
+    ]
+  },
+  "south_horizon_road": {
+    "combat": [
+      {
+        "enemy_id": "south_horizon_sand_raider",
+        "weight": 5
+      },
+      {
+        "enemy_id": "horizon_sea_lizard",
+        "weight": 2
+      },
+      {
+        "enemy_id": "valley_outer_challenger",
+        "weight": 1
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "spirit_stone",
+        "weight": 4
+      },
+      {
+        "item_id": "cloudstep_boots",
+        "weight": 1
+      },
+      {
+        "item_id": "purple_cloud_scripture_manual",
+        "weight": 1
+      }
+    ],
+    "special": [
+      {
+        "special_id": "spirit_spring",
+        "weight": 1
+      }
+    ]
+  },
+  "south_horizon_city": {
+    "combat": [
+      {
+        "enemy_id": "south_horizon_sand_raider",
+        "weight": 3
+      },
+      {
+        "enemy_id": "south_sea_pirate_cultivator",
+        "weight": 1
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "qi_pill",
+        "weight": 3
+      },
+      {
+        "item_id": "spirit_storage_ring",
+        "weight": 1
+      },
+      {
+        "item_id": "star_shattering_guard_manual",
+        "weight": 1
+      }
+    ],
+    "special": [
+      {
+        "special_id": "old_master",
+        "weight": 1
+      }
+    ]
+  },
+  "divine_phoenix_island": {
+    "combat": [
+      {
+        "enemy_id": "phoenix_flame_sprite",
+        "weight": 5
+      },
+      {
+        "enemy_id": "horizon_sea_lizard",
+        "weight": 2
+      },
+      {
+        "enemy_id": "mystic_realm_firebird",
+        "weight": 1
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "profound_pill",
+        "weight": 3
+      },
+      {
+        "item_id": "spirit_jade_amulet",
+        "weight": 1
+      },
+      {
+        "item_id": "iron_roar_manual",
+        "weight": 1
+      }
+    ],
+    "special": [
+      {
+        "special_id": "spirit_spring",
+        "weight": 1
+      }
+    ]
+  },
+  "divine_phoenix_mystic_realm": {
+    "combat": [
+      {
+        "enemy_id": "mystic_realm_firebird",
+        "weight": 5
+      },
+      {
+        "enemy_id": "phoenix_flame_sprite",
+        "weight": 2
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "azure_meridian_robes",
+        "weight": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "weight": 5
+      },
+      {
+        "item_id": "star_shattering_seal_manual",
+        "weight": 1
+      }
+    ],
+    "special": [
+      {
+        "special_id": "ancient_manual",
+        "weight": 1
+      }
+    ]
+  },
+  "south_sea_port": {
+    "combat": [
+      {
+        "enemy_id": "south_sea_pirate_cultivator",
+        "weight": 5
+      },
+      {
+        "enemy_id": "horizon_sea_lizard",
+        "weight": 2
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "spirit_storage_ring",
+        "weight": 1
+      },
+      {
+        "item_id": "profound_pill",
+        "weight": 3
+      },
+      {
+        "item_id": "nirvana_aura_no2_manual",
+        "weight": 1
+      }
+    ],
+    "special": [
+      {
+        "special_id": "spirit_spring",
+        "weight": 1
+      }
+    ]
+  },
+  "central_region_road": {
+    "combat": [
+      {
+        "enemy_id": "central_region_duelist",
+        "weight": 4
+      },
+      {
+        "enemy_id": "south_sea_pirate_cultivator",
+        "weight": 2
+      },
+      {
+        "enemy_id": "vermillion_guard_captain",
+        "weight": 1
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "spirit_stone",
+        "weight": 5
+      },
+      {
+        "item_id": "outer_disciple_flying_sword",
+        "weight": 1
+      },
+      {
+        "item_id": "soul_severing_sword_intent_manual",
+        "weight": 1
+      }
+    ],
+    "special": [
+      {
+        "special_id": "old_master",
+        "weight": 1
+      }
+    ]
+  },
+  "vermillion_bird_kingdom": {
+    "combat": [
+      {
+        "enemy_id": "vermillion_guard_captain",
+        "weight": 5
+      },
+      {
+        "enemy_id": "central_region_duelist",
+        "weight": 2
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "bronze_spirit_mirror",
+        "weight": 1
+      },
+      {
+        "item_id": "profound_pill",
+        "weight": 4
+      },
+      {
+        "item_id": "shadowless_ward_manual",
+        "weight": 1
+      }
+    ],
+    "special": [
+      {
+        "special_id": "ancient_manual",
+        "weight": 1
+      }
+    ]
+  },
+  "nine_furnace_kingdom": {
+    "combat": [
+      {
+        "enemy_id": "nine_furnace_fire_golem",
+        "weight": 5
+      },
+      {
+        "enemy_id": "vermillion_guard_captain",
+        "weight": 2
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "stone_skin_armor",
+        "weight": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "weight": 6
+      },
+      {
+        "item_id": "primordial_chaos_domain_manual",
+        "weight": 1
+      }
+    ],
+    "special": [
+      {
+        "special_id": "ancient_manual",
+        "weight": 1
+      }
+    ]
+  },
+  "asura_divine_kingdom": {
+    "combat": [
+      {
+        "enemy_id": "asura_blood_guard",
+        "weight": 5
+      },
+      {
+        "enemy_id": "central_region_duelist",
+        "weight": 2
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "blood_sealing_talisman",
+        "weight": 1
+      },
+      {
+        "item_id": "profound_pill",
+        "weight": 5
+      },
+      {
+        "item_id": "star_shattering_fist_intent_manual",
+        "weight": 1
+      }
+    ],
+    "special": [
+      {
+        "special_id": "old_master",
+        "weight": 1
+      }
+    ]
+  },
+  "rival_divine_kingdom": {
+    "combat": [
+      {
+        "enemy_id": "central_region_duelist",
+        "weight": 3
+      },
+      {
+        "enemy_id": "vermillion_guard_captain",
+        "weight": 3
+      },
+      {
+        "enemy_id": "asura_blood_guard",
+        "weight": 1
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "spirit_stone",
+        "weight": 5
+      },
+      {
+        "item_id": "heart_guard_amulet",
+        "weight": 1
+      },
+      {
+        "item_id": "mountain_crushing_fist_manual",
+        "weight": 1
+      }
+    ],
+    "special": [
+      {
+        "special_id": "ancient_manual",
+        "weight": 1
+      }
+    ]
+  },
+  "zenlight_monastery": {
+    "combat": [
+      {
+        "enemy_id": "zenlight_iron_monk",
+        "weight": 5
+      },
+      {
+        "enemy_id": "five_element_warder",
+        "weight": 1
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "heart_guard_amulet",
+        "weight": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "weight": 5
+      },
+      {
+        "item_id": "soul_severing_scripture_manual",
+        "weight": 1
+      }
+    ],
+    "special": [
+      {
+        "special_id": "old_master",
+        "weight": 1
+      }
+    ]
+  },
+  "southern_wilderness": {
+    "combat": [
+      {
+        "enemy_id": "southern_wilderness_shaman",
+        "weight": 5
+      },
+      {
+        "enemy_id": "asura_blood_guard",
+        "weight": 1
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "nameless_bone_shard",
+        "weight": 1
+      },
+      {
+        "item_id": "profound_pill",
+        "weight": 4
+      },
+      {
+        "item_id": "blood_sea_body_manual",
+        "weight": 1
+      }
+    ],
+    "special": [
+      {
+        "special_id": "spirit_spring",
+        "weight": 1
+      }
+    ]
+  },
+  "blood_slaughter_steppes": {
+    "combat": [
+      {
+        "enemy_id": "asura_blood_guard",
+        "weight": 5
+      },
+      {
+        "enemy_id": "southern_wilderness_shaman",
+        "weight": 2
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "blood_sealing_talisman",
+        "weight": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "weight": 6
+      },
+      {
+        "item_id": "nether_roar_manual",
+        "weight": 1
+      }
+    ],
+    "special": [
+      {
+        "special_id": "old_master",
+        "weight": 1
+      }
+    ]
+  },
+  "five_element_temples": {
+    "combat": [
+      {
+        "enemy_id": "five_element_warder",
+        "weight": 5
+      },
+      {
+        "enemy_id": "zenlight_iron_monk",
+        "weight": 2
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "ancient_jade_slip",
+        "weight": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "weight": 6
+      },
+      {
+        "item_id": "nirvana_sword_intent_manual",
+        "weight": 1
+      }
+    ],
+    "special": [
+      {
+        "special_id": "ancient_manual",
+        "weight": 1
+      }
+    ]
+  },
+  "ancient_ruins": {
+    "combat": [
+      {
+        "enemy_id": "ancient_ruin_sentinel",
+        "weight": 5
+      },
+      {
+        "enemy_id": "five_element_warder",
+        "weight": 2
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "cracked_black_pagoda",
+        "weight": 1
+      },
+      {
+        "item_id": "cloudpiercer_sword",
+        "weight": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "weight": 8
+      },
+      {
+        "item_id": "true_dragon_sword_intent_no2_manual",
+        "weight": 1
+      }
+    ],
+    "special": [
+      {
+        "special_id": "ancient_manual",
+        "weight": 1
+      }
+    ]
+  },
+  "planetary_gate_array": {
+    "combat": [
+      {
+        "enemy_id": "ancient_ruin_sentinel",
+        "weight": 4
+      },
+      {
+        "enemy_id": "holy_demon_warfiend",
+        "weight": 1
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "cloudpiercer_sword",
+        "weight": 1
+      },
+      {
+        "item_id": "profound_pill",
+        "weight": 5
+      },
+      {
+        "item_id": "true_dragon_seal_manual",
+        "weight": 1
+      }
+    ],
+    "special": [
+      {
+        "special_id": "ancient_manual",
+        "weight": 1
+      }
+    ]
+  },
+  "holy_demon_continent": {
+    "combat": [
+      {
+        "enemy_id": "holy_demon_warfiend",
+        "weight": 6
+      },
+      {
+        "enemy_id": "ancient_ruin_sentinel",
+        "weight": 2
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "cloudpiercer_sword",
+        "weight": 1
+      },
+      {
+        "item_id": "profound_pill",
+        "weight": 8
+      },
+      {
+        "item_id": "immortal_binding_saber_art_no2_manual",
+        "weight": 1
+      }
+    ],
+    "special": [
+      {
+        "special_id": "old_master",
+        "weight": 1
+      }
+    ]
+  }
 }

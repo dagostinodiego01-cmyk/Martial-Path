@@ -36,9 +36,12 @@ class CommandRouter:
         "market": Action.SHOP,
         "buy": Action.BUY_ITEM,
         "purchase": Action.BUY_ITEM,
+        "sell": Action.SELL_ITEM,
         "trainers": Action.TRAINERS,
         "masters": Action.TRAINERS,
         "learn": Action.LEARN_SKILL,
+        "sects": Action.SECTS,
+        "join": Action.JOIN_SECT,
         "breakthrough": Action.BREAKTHROUGH,
         "b": Action.BREAKTHROUGH,
         "stabilise": Action.STABILISE_FOUNDATION,
@@ -83,6 +86,8 @@ class CommandRouter:
         Action.TALK_TO_CHARACTER: "character_id",
         Action.SPAR_CHARACTER: "character_id",
         Action.DUEL_CHARACTER: "character_id",
+        Action.JOIN_SECT: "sect_id",
+        Action.SECTS: "sect_id",
         Action.TRAVEL: "location_id",
         Action.SAVE: "slot",
         Action.LOAD: "slot",
@@ -109,6 +114,8 @@ class CommandRouter:
             self._route_equip_args(command, args)
         elif action == Action.BUY_ITEM:
             self._route_buy_args(command, args)
+        elif action == Action.SELL_ITEM:
+            self._route_sell_args(command, args)
 
         return command
 
@@ -142,6 +149,9 @@ class CommandRouter:
             item_parts = item_parts[:-1]
         command["item_id"] = "_".join(item_parts)
 
+    def _route_sell_args(self, command: Dict[str, Any], args: List[str]) -> None:
+        self._route_buy_args(command, args)
+
     def describe_commands(self) -> List[Dict[str, str]]:
         """Return the command reference used by the UI to render help."""
         return [
@@ -160,6 +170,9 @@ class CommandRouter:
             {"command": "inventory", "aliases": "inv, i", "desc": "List the items you are carrying."},
             {"command": "shop", "aliases": "market", "desc": "View the market available at your current location."},
             {"command": "buy <item_id> [quantity]", "aliases": "purchase", "desc": "Buy an item from the current market."},
+            {"command": "sects [sect_id]", "aliases": "", "desc": "View the sects available at your location."},
+            {"command": "join <sect_id>", "aliases": "", "desc": "Join a sect at your location and take up its path."},
+            {"command": "sell <item_id> [quantity]", "aliases": "", "desc": "Sell an owned item or piece of equipment for gold."},
             {"command": "use <item_id>", "aliases": "", "desc": "Use an item, e.g. 'use healing_pill'."},
             {"command": "equip <item_id> <slot>", "aliases": "", "desc": "Equip an owned item into a valid equipment slot."},
             {"command": "unequip <slot>", "aliases": "", "desc": "Clear an equipped item from a slot."},

@@ -47,6 +47,39 @@ def test_immortal_realm_has_no_max_lifespan():
     assert system.current_max_lifespan(player, essence_unlocked=True) is None
 
 
+def test_lifespan_passive_bonus_extends_realm_lifespan():
+    system = _make_system()
+    player = Player(name="Cultivator", lifespan_bonus_years=400)
+    player.cultivation_state.essence.realm_id = "xiantian"
+
+    assert system.current_max_lifespan(player, essence_unlocked=True) == 800
+
+
+def test_lifespan_passive_bonus_extends_mortal_base():
+    system = _make_system()
+    player = Player(name="Mortal", lifespan_bonus_years=50)
+
+    assert system.current_max_lifespan(player, essence_unlocked=False) == 150
+
+
+def test_lifespan_passive_bonus_ignored_when_immortal():
+    system = _make_system()
+    player = Player(name="Immortal", lifespan_bonus_years=999)
+    player.cultivation_state.essence.realm_id = "beyond_divinity"
+
+    assert system.current_max_lifespan(player, essence_unlocked=True) is None
+
+
+def test_lifespan_passive_bonus_raises_lifespan_view_max_years():
+    system = _make_system()
+    player = Player(name="Cultivator", lifespan_bonus_years=400)
+    player.cultivation_state.essence.realm_id = "xiantian"
+
+    view = system.lifespan_view(player, essence_unlocked=True)
+
+    assert view["max_lifespan_years"] == 800
+
+
 def test_advance_age_uses_configured_time_cost():
     config = load_json("cultivation/cultivation_config.json")
     cost = config["lifespan"]["time_costs"]["train_body"]

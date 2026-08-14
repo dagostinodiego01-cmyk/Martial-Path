@@ -2,10 +2,1333 @@
   {
     "id": "wandering_sword_master",
     "display_name": "Wandering Sword Master",
-    "location_ids": ["outer_forest"],
+    "location_ids": [
+      "outer_forest"
+    ],
     "description": "A reclusive cultivator who trades pointers on the martial path for coin.",
     "techniques": [
-      { "skill_id": "spirit_palm", "price": { "gold": 80 } }
+      {
+        "skill_id": "spirit_palm",
+        "price": {
+          "gold": 80
+        }
+      }
+    ]
+  },
+  {
+    "id": "master_mortal_grade",
+    "display_name": "Mortal Arts Master",
+    "location_ids": [
+      "azure_village"
+    ],
+    "description": "A master of mortal grade techniques who passes on the arts of their tier.",
+    "techniques": [
+      {
+        "skill_id": "iron_fist",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "flowing_step",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "windless_roar",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "thunderclap_chant",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "earth_vein_saber_art",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "windless_palm",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "iron_body",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "white_tiger_chant",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "roaring_tide_fist_intent",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "roaring_tide_roar",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "vermilion_bird_palm",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "nine_yang_domain",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "white_tiger_palm",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "vermilion_bird_ward",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "azure_dragon_roar",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "earth_vein_guard",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "glacial_sword_art",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "nine_yin_sutra",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "black_tortoise_breathing_method",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "nine_yang_guard_no2",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "inferno_palm",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "vermilion_bird_fist",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "windless_chant",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "windless_saber_art",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "azure_dragon_sword_art",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "iron_body_no2",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "glacial_sword_art_no2",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "nine_yang_finger",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "white_tiger_palm_no2",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "azure_dragon_eye",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "glacial_saber_art_no2",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "inferno_sutra",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "azure_dragon_domain",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "earth_vein_aura",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "nine_yin_fist_intent",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "earth_vein_sutra",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "iron_kick",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "thunderclap_eye",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "earth_vein_sword_art",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "iron_sword_intent",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "myriad_sword_sutra",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "glacial_sword_intent",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "roaring_tide_sword_intent",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "glacial_footwork",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "roaring_tide_sword_intent_no2",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "inferno_constitution",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "black_tortoise_seal",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "white_tiger_fist_intent",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "nine_yin_saber_art",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "black_tortoise_scripture",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "inferno_body",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "white_tiger_chant_no2",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "nine_yin_bloodline",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "thunderclap_constitution",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "windless_roar_no3",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "vermilion_bird_meditation_no2",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "windless_chant_no2",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "inferno_seal",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "nine_yang_seal",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "nine_yang_footwork",
+        "price": {
+          "gold": 50
+        }
+      },
+      {
+        "skill_id": "black_tortoise_fist_intent",
+        "price": {
+          "gold": 50
+        }
+      }
+    ]
+  },
+  {
+    "id": "master_low_spirit_grade",
+    "display_name": "Spirit Arts Master",
+    "location_ids": [
+      "outer_forest"
+    ],
+    "description": "A master of low spirit grade techniques who passes on the arts of their tier.",
+    "techniques": [
+      {
+        "skill_id": "nine_yang_guard",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "nether_palm",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "myriad_sword_body",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "mountain_crushing_sword_art",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "thunderclap_sword_intent",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "black_tortoise_guard",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "primordial_chaos_meditation",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "glacial_saber_art",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "earth_vein_kick",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "iron_guard",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "vermilion_bird_meditation",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "inferno_bloodline",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "windless_sword_art",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "star_shattering_guard",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "iron_roar",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "great_sun_ward",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "windless_roar_no2",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "glacial_bloodline",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "nine_yin_seal",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "iron_fist_intent",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "myriad_sword_roar",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "windless_saber_art_no2",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "soul_severing_scripture",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "black_tortoise_body",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "azure_dragon_eye_no2",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "myriad_sword_aura_no2",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "mountain_crushing_sutra",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "inferno_fist_intent",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "thunderclap_bloodline",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "earth_vein_chant",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "nether_finger",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "white_tiger_breathing_method",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "white_tiger_seal",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "inferno_claw",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "nether_constitution",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "inferno_aura_no2",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "purple_cloud_sword_intent",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "thunderclap_chant_no2",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "shadowless_sword_intent",
+        "price": {
+          "gold": 120
+        }
+      }
+    ]
+  },
+  {
+    "id": "master_middle_spirit_grade",
+    "display_name": "Refined Spirit Master",
+    "location_ids": [
+      "misty_gorge"
+    ],
+    "description": "A master of middle spirit grade techniques who passes on the arts of their tier.",
+    "techniques": [
+      {
+        "skill_id": "great_sun_domain",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "skill_id": "nether_eye",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "skill_id": "purple_cloud_sword_art",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "skill_id": "purple_cloud_constitution",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "skill_id": "blood_sea_kick",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "skill_id": "purple_cloud_guard",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "skill_id": "true_dragon_constitution",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "skill_id": "great_sun_guard",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "skill_id": "mountain_crushing_fist_no2",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "skill_id": "shadowless_domain",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "skill_id": "nirvana_aura",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "skill_id": "purple_cloud_bloodline",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "skill_id": "purple_cloud_scripture",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "skill_id": "vermilion_bird_claw",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "skill_id": "heaven_splitting_breathing_method",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "skill_id": "glacial_claw",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "skill_id": "blood_sea_aura",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "skill_id": "shadowless_footwork",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "skill_id": "soul_severing_guard",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "skill_id": "vermilion_bird_roar",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "skill_id": "shadowless_footwork_no2",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "skill_id": "nine_yin_sword_art",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "skill_id": "nether_saber_art",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "skill_id": "heaven_splitting_footwork",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "skill_id": "great_sun_domain_no2",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "skill_id": "glacial_body",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "skill_id": "nether_roar_no2",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "skill_id": "black_tortoise_bloodline",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "skill_id": "windless_fist",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "skill_id": "phoenix_footwork",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "skill_id": "myriad_sword_finger",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "skill_id": "soul_severing_kick_no2",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "skill_id": "nine_yang_roar",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "skill_id": "earth_vein_footwork",
+        "price": {
+          "spirit_stone": 4
+        }
+      }
+    ]
+  },
+  {
+    "id": "master_high_spirit_grade",
+    "display_name": "High Spirit Master",
+    "location_ids": [
+      "south_sea_port"
+    ],
+    "description": "A master of high spirit grade techniques who passes on the arts of their tier.",
+    "techniques": [
+      {
+        "skill_id": "shadowless_body",
+        "price": {
+          "spirit_stone": 6
+        }
+      },
+      {
+        "skill_id": "blood_sea_roar",
+        "price": {
+          "spirit_stone": 6
+        }
+      },
+      {
+        "skill_id": "void_sutra",
+        "price": {
+          "spirit_stone": 6
+        }
+      },
+      {
+        "skill_id": "nirvana_scripture",
+        "price": {
+          "spirit_stone": 6
+        }
+      },
+      {
+        "skill_id": "blood_sea_palm",
+        "price": {
+          "spirit_stone": 6
+        },
+        "required_path": "Asura Path"
+      },
+      {
+        "skill_id": "primordial_chaos_claw",
+        "price": {
+          "spirit_stone": 6
+        }
+      },
+      {
+        "skill_id": "myriad_sword_aura",
+        "price": {
+          "spirit_stone": 6
+        }
+      },
+      {
+        "skill_id": "golden_body_chant",
+        "price": {
+          "spirit_stone": 6
+        }
+      },
+      {
+        "skill_id": "blood_sea_saber_art",
+        "price": {
+          "spirit_stone": 6
+        }
+      },
+      {
+        "skill_id": "nether_claw",
+        "price": {
+          "spirit_stone": 6
+        }
+      },
+      {
+        "skill_id": "nirvana_chant",
+        "price": {
+          "spirit_stone": 6
+        }
+      },
+      {
+        "skill_id": "primordial_chaos_seal",
+        "price": {
+          "spirit_stone": 6
+        }
+      },
+      {
+        "skill_id": "nether_aura",
+        "price": {
+          "spirit_stone": 6
+        },
+        "required_path": "Asura Path"
+      },
+      {
+        "skill_id": "mountain_crushing_fist_no3",
+        "price": {
+          "spirit_stone": 6
+        }
+      },
+      {
+        "skill_id": "true_dragon_constitution_no2",
+        "price": {
+          "spirit_stone": 6
+        }
+      },
+      {
+        "skill_id": "phoenix_sword_intent",
+        "price": {
+          "spirit_stone": 6
+        }
+      },
+      {
+        "skill_id": "nirvana_aura_no2",
+        "price": {
+          "spirit_stone": 6
+        }
+      },
+      {
+        "skill_id": "soul_severing_sword_intent",
+        "price": {
+          "spirit_stone": 6
+        }
+      },
+      {
+        "skill_id": "dao_heart_aura",
+        "price": {
+          "spirit_stone": 6
+        }
+      },
+      {
+        "skill_id": "nether_aura_no2",
+        "price": {
+          "spirit_stone": 6
+        }
+      },
+      {
+        "skill_id": "nirvana_scripture_no2",
+        "price": {
+          "spirit_stone": 6
+        }
+      },
+      {
+        "skill_id": "mountain_crushing_chant",
+        "price": {
+          "spirit_stone": 6
+        }
+      },
+      {
+        "skill_id": "myriad_sword_kick",
+        "price": {
+          "spirit_stone": 6
+        }
+      },
+      {
+        "skill_id": "myriad_sword_finger_no2",
+        "price": {
+          "spirit_stone": 6
+        }
+      }
+    ]
+  },
+  {
+    "id": "master_earth_grade",
+    "display_name": "Earth Grade Master",
+    "location_ids": [
+      "ruined_shrine"
+    ],
+    "description": "A master of earth grade techniques who passes on the arts of their tier.",
+    "techniques": [
+      {
+        "skill_id": "star_shattering_fist_intent",
+        "price": {
+          "spirit_stone": 9
+        }
+      },
+      {
+        "skill_id": "mountain_crushing_fist",
+        "price": {
+          "spirit_stone": 9
+        }
+      },
+      {
+        "skill_id": "dao_heart_meditation",
+        "price": {
+          "spirit_stone": 9
+        }
+      },
+      {
+        "skill_id": "blood_sea_body",
+        "price": {
+          "spirit_stone": 9
+        }
+      },
+      {
+        "skill_id": "dao_heart_scripture",
+        "price": {
+          "spirit_stone": 9
+        }
+      },
+      {
+        "skill_id": "soul_severing_kick",
+        "price": {
+          "spirit_stone": 9
+        }
+      },
+      {
+        "skill_id": "purple_cloud_fist_intent",
+        "price": {
+          "spirit_stone": 9
+        }
+      },
+      {
+        "skill_id": "true_dragon_seal",
+        "price": {
+          "spirit_stone": 9
+        }
+      },
+      {
+        "skill_id": "inferno_aura",
+        "price": {
+          "spirit_stone": 9
+        }
+      },
+      {
+        "skill_id": "void_kick",
+        "price": {
+          "spirit_stone": 9
+        }
+      },
+      {
+        "skill_id": "void_claw",
+        "price": {
+          "spirit_stone": 9
+        }
+      },
+      {
+        "skill_id": "heaven_splitting_kick",
+        "price": {
+          "spirit_stone": 9
+        }
+      },
+      {
+        "skill_id": "immortal_binding_saber_art",
+        "price": {
+          "spirit_stone": 9
+        }
+      },
+      {
+        "skill_id": "star_shattering_roar",
+        "price": {
+          "spirit_stone": 9
+        }
+      },
+      {
+        "skill_id": "heaven_splitting_roar",
+        "price": {
+          "spirit_stone": 9
+        }
+      },
+      {
+        "skill_id": "shadowless_saber_art",
+        "price": {
+          "spirit_stone": 9
+        }
+      },
+      {
+        "skill_id": "primordial_chaos_scripture",
+        "price": {
+          "spirit_stone": 9
+        }
+      },
+      {
+        "skill_id": "void_body",
+        "price": {
+          "spirit_stone": 9
+        }
+      },
+      {
+        "skill_id": "shadowless_ward",
+        "price": {
+          "spirit_stone": 9
+        }
+      },
+      {
+        "skill_id": "primordial_chaos_domain",
+        "price": {
+          "spirit_stone": 9
+        }
+      }
+    ]
+  },
+  {
+    "id": "master_heaven_grade",
+    "display_name": "Heaven Grade Master",
+    "location_ids": [
+      "divine_phoenix_mystic_realm"
+    ],
+    "description": "A master of heaven grade techniques who passes on the arts of their tier.",
+    "techniques": [
+      {
+        "skill_id": "primordial_chaos_fist",
+        "price": {
+          "spirit_stone": 14
+        }
+      },
+      {
+        "skill_id": "phoenix_sword_art",
+        "price": {
+          "spirit_stone": 14
+        },
+        "required_path": "Divine Phoenix"
+      },
+      {
+        "skill_id": "dao_heart_sword_intent",
+        "price": {
+          "spirit_stone": 14
+        }
+      },
+      {
+        "skill_id": "dao_heart_roar_no2",
+        "price": {
+          "spirit_stone": 14
+        }
+      },
+      {
+        "skill_id": "dao_heart_roar_no3",
+        "price": {
+          "spirit_stone": 14
+        }
+      },
+      {
+        "skill_id": "true_dragon_palm",
+        "price": {
+          "spirit_stone": 14
+        }
+      },
+      {
+        "skill_id": "nether_roar",
+        "price": {
+          "spirit_stone": 14
+        }
+      },
+      {
+        "skill_id": "nirvana_sword_intent",
+        "price": {
+          "spirit_stone": 14
+        }
+      },
+      {
+        "skill_id": "true_dragon_sword_intent_no2",
+        "price": {
+          "spirit_stone": 14
+        }
+      },
+      {
+        "skill_id": "heaven_splitting_seal",
+        "price": {
+          "spirit_stone": 14
+        }
+      },
+      {
+        "skill_id": "shadowless_roar",
+        "price": {
+          "spirit_stone": 14
+        }
+      },
+      {
+        "skill_id": "myriad_sword_claw",
+        "price": {
+          "spirit_stone": 14
+        }
+      },
+      {
+        "skill_id": "primordial_chaos_meditation_no2",
+        "price": {
+          "spirit_stone": 14
+        }
+      },
+      {
+        "skill_id": "phoenix_fist",
+        "price": {
+          "spirit_stone": 14
+        },
+        "required_path": "Divine Phoenix"
+      },
+      {
+        "skill_id": "dao_heart_sword_intent_no2",
+        "price": {
+          "spirit_stone": 14
+        }
+      },
+      {
+        "skill_id": "star_shattering_seal",
+        "price": {
+          "spirit_stone": 14
+        }
+      },
+      {
+        "skill_id": "phoenix_seal",
+        "price": {
+          "spirit_stone": 14
+        }
+      },
+      {
+        "skill_id": "purple_cloud_saber_art",
+        "price": {
+          "spirit_stone": 14
+        }
+      }
+    ]
+  },
+  {
+    "id": "master_dao_grade",
+    "display_name": "Dao Sovereign",
+    "location_ids": [
+      "holy_demon_continent"
+    ],
+    "description": "A master of dao grade techniques who passes on the arts of their tier.",
+    "techniques": [
+      {
+        "skill_id": "true_dragon_sword_intent",
+        "price": {
+          "spirit_stone": 22
+        }
+      },
+      {
+        "skill_id": "dao_heart_roar",
+        "price": {
+          "spirit_stone": 22
+        }
+      },
+      {
+        "skill_id": "immortal_binding_roar",
+        "price": {
+          "spirit_stone": 22
+        }
+      },
+      {
+        "skill_id": "primordial_chaos_sword_art",
+        "price": {
+          "spirit_stone": 22
+        }
+      },
+      {
+        "skill_id": "void_domain",
+        "price": {
+          "spirit_stone": 22
+        }
+      },
+      {
+        "skill_id": "dao_heart_fist_intent",
+        "price": {
+          "spirit_stone": 22
+        }
+      },
+      {
+        "skill_id": "immortal_binding_saber_art_no2",
+        "price": {
+          "spirit_stone": 22
+        }
+      },
+      {
+        "skill_id": "immortal_binding_fist",
+        "price": {
+          "spirit_stone": 22
+        }
+      },
+      {
+        "skill_id": "golden_body_domain",
+        "price": {
+          "spirit_stone": 22
+        }
+      },
+      {
+        "skill_id": "great_sun_chant",
+        "price": {
+          "spirit_stone": 22
+        }
+      },
+      {
+        "skill_id": "primordial_chaos_finger",
+        "price": {
+          "spirit_stone": 22
+        }
+      }
     ]
   }
 ]

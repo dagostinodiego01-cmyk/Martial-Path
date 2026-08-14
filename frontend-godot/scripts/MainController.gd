@@ -51,6 +51,9 @@ const EQUIPMENT_SLOT_ORDER := [
 	["flying_sword", "Flying Sword"],
 ]
 
+# Floating tab panels opened from the top bar (index -> title).
+const TAB_TITLES := ["Inventory", "Equipment", "Journal", "Status", "Techniques"]
+
 var api: ApiClient
 var _connected := false
 var _showing_event_result := false
@@ -66,9 +69,13 @@ var _hp_bar: ProgressBar
 var _qi_bar: ProgressBar
 var _hp_text: Label
 var _qi_text: Label
-var _day_label: Label
+var _year_label: Label
 
 # Character panel refs (left).
+var _portrait_initial: Label
+var _char_name_label: Label
+var _char_path_label: Label
+var _char_realm_label: Label
 var _character_text: RichTextLabel
 var _body_progress_bar: ProgressBar
 var _body_progress_text: Label
@@ -79,12 +86,24 @@ var _artwork_label: Label
 var _artwork_texture: TextureRect
 var _location_texture_cache := {}
 var _location_text: RichTextLabel
+var _chips_row: HBoxContainer
+var _exits_row: HBoxContainer
 var _combat_panel: PanelContainer
 var _enemy_name: Label
 var _enemy_hp_bar: ProgressBar
 var _enemy_details: RichTextLabel
 
-# Right tab refs.
+# Floating overlay (tab panels) refs.
+var _overlay: Control
+var _overlay_dim: ColorRect
+var _overlay_panel: PanelContainer
+var _overlay_title: Label
+var _overlay_content: VBoxContainer
+var _tab_pages: Array = []
+var _tab_buttons: Array = []
+var _active_tab := -1
+
+# Tab content refs (inside the floating overlay).
 var _inventory_text: RichTextLabel
 var _inventory_count: Label
 var _equipment_text: RichTextLabel
@@ -94,10 +113,12 @@ var _stones_label: Label
 var _quest_text: RichTextLabel
 var _status_text: RichTextLabel
 var _techniques_text: RichTextLabel
-var _right_tabs: TabContainer
 
 # Action refs.
-var _action_grid: GridContainer
+var _action_box: VBoxContainer
+var _cultivation_grid: GridContainer
+var _exploration_grid: GridContainer
+var _support_grid: GridContainer
 var _combat_actions: HBoxContainer
 var _log: RichTextLabel
 
@@ -111,9 +132,8 @@ var _shop_choices: Array = []
 var _trainer_choices: Array = []
 var _use_choices: Array = []
 
-# Cosmetic display state (the engine has no calendar yet).
-var _day := 1
-var _period := "Morning"
+# Cosmetic display state (the engine tracks years via lifespan).
+var _year := 0
 
 
 func _ready() -> void:
@@ -160,7 +180,7 @@ func _build_ui() -> void:
 
 	_build_top_bar(root)
 	_build_body(root)
-	_build_event_log(root)
+	_build_overlay()
 
 
 func _build_top_bar(root: VBoxContainer) -> void:
@@ -206,15 +226,18 @@ func _build_top_bar(root: VBoxContainer) -> void:
 	_qi_text = qi_group["cap"]
 	row.add_child(qi_group["box"])
 
-	var day_box := VBoxContainer.new()
-	day_box.custom_minimum_size = Vector2(96, 0)
-	row.add_child(day_box)
-	day_box.add_child(_make_label("Time", 12, COLOR_MUTED))
-	_day_label = _make_label("Day 1\nMorning", 14, COLOR_PRIMARY_TEXT)
-	day_box.add_child(_day_label)
+	var year_box := VBoxContainer.new()
+	year_box.custom_minimum_size = Vector2(72, 0)
+	row.add_child(year_box)
+	year_box.add_child(_make_label("YEAR", 12, COLOR_MUTED))
+	_year_label = _make_label("0", 16, COLOR_PRIMARY_TEXT)
+	year_box.add_child(_year_label)
+
+	for i in TAB_TITLES.size():
+		row.add_child(_make_tab_button(TAB_TITLES[i], i))
 
 	var settings_btn := _make_button("Settings", func(): _open_settings(), "Save, load, or start a new game.")
-	settings_btn.custom_minimum_size = Vector2(100, 0)
+	settings_btn.custom_minimum_size = Vector2(96, 0)
 	row.add_child(settings_btn)
 
 
@@ -246,7 +269,7 @@ func _build_body(root: VBoxContainer) -> void:
 	_build_location_panel(center)
 	_build_action_panel(center)
 
-	# Right column: tabbed detail panel.
+	# Right column: permanent event log.
 	var right := VBoxContainer.new()
 	right.custom_minimum_size = Vector2(PANEL_MIN_WIDTH, 0)
 	right.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -254,7 +277,7 @@ func _build_body(root: VBoxContainer) -> void:
 	right.size_flags_stretch_ratio = 26.0
 	right.add_theme_constant_override("separation", 12)
 	body.add_child(right)
-	_build_detail_tabs(right)
+	_build_event_log(right)
 
 
 func _build_character_panel(left: VBoxContainer) -> void:
@@ -269,6 +292,32 @@ func _build_character_panel(left: VBoxContainer) -> void:
 	panel.add_child(box)
 
 	box.add_child(_make_label("CHARACTER", 14, COLOR_ANTIQUE_GOLD))
+
+	# Portrait (monogram) + identity summary.
+	var header := HBoxContainer.new()
+	header.add_theme_constant_override("separation", 10)
+	box.add_child(header)
+
+	var portrait_panel := PanelContainer.new()
+	portrait_panel.custom_minimum_size = Vector2(64, 64)
+	portrait_panel.add_theme_stylebox_override("panel", _make_portrait_style())
+	header.add_child(portrait_panel)
+	_portrait_initial = _make_label("?", 30, COLOR_TITLE_GOLD)
+	_portrait_initial.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_portrait_initial.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	portrait_panel.add_child(_portrait_initial)
+
+	var identity := VBoxContainer.new()
+	identity.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	identity.add_theme_constant_override("separation", 2)
+	header.add_child(identity)
+	_char_name_label = _make_label("Daoist", 17, COLOR_PRIMARY_TEXT)
+	identity.add_child(_char_name_label)
+	_char_path_label = _make_label("Path: Unassigned", 12, COLOR_QI)
+	identity.add_child(_char_path_label)
+	_char_realm_label = _make_label("Realm: -", 12, COLOR_MUTED)
+	identity.add_child(_char_realm_label)
+
 	_character_text = RichTextLabel.new()
 	_character_text.bbcode_enabled = true
 	_character_text.fit_content = true
@@ -286,7 +335,7 @@ func _build_character_panel(left: VBoxContainer) -> void:
 	_apply_bar_style(_body_progress_bar, COLOR_BODY, COLOR_BODY_DARK)
 	box.add_child(_body_progress_bar)
 
-	box.add_child(_make_button("View Detailed Status", func(): _focus_tab(3), "Open the Status tab."))
+	box.add_child(_make_button("View Detailed Status", func(): _focus_tab(3), "Open the Status panel."))
 
 
 func _build_location_panel(center: VBoxContainer) -> void:
@@ -368,6 +417,16 @@ func _build_location_panel(center: VBoxContainer) -> void:
 	_location_text.add_theme_color_override("default_color", COLOR_PRIMARY_TEXT)
 	box.add_child(_location_text)
 
+	# Icon + value chips for Danger / Qi Density / Resources.
+	_chips_row = HBoxContainer.new()
+	_chips_row.add_theme_constant_override("separation", 8)
+	box.add_child(_chips_row)
+
+	# Interactive exits (click to travel).
+	_exits_row = HBoxContainer.new()
+	_exits_row.add_theme_constant_override("separation", 8)
+	box.add_child(_exits_row)
+
 
 func _build_action_panel(center: VBoxContainer) -> void:
 	var panel := _make_panel()
@@ -378,12 +437,22 @@ func _build_action_panel(center: VBoxContainer) -> void:
 	panel.add_child(box)
 	box.add_child(_make_label("ACTIONS", 14, COLOR_ANTIQUE_GOLD))
 
-	_action_grid = GridContainer.new()
-	_action_grid.columns = 4
-	_action_grid.add_theme_constant_override("h_separation", 8)
-	_action_grid.add_theme_constant_override("v_separation", 8)
-	_action_grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	box.add_child(_action_grid)
+	_action_box = VBoxContainer.new()
+	_action_box.add_theme_constant_override("separation", 6)
+	_action_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	box.add_child(_action_box)
+
+	_action_box.add_child(_make_label("Cultivation", 12, COLOR_ANTIQUE_GOLD))
+	_cultivation_grid = _make_action_grid(4)
+	_action_box.add_child(_cultivation_grid)
+
+	_action_box.add_child(_make_label("Exploration", 12, COLOR_ANTIQUE_GOLD))
+	_exploration_grid = _make_action_grid(4)
+	_action_box.add_child(_exploration_grid)
+
+	_action_box.add_child(_make_label("Commerce & Support", 12, COLOR_ANTIQUE_GOLD))
+	_support_grid = _make_action_grid(4)
+	_action_box.add_child(_support_grid)
 
 	_combat_actions = _make_action_row()
 	_combat_actions.visible = false
@@ -395,8 +464,7 @@ func _build_action_panel(center: VBoxContainer) -> void:
 
 
 func _render_actions(player: Dictionary) -> void:
-	for child in _action_grid.get_children():
-		child.queue_free()
+	_clear_action_grids()
 	var essence_unlocked := bool(player.get("essence_unlocked", true))
 	var cultivation: Dictionary = player.get("cultivation_state", {})
 	var essence: Dictionary = cultivation.get("essence_gathering", {})
@@ -405,22 +473,24 @@ func _render_actions(player: Dictionary) -> void:
 	if not essence_unlocked:
 		locked_reason = ("Locked - %s." % req) if req != "" else "Essence Gathering is still locked."
 
-	_action_grid.add_child(_make_action_card("Train Body", "Cultivate your body", func(): _send("TRAIN_BODY")))
-	_action_grid.add_child(_make_action_card("Gather Essence", ("Absorb spiritual energy" if essence_unlocked else "Locked"), func(): _send("TRAIN_ESSENCE"), essence_unlocked, locked_reason))
-	_action_grid.add_child(_make_action_card("Explore", "Search the area", func(): _send("EXPLORE")))
-	_action_grid.add_child(_make_action_card("Rest", "Recover HP & Qi", func(): _send("REST")))
-	_action_grid.add_child(_make_action_card("Stabilise Foundation", "Settle strain", func(): _send("STABILISE_FOUNDATION")))
-	_action_grid.add_child(_make_action_card("Stabilise Essence", ("Settle essence strain" if essence_unlocked else "Locked"), func(): _send("STABILISE_ESSENCE"), essence_unlocked, locked_reason))
-	_action_grid.add_child(_make_action_card("Body Breakthrough", "Attempt advancement", func(): _send("BODY_BREAKTHROUGH")))
-	_action_grid.add_child(_make_action_card("Essence Breakthrough", ("Attempt advancement" if essence_unlocked else "Locked"), func(): _send("ESSENCE_BREAKTHROUGH"), essence_unlocked, locked_reason))
-	_action_grid.add_child(_make_action_card("Travel", "Move to another area", func(): _open_travel_popup()))
-	_action_grid.add_child(_make_action_card("World Map", "Show your location", Callable(self, "_open_world_map_popup"), _has_map_position(), "This location has no map marker."))
-	_action_grid.add_child(_make_action_card("Market", "Buy supplies and equipment", func(): _send("SHOP"), _has_available_shop(), "No market is available here."))
-	_action_grid.add_child(_make_action_card("Masters", "Learn techniques", func(): _send("TRAINERS"), _has_available_trainer(), "No technique master is here."))
-	_action_grid.add_child(_make_action_card("Inventory", "Manage your items", func(): _focus_tab(0)))
-	_action_grid.add_child(_make_action_card("Use Item", "Use a pill or manual", Callable(self, "_open_use_popup"), _has_usable_item(), "No usable items in inventory."))
-	_action_grid.add_child(_make_action_card("Equip Item", "Wear owned equipment", Callable(self, "_open_equip_popup"), _has_equipment_inventory(), "No equippable items in inventory."))
-	_action_grid.add_child(_make_action_card("Unequip Item", "Clear an equipment slot", Callable(self, "_open_unequip_popup"), _has_equipped_items(), "No equipment is currently worn."))
+	_cultivation_grid.add_child(_make_action_card("Train Body", "Cultivate your body", func(): _send("TRAIN_BODY")))
+	_cultivation_grid.add_child(_make_action_card("Gather Essence", ("Absorb spiritual energy" if essence_unlocked else "Locked"), func(): _send("TRAIN_ESSENCE"), essence_unlocked, locked_reason))
+	_cultivation_grid.add_child(_make_action_card("Stabilise Foundation", "Settle strain", func(): _send("STABILISE_FOUNDATION")))
+	_cultivation_grid.add_child(_make_action_card("Stabilise Essence", ("Settle essence strain" if essence_unlocked else "Locked"), func(): _send("STABILISE_ESSENCE"), essence_unlocked, locked_reason))
+	_cultivation_grid.add_child(_make_action_card("Body Breakthrough", "Attempt advancement", func(): _send("BODY_BREAKTHROUGH")))
+	_cultivation_grid.add_child(_make_action_card("Essence Breakthrough", ("Attempt advancement" if essence_unlocked else "Locked"), func(): _send("ESSENCE_BREAKTHROUGH"), essence_unlocked, locked_reason))
+
+	_exploration_grid.add_child(_make_action_card("Explore", "Search the area", func(): _send("EXPLORE")))
+	_exploration_grid.add_child(_make_action_card("Rest", "Recover HP & Qi", func(): _send("REST")))
+	_exploration_grid.add_child(_make_action_card("Travel", "Move to another area", func(): _open_travel_popup()))
+	_exploration_grid.add_child(_make_action_card("World Map", "Show your location", Callable(self, "_open_world_map_popup"), _has_map_position(), "This location has no map marker."))
+
+	_support_grid.add_child(_make_action_card("Market", "Buy supplies and equipment", func(): _send("SHOP"), _has_available_shop(), "No market is available here."))
+	_support_grid.add_child(_make_action_card("Masters", "Learn techniques", func(): _send("TRAINERS"), _has_available_trainer(), "No technique master is here."))
+	_support_grid.add_child(_make_action_card("Inventory", "Manage your items", func(): _focus_tab(0)))
+	_support_grid.add_child(_make_action_card("Use Item", "Use a pill or manual", Callable(self, "_open_use_popup"), _has_usable_item(), "No usable items in inventory."))
+	_support_grid.add_child(_make_action_card("Equip Item", "Wear owned equipment", Callable(self, "_open_equip_popup"), _has_equipment_inventory(), "No equippable items in inventory."))
+	_support_grid.add_child(_make_action_card("Unequip Item", "Clear an equipment slot", Callable(self, "_open_unequip_popup"), _has_equipped_items(), "No equipment is currently worn."))
 
 
 func _make_action_card(title: String, subtitle: String, cb: Callable, enabled: bool = true, locked_reason: String = "") -> Button:
@@ -452,15 +522,19 @@ func _make_action_card(title: String, subtitle: String, cb: Callable, enabled: b
 	var title_label := _make_label(title, 14, COLOR_ANTIQUE_GOLD if enabled else COLOR_MUTED)
 	title_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	v.add_child(title_label)
-	var sub_label := _make_label(subtitle, 11, COLOR_MUTED)
+	var sub_text := subtitle
+	var sub_color := COLOR_MUTED
+	if not enabled and locked_reason != "":
+		sub_text = "🔒 " + locked_reason
+		sub_color = COLOR_WARNING
+	var sub_label := _make_label(sub_text, 11, sub_color)
 	sub_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	v.add_child(sub_label)
 	return button
 
 
 func _focus_tab(index: int) -> void:
-	if _right_tabs != null:
-		_right_tabs.current_tab = index
+	_open_overlay(index)
 
 
 func _open_settings() -> void:
@@ -595,7 +669,6 @@ func _world_map_content_rect(holder_size: Vector2) -> Rect2:
 
 
 func _open_equip_popup() -> void:
-	_focus_tab(0)
 	_equip_choices = []
 	var popup := PopupMenu.new()
 	for item in _last_state.get("inventory_items", []):
@@ -629,7 +702,6 @@ func _on_equip_selected(idx: int) -> void:
 
 
 func _open_use_popup() -> void:
-	_focus_tab(0)
 	_use_choices = []
 	var popup := PopupMenu.new()
 	for item in _last_state.get("inventory_items", []):
@@ -662,7 +734,6 @@ func _on_use_selected(idx: int) -> void:
 
 
 func _open_unequip_popup() -> void:
-	_focus_tab(0)
 	_unequip_choices = []
 	var popup := PopupMenu.new()
 	var player: Dictionary = _last_state.get("player", {})
@@ -697,7 +768,6 @@ func _on_unequip_selected(idx: int) -> void:
 
 
 func _show_shop(result: Dictionary) -> void:
-	_focus_tab(0)
 	_shop_choices = []
 	var shop: Dictionary = result.get("shop", {})
 	var shop_id := str(shop.get("id", ""))
@@ -771,7 +841,6 @@ func _has_usable_item() -> bool:
 
 
 func _show_trainer(result: Dictionary) -> void:
-	_focus_tab(4)
 	_trainer_choices = []
 	var trainer: Dictionary = result.get("trainer", {})
 	var trainer_id := str(trainer.get("id", ""))
@@ -818,33 +887,108 @@ func _slot_label(slot: String) -> String:
 	return slot.replace("_", " ").capitalize()
 
 
-func _build_detail_tabs(right: VBoxContainer) -> void:
-	var tabs := TabContainer.new()
-	tabs.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	tabs.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	tabs.custom_minimum_size = Vector2(PANEL_MIN_WIDTH, 0)
-	right.add_child(tabs)
-	_right_tabs = tabs
+func _build_overlay() -> void:
+	_overlay = Control.new()
+	_overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_overlay.visible = false
+	_overlay.mouse_filter = Control.MOUSE_FILTER_STOP
+	add_child(_overlay)
 
-	_build_inventory_tab(tabs)
-	_build_equipment_tab(tabs)
-	_quest_text = _add_text_tab(tabs, "Journal")
-	_status_text = _add_text_tab(tabs, "Status")
-	_techniques_text = _add_text_tab(tabs, "Techniques")
+	_overlay_dim = ColorRect.new()
+	_overlay_dim.color = Color(0, 0, 0, 0.55)
+	_overlay_dim.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_overlay_dim.mouse_filter = Control.MOUSE_FILTER_STOP
+	_overlay_dim.gui_input.connect(_on_overlay_dim_input)
+	_overlay.add_child(_overlay_dim)
+
+	_overlay_panel = _make_panel(COLOR_PANEL, COLOR_BORDER_STRONG, 1)
+	_overlay_panel.anchor_left = 0.15
+	_overlay_panel.anchor_right = 0.85
+	_overlay_panel.anchor_top = 0.07
+	_overlay_panel.anchor_bottom = 0.93
+	_overlay.add_child(_overlay_panel)
+
+	var root := VBoxContainer.new()
+	root.add_theme_constant_override("separation", 10)
+	_overlay_panel.add_child(root)
+
+	var header := HBoxContainer.new()
+	root.add_child(header)
+	_overlay_title = _make_label("INVENTORY", 20, COLOR_TITLE_GOLD)
+	header.add_child(_overlay_title)
+	var spacer := Control.new()
+	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	header.add_child(spacer)
+	header.add_child(_make_button("✕", func(): _close_overlay(), "Close this panel."))
+
+	_overlay_content = VBoxContainer.new()
+	_overlay_content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_overlay_content.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	root.add_child(_overlay_content)
+
+	_build_inventory_page()
+	_build_equipment_page()
+	_quest_text = _add_text_page("Journal")
+	_status_text = _add_text_page("Status")
+	_techniques_text = _add_text_page("Techniques")
+
+	for page in _tab_pages:
+		page.visible = false
 
 
-func _build_inventory_tab(tabs: TabContainer) -> void:
-	var margin := MarginContainer.new()
-	margin.name = "Inventory"
-	margin.add_theme_constant_override("margin_left", 8)
-	margin.add_theme_constant_override("margin_top", 8)
-	margin.add_theme_constant_override("margin_right", 8)
-	margin.add_theme_constant_override("margin_bottom", 8)
-	tabs.add_child(margin)
+func _make_tab_button(title: String, index: int) -> Button:
+	var button := _make_button(title, func(): _open_overlay(index), "Open the %s panel." % title)
+	button.focus_mode = Control.FOCUS_NONE
+	button.custom_minimum_size = Vector2(0, 36)
+	_tab_buttons.append(button)
+	return button
+
+
+func _open_overlay(index: int) -> void:
+	if index < 0 or index >= _tab_pages.size():
+		return
+	_active_tab = index
+	_overlay_title.text = TAB_TITLES[index].to_upper()
+	for i in _tab_pages.size():
+		_tab_pages[i].visible = (i == index)
+	_overlay.visible = true
+	_update_tab_button_states()
+
+
+func _close_overlay() -> void:
+	_active_tab = -1
+	_overlay.visible = false
+	_update_tab_button_states()
+
+
+func _update_tab_button_states() -> void:
+	for i in _tab_buttons.size():
+		var active := (i == _active_tab)
+		var button: Button = _tab_buttons[i]
+		if active:
+			button.add_theme_stylebox_override("normal", _make_button_style(Color("#1A2A33"), COLOR_TITLE_GOLD))
+			button.add_theme_color_override("font_color", COLOR_TITLE_GOLD)
+		else:
+			button.add_theme_stylebox_override("normal", _make_button_style(COLOR_PANEL_SOFT, COLOR_BORDER))
+			button.add_theme_color_override("font_color", COLOR_PRIMARY_TEXT)
+
+
+func _on_overlay_dim_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		_close_overlay()
+
+
+func _build_inventory_page() -> void:
+	var page := MarginContainer.new()
+	page.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	page.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	page.add_theme_constant_override("margin_top", 8)
+	_overlay_content.add_child(page)
+	_tab_pages.append(page)
 
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 6)
-	margin.add_child(box)
+	page.add_child(box)
 
 	var header := HBoxContainer.new()
 	header.add_child(_make_label("INVENTORY", 14, COLOR_ANTIQUE_GOLD))
@@ -873,18 +1017,17 @@ func _build_inventory_tab(tabs: TabContainer) -> void:
 	box.add_child(footer)
 
 
-func _build_equipment_tab(tabs: TabContainer) -> void:
-	var margin := MarginContainer.new()
-	margin.name = "Equipment"
-	margin.add_theme_constant_override("margin_left", 8)
-	margin.add_theme_constant_override("margin_top", 8)
-	margin.add_theme_constant_override("margin_right", 8)
-	margin.add_theme_constant_override("margin_bottom", 8)
-	tabs.add_child(margin)
+func _build_equipment_page() -> void:
+	var page := MarginContainer.new()
+	page.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	page.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	page.add_theme_constant_override("margin_top", 8)
+	_overlay_content.add_child(page)
+	_tab_pages.append(page)
 
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 6)
-	margin.add_child(box)
+	page.add_child(box)
 
 	var header := HBoxContainer.new()
 	header.add_child(_make_label("EQUIPMENT", 14, COLOR_ANTIQUE_GOLD))
@@ -903,14 +1046,13 @@ func _build_equipment_tab(tabs: TabContainer) -> void:
 	box.add_child(_equipment_text)
 
 
-func _add_text_tab(tabs: TabContainer, title: String) -> RichTextLabel:
-	var margin := MarginContainer.new()
-	margin.name = title
-	margin.add_theme_constant_override("margin_left", 8)
-	margin.add_theme_constant_override("margin_top", 8)
-	margin.add_theme_constant_override("margin_right", 8)
-	margin.add_theme_constant_override("margin_bottom", 8)
-	tabs.add_child(margin)
+func _add_text_page(title: String) -> RichTextLabel:
+	var page := MarginContainer.new()
+	page.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	page.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	page.add_theme_constant_override("margin_top", 8)
+	_overlay_content.add_child(page)
+	_tab_pages.append(page)
 
 	var text := RichTextLabel.new()
 	text.bbcode_enabled = true
@@ -918,13 +1060,13 @@ func _add_text_tab(tabs: TabContainer, title: String) -> RichTextLabel:
 	text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	text.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	text.add_theme_color_override("default_color", COLOR_PRIMARY_TEXT)
-	margin.add_child(text)
+	page.add_child(text)
 	return text
 
 
 func _build_event_log(root: VBoxContainer) -> void:
 	var log_panel := _make_panel()
-	log_panel.custom_minimum_size = Vector2(0, 150)
+	log_panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	root.add_child(log_panel)
 
 	var box := VBoxContainer.new()
@@ -947,11 +1089,94 @@ func _build_event_log(root: VBoxContainer) -> void:
 	_log.add_theme_color_override("default_color", COLOR_MUTED)
 	box.add_child(_log)
 
+	_append("[color=#5FAF72]Welcome to Martial Path. Your journey as a cultivator begins.[/color]")
+
 
 func _make_action_row() -> HBoxContainer:
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 8)
 	return row
+
+
+func _make_action_grid(columns: int) -> GridContainer:
+	var grid := GridContainer.new()
+	grid.columns = columns
+	grid.add_theme_constant_override("h_separation", 8)
+	grid.add_theme_constant_override("v_separation", 8)
+	grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	return grid
+
+
+func _clear_action_grids() -> void:
+	for grid in [_cultivation_grid, _exploration_grid, _support_grid]:
+		if grid != null:
+			_clear_row(grid)
+
+
+func _clear_row(container: Container) -> void:
+	if container == null:
+		return
+	for child in container.get_children():
+		child.queue_free()
+
+
+func _make_portrait_style() -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	style.bg_color = COLOR_PANEL_SOFT
+	style.border_color = COLOR_BORDER_STRONG
+	style.set_border_width_all(1)
+	style.set_corner_radius_all(32)
+	return style
+
+
+func _make_chip(caption: String, value: String, color: Color) -> PanelContainer:
+	var chip := PanelContainer.new()
+	chip.add_theme_stylebox_override("panel", _make_chip_style())
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 6)
+	chip.add_child(row)
+	row.add_child(_make_label(caption, 11, COLOR_MUTED))
+	row.add_child(_make_label(value, 12, color))
+	return chip
+
+
+func _make_chip_style() -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	style.bg_color = COLOR_PANEL_RAISED
+	style.border_color = COLOR_BORDER
+	style.set_border_width_all(1)
+	style.set_corner_radius_all(12)
+	style.content_margin_left = 10
+	style.content_margin_right = 10
+	style.content_margin_top = 4
+	style.content_margin_bottom = 4
+	return style
+
+
+func _render_chips(location: Dictionary) -> void:
+	_clear_row(_chips_row)
+	var danger := str(location.get("danger", "Unknown"))
+	_chips_row.add_child(_make_chip("DANGER", danger, Color(_danger_color(danger))))
+	var qi_label := str(location.get("qi_density_label", location.get("qi_density", "?")))
+	_chips_row.add_child(_make_chip("QI", qi_label, COLOR_QI))
+	var resources: Array = location.get("resources", [])
+	_chips_row.add_child(_make_chip("RESOURCES", _join_array(resources) if not resources.is_empty() else "None", COLOR_ANTIQUE_GOLD))
+
+
+func _render_exits(location: Dictionary) -> void:
+	_clear_row(_exits_row)
+	var connections: Array = location.get("connections", [])
+	if connections.is_empty():
+		return
+	_exits_row.add_child(_make_label("Exits", 12, COLOR_MUTED))
+	for conn in connections:
+		if typeof(conn) != TYPE_DICTIONARY:
+			continue
+		var exit_id := str(conn.get("id", ""))
+		var exit_name := str(conn.get("name", exit_id))
+		if exit_id == "":
+			continue
+		_exits_row.add_child(_make_button(exit_name, func(): api.travel(exit_id), "Travel to %s." % exit_name))
 
 
 func _make_bar_group(caption: String, color: Color, background_color: Color) -> Dictionary:
@@ -1088,9 +1313,6 @@ func _refresh_state(state: Dictionary) -> void:
 	if player.is_empty():
 		return
 	_destinations = state.get("destinations", [])
-	var time_info: Dictionary = state.get("time", {})
-	_day = int(player.get("current_day", time_info.get("day", _day)))
-	_period = str(time_info.get("period", _period))
 
 	_render_top_bar(player)
 	_render_character(player)
@@ -1122,7 +1344,8 @@ func _render_top_bar(player: Dictionary) -> void:
 	_qi_bar.value = qi
 	_qi_text.text = "Qi %d/%d" % [qi, mqi]
 	var lifespan: Dictionary = player.get("lifespan", {})
-	_day_label.text = "Year %d" % int(lifespan.get("year", 0))
+	_year = int(lifespan.get("year", 0))
+	_year_label.text = str(_year)
 
 
 func _render_character(player: Dictionary) -> void:
@@ -1138,9 +1361,16 @@ func _render_character(player: Dictionary) -> void:
 	var essence_progress := float(essence.get("progress", player.get("essence_progress", 0.0)))
 	var essence_required := float(essence.get("required_progress", 100.0))
 	var essence_percent := float(essence.get("progress_percent", essence_progress))
+	var player_name := str(player.get("name", "Daoist"))
+	_char_name_label.text = player_name
+	_char_path_label.text = "Path: %s" % player.get("path", "Unassigned")
+	_char_realm_label.text = "Realm: %s" % body.get("display_name", player.get("realm", "-"))
+	if player_name.length() > 0:
+		_portrait_initial.text = player_name.substr(0, 1).to_upper()
+	else:
+		_portrait_initial.text = "?"
 	var lines := ""
-	lines += "[color=#C7BCA8]Name:[/color] [b]%s[/b]\n" % player.get("name", "Unknown")
-	lines += "[color=#C7BCA8]Path:[/color] [b]%s[/b]\n\n" % player.get("path", "Unassigned")
+	lines += "[color=#D6A64A]VITALS[/color]\n"
 	lines += "[color=#C7BCA8]Martial Talent:[/color] [color=#C77DFF]%s[/color]\n" % martial_talent.get("display_name", "Unknown")
 	lines += "[color=#C7BCA8]Body Talent:[/color] [color=#79C85A]%s[/color]\n" % body_talent.get("display_name", "Unknown")
 	lines += "[color=#C7BCA8]Lifespan:[/color] [color=#D6A64A]%s[/color]\n\n" % lifespan.get("display", "Unknown")
@@ -1174,6 +1404,8 @@ func _render_location(location: Dictionary) -> void:
 		_artwork_texture.visible = false
 		_artwork_label.text = ""
 		_set_rich_text(_location_text, "")
+		_clear_row(_chips_row)
+		_clear_row(_exits_row)
 		return
 	var loc_name := str(location.get("name", location.get("display_name", "Unknown")))
 	_location_title.text = loc_name.to_upper()
@@ -1186,18 +1418,9 @@ func _render_location(location: Dictionary) -> void:
 		_artwork_texture.texture = null
 		_artwork_texture.visible = false
 		_artwork_label.text = loc_name
-	var resources := _join_array(location.get("resources", []))
-	var exits: Array = []
-	for exit_info in location.get("connections", []):
-		exits.append(str(exit_info.get("name", exit_info.get("id", ""))))
-	var danger := str(location.get("danger", "Unknown"))
-	var lines := ""
-	lines += "%s\n\n" % location.get("description", "")
-	lines += "[color=#C7BCA8]Danger:[/color] [color=%s][b]%s[/b][/color]    " % [_danger_color(danger), danger]
-	lines += "[color=#C7BCA8]Qi Density:[/color] [color=#3B9FE8]%s[/color]    " % location.get("qi_density", "?")
-	lines += "[color=#C7BCA8]Resources:[/color] [color=#D6A64A]%s[/color]\n" % (resources if resources != "" else "None")
-	lines += "[color=#C7BCA8]Exits:[/color] [color=#51BDED]%s[/color]" % (_join_array(exits) if exits.size() > 0 else "None")
-	_set_rich_text(_location_text, lines)
+	_set_rich_text(_location_text, str(location.get("description", "")))
+	_render_chips(location)
+	_render_exits(location)
 
 
 func _load_texture(path: String) -> Texture2D:
@@ -1347,7 +1570,7 @@ func _render_techniques(player: Dictionary) -> void:
 
 func _set_combat_mode(active: bool) -> void:
 	_combat_actions.visible = active
-	_action_grid.visible = not active
+	_action_box.visible = not active
 	_combat_panel.visible = active
 
 
@@ -1485,8 +1708,7 @@ func _render_breakthrough(result: Dictionary) -> void:
 
 
 func _render_character_encounter(result: Dictionary) -> void:
-	for child in _action_grid.get_children():
-		child.queue_free()
+	_clear_action_grids()
 	var characters: Array = result.get("characters", [])
 	var text := str(result.get("player_message", "You encounter familiar cultivators nearby."))
 	var names: Array = []
@@ -1500,8 +1722,8 @@ func _render_character_encounter(result: Dictionary) -> void:
 			var action_name := str(option.get("action", ""))
 			var character_id := str(option.get("character_id", character.get("id", "")))
 			var label := "%s %s" % [option.get("label", "Act"), character.get("name", character_id)]
-			_action_grid.add_child(_make_action_card(label, str(character.get("relationship_tier", "")), func(): api.send_action({"action": action_name, "character_id": character_id})))
-	_action_grid.add_child(_make_action_card("Continue", "Return to normal actions", func(): _render_actions(_last_state.get("player", {}))))
+			_cultivation_grid.add_child(_make_action_card(label, str(character.get("relationship_tier", "")), func(): api.send_action({"action": action_name, "character_id": character_id})))
+	_cultivation_grid.add_child(_make_action_card("Continue", "Return to normal actions", func(): _render_actions(_last_state.get("player", {}))))
 	if names.size() > 0:
 		text += "\n\n" + _join_array(names)
 	_set_situation("Encounter", text)
@@ -1722,4 +1944,4 @@ func _append(text: String) -> void:
 	if text.begins_with("  "):
 		_log.append_text(text + "\n")
 	else:
-		_log.append_text("[color=#8F8A81][%s][/color] %s\n" % [_period, text])
+		_log.append_text("[color=#8F8A81][Year %d][/color] %s\n" % [_year, text])

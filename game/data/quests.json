@@ -7,7 +7,7 @@
     "objectives": [
       { "type": "defeat", "target": "any", "count": 3, "text": "Defeat 3 foes" }
     ],
-    "rewards": { "exp": 40, "gold": 20, "items": { "healing_pill": 2 } }
+    "rewards": { "exp": 40, "gold": 20, "reputation": 5, "items": { "healing_pill": 2 } }
   },
   {
     "id": "a_steady_foundation",
@@ -17,7 +17,7 @@
     "objectives": [
       { "type": "breakthrough", "target": "any", "count": 1, "text": "Achieve 1 breakthrough" }
     ],
-    "rewards": { "exp": 60, "gold": 0, "items": { "spirit_stone": 1 } }
+    "rewards": { "exp": 60, "gold": 0, "reputation": 10, "items": { "spirit_stone": 1 } }
   },
   {
     "id": "wanderers_path",
@@ -27,6 +27,76 @@
     "objectives": [
       { "type": "visit_location", "target": "misty_gorge", "count": 1, "text": "Reach the Misty Gorge" }
     ],
-    "rewards": { "exp": 30, "gold": 10, "items": {} }
+    "rewards": { "exp": 30, "gold": 10, "reputation": 8, "items": {} }
+  },
+  {
+    "id": "azure_stream_guardian",
+    "title": "Guardian of Azure Stream",
+    "description": "The village elders ask you to cull the beasts threatening their homes.",
+    "auto_start": false,
+    "requires": { "completed": ["trial_of_the_forest"] },
+    "objectives": [
+      { "type": "defeat", "target": "any", "count": 5, "text": "Defeat 5 foes" }
+    ],
+    "rewards": { "exp": 50, "gold": 30, "reputation": 10, "items": { "healing_pill": 2 } }
+  },
+  {
+    "id": "azure_stream_paragon",
+    "title": "Paragon of Azure Stream",
+    "description": "Hunt down the rogue cultivator preying on the village roads.",
+    "auto_start": false,
+    "requires": { "completed": ["azure_stream_guardian"] },
+    "objectives": [
+      { "type": "defeat", "target": "rogue_cultivator", "count": 1, "text": "Defeat a rogue cultivator" }
+    ],
+    "rewards": { "exp": 80, "gold": 20, "reputation": 20, "skills": ["windless_roar"] }
+  },
+  {
+    "id": "sky_fortune_scion",
+    "title": "Scion of Sky Fortune",
+    "description": "The capital watches rising talents. Break through twice more to earn its notice.",
+    "auto_start": false,
+    "requires": { "completed": ["a_steady_foundation"], "min_reputation": 15 },
+    "objectives": [
+      { "type": "breakthrough", "target": "any", "count": 2, "text": "Achieve 2 breakthroughs" }
+    ],
+    "rewards": { "exp": 90, "gold": 40, "reputation": 15, "manuals": { "spirit_palm_manual": 1 } }
+  },
+  {
+    "id": "sky_fortune_champion",
+    "title": "Champion of Sky Fortune",
+    "description": "Prove your standing by besting the capital's challengers in open combat.",
+    "auto_start": false,
+    "requires": { "completed": ["sky_fortune_scion"] },
+    "objectives": [
+      { "type": "defeat", "target": "any", "count": 3, "text": "Defeat 3 foes" }
+    ],
+    "rewards": { "exp": 120, "gold": 50, "reputation": 25, "skills": ["nine_yang_guard"] }
+  },
+  {
+    "id": "dao_heart_awakening",
+    "title": "Dao Heart Awakening",
+    "description": "With a name made, turn inward and temper the heart of the Dao.",
+    "auto_start": false,
+    "requires": { "completed": ["sky_fortune_champion"], "min_reputation": 30 },
+    "objectives": [
+      { "type": "breakthrough", "target": "any", "count": 1, "text": "Achieve 1 breakthrough" }
+    ],
+    "rewards": { "exp": 150, "gold": 60, "reputation": 30, "skills": ["thunderclap_chant"] }
+  },
+  {
+    "id": "transcendent_horizon",
+    "title": "Transcendent Horizon",
+    "description": "Only in the Nine Furnace Kingdom, with a legend behind you, may you fell its fire golem.",
+    "auto_start": false,
+    "requires": {
+      "completed": ["dao_heart_awakening"],
+      "min_reputation": 60,
+      "location": "nine_furnace_kingdom"
+    },
+    "objectives": [
+      { "type": "defeat", "target": "nine_furnace_fire_golem", "count": 1, "text": "Defeat a Nine Furnace fire golem" }
+    ],
+    "rewards": { "exp": 300, "gold": 100, "reputation": 50, "manuals": { "great_sun_domain_manual": 1 } }
   }
 ]

@@ -123,11 +123,33 @@
       "enemy_id": "duanmu_qun_duel",
       "quest_ids": [],
       "teaches_skills": [],
-      "relationship_rewards": []
+      "relationship_rewards": [],
+      "spar_min_tier": "neutral",
+      "duel_min_tier": "friendly"
     },
     "intro_text": "A noble prodigy who seeks worthy foes and despises every dishonorable shortcut.",
     "repeat_text": "Duanmu Qun bows precisely, ready to test himself against you once more.",
-    "ai_prompt_notes": "Speak as a noble, fair-minded genius rival. Formal and honourable, hungry for worthy battle."
+    "ai_prompt_notes": "Speak as a noble, fair-minded genius rival. Formal and honourable, hungry for worthy battle.",
+    "dialogue": {
+      "choices": [
+        {
+          "id": "salute_honor",
+          "text": "Salute his honour and ask to test yourself fairly.",
+          "response": "Duanmu Qun returns the salute crisply, his wariness easing into genuine respect.",
+          "relationship_delta": { "relationship_score": 40, "respect": 25, "trust": 10 },
+          "morality_delta": 15,
+          "reputation_delta": 10
+        },
+        {
+          "id": "mock_honor",
+          "text": "Dismiss his code of honour as empty posturing.",
+          "response": "Duanmu Qun's eyes harden; he marks you as another boastful rival.",
+          "relationship_delta": { "relationship_score": -30, "respect": -15, "resentment": 20 },
+          "morality_delta": -15,
+          "reputation_delta": -5
+        }
+      ]
+    }
   },
   {
     "id": "li_yifeng",

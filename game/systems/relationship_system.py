@@ -68,6 +68,18 @@ class RelationshipSystem:
                 return str(tier["id"])
         return str(self._tiers[0]["id"]) if self._tiers else "neutral"
 
+    def meets_min_tier(self, tier_id: str, minimum: str) -> bool:
+        """Return ``True`` when ``tier_id`` is at least ``minimum`` in tier order.
+
+        Tier order is the configured ``tiers`` list order (hostile -> neutral ->
+        friendly -> trusted). An unknown ``minimum`` does not gate (fail-open) so
+        bad/legacy data never blocks an interaction.
+        """
+        order = [str(tier["id"]) for tier in self._tiers]
+        if str(minimum) not in order:
+            return True
+        return order.index(str(tier_id)) >= order.index(str(minimum))
+
     def adjust(self, store: Dict[str, Any], npc_id: str, changes: Dict[str, int]) -> Dict[str, Any]:
         """Apply clamped deltas to one NPC's emotional variables."""
         state = self.ensure(store, npc_id)

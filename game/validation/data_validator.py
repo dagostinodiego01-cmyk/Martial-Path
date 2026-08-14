@@ -31,14 +31,17 @@ def validate_all_game_data(registry: Optional[GameDataRegistry] = None) -> Valid
     _validate_locations(registry, result)
     _validate_encounter_pools(registry, result)
     _validate_cultivation_schema(registry, result)
+    _validate_defeat_penalty(registry, result)
     _validate_realm_lifespans(registry, result)
     _validate_talent_tracks(registry, result)
     _validate_talent_ladder(registry, result)
     _validate_equipment_data(registry, result)
     _validate_shop_data(registry, result)
     _validate_trainers(registry, result)
+    _validate_sects(registry, result)
     _validate_technique_manuals(registry, result)
     _validate_find_config(registry, result)
+    _validate_quests(registry, result)
 
     return result
 
@@ -75,7 +78,7 @@ def _validate_unique_ids(registry: GameDataRegistry, result: ValidationResult) -
 
 # -- item references -----------------------------------------------------
 def _validate_item_references(registry: GameDataRegistry, result: ValidationResult) -> None:
-    item_ids = _id_set(registry.items) | _id_set(registry.equipment)
+    item_ids = _id_set(registry.items) | _id_set(registry.equipment) | registry.manual_item_ids()
 
     for enemy in registry.enemies:
         _check_loot(enemy, item_ids, "enemy_loot", result)
@@ -226,7 +229,7 @@ def _validate_encounter_pools(registry: GameDataRegistry, result: ValidationResu
         return
     location_ids = _id_set(registry.locations)
     enemy_ids = _id_set(registry.enemies)
-    item_ids = _id_set(registry.items) | _id_set(registry.equipment)
+    item_ids = _id_set(registry.items) | _id_set(registry.equipment) | registry.manual_item_ids()
     special_ids = {special.get("id") for special in registry.events.get("special_events", [])}
 
     for location_id, pool in registry.encounter_pools.items():
@@ -324,6 +327,16 @@ def _validate_essence_progression_config(config: Dict[str, Any], result: Validat
 
 
 # -- talent tracks ------------------------------------------------------
+def _validate_defeat_penalty(registry: GameDataRegistry, result: ValidationResult) -> None:
+    config = registry.cultivation_config.get("defeat_penalty", {})
+    if not config:
+        return
+    for field in ("progress_loss_ratio", "revive_hp_ratio", "revive_qi_ratio"):
+        value = config.get(field)
+        if not isinstance(value, (int, float)) or isinstance(value, bool) or not 0 <= value <= 1:
+            result.add("bad_cultivation_config", f"defeat_penalty.{field} must be between 0 and 1")
+
+
 def _validate_realm_lifespans(registry: GameDataRegistry, result: ValidationResult) -> None:
     for realm in registry.essence_realms.get("realms", []):
         if "max_lifespan_years" not in realm:
@@ -505,7 +518,7 @@ def _validate_equipment_data(registry: GameDataRegistry, result: ValidationResul
 # -- shops ---------------------------------------------------------------
 def _validate_shop_data(registry: GameDataRegistry, result: ValidationResult) -> None:
     location_ids = _id_set(registry.locations)
-    item_ids = _id_set(registry.items) | _id_set(registry.equipment)
+    item_ids = _id_set(registry.items) | _id_set(registry.equipment) | registry.manual_item_ids()
     supported_currencies = {"gold", "spirit_stone"}
     seen: Set[str] = set()
     for shop in registry.shops:
@@ -555,6 +568,7 @@ def _validate_shop_data(registry: GameDataRegistry, result: ValidationResult) ->
 def _validate_trainers(registry: GameDataRegistry, result: ValidationResult) -> None:
     location_ids = _id_set(registry.locations)
     skill_ids = _id_set(registry.skills)
+    sect_paths = {sect.get("path") for sect in registry.sects if sect.get("path")}
     supported_currencies = {"gold", "spirit_stone"}
     seen: Set[str] = set()
     for trainer in registry.trainers:
@@ -596,6 +610,51 @@ def _validate_trainers(registry: GameDataRegistry, result: ValidationResult) -> 
                         result.add("bad_trainer", f"trainer '{trainer_id}' skill '{skill_id}' has unsupported currency '{currency}'")
                     if not isinstance(amount, int) or isinstance(amount, bool) or amount <= 0:
                         result.add("bad_trainer", f"trainer '{trainer_id}' skill '{skill_id}' price.{currency} must be a positive integer")
+            required_path = entry.get("required_path") if isinstance(entry, dict) else None
+            if required_path and required_path not in sect_paths:
+                result.add("bad_trainer", f"trainer '{trainer_id}' skill '{skill_id}' required_path '{required_path}' is not a known sect path")
+
+
+def _validate_sects(registry: GameDataRegistry, result: ValidationResult) -> None:
+    location_ids = _id_set(registry.locations)
+    body_ids = {realm.get("id") for realm in registry.body_realms.get("realms", [])}
+    seen: Set[str] = set()
+    seen_paths: Set[str] = set()
+    for sect in registry.sects:
+        sect_id = sect.get("id")
+        if not isinstance(sect_id, str) or not re.fullmatch(r"[a-z][a-z0-9_]*", sect_id):
+            result.add("bad_sect", f"sect id '{sect_id}' must be stable snake_case")
+            continue
+        if sect_id in seen:
+            result.add("duplicate_id", f"sect: duplicate id '{sect_id}'")
+        seen.add(sect_id)
+        if not isinstance(sect.get("display_name"), str) or not sect.get("display_name"):
+            result.add("bad_sect", f"sect '{sect_id}' display_name is required")
+        path = sect.get("path")
+        if not isinstance(path, str) or not path:
+            result.add("bad_sect", f"sect '{sect_id}' path is required")
+        elif path in seen_paths:
+            result.add("bad_sect", f"sect '{sect_id}' path '{path}' duplicates another sect's path")
+        if isinstance(path, str):
+            seen_paths.add(path)
+        locations = sect.get("location_ids")
+        if not isinstance(locations, list) or not locations:
+            result.add("bad_sect", f"sect '{sect_id}' location_ids must be a non-empty list")
+        else:
+            for location_id in locations:
+                if location_id not in location_ids:
+                    result.add("bad_sect", f"sect '{sect_id}' references missing location '{location_id}'")
+        requirements = sect.get("join_requirements", {}) or {}
+        min_realm = requirements.get("min_body_realm")
+        if min_realm is not None and min_realm not in body_ids:
+            result.add("bad_sect", f"sect '{sect_id}' min_body_realm '{min_realm}' is not a known body realm")
+        for field in ("min_reputation", "max_reputation"):
+            value = requirements.get(field)
+            if value is not None and (not isinstance(value, int) or isinstance(value, bool)):
+                result.add("bad_sect", f"sect '{sect_id}' {field} must be an integer")
+        ranks = sect.get("contribution_ranks")
+        if not isinstance(ranks, list) or not ranks or not all(isinstance(rank, str) and rank for rank in ranks):
+            result.add("bad_sect", f"sect '{sect_id}' contribution_ranks must be a non-empty list of names")
 
 
 def _validate_technique_manuals(registry: GameDataRegistry, result: ValidationResult) -> None:
@@ -606,6 +665,30 @@ def _validate_technique_manuals(registry: GameDataRegistry, result: ValidationRe
             result.add("bad_manual", "technique manual override is missing 'skill_id'")
         elif skill_id not in skill_ids:
             result.add("bad_manual", f"technique manual override references missing skill '{skill_id}'")
+
+
+def _validate_quests(registry: GameDataRegistry, result: ValidationResult) -> None:
+    quest_ids = _id_set(registry.quests)
+    skill_ids = _id_set(registry.skills)
+    manual_ids = registry.manual_item_ids()
+    location_ids = _id_set(registry.locations)
+    for quest in registry.quests:
+        quest_id = quest.get("id")
+        requires = quest.get("requires", {}) or {}
+        for completed_id in requires.get("completed", []):
+            if completed_id not in quest_ids:
+                result.add("bad_quest_ref", f"quest '{quest_id}' requires missing quest '{completed_id}'")
+            elif completed_id == quest_id:
+                result.add("bad_quest_ref", f"quest '{quest_id}' cannot require itself")
+        location = requires.get("location")
+        if location and location not in location_ids:
+            result.add("bad_quest_ref", f"quest '{quest_id}' requires missing location '{location}'")
+        for skill_id in quest.get("rewards", {}).get("skills", []):
+            if skill_id not in skill_ids:
+                result.add("bad_quest_ref", f"quest '{quest_id}' rewards missing skill '{skill_id}'")
+        for manual_id in quest.get("rewards", {}).get("manuals", {}):
+            if manual_id not in manual_ids:
+                result.add("bad_quest_ref", f"quest '{quest_id}' rewards missing manual '{manual_id}'")
 
 
 def _validate_find_config(registry: GameDataRegistry, result: ValidationResult) -> None:

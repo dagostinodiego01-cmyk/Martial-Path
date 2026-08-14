@@ -14,7 +14,7 @@ isolation.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Set
 
 from game.utils.data_loader import load_collection, load_json
 
@@ -49,6 +49,7 @@ class GameDataRegistry:
     talents: Dict[str, Any] = field(default_factory=dict)
     technique_manuals: List[Dict[str, Any]] = field(default_factory=list)
     trainers: List[Dict[str, Any]] = field(default_factory=list)
+    sects: List[Dict[str, Any]] = field(default_factory=list)
 
     @classmethod
     def load(cls) -> "GameDataRegistry":
@@ -75,6 +76,7 @@ class GameDataRegistry:
             talents=load_json("cultivation/talents.json"),
             technique_manuals=_load_optional_collection("technique_manuals"),
             trainers=_load_optional_collection("trainers"),
+            sects=_load_optional_collection("sects"),
         )
 
     # -- id-indexed views (built on demand) ------------------------------
@@ -111,8 +113,30 @@ class GameDataRegistry:
     def technique_manuals_by_id(self) -> Dict[str, Dict[str, Any]]:
         return _by_id(self.technique_manuals)
 
+    def manual_item_ids(self) -> Set[str]:
+        """Return the ids of every auto-generated technique-manual item.
+
+        One manual is synthesised per skill (id ``"<skill_id>_manual"`` unless a
+        ``technique_manuals.json`` override supplies a custom id). These ids are
+        valid item references in shops/loot/pools even though they are not part
+        of ``items.json`` -- the engine builds them at runtime from the skills
+        and manual-override collections.
+        """
+        overrides = {entry["skill_id"]: entry for entry in self.technique_manuals if entry.get("skill_id")}
+        ids: Set[str] = set()
+        for skill in self.skills:
+            skill_id = skill.get("id")
+            if not skill_id:
+                continue
+            override = overrides.get(skill_id, {})
+            ids.add(str(override.get("id", f"{skill_id}_manual")))
+        return ids
+
     def trainers_by_id(self) -> Dict[str, Dict[str, Any]]:
         return _by_id(self.trainers)
+
+    def sects_by_id(self) -> Dict[str, Dict[str, Any]]:
+        return _by_id(self.sects)
 
     def talents_by_id(self) -> Dict[str, Dict[str, Any]]:
         return {entry["id"]: entry for entry in self.talents.get("tiers", []) if "id" in entry}

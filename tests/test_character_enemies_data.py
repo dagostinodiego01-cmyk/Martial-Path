@@ -1,4 +1,5 @@
 """Integrity tests for the named-character combat entries (data/character_enemies/)."""
+from game.data.registry import GameDataRegistry
 from game.utils.data_loader import load_collection, load_json
 
 
@@ -29,6 +30,7 @@ def test_character_enemy_character_ids_exist():
 
 def test_character_enemy_loot_references_existing_items():
     items = {item["id"] for item in load_json("items.json")}
+    items |= GameDataRegistry.load().manual_item_ids()
     for enemy in load_collection("character_enemies"):
         for drop in enemy.get("loot_table", []):
             assert drop["item_id"] in items

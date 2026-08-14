@@ -69,6 +69,16 @@ class TrainerSystem:
         if self._skill_system.knows(player, skill_id):
             return {"event": EventType.ERROR, "reason": "SKILL_ALREADY_KNOWN", "skill_id": skill_id, "name": self._skills[skill_id].name}
 
+        required_path = entry.get("required_path")
+        if required_path and player.path != required_path:
+            return {
+                "event": EventType.ERROR,
+                "reason": "PATH_LOCKED",
+                "skill_id": skill_id,
+                "required_path": required_path,
+                "path": player.path,
+            }
+
         price = currency.normalise_price(entry.get("price"))
         missing = currency.shortage(player, price)
         if missing:
@@ -115,12 +125,14 @@ class TrainerSystem:
         skill_id = str(entry.get("skill_id", ""))
         skill = self._skills.get(skill_id)
         price = currency.normalise_price(entry.get("price"))
+        required_path = entry.get("required_path")
         return {
             "skill_id": skill_id,
             "name": skill.name if skill else skill_id,
             "type": skill.type if skill else "unknown",
             "description": skill.description if skill else "",
             "price": price,
+            "required_path": required_path,
             "already_known": self._skill_system.knows(player, skill_id),
             "affordable": not currency.shortage(player, price),
         }

@@ -5,7 +5,9 @@ so?". Both technique manuals (consumable items) and location trainers route thei
 learn requests through here, so the dedup/validation rules live in one place.
 
 The system holds no session state; it validates against the skill catalog and
-mutates only the player's known-skill list. It returns structured results only.
+mutates only the player's known-skill list plus the one-time effects of learned
+passives (``comprehension_gain`` -> +comprehension, ``lifespan`` -> +lifespan
+bonus years). It returns structured results only.
 """
 from __future__ import annotations
 
@@ -49,6 +51,7 @@ class SkillSystem:
             return {"event": EventType.ERROR, "reason": "SKILL_ALREADY_KNOWN", "skill_id": skill_id, "name": skill.name}
 
         player.skills.append(skill_id)
+        self._apply_passive_on_learn(player, skill)
         return SkillLearnedResult(
             skill_id=skill_id,
             name=skill.name,
@@ -57,3 +60,18 @@ class SkillSystem:
             price=price,
             wallet=wallet,
         ).to_dict()
+
+    def _apply_passive_on_learn(self, player: Player, skill: Skill) -> None:
+        """Apply a newly learned passive's one-time effect to the player.
+
+        Active skills and always-on stat passives are handled elsewhere
+        (CombatSystem/StatsSystem); only passives with a permanent, learn-time
+        effect on non-combat state are resolved here. Skills are never removed,
+        so a one-time apply and an always-on computation are equivalent.
+        """
+        if skill.is_active():
+            return
+        if skill.effect == "comprehension_gain":
+            player.comprehension += int(skill.scaling)
+        elif skill.effect == "lifespan":
+            player.lifespan_bonus_years += int(skill.scaling)

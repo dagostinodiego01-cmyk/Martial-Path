@@ -14,7 +14,7 @@ adopts typed results for a new outcome.
 from __future__ import annotations
 
 from dataclasses import dataclass, fields
-from typing import Any, ClassVar, Dict, Optional
+from typing import Any, ClassVar, Dict, List, Optional
 
 from game.core.constants import EventType
 
@@ -175,6 +175,22 @@ class CharacterInteractionResult(Result):
     name: str
     dialogue_context: Dict[str, Any]
     player_message: str
+    choices: Optional[List[Dict[str, Any]]] = None
+
+
+@dataclass(frozen=True)
+class DialogueChoiceResult(Result):
+    """Outcome of choosing a dialogue option: the social deltas applied."""
+
+    EVENT: ClassVar[str] = EventType.DIALOGUE_CHOICE
+    character_id: str
+    choice_id: str
+    name: str
+    player_message: str
+    morality: Dict[str, Any]
+    reputation: int
+    reputation_delta: int
+    relationship: Optional[Dict[str, Any]] = None
 
 
 @dataclass(frozen=True)

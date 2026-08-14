@@ -82,3 +82,19 @@ def test_shop_and_buy_commands():
         "item_id": "qi_pill",
         "quantity": 3,
     }
+
+
+def test_sell_command():
+    router = CommandRouter()
+
+    assert router.route("sell training sword") == {
+        "action": Action.SELL_ITEM,
+        "raw": "sell training sword",
+        "item_id": "training_sword",
+    }
+    assert router.route("sell qi pill 3") == {
+        "action": Action.SELL_ITEM,
+        "raw": "sell qi pill 3",
+        "item_id": "qi_pill",
+        "quantity": 3,
+    }

@@ -31,11 +31,13 @@ class CultivationSystem:
         rng: RNG,
         spiritual_roots: Optional[List[Dict[str, Any]]] = None,
         physiques: Optional[List[Dict[str, Any]]] = None,
+        skills: Optional[Dict[str, Any]] = None,
     ) -> None:
         self._body_data = body_data
         self._essence_data = essence_data
         self._config = config
         self._rng = rng
+        self._skills = skills or {}
         self._body_realms = sorted(body_data.get("realms", []), key=lambda realm: int(realm.get("order", 0)))
         self._essence_realms = sorted(essence_data.get("realms", []), key=lambda realm: int(realm.get("order", 0)))
         self._body_by_id = {realm["id"]: realm for realm in self._body_realms}
@@ -67,7 +69,11 @@ class CultivationSystem:
         essence_support_modifier = self.calculate_essence_support_for_body(player)
         variance = self._rng.randint(0, 3)
         equipment_modifiers = self._equipment_modifiers(player).get("cultivation_modifiers", {})
-        base_gain = float(method.get("base_gain", 8.0)) * self._physique_float(player, "body_cultivation_multiplier", 1.0)
+        base_gain = (
+            float(method.get("base_gain", 8.0))
+            * self._physique_float(player, "body_cultivation_multiplier", 1.0)
+            * self._cultivation_speed_multiplier(player)
+        )
         flat_bonus = float(equipment_modifiers.get("body_cultivation_flat_bonus", 0.0))
         gain = (base_gain * daily_multiplier) + foundation_modifier + essence_support_modifier + variance
         gain += flat_bonus
@@ -122,7 +128,11 @@ class CultivationSystem:
         density_bonus = state.true_essence_density / 100.0
         variance = self._rng.randint(0, 3)
         equipment_modifiers = self._equipment_modifiers(player).get("cultivation_modifiers", {})
-        base_gain = float(method.get("base_gain", 8.0)) * self._spiritual_root_float(player, "essence_cultivation_multiplier", 1.0)
+        base_gain = (
+            float(method.get("base_gain", 8.0))
+            * self._spiritual_root_float(player, "essence_cultivation_multiplier", 1.0)
+            * self._cultivation_speed_multiplier(player)
+        )
         gain = base_gain + comprehension_modifier + body_stability_modifier + density_bonus + variance
         gain += float(equipment_modifiers.get("essence_cultivation_flat_bonus", 0.0))
         state.progress = min(required_progress, state.progress + gain)
@@ -924,6 +934,15 @@ class CultivationSystem:
     def _physique_float(self, player: Player, key: str, default: float) -> float:
         trait = self._physiques_by_id.get(player.body_talent_id) or self._physiques_by_id.get("iron_skin_grade") or {}
         return float(trait.get(key, default))
+
+    def _cultivation_speed_multiplier(self, player: Player) -> float:
+        """Product of learned ``cultivation_speed`` passive scalings (1.0 if none)."""
+        multiplier = 1.0
+        for skill_id in getattr(player, "skills", []):
+            skill = self._skills.get(skill_id)
+            if skill is not None and not skill.is_active() and skill.effect == "cultivation_speed":
+                multiplier *= skill.scaling
+        return multiplier
 
     def _scaled_body_gain(self, value: Any, multiplier: float, divisor: int) -> int:
         return max(0, int(round(float(value) * multiplier)) // divisor)

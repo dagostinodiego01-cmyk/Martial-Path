@@ -22,6 +22,7 @@ from game.core.constants import (
 from game.core.results import (
     CharacterEncounterResult,
     CharacterInteractionResult,
+    DialogueChoiceResult,
     HelpResult,
     MeditateResult,
     PlayerDiedResult,
@@ -52,6 +53,8 @@ from game.systems.loot_system import LootSystem
 from game.systems.morality_system import MoralitySystem
 from game.systems.quest_system import QuestSystem
 from game.systems.relationship_system import RelationshipSystem
+from game.systems.sect_system import SectSystem
+from game.systems.sell_system import SellSystem
 from game.systems.shop_system import ShopSystem
 from game.systems.skill_system import SkillSystem
 from game.systems.starting_fate_system import StartingFateSystem
@@ -93,12 +96,14 @@ class GameEngine:
         character_enemies: Optional[List[Dict[str, Any]]] = None,
         talents: Optional[Dict[str, Any]] = None,
         trainers: Optional[List[Dict[str, Any]]] = None,
+        sects: Optional[List[Dict[str, Any]]] = None,
     ) -> None:
         self._log = get_logger("engine")
         self.player = player
         self._rng = rng
         self._items = items
         self._skills = skills
+        self._cultivation_config = cultivation_config or {}
         self._enemy_templates = {template["id"]: template for template in enemy_templates}
         self._character_enemy_templates = {template["id"]: template for template in character_enemies or []}
         self._body_realm_names = {
@@ -111,17 +116,19 @@ class GameEngine:
         }
 
         # Gameplay systems (pure logic).
-        self.cultivation = CultivationSystem(body_realms, essence_realms, cultivation_config, rng, martial_talents, body_talents)
+        self.cultivation = CultivationSystem(body_realms, essence_realms, cultivation_config, rng, martial_talents, body_talents, skills)
         self.cultivation_service = CultivationService({"player": player}, self.cultivation)
         self.lifespan = LifespanSystem(essence_realms, cultivation_config)
         self.stats = StatsSystem(skills)
         self.combat = CombatSystem(rng, self.stats)
         self.effects = EffectSystem()
         self.inventory = InventorySystem(items, self.effects)
+        self.sell = SellSystem(items)
         self.equipment = EquipmentSystem(equipment or [], body_realms, essence_realms)
         self.shops = ShopSystem(shops or [], items)
         self.techniques = SkillSystem(skills)
         self.trainers = TrainerSystem(trainers or [], skills, self.techniques)
+        self.sects = SectSystem(sects or [], body_realms)
         self.loot = LootSystem(self.inventory, rng)
         # Rarity-weighted exploration finds over the whole item/equipment catalog
         # (technique manuals are excluded; skills are learned, not stumbled upon).
@@ -154,13 +161,14 @@ class GameEngine:
         self.character_service = CharacterService(
             characters or [], self.locations, self.morality, self.relationships
         )
-        self.quests = QuestSystem(quests or [])
+        self.quests = QuestSystem(quests or [], self.techniques)
         self.saves = SaveService()
 
         # Mutable session state.
         self._mode = MODE_EXPLORE
         self._current_enemy: Optional[Enemy] = None
         self._cooldowns: Dict[str, int] = {}
+        self._combat_is_spar = False
         self._running = True
         self._fate_accepted = bool(player.martial_talent_id and player.body_talent_id)
         self._pending_fate: Optional[Dict[str, Any]] = None
@@ -217,6 +225,7 @@ class GameEngine:
             registry.character_enemies,
             registry.talents,
             registry.trainers,
+            registry.sects,
         )
         engine._assign_new_game_fate()
         return engine
@@ -285,6 +294,7 @@ class GameEngine:
             "inventory_items": self.inventory.list_inventory(self.player)["items"],
             "shops": self.shops.shops_for_location(self.player.current_location),
             "trainers": self.trainers.trainers_for_location(self.player.current_location),
+            "sects": self.sects.sects_for_location(self.player.current_location),
             "location": self.locations.view(self.player.current_location),
             "destinations": self.travel.get_available_destinations(self.player),
             "location_characters": self.character_service.get_available_characters(
@@ -345,6 +355,7 @@ class GameEngine:
             Action.TRAIN_BODY: lambda action: self._advance_time_after(self.cultivation_service.train_body("player", action.get("method_id", "train_body")), "train_body"),
             Action.TRAIN_ESSENCE: lambda action: self._advance_time_after(self.cultivation_service.train_essence("player", action.get("method_id", "gather_essence")), "train_essence"),
             Action.TALK_TO_CHARACTER: lambda action: self._talk_to_character(action.get("character_id", "")),
+            Action.DIALOGUE_CHOOSE: lambda action: self._dialogue_choose(action),
             Action.SPAR_CHARACTER: lambda action: self._start_character_combat(action.get("character_id", ""), "spar"),
             Action.DUEL_CHARACTER: lambda action: self._start_character_combat(action.get("character_id", ""), "duel"),
             Action.BREAKTHROUGH: lambda action: self._advance_time_after(self._after_breakthrough(self.cultivation_service.attempt_body_breakthrough("player")), "body_breakthrough"),
@@ -358,8 +369,11 @@ class GameEngine:
             Action.TRAVEL: lambda action: self._travel(action.get("location_id", "")),
             Action.SHOP: lambda action: self.shops.shop_view(self.player, action.get("shop_id", "")),
             Action.BUY_ITEM: lambda action: self._buy_item(action),
+            Action.SELL_ITEM: lambda action: self._sell_item(action),
             Action.TRAINERS: lambda action: self.trainers.trainer_view(self.player, action.get("trainer_id", "")),
             Action.LEARN_SKILL: lambda action: self._learn_skill(action),
+            Action.SECTS: lambda action: self.sects.sect_view(self.player, action.get("sect_id", "")),
+            Action.JOIN_SECT: lambda action: self._join_sect(action.get("sect_id", "")),
             Action.SAVE: lambda action: self.save_game(action.get("slot") or "default"),
             Action.LOAD: lambda action: self.load_game(action.get("slot") or "default"),
             Action.USE_ITEM: lambda action: self._use_item(action.get("item_id", "")),
@@ -390,10 +404,10 @@ class GameEngine:
             self._mode = MODE_EXPLORE
             return {"event": EventType.ERROR, "reason": "NOT_IN_COMBAT"}
         if name == Action.ATTACK:
-            result = self.combat.attack(self.player, self._current_enemy)
+            result = self.combat.attack(self.player, self._current_enemy, spar=self._combat_is_spar)
             self._tick_cooldowns()
         elif name == Action.FLEE:
-            result = self.combat.flee(self.player, self._current_enemy)
+            result = self.combat.flee(self.player, self._current_enemy, spar=self._combat_is_spar)
             self._tick_cooldowns()
         elif name == Action.USE_SKILL:
             result = self._use_combat_skill(action.get("skill_id", ""))
@@ -427,6 +441,9 @@ class GameEngine:
             self._current_enemy = enemy
             self._mode = MODE_COMBAT
             self._cooldowns = {}
+            self._combat_is_spar = False
+            self.player.statuses.clear()
+            self.player.shield = 0
             return {
                 "event": EventType.COMBAT,
                 "enemy": self._enemy_view(enemy),
@@ -487,6 +504,8 @@ class GameEngine:
     def _enemy_view(self, enemy: Enemy) -> Dict[str, Any]:
         """Return the enemy's public stats plus a UI-only threat/reward preview."""
         view = enemy.public_view()
+        view["shield"] = enemy.shield
+        view["statuses"] = {k: dict(v) for k, v in enemy.statuses.items()}
         body_name = self._body_realm_names.get(enemy.body_realm_id, enemy.body_realm_id)
         essence_name = self._essence_realm_names.get(enemy.essence_realm_id or "", "")
         view["body_realm"] = body_name
@@ -595,6 +614,48 @@ class GameEngine:
             name=context.get("name", character_id),
             dialogue_context=context,
             player_message=message,
+            choices=self.character_service.dialogue_choices(character_id, self.player),
+        ).to_dict()
+
+    def _dialogue_choose(self, action: Dict[str, Any]) -> Dict[str, Any]:
+        """Apply a chosen dialogue option's relationship/morality/reputation deltas."""
+        character_id = action.get("character_id", "")
+        choice_id = action.get("choice_id", "")
+        if not character_id or not choice_id:
+            return {"event": EventType.ERROR, "reason": "NO_CHOICE_SPECIFIED"}
+        choice = self.character_service.get_dialogue_choice(character_id, choice_id, self.player)
+        if choice is None:
+            return {
+                "event": EventType.ERROR,
+                "reason": "CHOICE_NOT_AVAILABLE",
+                "character_id": character_id,
+                "choice_id": choice_id,
+            }
+
+        relationship = None
+        relationship_delta = choice.get("relationship_delta") or {}
+        if relationship_delta:
+            relationship = self.relationships.adjust(
+                self.player.relationships, character_id, relationship_delta
+            )
+
+        morality = self.morality.adjust(self.player.morality, int(choice.get("morality_delta", 0)))
+        self.player.morality = morality["morality"]
+
+        reputation_delta = int(choice.get("reputation_delta", 0))
+        self.player.reputation += reputation_delta
+        # Reputation can satisfy a quest's unlock gate without any notify event.
+        self.quests.check_unlocks(self.player)
+
+        return DialogueChoiceResult(
+            character_id=character_id,
+            choice_id=choice_id,
+            name=str(choice.get("character_name", character_id)),
+            player_message=str(choice.get("response", "")),
+            relationship=relationship,
+            morality=morality,
+            reputation=self.player.reputation,
+            reputation_delta=reputation_delta,
         ).to_dict()
 
     def _start_character_combat(self, character_id: str, interaction: str) -> Dict[str, Any]:
@@ -620,6 +681,9 @@ class GameEngine:
         self._current_enemy = enemy
         self._mode = MODE_COMBAT
         self._cooldowns = {}
+        self._combat_is_spar = interaction == "spar"
+        self.player.statuses.clear()
+        self.player.shield = 0
         label = "sparring match" if interaction == "spar" else "duel"
         return {
             "event": EventType.COMBAT,
@@ -657,6 +721,18 @@ class GameEngine:
             result["inventory_items"] = self.inventory.list_inventory(self.player)["items"]
         return result
 
+    def _sell_item(self, action: Dict[str, Any]) -> Dict[str, Any]:
+        """Sell owned items/equipment for gold."""
+        quantity = action.get("quantity", 1)
+        try:
+            quantity = int(quantity)
+        except (TypeError, ValueError):
+            return {"event": EventType.ERROR, "reason": "INVALID_QUANTITY", "quantity": quantity}
+        result = self.sell.sell_item(self.player, action.get("item_id", ""), quantity)
+        if result.get("event") != EventType.ERROR:
+            result["inventory_items"] = self.inventory.list_inventory(self.player)["items"]
+        return result
+
     def _use_item(self, item_id: str) -> Dict[str, Any]:
         """Use an item in exploration; technique manuals teach their skill instead."""
         item = self._items.get(item_id)
@@ -680,6 +756,13 @@ class GameEngine:
         )
         if result.get("event") == EventType.SKILL_LEARNED:
             result["known_skills"] = self.get_known_skills()
+        return result
+
+    def _join_sect(self, sect_id: str) -> Dict[str, Any]:
+        """Join a sect, assigning the player's martial path."""
+        result = self.sects.join(self.player, sect_id)
+        if result.get("event") == EventType.SECT_JOINED:
+            result["player"] = self._player_view()
         return result
 
     def _find_rarity_index(self) -> int:
@@ -838,16 +921,17 @@ class GameEngine:
                 "skill_id": skill_id,
                 "remaining": remaining,
             }
-        if self.player.qi < skill.qi_cost:
+        qi_cost = self.stats.effective_qi_cost(skill, self.player)
+        if self.player.qi < qi_cost:
             return {
                 "event": EventType.ERROR,
                 "reason": "NOT_ENOUGH_QI",
-                "required": skill.qi_cost,
+                "required": qi_cost,
                 "qi": self.player.qi,
             }
 
-        self.player.qi -= skill.qi_cost
-        result = self.combat.use_skill(self.player, self._current_enemy, skill)
+        self.player.qi -= qi_cost
+        result = self.combat.use_skill(self.player, self._current_enemy, skill, spar=self._combat_is_spar)
         # Tick existing cooldowns for the elapsed turn, then arm this skill so it
         # is unavailable for exactly ``skill.cooldown`` of the player's turns.
         self._tick_cooldowns()
@@ -866,7 +950,7 @@ class GameEngine:
         if item_result.get("event") == EventType.ERROR:
             return item_result
 
-        enemy_turn = self.combat.enemy_turn_only(self.player, self._current_enemy)
+        enemy_turn = self.combat.enemy_turn_only(self.player, self._current_enemy, spar=self._combat_is_spar)
         self._tick_cooldowns()
 
         item_event = {
@@ -886,6 +970,9 @@ class GameEngine:
         self._mode = MODE_EXPLORE
         self._current_enemy = None
         self._cooldowns = {}
+        self.player.statuses.clear()
+        self.player.shield = 0
+        self._combat_is_spar = False
 
         if outcome == "VICTORY":
             result["loot"] = self.loot.roll_loot(self.player, result.get("loot_table", []))
@@ -894,15 +981,30 @@ class GameEngine:
                 result["quest_updates"] = updates
         elif outcome == "DEFEAT":
             self._apply_defeat_penalty(result)
+        elif outcome in ("SPAR_WON", "SPAR_LOST"):
+            self._apply_spar_end(result)
         return result
 
+    def _apply_spar_end(self, result: Dict[str, Any]) -> None:
+        """A friendly spar ends with no loot or progress loss; the loser is patched up."""
+        if result.get("outcome") == "SPAR_LOST":
+            self.player.hp = max(self.player.hp, self.player.max_hp // 2)
+            self.player.qi = max(self.player.qi, self.player.max_qi // 2)
+        result["spar"] = True
+
     def _apply_defeat_penalty(self, result: Dict[str, Any]) -> None:
-        """Defeat is not game over: the player is rescued at a cost."""
-        lost = round(self.player.cultivation_state.body.progress, 1)
-        self.player.cultivation_state.body.progress = 0.0
-        self.player.progress = 0.0
-        self.player.hp = max(1, self.player.max_hp // 2)
-        self.player.qi = self.player.max_qi // 2
+        """Defeat is not game over: the player is rescued at a data-driven cost."""
+        cfg = self._cultivation_config.get("defeat_penalty", {})
+        loss_ratio = float(cfg.get("progress_loss_ratio", 1.0))
+        hp_ratio = float(cfg.get("revive_hp_ratio", 0.5))
+        qi_ratio = float(cfg.get("revive_qi_ratio", 0.5))
+
+        body = self.player.cultivation_state.body
+        lost = round(float(body.progress) * loss_ratio, 1)
+        body.progress = max(0.0, float(body.progress) - lost)
+        self.player.progress = body.progress
+        self.player.hp = max(1, int(self.player.max_hp * hp_ratio))
+        self.player.qi = int(self.player.max_qi * qi_ratio)
         result["penalty"] = {"progress_lost": lost, "revived_hp": self.player.hp}
 
     def _tick_cooldowns(self) -> None:
@@ -935,6 +1037,8 @@ class GameEngine:
         data["equipment_details"] = self.equipment.equipment_details(self.player)
         data["equipment_modifiers"] = self.equipment.aggregate_modifiers(self.player)
         data["effective_stats"] = self.stats.effective_stats(self.player)
+        data["shield"] = self.player.shield
+        data["statuses"] = {k: dict(v) for k, v in self.player.statuses.items()}
         return data
 
     @staticmethod
@@ -950,6 +1054,7 @@ class GameEngine:
             "magnitude": 0,
             "description": entry.get("description", ""),
             "consumed_on_use": False,
+            "value": int(entry.get("value", 0)),
         }
 
     @staticmethod

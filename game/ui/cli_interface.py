@@ -38,6 +38,8 @@ class CLIInterface:
             EventType.STARTING_FATE_ACCEPTED: self._fmt_starting_fate,
             EventType.CHARACTER_ENCOUNTER: self._fmt_character_encounter,
             EventType.CHARACTER_INTERACTION: self._fmt_character_interaction,
+            EventType.SECTS: self._fmt_sects,
+            EventType.SECT_JOINED: self._fmt_sect_joined,
             EventType.HELP: self._fmt_help,
             EventType.ERROR: self._fmt_error,
             EventType.QUIT: self._fmt_quit,
@@ -248,6 +250,24 @@ class CLIInterface:
         self._p(f"{result.get('name', result.get('character_id', 'Someone'))}:")
         self._p(result.get("player_message", "They acknowledge you."))
         self._hr()
+
+    def _fmt_sects(self, result: Dict[str, Any]) -> None:
+        sect = result.get("sect")
+        if not sect:
+            self._p("No sect is available at this location.")
+            return
+        self._hr()
+        self._p(f"{sect.get('display_name')} (path: {sect.get('path')})")
+        self._p(sect.get("description", ""))
+        status = sect.get("join_status", {})
+        if status.get("allowed"):
+            self._p(f"  Join with: join {sect.get('id')}")
+        else:
+            self._p(f"  Cannot join yet: {status.get('reason', 'requirements not met')}")
+        self._hr()
+
+    def _fmt_sect_joined(self, result: Dict[str, Any]) -> None:
+        self._p(result.get("player_message", f"You join the sect and take up the path of {result.get('path')}."))
 
     def _fmt_help(self, _result: Dict[str, Any]) -> None:
         self._hr()

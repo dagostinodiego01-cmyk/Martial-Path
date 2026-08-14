@@ -15,6 +15,13 @@ def test_all_shipped_game_data_is_valid():
     assert result.is_valid, result.format_errors()
 
 
+def test_shops_cover_most_regions():
+    registry = GameDataRegistry.load()
+    assert len(registry.shops) >= 10
+    served = {loc for shop in registry.shops for loc in shop["location_ids"]}
+    assert len(served) >= 10
+
+
 def test_detects_duplicate_item_id():
     base = GameDataRegistry.load()
     broken = dataclasses.replace(base, items=base.items + [base.items[0]])

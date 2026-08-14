@@ -18,6 +18,11 @@
         "item_id": "healing_pill",
         "chance": 0.3,
         "count": 1
+      },
+      {
+        "item_id": "iron_fist_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ]
   },
@@ -39,6 +44,11 @@
       {
         "item_id": "qi_pill",
         "chance": 0.3,
+        "count": 1
+      },
+      {
+        "item_id": "nether_palm_manual",
+        "chance": 0.05,
         "count": 1
       }
     ]
@@ -62,6 +72,11 @@
         "item_id": "spirit_stone",
         "chance": 0.5,
         "count": 2
+      },
+      {
+        "item_id": "purple_cloud_sword_art_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ]
   },
@@ -78,6 +93,11 @@
       {
         "item_id": "beast_core",
         "chance": 0.45,
+        "count": 1
+      },
+      {
+        "item_id": "windless_roar_manual",
+        "chance": 0.05,
         "count": 1
       }
     ]
@@ -101,6 +121,11 @@
         "item_id": "training_sword",
         "chance": 0.08,
         "count": 1
+      },
+      {
+        "item_id": "thunderclap_chant_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ]
   },
@@ -122,6 +147,11 @@
       {
         "item_id": "worn_travel_boots",
         "chance": 0.08,
+        "count": 1
+      },
+      {
+        "item_id": "earth_vein_saber_art_manual",
+        "chance": 0.05,
         "count": 1
       }
     ]
@@ -145,6 +175,11 @@
         "item_id": "qi_pill",
         "chance": 0.15,
         "count": 1
+      },
+      {
+        "item_id": "primordial_chaos_meditation_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ]
   },
@@ -166,6 +201,11 @@
       {
         "item_id": "mist_concealment_cloak",
         "chance": 0.04,
+        "count": 1
+      },
+      {
+        "item_id": "glacial_saber_art_manual",
+        "chance": 0.05,
         "count": 1
       }
     ]
@@ -189,6 +229,11 @@
         "item_id": "spirit_stone",
         "chance": 0.35,
         "count": 1
+      },
+      {
+        "item_id": "mountain_crushing_fist_no2_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ]
   },
@@ -210,6 +255,11 @@
       {
         "item_id": "profound_pill",
         "chance": 0.25,
+        "count": 1
+      },
+      {
+        "item_id": "shadowless_domain_manual",
+        "chance": 0.05,
         "count": 1
       }
     ]
@@ -233,6 +283,11 @@
         "item_id": "beast_hide_vest",
         "chance": 0.06,
         "count": 1
+      },
+      {
+        "item_id": "vermilion_bird_meditation_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ]
   },
@@ -253,6 +308,11 @@
       },
       {
         "item_id": "iron_body_ring",
+        "chance": 0.05,
+        "count": 1
+      },
+      {
+        "item_id": "purple_cloud_bloodline_manual",
         "chance": 0.05,
         "count": 1
       }
@@ -277,6 +337,11 @@
         "item_id": "sect_disciple_sword",
         "chance": 0.05,
         "count": 1
+      },
+      {
+        "item_id": "purple_cloud_scripture_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ]
   },
@@ -298,6 +363,11 @@
       {
         "item_id": "shadow_thread_cloak",
         "chance": 0.04,
+        "count": 1
+      },
+      {
+        "item_id": "mountain_crushing_fist_no3_manual",
+        "chance": 0.05,
         "count": 1
       }
     ]
@@ -321,6 +391,11 @@
         "item_id": "qi_pill",
         "chance": 0.45,
         "count": 1
+      },
+      {
+        "item_id": "heaven_splitting_roar_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ]
   },
@@ -343,6 +418,11 @@
         "item_id": "spirit_stone",
         "chance": 0.45,
         "count": 2
+      },
+      {
+        "item_id": "shadowless_saber_art_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ]
   },
@@ -364,6 +444,11 @@
       {
         "item_id": "profound_pill",
         "chance": 0.45,
+        "count": 1
+      },
+      {
+        "item_id": "phoenix_seal_manual",
+        "chance": 0.05,
         "count": 1
       }
     ]
@@ -387,6 +472,11 @@
         "item_id": "spirit_stone",
         "chance": 0.55,
         "count": 2
+      },
+      {
+        "item_id": "purple_cloud_saber_art_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ]
   },
@@ -407,6 +497,11 @@
       },
       {
         "item_id": "blood_heat_ring",
+        "chance": 0.05,
+        "count": 1
+      },
+      {
+        "item_id": "immortal_binding_fist_manual",
         "chance": 0.05,
         "count": 1
       }
@@ -431,6 +526,11 @@
         "item_id": "spirit_jade_amulet",
         "chance": 0.08,
         "count": 1
+      },
+      {
+        "item_id": "golden_body_domain_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ]
   },
@@ -453,6 +553,11 @@
         "item_id": "spirit_stone",
         "chance": 0.7,
         "count": 3
+      },
+      {
+        "item_id": "great_sun_chant_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ]
   },
@@ -474,6 +579,11 @@
       {
         "item_id": "profound_pill",
         "chance": 0.45,
+        "count": 1
+      },
+      {
+        "item_id": "primordial_chaos_finger_manual",
+        "chance": 0.05,
         "count": 1
       }
     ]
@@ -497,6 +607,11 @@
         "item_id": "spirit_stone",
         "chance": 0.7,
         "count": 3
+      },
+      {
+        "item_id": "true_dragon_sword_intent_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ]
   },
@@ -518,6 +633,11 @@
       {
         "item_id": "profound_pill",
         "chance": 0.55,
+        "count": 1
+      },
+      {
+        "item_id": "dao_heart_roar_manual",
+        "chance": 0.05,
         "count": 1
       }
     ]
@@ -541,6 +661,11 @@
         "item_id": "spirit_stone",
         "chance": 0.8,
         "count": 4
+      },
+      {
+        "item_id": "immortal_binding_roar_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ]
   },
@@ -562,6 +687,11 @@
       {
         "item_id": "profound_pill",
         "chance": 0.65,
+        "count": 1
+      },
+      {
+        "item_id": "primordial_chaos_sword_art_manual",
+        "chance": 0.05,
         "count": 1
       }
     ]
@@ -585,6 +715,11 @@
         "item_id": "spirit_stone",
         "chance": 0.85,
         "count": 4
+      },
+      {
+        "item_id": "void_domain_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ]
   },
@@ -606,6 +741,11 @@
       {
         "item_id": "profound_pill",
         "chance": 0.7,
+        "count": 1
+      },
+      {
+        "item_id": "dao_heart_fist_intent_manual",
+        "chance": 0.05,
         "count": 1
       }
     ]
@@ -629,6 +769,11 @@
         "item_id": "spirit_stone",
         "chance": 0.9,
         "count": 5
+      },
+      {
+        "item_id": "immortal_binding_saber_art_no2_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ]
   },
@@ -650,6 +795,11 @@
       {
         "item_id": "cloudpiercer_sword",
         "chance": 0.02,
+        "count": 1
+      },
+      {
+        "item_id": "immortal_binding_fist_manual",
+        "chance": 0.05,
         "count": 1
       }
     ]
@@ -673,6 +823,11 @@
         "item_id": "profound_pill",
         "chance": 0.95,
         "count": 2
+      },
+      {
+        "item_id": "golden_body_domain_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ]
   },
@@ -694,6 +849,11 @@
       {
         "item_id": "iron_spear",
         "chance": 0.06,
+        "count": 1
+      },
+      {
+        "item_id": "white_tiger_breathing_method_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -723,6 +883,11 @@
         "item_id": "purple_cloud_seal",
         "chance": 0.07,
         "count": 1
+      },
+      {
+        "item_id": "white_tiger_seal_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Verdant Fields"
@@ -746,6 +911,11 @@
         "item_id": "iron_bone_sigil",
         "chance": 0.06,
         "count": 1
+      },
+      {
+        "item_id": "azure_dragon_domain_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Verdant Fields"
@@ -767,6 +937,11 @@
       },
       {
         "item_id": "true_dragon_amulet",
+        "chance": 0.05,
+        "count": 1
+      },
+      {
+        "item_id": "nether_constitution_manual",
         "chance": 0.05,
         "count": 1
       }
@@ -797,6 +972,11 @@
         "item_id": "iron_bone_sigil",
         "chance": 0.04,
         "count": 1
+      },
+      {
+        "item_id": "nine_yin_fist_intent_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Verdant Fields"
@@ -814,6 +994,11 @@
       {
         "item_id": "qi_pill",
         "chance": 0.79,
+        "count": 1
+      },
+      {
+        "item_id": "earth_vein_sutra_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -843,6 +1028,11 @@
         "item_id": "cracked_protection_talisman",
         "chance": 0.1,
         "count": 1
+      },
+      {
+        "item_id": "thunderclap_chant_no2_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Verdant Fields"
@@ -865,6 +1055,11 @@
       {
         "item_id": "profound_fang",
         "chance": 0.46,
+        "count": 1
+      },
+      {
+        "item_id": "thunderclap_eye_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -889,6 +1084,11 @@
         "item_id": "iron_spear",
         "chance": 0.07,
         "count": 1
+      },
+      {
+        "item_id": "earth_vein_sword_art_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Verdant Fields"
@@ -912,6 +1112,11 @@
         "item_id": "soul_nurturing_decoction",
         "chance": 0.56,
         "count": 1
+      },
+      {
+        "item_id": "nether_palm_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Verdant Fields"
@@ -934,6 +1139,11 @@
       {
         "item_id": "profound_pill",
         "chance": 0.26,
+        "count": 1
+      },
+      {
+        "item_id": "myriad_sword_sutra_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -963,6 +1173,11 @@
         "item_id": "patched_leather_armor",
         "chance": 0.09,
         "count": 1
+      },
+      {
+        "item_id": "glacial_sword_intent_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Verdant Fields"
@@ -991,6 +1206,11 @@
         "item_id": "cloud_sea_vestments",
         "chance": 0.03,
         "count": 1
+      },
+      {
+        "item_id": "roaring_tide_sword_intent_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Azure Stream Village"
@@ -1014,6 +1234,11 @@
         "item_id": "cracked_protection_talisman",
         "chance": 0.07,
         "count": 1
+      },
+      {
+        "item_id": "black_tortoise_guard_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Azure Stream Village"
@@ -1032,6 +1257,11 @@
         "item_id": "profound_pill",
         "chance": 0.84,
         "count": 1
+      },
+      {
+        "item_id": "primordial_chaos_meditation_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Azure Stream Village"
@@ -1049,6 +1279,11 @@
       {
         "item_id": "vermilion_pill_no3",
         "chance": 0.53,
+        "count": 1
+      },
+      {
+        "item_id": "inferno_constitution_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -1078,6 +1313,11 @@
         "item_id": "blazing_yang_saber",
         "chance": 0.09,
         "count": 1
+      },
+      {
+        "item_id": "earth_vein_kick_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Azure Stream Village"
@@ -1100,6 +1340,11 @@
       {
         "item_id": "minor_qi_ring",
         "chance": 0.07,
+        "count": 1
+      },
+      {
+        "item_id": "iron_guard_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -1124,6 +1369,11 @@
         "item_id": "vermilion_tonic",
         "chance": 0.57,
         "count": 1
+      },
+      {
+        "item_id": "nine_yin_saber_art_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Azure Stream Village"
@@ -1147,6 +1397,11 @@
         "item_id": "spirit_stone",
         "chance": 0.26,
         "count": 1
+      },
+      {
+        "item_id": "black_tortoise_scripture_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Azure Stream Village"
@@ -1164,6 +1419,11 @@
       {
         "item_id": "mystic_pellet",
         "chance": 0.39,
+        "count": 1
+      },
+      {
+        "item_id": "windless_sword_art_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -1183,6 +1443,11 @@
         "item_id": "blood_quenching_pill",
         "chance": 0.73,
         "count": 1
+      },
+      {
+        "item_id": "white_tiger_chant_no2_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Azure Stream Village"
@@ -1200,6 +1465,11 @@
       {
         "item_id": "heaven_fang",
         "chance": 0.43,
+        "count": 1
+      },
+      {
+        "item_id": "nine_yin_bloodline_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -1229,6 +1499,11 @@
         "item_id": "heaven_splitting_spear",
         "chance": 0.04,
         "count": 1
+      },
+      {
+        "item_id": "great_sun_ward_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Azure Stream Village"
@@ -1246,6 +1521,11 @@
       {
         "item_id": "spirit_stone",
         "chance": 0.31,
+        "count": 1
+      },
+      {
+        "item_id": "nine_yin_sword_art_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -1265,6 +1545,11 @@
         "item_id": "bone_forging_nectar_no3",
         "chance": 0.63,
         "count": 1
+      },
+      {
+        "item_id": "glacial_bloodline_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Black Pine Forest"
@@ -1282,6 +1567,11 @@
       {
         "item_id": "dragon_blood_dan",
         "chance": 0.51,
+        "count": 1
+      },
+      {
+        "item_id": "heaven_splitting_footwork_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -1311,6 +1601,11 @@
         "item_id": "spirit_jade_amulet",
         "chance": 0.06,
         "count": 1
+      },
+      {
+        "item_id": "iron_fist_intent_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Black Pine Forest"
@@ -1339,6 +1634,11 @@
         "item_id": "clear_mind_amulet",
         "chance": 0.03,
         "count": 1
+      },
+      {
+        "item_id": "glacial_body_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Black Pine Forest"
@@ -1361,6 +1661,11 @@
       {
         "item_id": "myriad_star_bell",
         "chance": 0.09,
+        "count": 1
+      },
+      {
+        "item_id": "nether_roar_no2_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -1390,6 +1695,11 @@
         "item_id": "bone_forged_blade",
         "chance": 0.08,
         "count": 1
+      },
+      {
+        "item_id": "black_tortoise_bloodline_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Black Pine Forest"
@@ -1412,6 +1722,11 @@
       {
         "item_id": "vermilion_bird_sabatons",
         "chance": 0.09,
+        "count": 1
+      },
+      {
+        "item_id": "windless_fist_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -1436,6 +1751,11 @@
         "item_id": "beast_core",
         "chance": 0.35,
         "count": 1
+      },
+      {
+        "item_id": "azure_dragon_eye_no2_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Black Pine Forest"
@@ -1453,6 +1773,11 @@
       {
         "item_id": "beast_core",
         "chance": 0.3,
+        "count": 1
+      },
+      {
+        "item_id": "myriad_sword_aura_no2_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -1477,6 +1802,11 @@
         "item_id": "mystic_decoction_mortal",
         "chance": 0.5,
         "count": 1
+      },
+      {
+        "item_id": "mountain_crushing_sutra_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Black Pine Forest"
@@ -1500,6 +1830,11 @@
         "item_id": "iron_thread_boots",
         "chance": 0.09,
         "count": 1
+      },
+      {
+        "item_id": "inferno_fist_intent_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Black Pine Forest"
@@ -1522,6 +1857,11 @@
       {
         "item_id": "vermilion_bird_sabatons",
         "chance": 0.03,
+        "count": 1
+      },
+      {
+        "item_id": "earth_vein_footwork_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -1551,6 +1891,11 @@
         "item_id": "beast_hide_vest",
         "chance": 0.04,
         "count": 1
+      },
+      {
+        "item_id": "earth_vein_chant_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Black Pine Forest"
@@ -1578,6 +1923,11 @@
       {
         "item_id": "outer_disciple_flying_sword",
         "chance": 0.09,
+        "count": 1
+      },
+      {
+        "item_id": "mountain_crushing_chant_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -1607,6 +1957,11 @@
         "item_id": "bone_tempering_ring",
         "chance": 0.05,
         "count": 1
+      },
+      {
+        "item_id": "purple_cloud_sword_art_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Misty Valley"
@@ -1630,6 +1985,11 @@
         "item_id": "scarlet_sun_cloak",
         "chance": 0.04,
         "count": 1
+      },
+      {
+        "item_id": "myriad_sword_finger_no2_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Misty Valley"
@@ -1652,6 +2012,11 @@
       {
         "item_id": "healing_pill",
         "chance": 0.32,
+        "count": 1
+      },
+      {
+        "item_id": "blood_sea_kick_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -1681,6 +2046,11 @@
         "item_id": "ancestral_boots",
         "chance": 0.03,
         "count": 1
+      },
+      {
+        "item_id": "purple_cloud_guard_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Misty Valley"
@@ -1698,6 +2068,11 @@
       {
         "item_id": "mystic_elixir_mortal",
         "chance": 0.31,
+        "count": 1
+      },
+      {
+        "item_id": "void_sutra_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -1722,6 +2097,11 @@
         "item_id": "earth_bone",
         "chance": 0.37,
         "count": 1
+      },
+      {
+        "item_id": "nirvana_scripture_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Misty Valley"
@@ -1745,6 +2125,11 @@
         "item_id": "profound_pill",
         "chance": 0.33,
         "count": 1
+      },
+      {
+        "item_id": "mountain_crushing_fist_no2_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Misty Valley"
@@ -1762,6 +2147,11 @@
       {
         "item_id": "profound_pill",
         "chance": 0.43,
+        "count": 1
+      },
+      {
+        "item_id": "primordial_chaos_claw_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -1791,6 +2181,11 @@
         "item_id": "earth_vein_immortal_sword",
         "chance": 0.04,
         "count": 1
+      },
+      {
+        "item_id": "nirvana_aura_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Misty Valley"
@@ -1813,6 +2208,11 @@
       {
         "item_id": "cloud_sea_signet",
         "chance": 0.09,
+        "count": 1
+      },
+      {
+        "item_id": "golden_body_chant_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -1842,6 +2242,11 @@
         "item_id": "golden_body_talisman",
         "chance": 0.05,
         "count": 1
+      },
+      {
+        "item_id": "purple_cloud_scripture_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Misty Valley"
@@ -1859,6 +2264,11 @@
       {
         "item_id": "profound_pill",
         "chance": 0.89,
+        "count": 1
+      },
+      {
+        "item_id": "vermilion_bird_claw_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -1883,6 +2293,11 @@
         "item_id": "qi_pill",
         "chance": 0.21,
         "count": 1
+      },
+      {
+        "item_id": "nirvana_chant_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Misty Valley"
@@ -1901,6 +2316,11 @@
         "item_id": "frost_jade_tonic",
         "chance": 0.56,
         "count": 1
+      },
+      {
+        "item_id": "primordial_chaos_seal_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Misty Valley"
@@ -1918,6 +2338,11 @@
       {
         "item_id": "beast_core",
         "chance": 0.82,
+        "count": 1
+      },
+      {
+        "item_id": "blood_sea_aura_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -1942,6 +2367,11 @@
         "item_id": "coiling_dragon_glaive",
         "chance": 0.04,
         "count": 1
+      },
+      {
+        "item_id": "mountain_crushing_fist_no3_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Imperial Capital"
@@ -1964,6 +2394,11 @@
       {
         "item_id": "healing_pill",
         "chance": 0.44,
+        "count": 1
+      },
+      {
+        "item_id": "purple_cloud_fist_intent_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -1988,6 +2423,11 @@
         "item_id": "purple_cloud_dan",
         "chance": 0.25,
         "count": 1
+      },
+      {
+        "item_id": "phoenix_sword_intent_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Imperial Capital"
@@ -2010,6 +2450,11 @@
       {
         "item_id": "star_gathering_decoction_mortal",
         "chance": 0.59,
+        "count": 1
+      },
+      {
+        "item_id": "nirvana_aura_no2_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -2039,6 +2484,11 @@
         "item_id": "scarlet_sun_lantern",
         "chance": 0.07,
         "count": 1
+      },
+      {
+        "item_id": "soul_severing_sword_intent_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Imperial Capital"
@@ -2062,6 +2512,11 @@
         "item_id": "soul_nurturing_nectar_mortal",
         "chance": 0.28,
         "count": 1
+      },
+      {
+        "item_id": "void_claw_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Imperial Capital"
@@ -2079,6 +2534,11 @@
       {
         "item_id": "healing_pill",
         "chance": 0.37,
+        "count": 1
+      },
+      {
+        "item_id": "heaven_splitting_kick_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -2103,6 +2563,11 @@
         "item_id": "dragon_blood_dan",
         "chance": 0.3,
         "count": 1
+      },
+      {
+        "item_id": "immortal_binding_saber_art_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Imperial Capital"
@@ -2120,6 +2585,11 @@
       {
         "item_id": "mystic_root",
         "chance": 0.73,
+        "count": 1
+      },
+      {
+        "item_id": "mountain_crushing_chant_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -2149,6 +2619,11 @@
         "item_id": "spirit_devouring_saber",
         "chance": 0.04,
         "count": 1
+      },
+      {
+        "item_id": "myriad_sword_kick_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Imperial Capital"
@@ -2166,6 +2641,11 @@
       {
         "item_id": "purple_cloud_nectar",
         "chance": 0.78,
+        "count": 1
+      },
+      {
+        "item_id": "shadowless_saber_art_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -2190,6 +2670,11 @@
         "item_id": "primordial_sabatons",
         "chance": 0.08,
         "count": 1
+      },
+      {
+        "item_id": "primordial_chaos_scripture_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Imperial Capital"
@@ -2212,6 +2697,11 @@
       {
         "item_id": "foundation_stone_amulet",
         "chance": 0.09,
+        "count": 1
+      },
+      {
+        "item_id": "blood_sea_roar_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -2236,6 +2726,11 @@
         "item_id": "abyssal_charm",
         "chance": 0.04,
         "count": 1
+      },
+      {
+        "item_id": "void_sutra_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Imperial Capital"
@@ -2259,6 +2754,11 @@
         "item_id": "ancestral_ring",
         "chance": 0.03,
         "count": 1
+      },
+      {
+        "item_id": "nirvana_scripture_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Imperial Capital"
@@ -2281,6 +2781,11 @@
       {
         "item_id": "foundation_stone_amulet",
         "chance": 0.04,
+        "count": 1
+      },
+      {
+        "item_id": "blood_sea_palm_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -2310,6 +2815,11 @@
         "item_id": "vermilion_bird_immortal_sword",
         "chance": 0.1,
         "count": 1
+      },
+      {
+        "item_id": "primordial_chaos_claw_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Imperial Capital"
@@ -2328,6 +2838,11 @@
         "item_id": "nine_revolutions_pellet_mortal",
         "chance": 0.55,
         "count": 2
+      },
+      {
+        "item_id": "dao_heart_meditation_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Imperial Capital"
@@ -2355,6 +2870,11 @@
       {
         "item_id": "void_cloak",
         "chance": 0.08,
+        "count": 1
+      },
+      {
+        "item_id": "blood_sea_body_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -2384,6 +2904,11 @@
         "item_id": "foundation_stone_amulet",
         "chance": 0.02,
         "count": 1
+      },
+      {
+        "item_id": "dao_heart_scripture_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "South Horizon Desert"
@@ -2406,6 +2931,11 @@
       {
         "item_id": "star_gathering_pellet",
         "chance": 0.24,
+        "count": 1
+      },
+      {
+        "item_id": "star_shattering_seal_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -2435,6 +2965,11 @@
         "item_id": "coiling_dragon_glaive",
         "chance": 0.09,
         "count": 1
+      },
+      {
+        "item_id": "purple_cloud_fist_intent_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "South Horizon Desert"
@@ -2457,6 +2992,11 @@
       {
         "item_id": "heaven_splitting_shroud",
         "chance": 0.07,
+        "count": 1
+      },
+      {
+        "item_id": "purple_cloud_saber_art_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -2486,6 +3026,11 @@
         "item_id": "demon_sealing_scale_mail",
         "chance": 0.09,
         "count": 1
+      },
+      {
+        "item_id": "primordial_chaos_fist_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "South Horizon Desert"
@@ -2508,6 +3053,11 @@
       {
         "item_id": "healing_pill",
         "chance": 0.6,
+        "count": 1
+      },
+      {
+        "item_id": "phoenix_sword_art_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -2532,6 +3082,11 @@
         "item_id": "ancient_jade_slip",
         "chance": 0.09,
         "count": 1
+      },
+      {
+        "item_id": "void_claw_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "South Horizon Desert"
@@ -2555,6 +3110,11 @@
         "item_id": "cloudpiercer_sword",
         "chance": 0.07,
         "count": 1
+      },
+      {
+        "item_id": "heaven_splitting_kick_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "South Horizon Desert"
@@ -2577,6 +3137,11 @@
       {
         "item_id": "demon_sealing_whip",
         "chance": 0.08,
+        "count": 1
+      },
+      {
+        "item_id": "dao_heart_roar_no3_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -2606,6 +3171,11 @@
         "item_id": "blood_heat_ring",
         "chance": 0.04,
         "count": 1
+      },
+      {
+        "item_id": "true_dragon_palm_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "South Horizon Desert"
@@ -2634,6 +3204,11 @@
         "item_id": "stone_skin_armor",
         "chance": 0.03,
         "count": 1
+      },
+      {
+        "item_id": "nether_roar_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "South Horizon Desert"
@@ -2657,6 +3232,11 @@
         "item_id": "azure_meridian_robes",
         "chance": 0.06,
         "count": 1
+      },
+      {
+        "item_id": "shadowless_saber_art_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "South Horizon Desert"
@@ -2675,6 +3255,11 @@
         "item_id": "thunder_essence_pill_no3",
         "chance": 0.62,
         "count": 2
+      },
+      {
+        "item_id": "true_dragon_sword_intent_no2_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "South Horizon Desert"
@@ -2697,6 +3282,11 @@
       {
         "item_id": "vermilion_bird_immortal_sword_mk_2",
         "chance": 0.04,
+        "count": 1
+      },
+      {
+        "item_id": "heaven_splitting_seal_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -2726,6 +3316,11 @@
         "item_id": "eternal_night_staff",
         "chance": 0.03,
         "count": 1
+      },
+      {
+        "item_id": "shadowless_roar_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "South Horizon Desert"
@@ -2749,6 +3344,11 @@
         "item_id": "marrow_tempering_elixir",
         "chance": 0.23,
         "count": 2
+      },
+      {
+        "item_id": "primordial_chaos_domain_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "South Horizon Desert"
@@ -2771,6 +3371,11 @@
       {
         "item_id": "primordial_sabatons",
         "chance": 0.09,
+        "count": 1
+      },
+      {
+        "item_id": "star_shattering_fist_intent_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -2795,6 +3400,11 @@
         "item_id": "soul_nurturing_nectar",
         "chance": 0.43,
         "count": 3
+      },
+      {
+        "item_id": "true_dragon_sword_intent_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Sea of Miracles"
@@ -2818,6 +3428,11 @@
         "item_id": "healing_pill",
         "chance": 0.44,
         "count": 3
+      },
+      {
+        "item_id": "dao_heart_roar_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Sea of Miracles"
@@ -2836,6 +3451,11 @@
         "item_id": "vermilion_pellet_mortal",
         "chance": 0.64,
         "count": 2
+      },
+      {
+        "item_id": "immortal_binding_roar_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Sea of Miracles"
@@ -2858,6 +3478,11 @@
       {
         "item_id": "eternal_night_staff",
         "chance": 0.1,
+        "count": 1
+      },
+      {
+        "item_id": "primordial_chaos_sword_art_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -2887,6 +3512,11 @@
         "item_id": "bronze_spirit_mirror",
         "chance": 0.1,
         "count": 1
+      },
+      {
+        "item_id": "purple_cloud_saber_art_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Sea of Miracles"
@@ -2910,6 +3540,11 @@
         "item_id": "beast_core",
         "chance": 0.57,
         "count": 3
+      },
+      {
+        "item_id": "primordial_chaos_fist_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Sea of Miracles"
@@ -2927,6 +3562,11 @@
       {
         "item_id": "star_gathering_decoction",
         "chance": 0.55,
+        "count": 1
+      },
+      {
+        "item_id": "immortal_binding_saber_art_no2_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -2951,6 +3591,11 @@
         "item_id": "falling_star_charm_paper",
         "chance": 0.04,
         "count": 1
+      },
+      {
+        "item_id": "dao_heart_sword_intent_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Sea of Miracles"
@@ -2973,6 +3618,11 @@
       {
         "item_id": "ancestral_ring",
         "chance": 0.08,
+        "count": 1
+      },
+      {
+        "item_id": "golden_body_domain_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -3000,6 +3650,11 @@
       },
       {
         "item_id": "scarlet_sun_lantern",
+        "chance": 0.05,
+        "count": 1
+      },
+      {
+        "item_id": "dao_heart_roar_no3_manual",
         "chance": 0.05,
         "count": 1
       }
@@ -3030,6 +3685,11 @@
         "item_id": "spirit_devouring_shroud",
         "chance": 0.08,
         "count": 1
+      },
+      {
+        "item_id": "true_dragon_palm_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Sea of Miracles"
@@ -3052,6 +3712,11 @@
       {
         "item_id": "myriad_star_medallion",
         "chance": 0.06,
+        "count": 1
+      },
+      {
+        "item_id": "true_dragon_sword_intent_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -3081,6 +3746,11 @@
         "item_id": "white_tiger_gourd",
         "chance": 0.02,
         "count": 1
+      },
+      {
+        "item_id": "nirvana_sword_intent_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Sea of Miracles"
@@ -3099,6 +3769,11 @@
         "item_id": "profound_decoction",
         "chance": 0.87,
         "count": 3
+      },
+      {
+        "item_id": "true_dragon_sword_intent_no2_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Sea of Miracles"
@@ -3116,6 +3791,11 @@
       {
         "item_id": "healing_pill",
         "chance": 0.55,
+        "count": 1
+      },
+      {
+        "item_id": "primordial_chaos_sword_art_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -3145,6 +3825,11 @@
         "item_id": "void_cloak",
         "chance": 0.05,
         "count": 1
+      },
+      {
+        "item_id": "shadowless_roar_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Sea of Miracles"
@@ -3167,6 +3852,11 @@
       {
         "item_id": "star_gathering_dan_mortal",
         "chance": 0.39,
+        "count": 1
+      },
+      {
+        "item_id": "myriad_sword_claw_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -3191,6 +3881,11 @@
         "item_id": "marrow_cleansing_spirit_stone",
         "chance": 0.5,
         "count": 3
+      },
+      {
+        "item_id": "primordial_chaos_meditation_no2_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Sea of Miracles"
@@ -3212,6 +3907,11 @@
       },
       {
         "item_id": "vermilion_bird_cloak",
+        "chance": 0.05,
+        "count": 1
+      },
+      {
+        "item_id": "immortal_binding_fist_manual",
         "chance": 0.05,
         "count": 1
       }
@@ -3237,6 +3937,11 @@
         "item_id": "phoenix_sabatons",
         "chance": 0.1,
         "count": 1
+      },
+      {
+        "item_id": "golden_body_domain_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Great Zen Region"
@@ -3255,6 +3960,11 @@
         "item_id": "profound_pill",
         "chance": 0.37,
         "count": 2
+      },
+      {
+        "item_id": "great_sun_chant_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Great Zen Region"
@@ -3283,6 +3993,11 @@
         "item_id": "demon_sealing_gourd",
         "chance": 0.08,
         "count": 1
+      },
+      {
+        "item_id": "primordial_chaos_finger_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Great Zen Region"
@@ -3306,6 +4021,11 @@
         "item_id": "profound_pill",
         "chance": 0.52,
         "count": 3
+      },
+      {
+        "item_id": "true_dragon_sword_intent_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Great Zen Region"
@@ -3324,6 +4044,11 @@
         "item_id": "profound_nectar_no3",
         "chance": 0.85,
         "count": 3
+      },
+      {
+        "item_id": "dao_heart_roar_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Great Zen Region"
@@ -3341,6 +4066,11 @@
       {
         "item_id": "mystic_pill_no4",
         "chance": 0.31,
+        "count": 1
+      },
+      {
+        "item_id": "immortal_binding_roar_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -3365,6 +4095,11 @@
         "item_id": "purple_cloud_dan",
         "chance": 0.44,
         "count": 1
+      },
+      {
+        "item_id": "primordial_chaos_sword_art_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Great Zen Region"
@@ -3388,6 +4123,11 @@
         "item_id": "silver_moon_war_vestments",
         "chance": 0.03,
         "count": 1
+      },
+      {
+        "item_id": "void_domain_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Great Zen Region"
@@ -3409,6 +4149,11 @@
       },
       {
         "item_id": "void_medallion",
+        "chance": 0.05,
+        "count": 1
+      },
+      {
+        "item_id": "dao_heart_fist_intent_manual",
         "chance": 0.05,
         "count": 1
       }
@@ -3434,6 +4179,11 @@
         "item_id": "soul_nurturing_nectar",
         "chance": 0.3,
         "count": 1
+      },
+      {
+        "item_id": "immortal_binding_saber_art_no2_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Great Zen Region"
@@ -3457,6 +4207,11 @@
         "item_id": "vermilion_bird_cloak",
         "chance": 0.09,
         "count": 1
+      },
+      {
+        "item_id": "immortal_binding_fist_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Great Zen Region"
@@ -3475,6 +4230,11 @@
         "item_id": "star_gathering_dan_mortal",
         "chance": 0.53,
         "count": 2
+      },
+      {
+        "item_id": "golden_body_domain_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Great Zen Region"
@@ -3503,6 +4263,11 @@
         "item_id": "white_tiger_veil",
         "chance": 0.09,
         "count": 1
+      },
+      {
+        "item_id": "great_sun_chant_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Great Zen Region"
@@ -3521,6 +4286,11 @@
         "item_id": "dragon_blood_ore",
         "chance": 0.54,
         "count": 2
+      },
+      {
+        "item_id": "primordial_chaos_finger_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Great Zen Region"
@@ -3539,6 +4309,11 @@
         "item_id": "golden_body_nectar",
         "chance": 0.62,
         "count": 2
+      },
+      {
+        "item_id": "true_dragon_sword_intent_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Great Zen Region"
@@ -3557,6 +4332,11 @@
         "item_id": "heaven_decoction",
         "chance": 0.73,
         "count": 2
+      },
+      {
+        "item_id": "dao_heart_roar_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Great Zen Region"
@@ -3579,6 +4359,11 @@
       {
         "item_id": "silver_moon_war_vestments",
         "chance": 0.09,
+        "count": 1
+      },
+      {
+        "item_id": "immortal_binding_roar_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -3608,6 +4393,11 @@
         "item_id": "glacial_spear",
         "chance": 0.03,
         "count": 1
+      },
+      {
+        "item_id": "primordial_chaos_sword_art_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Blood Slaughter Steppes"
@@ -3636,6 +4426,11 @@
         "item_id": "radiant_dawn_sabatons",
         "chance": 0.08,
         "count": 1
+      },
+      {
+        "item_id": "void_domain_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Blood Slaughter Steppes"
@@ -3654,6 +4449,11 @@
         "item_id": "healing_pill",
         "chance": 0.89,
         "count": 3
+      },
+      {
+        "item_id": "dao_heart_fist_intent_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Blood Slaughter Steppes"
@@ -3677,6 +4477,11 @@
         "item_id": "bone_forging_nectar_mortal",
         "chance": 0.2,
         "count": 2
+      },
+      {
+        "item_id": "immortal_binding_saber_art_no2_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Blood Slaughter Steppes"
@@ -3695,6 +4500,11 @@
         "item_id": "dragon_blood_tonic",
         "chance": 0.65,
         "count": 3
+      },
+      {
+        "item_id": "immortal_binding_fist_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Blood Slaughter Steppes"
@@ -3722,6 +4532,11 @@
       {
         "item_id": "heaven_splitting_vestments",
         "chance": 0.04,
+        "count": 1
+      },
+      {
+        "item_id": "golden_body_domain_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -3751,6 +4566,11 @@
         "item_id": "void_medallion",
         "chance": 0.03,
         "count": 1
+      },
+      {
+        "item_id": "great_sun_chant_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Blood Slaughter Steppes"
@@ -3773,6 +4593,11 @@
       {
         "item_id": "white_tiger_pendant",
         "chance": 0.06,
+        "count": 1
+      },
+      {
+        "item_id": "primordial_chaos_finger_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -3797,6 +4622,11 @@
         "item_id": "blazing_yang_sabatons",
         "chance": 0.06,
         "count": 1
+      },
+      {
+        "item_id": "true_dragon_sword_intent_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Blood Slaughter Steppes"
@@ -3820,6 +4650,11 @@
         "item_id": "spirit_stone",
         "chance": 0.31,
         "count": 1
+      },
+      {
+        "item_id": "dao_heart_roar_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Blood Slaughter Steppes"
@@ -3842,6 +4677,11 @@
       {
         "item_id": "heaven_splitting_vestments",
         "chance": 0.06,
+        "count": 1
+      },
+      {
+        "item_id": "immortal_binding_roar_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -3871,6 +4711,11 @@
         "item_id": "void_medallion",
         "chance": 0.05,
         "count": 1
+      },
+      {
+        "item_id": "primordial_chaos_sword_art_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Blood Slaughter Steppes"
@@ -3888,6 +4733,11 @@
       {
         "item_id": "soul_nurturing_nectar_mortal",
         "chance": 0.89,
+        "count": 1
+      },
+      {
+        "item_id": "void_domain_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -3917,6 +4767,11 @@
         "item_id": "phoenix_sabatons",
         "chance": 0.07,
         "count": 1
+      },
+      {
+        "item_id": "dao_heart_fist_intent_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Blood Slaughter Steppes"
@@ -3935,6 +4790,11 @@
         "item_id": "soul_nurturing_pill",
         "chance": 0.61,
         "count": 3
+      },
+      {
+        "item_id": "immortal_binding_saber_art_no2_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Blood Slaughter Steppes"
@@ -3963,6 +4823,11 @@
         "item_id": "star_origin_lantern",
         "chance": 0.03,
         "count": 1
+      },
+      {
+        "item_id": "immortal_binding_fist_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Blood Slaughter Steppes"
@@ -3985,6 +4850,11 @@
       {
         "item_id": "heaven_splitting_greaves",
         "chance": 0.07,
+        "count": 1
+      },
+      {
+        "item_id": "golden_body_domain_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -4012,6 +4882,11 @@
       },
       {
         "item_id": "ghost_flame_battle_armor",
+        "chance": 0.05,
+        "count": 1
+      },
+      {
+        "item_id": "great_sun_chant_manual",
         "chance": 0.05,
         "count": 1
       }
@@ -4042,6 +4917,11 @@
         "item_id": "heaven_splitting_greaves",
         "chance": 0.08,
         "count": 1
+      },
+      {
+        "item_id": "primordial_chaos_finger_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Five Element Temples"
@@ -4060,6 +4940,11 @@
         "item_id": "nine_revolutions_essence",
         "chance": 0.53,
         "count": 3
+      },
+      {
+        "item_id": "true_dragon_sword_intent_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Five Element Temples"
@@ -4077,6 +4962,11 @@
       {
         "item_id": "qi_pill",
         "chance": 0.56,
+        "count": 1
+      },
+      {
+        "item_id": "dao_heart_roar_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -4100,6 +4990,11 @@
       {
         "item_id": "heaven_splitting_fan",
         "chance": 0.09,
+        "count": 1
+      },
+      {
+        "item_id": "immortal_binding_roar_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -4129,6 +5024,11 @@
         "item_id": "nirvana_mirror",
         "chance": 0.08,
         "count": 1
+      },
+      {
+        "item_id": "primordial_chaos_sword_art_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Five Element Temples"
@@ -4156,6 +5056,11 @@
       {
         "item_id": "nirvana_mirror",
         "chance": 0.06,
+        "count": 1
+      },
+      {
+        "item_id": "void_domain_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -4185,6 +5090,11 @@
         "item_id": "sky_severing_immortal_sword",
         "chance": 0.09,
         "count": 1
+      },
+      {
+        "item_id": "dao_heart_fist_intent_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Five Element Temples"
@@ -4208,6 +5118,11 @@
         "item_id": "nine_nether_war_vestments",
         "chance": 0.09,
         "count": 1
+      },
+      {
+        "item_id": "immortal_binding_saber_art_no2_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Five Element Temples"
@@ -4230,6 +5145,11 @@
       {
         "item_id": "spirit_devouring_flying_sword",
         "chance": 0.03,
+        "count": 1
+      },
+      {
+        "item_id": "immortal_binding_fist_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -4259,6 +5179,11 @@
         "item_id": "radiant_dawn_seal",
         "chance": 0.1,
         "count": 1
+      },
+      {
+        "item_id": "golden_body_domain_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Five Element Temples"
@@ -4282,6 +5207,11 @@
         "item_id": "void_spirit_nectar",
         "chance": 0.22,
         "count": 3
+      },
+      {
+        "item_id": "great_sun_chant_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Five Element Temples"
@@ -4300,6 +5230,11 @@
         "item_id": "healing_pill",
         "chance": 0.74,
         "count": 2
+      },
+      {
+        "item_id": "primordial_chaos_finger_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Five Element Temples"
@@ -4318,6 +5253,11 @@
         "item_id": "dragon_blood_dan",
         "chance": 0.85,
         "count": 4
+      },
+      {
+        "item_id": "true_dragon_sword_intent_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Five Element Temples"
@@ -4346,6 +5286,11 @@
         "item_id": "vermilion_bird_battle_armor",
         "chance": 0.09,
         "count": 1
+      },
+      {
+        "item_id": "dao_heart_roar_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Five Element Temples"
@@ -4369,6 +5314,11 @@
         "item_id": "qi_pill",
         "chance": 0.23,
         "count": 1
+      },
+      {
+        "item_id": "immortal_binding_roar_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Southern Wilderness"
@@ -4387,6 +5337,11 @@
         "item_id": "dao_enlightenment_spirit_stone",
         "chance": 0.83,
         "count": 3
+      },
+      {
+        "item_id": "primordial_chaos_sword_art_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Southern Wilderness"
@@ -4405,6 +5360,11 @@
         "item_id": "great_return_pellet_mortal",
         "chance": 0.45,
         "count": 2
+      },
+      {
+        "item_id": "void_domain_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Southern Wilderness"
@@ -4423,6 +5383,11 @@
         "item_id": "great_return_dan",
         "chance": 0.89,
         "count": 3
+      },
+      {
+        "item_id": "dao_heart_fist_intent_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Southern Wilderness"
@@ -4441,6 +5406,11 @@
         "item_id": "nirvana_rebirth_elixir",
         "chance": 0.81,
         "count": 2
+      },
+      {
+        "item_id": "immortal_binding_saber_art_no2_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Southern Wilderness"
@@ -4469,6 +5439,11 @@
         "item_id": "void_charm_paper",
         "chance": 0.08,
         "count": 1
+      },
+      {
+        "item_id": "immortal_binding_fist_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Southern Wilderness"
@@ -4491,6 +5466,11 @@
       {
         "item_id": "golden_body_band",
         "chance": 0.06,
+        "count": 1
+      },
+      {
+        "item_id": "golden_body_domain_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -4515,6 +5495,11 @@
         "item_id": "primordial_dan",
         "chance": 0.46,
         "count": 3
+      },
+      {
+        "item_id": "great_sun_chant_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Southern Wilderness"
@@ -4543,6 +5528,11 @@
         "item_id": "spirit_devouring_flying_sword",
         "chance": 0.08,
         "count": 1
+      },
+      {
+        "item_id": "primordial_chaos_finger_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Southern Wilderness"
@@ -4565,6 +5555,11 @@
       {
         "item_id": "ghost_flame_band",
         "chance": 0.02,
+        "count": 1
+      },
+      {
+        "item_id": "true_dragon_sword_intent_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -4589,6 +5584,11 @@
         "item_id": "life_extending_elixir",
         "chance": 0.22,
         "count": 2
+      },
+      {
+        "item_id": "dao_heart_roar_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Southern Wilderness"
@@ -4607,6 +5607,11 @@
         "item_id": "golden_body_pellet_mortal",
         "chance": 0.33,
         "count": 3
+      },
+      {
+        "item_id": "immortal_binding_roar_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Southern Wilderness"
@@ -4635,6 +5640,11 @@
         "item_id": "vermilion_bird_battle_armor",
         "chance": 0.05,
         "count": 1
+      },
+      {
+        "item_id": "primordial_chaos_sword_art_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Southern Wilderness"
@@ -4658,6 +5668,11 @@
         "item_id": "inferno_war_vestments",
         "chance": 0.06,
         "count": 1
+      },
+      {
+        "item_id": "void_domain_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Southern Wilderness"
@@ -4676,6 +5691,11 @@
         "item_id": "star_gathering_pellet",
         "chance": 0.5,
         "count": 2
+      },
+      {
+        "item_id": "dao_heart_fist_intent_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Ancient Ruins"
@@ -4698,6 +5718,11 @@
       {
         "item_id": "purple_cloud_sky_sword_mk_2",
         "chance": 0.04,
+        "count": 1
+      },
+      {
+        "item_id": "immortal_binding_saber_art_no2_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -4727,6 +5752,11 @@
         "item_id": "iron_bone_ring",
         "chance": 0.1,
         "count": 1
+      },
+      {
+        "item_id": "immortal_binding_fist_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Ancient Ruins"
@@ -4755,6 +5785,11 @@
         "item_id": "heaven_splitting_boots",
         "chance": 0.06,
         "count": 1
+      },
+      {
+        "item_id": "golden_body_domain_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Ancient Ruins"
@@ -4777,6 +5812,11 @@
       {
         "item_id": "blazing_yang_circlet",
         "chance": 0.08,
+        "count": 1
+      },
+      {
+        "item_id": "great_sun_chant_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -4801,6 +5841,11 @@
         "item_id": "blazing_yang_talisman",
         "chance": 0.06,
         "count": 1
+      },
+      {
+        "item_id": "primordial_chaos_finger_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Ancient Ruins"
@@ -4819,6 +5864,11 @@
         "item_id": "profound_pill",
         "chance": 0.37,
         "count": 2
+      },
+      {
+        "item_id": "true_dragon_sword_intent_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Ancient Ruins"
@@ -4837,6 +5887,11 @@
         "item_id": "immortal_ascension_nectar_no3",
         "chance": 0.77,
         "count": 3
+      },
+      {
+        "item_id": "dao_heart_roar_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Ancient Ruins"
@@ -4855,6 +5910,11 @@
         "item_id": "beast_core",
         "chance": 0.55,
         "count": 3
+      },
+      {
+        "item_id": "immortal_binding_roar_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Ancient Ruins"
@@ -4877,6 +5937,11 @@
       {
         "item_id": "purple_cloud_pill",
         "chance": 0.51,
+        "count": 1
+      },
+      {
+        "item_id": "primordial_chaos_sword_art_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -4906,6 +5971,11 @@
         "item_id": "earth_vein_sigil",
         "chance": 0.02,
         "count": 1
+      },
+      {
+        "item_id": "void_domain_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Ancient Ruins"
@@ -4924,6 +5994,11 @@
         "item_id": "healing_pill",
         "chance": 0.89,
         "count": 4
+      },
+      {
+        "item_id": "dao_heart_fist_intent_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Ancient Ruins"
@@ -4952,6 +6027,11 @@
         "item_id": "frost_sigil",
         "chance": 0.07,
         "count": 1
+      },
+      {
+        "item_id": "immortal_binding_saber_art_no2_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Planetary Gate Array"
@@ -4974,6 +6054,11 @@
       {
         "item_id": "nine_nether_circlet",
         "chance": 0.06,
+        "count": 1
+      },
+      {
+        "item_id": "immortal_binding_fist_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -5003,6 +6088,11 @@
         "item_id": "scarlet_sun_cloak_mk_2",
         "chance": 0.04,
         "count": 1
+      },
+      {
+        "item_id": "golden_body_domain_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Planetary Gate Array"
@@ -5025,6 +6115,11 @@
       {
         "item_id": "eternal_night_treads",
         "chance": 0.04,
+        "count": 1
+      },
+      {
+        "item_id": "great_sun_chant_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -5049,6 +6144,11 @@
         "item_id": "profound_pill",
         "chance": 0.47,
         "count": 2
+      },
+      {
+        "item_id": "primordial_chaos_finger_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Planetary Gate Array"
@@ -5067,6 +6167,11 @@
         "item_id": "spirit_stone",
         "chance": 0.76,
         "count": 5
+      },
+      {
+        "item_id": "true_dragon_sword_intent_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Planetary Gate Array"
@@ -5085,6 +6190,11 @@
         "item_id": "beast_core",
         "chance": 0.32,
         "count": 2
+      },
+      {
+        "item_id": "dao_heart_roar_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Planetary Gate Array"
@@ -5107,6 +6217,11 @@
       {
         "item_id": "eternal_night_treads",
         "chance": 0.06,
+        "count": 1
+      },
+      {
+        "item_id": "immortal_binding_roar_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -5131,6 +6246,11 @@
         "item_id": "demon_sealing_spear",
         "chance": 0.07,
         "count": 1
+      },
+      {
+        "item_id": "primordial_chaos_sword_art_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Planetary Gate Array"
@@ -5149,6 +6269,11 @@
         "item_id": "primordial_pellet",
         "chance": 0.54,
         "count": 2
+      },
+      {
+        "item_id": "void_domain_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Planetary Gate Array"
@@ -5171,6 +6296,11 @@
       {
         "item_id": "beast_core",
         "chance": 0.35,
+        "count": 1
+      },
+      {
+        "item_id": "dao_heart_fist_intent_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -5195,6 +6325,11 @@
         "item_id": "plain_traveller_cloak",
         "chance": 0.06,
         "count": 1
+      },
+      {
+        "item_id": "iron_sword_intent_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Verdant Fields"
@@ -5213,6 +6348,11 @@
         "item_id": "bone_forging_nectar",
         "chance": 0.36,
         "count": 1
+      },
+      {
+        "item_id": "white_tiger_seal_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Verdant Fields"
@@ -5230,6 +6370,11 @@
       {
         "item_id": "healing_pill",
         "chance": 0.69,
+        "count": 1
+      },
+      {
+        "item_id": "glacial_sword_intent_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -5259,6 +6404,11 @@
         "item_id": "cracked_protection_talisman",
         "chance": 0.06,
         "count": 1
+      },
+      {
+        "item_id": "roaring_tide_sword_intent_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Verdant Fields"
@@ -5282,6 +6432,11 @@
         "item_id": "bone_forging_dan",
         "chance": 0.48,
         "count": 1
+      },
+      {
+        "item_id": "glacial_footwork_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Verdant Fields"
@@ -5304,6 +6459,11 @@
       {
         "item_id": "beast_core",
         "chance": 0.5,
+        "count": 1
+      },
+      {
+        "item_id": "roaring_tide_sword_intent_no2_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -5333,6 +6493,11 @@
         "item_id": "iron_body_ring",
         "chance": 0.09,
         "count": 1
+      },
+      {
+        "item_id": "inferno_constitution_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Verdant Fields"
@@ -5355,6 +6520,11 @@
       {
         "item_id": "heaven_splitting_spear",
         "chance": 0.06,
+        "count": 1
+      },
+      {
+        "item_id": "shadowless_sword_intent_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],
@@ -5384,6 +6554,11 @@
         "item_id": "minor_qi_ring",
         "chance": 0.08,
         "count": 1
+      },
+      {
+        "item_id": "white_tiger_fist_intent_manual",
+        "chance": 0.05,
+        "count": 1
       }
     ],
     "area": "Verdant Fields"
@@ -5406,6 +6581,11 @@
       {
         "item_id": "beast_core",
         "chance": 0.24,
+        "count": 1
+      },
+      {
+        "item_id": "nether_palm_manual",
+        "chance": 0.05,
         "count": 1
       }
     ],

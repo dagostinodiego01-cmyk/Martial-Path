@@ -43,6 +43,16 @@ def test_relationship_score_can_go_negative_into_hostile():
     assert result["tier"] == "hostile"
 
 
+def test_meets_min_tier_orders_tiers():
+    system = _system()
+    assert system.meets_min_tier("neutral", "neutral") is True
+    assert system.meets_min_tier("neutral", "friendly") is False
+    assert system.meets_min_tier("trusted", "friendly") is True
+    assert system.meets_min_tier("hostile", "friendly") is False
+    # unknown minimum does not gate (fail-open on bad/legacy data)
+    assert system.meets_min_tier("neutral", "unknown_tier") is True
+
+
 def test_remember_records_each_action_once():
     system = _system()
     store = {}

@@ -35,14 +35,17 @@ class LifespanSystem:
 
         Lifespan follows the Essence Gathering realm. Before Essence cultivation
         is unlocked the character is still mortal, so the mortal base applies.
+        ``lifespan`` passive techniques add a flat bonus on top of the
+        realm-derived value (never applied to an immortal realm).
         """
+        bonus = float(getattr(player, "lifespan_bonus_years", 0.0))
         if not essence_unlocked:
-            return self._mortal_base
+            return self._mortal_base + bonus
         realm_id = player.cultivation_state.essence.realm_id
         if realm_id not in self._lifespan_by_realm:
-            return self._mortal_base
+            return self._mortal_base + bonus
         value = self._lifespan_by_realm[realm_id]
-        return None if value is None else float(value)
+        return None if value is None else float(value) + bonus
 
     def time_cost(self, action_key: str) -> float:
         """Return the age (in years) a given action consumes."""

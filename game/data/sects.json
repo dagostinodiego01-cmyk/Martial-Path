@@ -1,0 +1,50 @@
+[
+  {
+    "id": "lin_academy",
+    "display_name": "Lin Academy",
+    "path": "Lin Academy",
+    "location_ids": ["lin_academy"],
+    "description": "The scholarly academy where fledgling cultivators first learn to temper body and will.",
+    "join_requirements": {
+      "min_reputation": 0,
+      "min_body_realm": "mortal"
+    },
+    "contribution_ranks": ["outer_disciple", "inner_disciple", "core_disciple"]
+  },
+  {
+    "id": "seven_profound_valleys",
+    "display_name": "Seven Profound Valleys",
+    "path": "Seven Profound Valleys",
+    "location_ids": ["seven_profound_valleys_gate", "seven_profound_valleys_inner"],
+    "description": "A valley sect that prizes steady foundations and unbroken lineage over flashy power.",
+    "join_requirements": {
+      "min_reputation": 5,
+      "min_body_realm": "flesh_training"
+    },
+    "contribution_ranks": ["outer_disciple", "inner_disciple", "core_disciple", "elder"]
+  },
+  {
+    "id": "divine_phoenix_island",
+    "display_name": "Divine Phoenix Island",
+    "path": "Divine Phoenix",
+    "location_ids": ["divine_phoenix_island"],
+    "description": "A proud island sect whose disciples walk the rebirth path of the divine phoenix.",
+    "join_requirements": {
+      "min_reputation": 15,
+      "min_body_realm": "bone_forging"
+    },
+    "contribution_ranks": ["outer_disciple", "inner_disciple", "core_disciple", "elder"]
+  },
+  {
+    "id": "asura_divine_kingdom",
+    "display_name": "Asura Divine Kingdom",
+    "path": "Asura Path",
+    "location_ids": ["asura_divine_kingdom"],
+    "description": "A demonic kingdom that welcomes only those who have stained their name in blood.",
+    "join_requirements": {
+      "max_reputation": -10,
+      "min_body_realm": "body_pulse_condensation"
+    },
+    "contribution_ranks": ["blood_disciple", "asura_candidate", "asura_lord"]
+  }
+]

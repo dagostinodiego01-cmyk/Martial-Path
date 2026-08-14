@@ -2,49 +2,1976 @@
   {
     "id": "azure_stream_market",
     "display_name": "Azure Stream Market",
-    "location_ids": ["azure_village", "starting_village"],
+    "location_ids": [
+      "azure_village",
+      "starting_village"
+    ],
     "description": "A modest village market selling basic weapons, travel gear, and recovery pills.",
     "stock": [
-      {"item_id": "training_sword", "price": {"gold": 25}, "stock": 1},
-      {"item_id": "wooden_staff", "price": {"gold": 20}, "stock": 1},
-      {"item_id": "patched_leather_armor", "price": {"gold": 35}, "stock": 1},
-      {"item_id": "plain_traveller_cloak", "price": {"gold": 18}, "stock": 1},
-      {"item_id": "worn_travel_boots", "price": {"gold": 20}, "stock": 1},
-      {"item_id": "healing_pill", "price": {"gold": 10}},
-      {"item_id": "qi_pill", "price": {"gold": 12}}
+      {
+        "item_id": "training_sword",
+        "price": {
+          "gold": 25
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "wooden_staff",
+        "price": {
+          "gold": 20
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "patched_leather_armor",
+        "price": {
+          "gold": 35
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "plain_traveller_cloak",
+        "price": {
+          "gold": 18
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "worn_travel_boots",
+        "price": {
+          "gold": 20
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "healing_pill",
+        "price": {
+          "gold": 10
+        }
+      },
+      {
+        "item_id": "qi_pill",
+        "price": {
+          "gold": 12
+        }
+      },
+      {
+        "item_id": "iron_fist_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "spirit_palm_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "flowing_step_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "windless_roar_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "thunderclap_chant_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "earth_vein_saber_art_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "windless_palm_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "iron_body_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "white_tiger_chant_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "roaring_tide_fist_intent_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "roaring_tide_roar_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "vermilion_bird_palm_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "nine_yang_domain_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "white_tiger_palm_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "vermilion_bird_ward_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "azure_dragon_roar_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "earth_vein_guard_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "glacial_sword_art_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "nine_yin_sutra_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "black_tortoise_breathing_method_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "nine_yang_guard_no2_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "inferno_palm_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "vermilion_bird_fist_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "windless_chant_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "windless_saber_art_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "azure_dragon_sword_art_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "iron_body_no2_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "glacial_sword_art_no2_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "nine_yang_finger_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "white_tiger_palm_no2_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "azure_dragon_eye_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "glacial_saber_art_no2_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "inferno_sutra_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "azure_dragon_domain_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "earth_vein_aura_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "nine_yin_fist_intent_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "earth_vein_sutra_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "iron_kick_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "thunderclap_eye_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "earth_vein_sword_art_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "iron_sword_intent_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "myriad_sword_sutra_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "glacial_sword_intent_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "roaring_tide_sword_intent_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "glacial_footwork_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "roaring_tide_sword_intent_no2_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "inferno_constitution_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "black_tortoise_seal_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "white_tiger_fist_intent_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "nine_yin_saber_art_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "black_tortoise_scripture_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "inferno_body_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "white_tiger_chant_no2_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "nine_yin_bloodline_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "thunderclap_constitution_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "windless_roar_no3_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "vermilion_bird_meditation_no2_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "windless_chant_no2_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "inferno_seal_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "nine_yang_seal_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "nine_yang_footwork_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "black_tortoise_fist_intent_manual",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "nine_yang_guard_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "nether_palm_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "myriad_sword_body_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "mountain_crushing_sword_art_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "thunderclap_sword_intent_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "black_tortoise_guard_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "primordial_chaos_meditation_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "glacial_saber_art_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "earth_vein_kick_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "iron_guard_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "vermilion_bird_meditation_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "inferno_bloodline_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "windless_sword_art_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "star_shattering_guard_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "iron_roar_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "great_sun_ward_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "windless_roar_no2_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "glacial_bloodline_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "nine_yin_seal_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "iron_fist_intent_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "myriad_sword_roar_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "windless_saber_art_no2_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "soul_severing_scripture_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "black_tortoise_body_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "azure_dragon_eye_no2_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "myriad_sword_aura_no2_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "mountain_crushing_sutra_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "inferno_fist_intent_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "thunderclap_bloodline_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "earth_vein_chant_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "nether_finger_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "white_tiger_breathing_method_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "white_tiger_seal_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "inferno_claw_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "nether_constitution_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "inferno_aura_no2_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "purple_cloud_sword_intent_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "thunderclap_chant_no2_manual",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "shadowless_sword_intent_manual",
+        "price": {
+          "gold": 60
+        }
+      }
     ]
   },
   {
     "id": "sky_fortune_cultivator_market",
     "display_name": "Sky Fortune Cultivator Market",
-    "location_ids": ["sky_fortune_capital", "south_horizon_city"],
+    "location_ids": [
+      "sky_fortune_capital",
+      "south_horizon_city"
+    ],
     "description": "A cultivator market where spirit stones buy low-grade treasures and breakthrough aids.",
     "stock": [
-      {"item_id": "bone_forged_blade", "price": {"spirit_stone": 3}, "stock": 1},
-      {"item_id": "sect_disciple_sword", "price": {"spirit_stone": 3}, "stock": 1},
-      {"item_id": "beast_hide_vest", "price": {"spirit_stone": 2}, "stock": 1},
-      {"item_id": "cloudstep_boots", "price": {"spirit_stone": 2}, "stock": 1},
-      {"item_id": "mist_concealment_cloak", "price": {"spirit_stone": 2}, "stock": 1},
-      {"item_id": "minor_qi_ring", "price": {"spirit_stone": 2}, "stock": 1},
-      {"item_id": "iron_body_ring", "price": {"spirit_stone": 2}, "stock": 1},
-      {"item_id": "spirit_jade_amulet", "price": {"spirit_stone": 3}, "stock": 1},
-      {"item_id": "clear_mind_amulet", "price": {"spirit_stone": 3}, "stock": 1},
-      {"item_id": "minor_breakthrough_talisman", "price": {"spirit_stone": 4}, "stock": 1}
+      {
+        "item_id": "bone_forged_blade",
+        "price": {
+          "spirit_stone": 3
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "sect_disciple_sword",
+        "price": {
+          "spirit_stone": 3
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "beast_hide_vest",
+        "price": {
+          "spirit_stone": 2
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "cloudstep_boots",
+        "price": {
+          "spirit_stone": 2
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "mist_concealment_cloak",
+        "price": {
+          "spirit_stone": 2
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "minor_qi_ring",
+        "price": {
+          "spirit_stone": 2
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "iron_body_ring",
+        "price": {
+          "spirit_stone": 2
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "spirit_jade_amulet",
+        "price": {
+          "spirit_stone": 3
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "clear_mind_amulet",
+        "price": {
+          "spirit_stone": 3
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "minor_breakthrough_talisman",
+        "price": {
+          "spirit_stone": 4
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "great_sun_domain_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "nether_eye_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "purple_cloud_sword_art_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "purple_cloud_constitution_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "blood_sea_kick_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "purple_cloud_guard_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "true_dragon_constitution_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "great_sun_guard_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "mountain_crushing_fist_no2_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "shadowless_domain_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "nirvana_aura_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "purple_cloud_bloodline_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "purple_cloud_scripture_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "vermilion_bird_claw_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "heaven_splitting_breathing_method_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "glacial_claw_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "blood_sea_aura_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "shadowless_footwork_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "soul_severing_guard_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "vermilion_bird_roar_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "shadowless_footwork_no2_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "nine_yin_sword_art_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "nether_saber_art_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "heaven_splitting_footwork_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "great_sun_domain_no2_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "glacial_body_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "nether_roar_no2_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "black_tortoise_bloodline_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "windless_fist_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "phoenix_footwork_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "myriad_sword_finger_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "soul_severing_kick_no2_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "nine_yang_roar_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "earth_vein_footwork_manual",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "shadowless_body_manual",
+        "price": {
+          "spirit_stone": 5
+        }
+      },
+      {
+        "item_id": "blood_sea_roar_manual",
+        "price": {
+          "spirit_stone": 5
+        }
+      },
+      {
+        "item_id": "void_sutra_manual",
+        "price": {
+          "spirit_stone": 5
+        }
+      },
+      {
+        "item_id": "nirvana_scripture_manual",
+        "price": {
+          "spirit_stone": 5
+        }
+      },
+      {
+        "item_id": "blood_sea_palm_manual",
+        "price": {
+          "spirit_stone": 5
+        }
+      },
+      {
+        "item_id": "primordial_chaos_claw_manual",
+        "price": {
+          "spirit_stone": 5
+        }
+      },
+      {
+        "item_id": "myriad_sword_aura_manual",
+        "price": {
+          "spirit_stone": 5
+        }
+      },
+      {
+        "item_id": "golden_body_chant_manual",
+        "price": {
+          "spirit_stone": 5
+        }
+      },
+      {
+        "item_id": "blood_sea_saber_art_manual",
+        "price": {
+          "spirit_stone": 5
+        }
+      },
+      {
+        "item_id": "nether_claw_manual",
+        "price": {
+          "spirit_stone": 5
+        }
+      },
+      {
+        "item_id": "nirvana_chant_manual",
+        "price": {
+          "spirit_stone": 5
+        }
+      },
+      {
+        "item_id": "primordial_chaos_seal_manual",
+        "price": {
+          "spirit_stone": 5
+        }
+      },
+      {
+        "item_id": "nether_aura_manual",
+        "price": {
+          "spirit_stone": 5
+        }
+      },
+      {
+        "item_id": "mountain_crushing_fist_no3_manual",
+        "price": {
+          "spirit_stone": 5
+        }
+      },
+      {
+        "item_id": "true_dragon_constitution_no2_manual",
+        "price": {
+          "spirit_stone": 5
+        }
+      },
+      {
+        "item_id": "phoenix_sword_intent_manual",
+        "price": {
+          "spirit_stone": 5
+        }
+      },
+      {
+        "item_id": "nirvana_aura_no2_manual",
+        "price": {
+          "spirit_stone": 5
+        }
+      },
+      {
+        "item_id": "soul_severing_sword_intent_manual",
+        "price": {
+          "spirit_stone": 5
+        }
+      },
+      {
+        "item_id": "dao_heart_aura_manual",
+        "price": {
+          "spirit_stone": 5
+        }
+      },
+      {
+        "item_id": "nether_aura_no2_manual",
+        "price": {
+          "spirit_stone": 5
+        }
+      },
+      {
+        "item_id": "nirvana_scripture_no2_manual",
+        "price": {
+          "spirit_stone": 5
+        }
+      },
+      {
+        "item_id": "mountain_crushing_chant_manual",
+        "price": {
+          "spirit_stone": 5
+        }
+      },
+      {
+        "item_id": "myriad_sword_kick_manual",
+        "price": {
+          "spirit_stone": 5
+        }
+      },
+      {
+        "item_id": "myriad_sword_finger_no2_manual",
+        "price": {
+          "spirit_stone": 5
+        }
+      },
+      {
+        "item_id": "star_shattering_fist_intent_manual",
+        "price": {
+          "spirit_stone": 8
+        }
+      },
+      {
+        "item_id": "mountain_crushing_fist_manual",
+        "price": {
+          "spirit_stone": 8
+        }
+      },
+      {
+        "item_id": "dao_heart_meditation_manual",
+        "price": {
+          "spirit_stone": 8
+        }
+      },
+      {
+        "item_id": "blood_sea_body_manual",
+        "price": {
+          "spirit_stone": 8
+        }
+      },
+      {
+        "item_id": "dao_heart_scripture_manual",
+        "price": {
+          "spirit_stone": 8
+        }
+      },
+      {
+        "item_id": "soul_severing_kick_manual",
+        "price": {
+          "spirit_stone": 8
+        }
+      },
+      {
+        "item_id": "purple_cloud_fist_intent_manual",
+        "price": {
+          "spirit_stone": 8
+        }
+      },
+      {
+        "item_id": "true_dragon_seal_manual",
+        "price": {
+          "spirit_stone": 8
+        }
+      },
+      {
+        "item_id": "inferno_aura_manual",
+        "price": {
+          "spirit_stone": 8
+        }
+      },
+      {
+        "item_id": "void_kick_manual",
+        "price": {
+          "spirit_stone": 8
+        }
+      },
+      {
+        "item_id": "void_claw_manual",
+        "price": {
+          "spirit_stone": 8
+        }
+      },
+      {
+        "item_id": "heaven_splitting_kick_manual",
+        "price": {
+          "spirit_stone": 8
+        }
+      },
+      {
+        "item_id": "immortal_binding_saber_art_manual",
+        "price": {
+          "spirit_stone": 8
+        }
+      },
+      {
+        "item_id": "star_shattering_roar_manual",
+        "price": {
+          "spirit_stone": 8
+        }
+      },
+      {
+        "item_id": "heaven_splitting_roar_manual",
+        "price": {
+          "spirit_stone": 8
+        }
+      },
+      {
+        "item_id": "shadowless_saber_art_manual",
+        "price": {
+          "spirit_stone": 8
+        }
+      },
+      {
+        "item_id": "primordial_chaos_scripture_manual",
+        "price": {
+          "spirit_stone": 8
+        }
+      },
+      {
+        "item_id": "void_body_manual",
+        "price": {
+          "spirit_stone": 8
+        }
+      },
+      {
+        "item_id": "shadowless_ward_manual",
+        "price": {
+          "spirit_stone": 8
+        }
+      },
+      {
+        "item_id": "primordial_chaos_domain_manual",
+        "price": {
+          "spirit_stone": 8
+        }
+      }
     ]
   },
   {
     "id": "nine_furnace_auction_house",
     "display_name": "Nine Furnace Auction House",
-    "location_ids": ["nine_furnace_kingdom", "rival_divine_kingdom"],
+    "location_ids": [
+      "nine_furnace_kingdom",
+      "rival_divine_kingdom"
+    ],
     "description": "A high-value auction house with rarer defensive treasures and flying swords.",
     "stock": [
-      {"item_id": "stone_skin_armor", "price": {"spirit_stone": 8}, "stock": 1},
-      {"item_id": "azure_meridian_robes", "price": {"spirit_stone": 7}, "stock": 1},
-      {"item_id": "heart_guard_amulet", "price": {"spirit_stone": 7}, "stock": 1},
-      {"item_id": "bronze_spirit_mirror", "price": {"spirit_stone": 12}, "stock": 1},
-      {"item_id": "ancient_jade_slip", "price": {"spirit_stone": 13}, "stock": 1},
-      {"item_id": "rusted_flying_sword", "price": {"spirit_stone": 5}, "stock": 1},
-      {"item_id": "outer_disciple_flying_sword", "price": {"spirit_stone": 10}, "stock": 1}
+      {
+        "item_id": "stone_skin_armor",
+        "price": {
+          "spirit_stone": 8
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "azure_meridian_robes",
+        "price": {
+          "spirit_stone": 7
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "heart_guard_amulet",
+        "price": {
+          "spirit_stone": 7
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "bronze_spirit_mirror",
+        "price": {
+          "spirit_stone": 12
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "ancient_jade_slip",
+        "price": {
+          "spirit_stone": 13
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "rusted_flying_sword",
+        "price": {
+          "spirit_stone": 5
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "outer_disciple_flying_sword",
+        "price": {
+          "spirit_stone": 10
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "primordial_chaos_fist_manual",
+        "price": {
+          "spirit_stone": 12
+        }
+      },
+      {
+        "item_id": "phoenix_sword_art_manual",
+        "price": {
+          "spirit_stone": 12
+        }
+      },
+      {
+        "item_id": "dao_heart_sword_intent_manual",
+        "price": {
+          "spirit_stone": 12
+        }
+      },
+      {
+        "item_id": "dao_heart_roar_no2_manual",
+        "price": {
+          "spirit_stone": 12
+        }
+      },
+      {
+        "item_id": "dao_heart_roar_no3_manual",
+        "price": {
+          "spirit_stone": 12
+        }
+      },
+      {
+        "item_id": "true_dragon_palm_manual",
+        "price": {
+          "spirit_stone": 12
+        }
+      },
+      {
+        "item_id": "nether_roar_manual",
+        "price": {
+          "spirit_stone": 12
+        }
+      },
+      {
+        "item_id": "nirvana_sword_intent_manual",
+        "price": {
+          "spirit_stone": 12
+        }
+      },
+      {
+        "item_id": "true_dragon_sword_intent_no2_manual",
+        "price": {
+          "spirit_stone": 12
+        }
+      },
+      {
+        "item_id": "heaven_splitting_seal_manual",
+        "price": {
+          "spirit_stone": 12
+        }
+      },
+      {
+        "item_id": "shadowless_roar_manual",
+        "price": {
+          "spirit_stone": 12
+        }
+      },
+      {
+        "item_id": "myriad_sword_claw_manual",
+        "price": {
+          "spirit_stone": 12
+        }
+      },
+      {
+        "item_id": "primordial_chaos_meditation_no2_manual",
+        "price": {
+          "spirit_stone": 12
+        }
+      },
+      {
+        "item_id": "phoenix_fist_manual",
+        "price": {
+          "spirit_stone": 12
+        }
+      },
+      {
+        "item_id": "dao_heart_sword_intent_no2_manual",
+        "price": {
+          "spirit_stone": 12
+        }
+      },
+      {
+        "item_id": "star_shattering_seal_manual",
+        "price": {
+          "spirit_stone": 12
+        }
+      },
+      {
+        "item_id": "phoenix_seal_manual",
+        "price": {
+          "spirit_stone": 12
+        }
+      },
+      {
+        "item_id": "purple_cloud_saber_art_manual",
+        "price": {
+          "spirit_stone": 12
+        }
+      },
+      {
+        "item_id": "true_dragon_sword_intent_manual",
+        "price": {
+          "spirit_stone": 20
+        }
+      },
+      {
+        "item_id": "dao_heart_roar_manual",
+        "price": {
+          "spirit_stone": 20
+        }
+      },
+      {
+        "item_id": "immortal_binding_roar_manual",
+        "price": {
+          "spirit_stone": 20
+        }
+      },
+      {
+        "item_id": "primordial_chaos_sword_art_manual",
+        "price": {
+          "spirit_stone": 20
+        }
+      },
+      {
+        "item_id": "void_domain_manual",
+        "price": {
+          "spirit_stone": 20
+        }
+      },
+      {
+        "item_id": "dao_heart_fist_intent_manual",
+        "price": {
+          "spirit_stone": 20
+        }
+      },
+      {
+        "item_id": "immortal_binding_saber_art_no2_manual",
+        "price": {
+          "spirit_stone": 20
+        }
+      },
+      {
+        "item_id": "immortal_binding_fist_manual",
+        "price": {
+          "spirit_stone": 20
+        }
+      },
+      {
+        "item_id": "golden_body_domain_manual",
+        "price": {
+          "spirit_stone": 20
+        }
+      },
+      {
+        "item_id": "great_sun_chant_manual",
+        "price": {
+          "spirit_stone": 20
+        }
+      },
+      {
+        "item_id": "primordial_chaos_finger_manual",
+        "price": {
+          "spirit_stone": 20
+        }
+      }
+    ]
+  },
+  {
+    "id": "lin_academy_supply",
+    "display_name": "Lin Academy Supply Hall",
+    "location_ids": [
+      "lin_academy"
+    ],
+    "description": "The academy's outfitter, selling mortal-grade arms and recovery pills to new disciples.",
+    "stock": [
+      {
+        "item_id": "training_sword",
+        "price": {
+          "gold": 25
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "iron_spear",
+        "price": {
+          "gold": 35
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "patched_leather_armor",
+        "price": {
+          "gold": 35
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "worn_travel_boots",
+        "price": {
+          "gold": 20
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "healing_pill",
+        "price": {
+          "gold": 10
+        }
+      },
+      {
+        "item_id": "qi_pill",
+        "price": {
+          "gold": 12
+        }
+      },
+      {
+        "item_id": "profound_pill",
+        "price": {
+          "gold": 25
+        }
+      }
+    ]
+  },
+  {
+    "id": "beast_mountain_trader",
+    "display_name": "Beast Mountain Trader",
+    "location_ids": [
+      "beast_mountain"
+    ],
+    "description": "A weather-beaten trader swapping mortal gear and pelts to hunters heading uphill.",
+    "stock": [
+      {
+        "item_id": "blazing_yang_saber",
+        "price": {
+          "gold": 29
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "silver_moon_plate",
+        "price": {
+          "gold": 30
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "inferno_treads",
+        "price": {
+          "gold": 34
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "plain_traveller_cloak",
+        "price": {
+          "gold": 18
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "outer_disciple_cloak",
+        "price": {
+          "gold": 60
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "healing_pill",
+        "price": {
+          "gold": 10
+        }
+      },
+      {
+        "item_id": "qi_pill",
+        "price": {
+          "gold": 12
+        }
+      },
+      {
+        "item_id": "beast_core",
+        "price": {
+          "gold": 15
+        }
+      }
+    ]
+  },
+  {
+    "id": "seven_profound_valleys_exchange",
+    "display_name": "Seven Profound Valleys Exchange",
+    "location_ids": [
+      "seven_profound_valleys_gate",
+      "seven_profound_valleys_inner"
+    ],
+    "description": "The valley sect's gate-market, selling low-spirit gear and breakthrough aids to outer disciples.",
+    "stock": [
+      {
+        "item_id": "bone_forged_blade",
+        "price": {
+          "gold": 180
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "beast_hide_vest",
+        "price": {
+          "gold": 120
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "cloudstep_boots",
+        "price": {
+          "gold": 140
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "minor_qi_ring",
+        "price": {
+          "gold": 80
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "mystic_pill",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "profound_nectar",
+        "price": {
+          "gold": 40
+        }
+      },
+      {
+        "item_id": "marrow_cleansing_pill",
+        "price": {
+          "gold": 25
+        }
+      }
+    ]
+  },
+  {
+    "id": "zenlight_monastery_hall",
+    "display_name": "Zenlight Monastery Hall",
+    "location_ids": [
+      "zenlight_monastery"
+    ],
+    "description": "A quiet monastery hall selling mind-clearing amulets, talismans, and tonic pills.",
+    "stock": [
+      {
+        "item_id": "clear_mind_amulet",
+        "price": {
+          "gold": 190
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "foundation_stone_amulet",
+        "price": {
+          "gold": 300
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "cracked_protection_talisman",
+        "price": {
+          "gold": 45
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "healing_pill",
+        "price": {
+          "gold": 10
+        }
+      },
+      {
+        "item_id": "profound_pill",
+        "price": {
+          "gold": 25
+        }
+      },
+      {
+        "item_id": "earth_tonic",
+        "price": {
+          "gold": 50
+        }
+      }
+    ]
+  },
+  {
+    "id": "south_sea_port_bazaar",
+    "display_name": "South Sea Port Bazaar",
+    "location_ids": [
+      "south_sea_port"
+    ],
+    "description": "A bustling port bazaar where spirit stones buy cultivator gear and breakthrough elixirs.",
+    "stock": [
+      {
+        "item_id": "sect_disciple_sword",
+        "price": {
+          "spirit_stone": 3
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "mist_concealment_cloak",
+        "price": {
+          "spirit_stone": 2
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "iron_thread_boots",
+        "price": {
+          "spirit_stone": 2
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "spirit_jade_amulet",
+        "price": {
+          "spirit_stone": 3
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "minor_breakthrough_talisman",
+        "price": {
+          "spirit_stone": 4
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "profound_nectar",
+        "price": {
+          "spirit_stone": 1
+        }
+      },
+      {
+        "item_id": "mystic_pill",
+        "price": {
+          "spirit_stone": 1
+        }
+      },
+      {
+        "item_id": "frost_jade_elixir",
+        "price": {
+          "spirit_stone": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "vermillion_bird_kingdom_market",
+    "display_name": "Vermillion Bird Kingdom Market",
+    "location_ids": [
+      "vermillion_bird_kingdom"
+    ],
+    "description": "The kingdom's grand market, trading mid-spirit arms and elixirs for spirit stones.",
+    "stock": [
+      {
+        "item_id": "spirit_devouring_saber",
+        "price": {
+          "spirit_stone": 5
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "nine_nether_vestments",
+        "price": {
+          "spirit_stone": 5
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "mist_walking_boots",
+        "price": {
+          "spirit_stone": 6
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "blood_heat_ring",
+        "price": {
+          "spirit_stone": 6
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "heart_guard_amulet",
+        "price": {
+          "spirit_stone": 6
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "blood_sealing_talisman",
+        "price": {
+          "spirit_stone": 4
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "mystic_dan",
+        "price": {
+          "spirit_stone": 1
+        }
+      },
+      {
+        "item_id": "heaven_tonic",
+        "price": {
+          "spirit_stone": 2
+        }
+      },
+      {
+        "item_id": "nine_revolutions_elixir",
+        "price": {
+          "spirit_stone": 2
+        }
+      }
+    ]
+  },
+  {
+    "id": "asura_divine_kingdom_blackmarket",
+    "display_name": "Asura Divine Kingdom Black Market",
+    "location_ids": [
+      "asura_divine_kingdom"
+    ],
+    "description": "A black market dealing in high-spirit arms and lifespan-extending elixirs.",
+    "stock": [
+      {
+        "item_id": "blood_moon_halberd",
+        "price": {
+          "spirit_stone": 13
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "sky_severing_scale_mail",
+        "price": {
+          "spirit_stone": 13
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "blazing_yang_sabatons",
+        "price": {
+          "spirit_stone": 11
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "bronze_spirit_mirror",
+        "price": {
+          "spirit_stone": 10
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "ancient_jade_slip",
+        "price": {
+          "spirit_stone": 10
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "marrow_cleansing_elixir",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "item_id": "purple_cloud_dan",
+        "price": {
+          "spirit_stone": 2
+        }
+      }
+    ]
+  },
+  {
+    "id": "planetary_gate_array_exchange",
+    "display_name": "Planetary Gate Array Exchange",
+    "location_ids": [
+      "planetary_gate_array"
+    ],
+    "description": "An exchange on the gate array's threshold, selling earth-grade treasures and breakthrough pills.",
+    "stock": [
+      {
+        "item_id": "cloud_sea_halberd",
+        "price": {
+          "spirit_stone": 26
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "nine_nether_war_vestments",
+        "price": {
+          "spirit_stone": 29
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "heaven_splitting_greaves",
+        "price": {
+          "spirit_stone": 27
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "miniature_alchemy_cauldron",
+        "price": {
+          "spirit_stone": 13
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "cracked_black_pagoda",
+        "price": {
+          "spirit_stone": 15
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "cloudpiercer_sword",
+        "price": {
+          "spirit_stone": 20
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "great_return_pill",
+        "price": {
+          "spirit_stone": 4
+        }
+      },
+      {
+        "item_id": "heaven_decoction",
+        "price": {
+          "spirit_stone": 2
+        }
+      }
+    ]
+  },
+  {
+    "id": "holy_demon_continent_soul_market",
+    "display_name": "Holy Demon Continent Soul Market",
+    "location_ids": [
+      "holy_demon_continent"
+    ],
+    "description": "The continent's soul market, trading heaven-grade relics and immortality pellets for spirit stones.",
+    "stock": [
+      {
+        "item_id": "ghost_flame_halberd",
+        "price": {
+          "spirit_stone": 56
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "thunder_war_vestments",
+        "price": {
+          "spirit_stone": 56
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "azure_trident",
+        "price": {
+          "spirit_stone": 169
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "immortal_ascension_pill",
+        "price": {
+          "spirit_stone": 10
+        }
+      },
+      {
+        "item_id": "celestial_elixir",
+        "price": {
+          "spirit_stone": 10
+        }
+      },
+      {
+        "item_id": "dao_enlightenment_spirit_stone",
+        "price": {
+          "spirit_stone": 5
+        }
+      }
     ]
   }
 ]

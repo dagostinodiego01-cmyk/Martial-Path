@@ -21,6 +21,7 @@ class Item:
         magnitude: Numeric strength of the effect.
         description: Flavour/help text (content, displayed by the UI).
         consumed_on_use: Whether using the item removes one from the stack.
+        value: Sell/worth value in gold (equipment carries it; 0 = derive).
     """
 
     id: str
@@ -34,6 +35,7 @@ class Item:
     rarity: str = ""
     valid_slots: List[str] = field(default_factory=list)
     skill_id: str = ""
+    value: int = 0
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "Item":
@@ -51,6 +53,7 @@ class Item:
             rarity=str(data.get("rarity", "")),
             valid_slots=[str(slot) for slot in data.get("valid_slots", [])],
             skill_id=str(data.get("skill_id", "")),
+            value=int(data.get("value", 0)),
         )
 
     def is_consumable(self) -> bool:

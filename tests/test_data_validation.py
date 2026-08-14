@@ -1,4 +1,5 @@
 """Data-file integrity checks: unique IDs and valid cross-references."""
+from game.data.registry import GameDataRegistry
 from game.systems.cultivation_system import CultivationSystem
 from game.utils.data_loader import load_collection, load_json
 from game.utils.rng import RNG
@@ -45,6 +46,7 @@ def test_all_skill_ids_are_unique():
 
 def test_enemy_loot_references_existing_items():
     items = {item["id"] for item in load_json("items.json")} | {item["id"] for item in load_json("equipment.json")}
+    items |= GameDataRegistry.load().manual_item_ids()
     enemies = load_collection("enemies")
 
     for enemy in enemies:

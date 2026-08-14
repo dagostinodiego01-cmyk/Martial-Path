@@ -198,6 +198,11 @@
       "message": "You calm your churning true essence and let it settle evenly through your meridians."
     }
   },
+  "defeat_penalty": {
+    "progress_loss_ratio": 0.25,
+    "revive_hp_ratio": 0.5,
+    "revive_qi_ratio": 0.5
+  },
   "sequence_display_names": {
     "gate_of_healing": "Gate of Healing",
     "gate_of_limit": "Gate of Limit",

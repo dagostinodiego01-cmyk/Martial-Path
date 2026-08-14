@@ -383,11 +383,33 @@
       "enemy_id": "zhu_yan_duel",
       "quest_ids": [],
       "teaches_skills": [],
-      "relationship_rewards": []
+      "relationship_rewards": [],
+      "spar_min_tier": "neutral",
+      "duel_min_tier": "friendly"
     },
     "intro_text": "A privileged academy student whose bluster hides a deep fear of being ordinary.",
     "repeat_text": "Zhu Yan puffs up the moment he spots an audience.",
-    "ai_prompt_notes": "Speak as a smug, insecure social rival. Boastful and status-obsessed, secretly craving recognition."
+    "ai_prompt_notes": "Speak as a smug, insecure social rival. Boastful and status-obsessed, secretly craving recognition.",
+    "dialogue": {
+      "choices": [
+        {
+          "id": "praise_him",
+          "text": "Praise his talent without envy.",
+          "response": "Zhu Yan puffs up, then falters — your sincerity leaves him nothing to prove.",
+          "relationship_delta": { "relationship_score": 40, "trust": 15, "respect": 10 },
+          "morality_delta": 10,
+          "reputation_delta": 8
+        },
+        {
+          "id": "snub_him",
+          "text": "Dismiss him as a pampered academy brat.",
+          "response": "Zhu Yan's smile turns brittle; he files the insult away for later.",
+          "relationship_delta": { "relationship_score": -30, "respect": -10, "resentment": 20 },
+          "morality_delta": -15,
+          "reputation_delta": -3
+        }
+      ]
+    }
   },
   {
     "id": "mister_muyi",

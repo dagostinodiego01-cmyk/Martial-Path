@@ -104,3 +104,71 @@ def test_engine_exposes_location_characters():
     engine = GameEngine.new_game(seed=1)
     briefs = engine.character_service.get_available_characters("azure_village", engine.player)
     assert any(b["id"] == "lan_yunyue" for b in briefs)
+
+
+def _dialogue_service():
+    characters = [
+        {
+            "id": "rival",
+            "name": "The Rival",
+            "faction": "None",
+            "unlock": {"min_stage": 1},
+            "personality": {
+                "speech_style": "Terse.",
+                "morality_reaction": {"righteous": "", "neutral": "", "demonic": ""},
+                "relationship_behavior": {"hostile": "", "neutral": "", "friendly": "", "trusted": ""},
+            },
+            "gameplay_hooks": {
+                "can_talk": True,
+                "can_spar": True,
+                "can_duel": True,
+                "enemy_id": "rival_duel",
+                "duel_min_tier": "friendly",
+            },
+            "dialogue": {
+                "choices": [
+                    {
+                        "id": "swear_loyalty",
+                        "text": "Swear to uphold your word.",
+                        "response": "Good.",
+                        "relationship_delta": {"relationship_score": 40},
+                        "morality_delta": 10,
+                        "reputation_delta": 5,
+                    },
+                    {
+                        "id": "secret_pact",
+                        "text": "Offer a pact best kept hidden.",
+                        "response": "...",
+                        "requires": {"morality_band": "demonic"},
+                        "relationship_delta": {"relationship_score": 40},
+                        "morality_delta": -20,
+                        "reputation_delta": -5,
+                    },
+                ],
+            },
+        },
+    ]
+    return CharacterService(
+        characters, LocationSystem(LOCATIONS), MoralitySystem(MORALITY), RelationshipSystem(RELATIONSHIPS)
+    )
+
+
+def test_dialogue_choices_are_filtered_by_availability():
+    service = _dialogue_service()
+    assert [c["id"] for c in service.dialogue_choices("rival", _player(morality=50))] == ["swear_loyalty"]
+    assert {c["id"] for c in service.dialogue_choices("rival", _player(morality=-50))} == {"swear_loyalty", "secret_pact"}
+
+
+def test_get_dialogue_choice_rejects_unavailable():
+    service = _dialogue_service()
+    assert service.get_dialogue_choice("rival", "secret_pact", _player(morality=50)) is None
+    choice = service.get_dialogue_choice("rival", "secret_pact", _player(morality=-50))
+    assert choice is not None
+    assert choice["character_name"] == "The Rival"
+
+
+def test_duel_gates_on_relationship_tier():
+    service = _dialogue_service()
+    assert service.can_duel("rival", _player()) == {"allowed": False, "reason": "RELATIONSHIP_TOO_LOW"}
+    trusted = _player(relationships={"rival": {"relationship_score": 80}})
+    assert service.can_duel("rival", trusted)["allowed"] is True

@@ -1,23 +1,560 @@
 [
-  {"id":"zhu_yan_duel","character_id":"zhu_yan","name":"Zhu Yan","body_realm_id":"strength_training","essence_realm_id":null,"hp":60,"attack":12,"defense":5,"exp_reward":25,"loot_table":[{"item_id":"healing_pill","chance":0.5,"count":1}]},
-  {"id":"rogue_cultivator_duel","character_id":"rogue_cultivator","name":"Rogue Cultivator","body_realm_id":"flesh_training","essence_realm_id":"houtian","hp":80,"attack":15,"defense":6,"exp_reward":35,"loot_table":[{"item_id":"spirit_stone","chance":0.3,"count":1},{"item_id":"healing_pill","chance":0.4,"count":1}]},
-  {"id":"divine_phoenix_disciple_spar","character_id":"divine_phoenix_disciple","name":"Divine Phoenix Disciple","body_realm_id":"flesh_training","essence_realm_id":"houtian","hp":90,"attack":14,"defense":8,"exp_reward":30,"loot_table":[{"item_id":"qi_pill","chance":0.4,"count":1}]},
-  {"id":"ling_sen_duel","character_id":"ling_sen","name":"Ling Sen","body_realm_id":"flesh_training","essence_realm_id":"houtian","hp":100,"attack":16,"defense":9,"exp_reward":40,"loot_table":[{"item_id":"healing_pill","chance":0.5,"count":1}]},
-  {"id":"jiang_baoyun_duel","character_id":"jiang_baoyun","name":"Jiang Baoyun","body_realm_id":"flesh_training","essence_realm_id":"houtian","hp":95,"attack":17,"defense":8,"exp_reward":40,"loot_table":[{"item_id":"qi_pill","chance":0.5,"count":1}]},
-  {"id":"ouyang_dihua_duel","character_id":"ouyang_dihua","name":"Ouyang Dihua","body_realm_id":"flesh_training","essence_realm_id":"houtian","hp":90,"attack":16,"defense":7,"exp_reward":40,"loot_table":[{"item_id":"spirit_stone","chance":0.4,"count":1}]},
-  {"id":"jiang_lanjian_duel","character_id":"jiang_lanjian","name":"Jiang Lanjian","body_realm_id":"viscera_training","essence_realm_id":"houtian","hp":110,"attack":19,"defense":8,"exp_reward":45,"loot_table":[{"item_id":"spirit_stone","chance":0.4,"count":1},{"item_id":"healing_pill","chance":0.4,"count":1}]},
-  {"id":"feng_shen_duel","character_id":"feng_shen","name":"Feng Shen","body_realm_id":"viscera_training","essence_realm_id":"houtian","hp":115,"attack":20,"defense":7,"exp_reward":45,"loot_table":[{"item_id":"healing_pill","chance":0.5,"count":1}]},
-  {"id":"blood_slaughter_steppes_warrior_arena","character_id":"blood_slaughter_steppes_warrior","name":"Blood Slaughter Steppes Warrior","body_realm_id":"viscera_training","essence_realm_id":"houtian","hp":120,"attack":20,"defense":7,"exp_reward":50,"loot_table":[{"item_id":"beast_core","chance":0.6,"count":1},{"item_id":"healing_pill","chance":0.4,"count":1}]},
-  {"id":"duanmu_qun_duel","character_id":"duanmu_qun","name":"Duanmu Qun","body_realm_id":"altering_muscle","essence_realm_id":"houtian","hp":140,"attack":22,"defense":10,"exp_reward":60,"loot_table":[{"item_id":"profound_pill","chance":0.3,"count":1},{"item_id":"spirit_stone","chance":0.4,"count":1}]},
-  {"id":"ouyang_boyan_duel","character_id":"ouyang_boyan","name":"Ouyang Boyan","body_realm_id":"bone_forging","essence_realm_id":"houtian","hp":200,"attack":28,"defense":12,"exp_reward":90,"loot_table":[{"item_id":"profound_pill","chance":0.5,"count":1},{"item_id":"spirit_stone","chance":0.5,"count":1}]},
-  {"id":"situ_yaoyue_duel","character_id":"situ_yaoyue","name":"Situ Yaoyue","body_realm_id":"body_pulse_condensation","essence_realm_id":"xiantian","hp":220,"attack":34,"defense":12,"exp_reward":110,"loot_table":[{"item_id":"profound_pill","chance":0.5,"count":1},{"item_id":"qi_pill","chance":0.5,"count":1}]},
-  {"id":"situ_bonan_duel","character_id":"situ_bonan","name":"Situ Bonan","body_realm_id":"body_pulse_condensation","essence_realm_id":"xiantian","hp":240,"attack":32,"defense":14,"exp_reward":110,"loot_table":[{"item_id":"profound_pill","chance":0.5,"count":1},{"item_id":"spirit_stone","chance":0.5,"count":2}]},
-  {"id":"holy_demon_continent_demon_duel","character_id":"holy_demon_continent_demon","name":"Holy Demon Continent Demon","body_realm_id":"tempering_marrow","essence_realm_id":"xiantian","hp":300,"attack":38,"defense":16,"exp_reward":140,"loot_table":[{"item_id":"beast_core","chance":0.8,"count":1},{"item_id":"profound_pill","chance":0.5,"count":1}]},
-  {"id":"four_divine_kingdoms_prince_or_princess_duel","character_id":"four_divine_kingdoms_prince_or_princess","name":"Four Divine Kingdoms Prince or Princess","body_realm_id":"tempering_marrow","essence_realm_id":"xiantian","hp":280,"attack":36,"defense":15,"exp_reward":140,"loot_table":[{"item_id":"profound_pill","chance":0.6,"count":1},{"item_id":"spirit_stone","chance":0.5,"count":1}]},
-  {"id":"steppes_master_trial","character_id":"steppes_master","name":"Steppes Master","body_realm_id":"tempering_marrow","essence_realm_id":"xiantian","hp":320,"attack":40,"defense":15,"exp_reward":150,"loot_table":[{"item_id":"beast_core","chance":0.7,"count":1},{"item_id":"profound_pill","chance":0.4,"count":1}]},
-  {"id":"xuan_wuji_boss","character_id":"xuan_wuji","name":"Xuan Wuji","body_realm_id":"eight_gates_hidden_celestial_stems","essence_realm_id":"revolving_core","hp":360,"attack":44,"defense":18,"exp_reward":180,"loot_table":[{"item_id":"profound_pill","chance":0.7,"count":1},{"item_id":"spirit_stone","chance":0.6,"count":2}]},
-  {"id":"situ_haotian_boss","character_id":"situ_haotian","name":"Situ Haotian","body_realm_id":"eight_gates_hidden_celestial_stems","essence_realm_id":"revolving_core","hp":380,"attack":46,"defense":19,"exp_reward":190,"loot_table":[{"item_id":"profound_pill","chance":0.7,"count":1},{"item_id":"spirit_stone","chance":0.6,"count":2}]},
-  {"id":"yang_yun_boss","character_id":"yang_yun","name":"Yang Yun","body_realm_id":"nine_stars_dao_palace","essence_realm_id":"revolving_core","hp":400,"attack":48,"defense":20,"exp_reward":200,"loot_table":[{"item_id":"profound_pill","chance":0.8,"count":1},{"item_id":"spirit_stone","chance":0.6,"count":2}]},
-  {"id":"ancient_devil_manifestation","character_id":"ancient_devil","name":"Ancient Devil Manifestation","body_realm_id":"nine_stars_dao_palace","essence_realm_id":"life_destruction","hp":550,"attack":60,"defense":24,"exp_reward":300,"loot_table":[{"item_id":"profound_pill","chance":0.9,"count":1},{"item_id":"spirit_stone","chance":0.7,"count":3}]},
-  {"id":"demon_emperor_avatar","character_id":"demon_emperor","name":"Demon Emperor Avatar","body_realm_id":"nine_stars_dao_palace","essence_realm_id":"divine_sea","hp":800,"attack":75,"defense":30,"exp_reward":500,"loot_table":[{"item_id":"profound_pill","chance":1.0,"count":1},{"item_id":"spirit_stone","chance":0.9,"count":3}]}
+  {
+    "id": "zhu_yan_duel",
+    "character_id": "zhu_yan",
+    "name": "Zhu Yan",
+    "body_realm_id": "strength_training",
+    "essence_realm_id": null,
+    "hp": 60,
+    "attack": 12,
+    "defense": 5,
+    "exp_reward": 25,
+    "loot_table": [
+      {
+        "item_id": "healing_pill",
+        "chance": 0.5,
+        "count": 1
+      },
+      {
+        "item_id": "nine_yang_guard_manual",
+        "chance": 0.05,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "rogue_cultivator_duel",
+    "character_id": "rogue_cultivator",
+    "name": "Rogue Cultivator",
+    "body_realm_id": "flesh_training",
+    "essence_realm_id": "houtian",
+    "hp": 80,
+    "attack": 15,
+    "defense": 6,
+    "exp_reward": 35,
+    "loot_table": [
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.3,
+        "count": 1
+      },
+      {
+        "item_id": "healing_pill",
+        "chance": 0.4,
+        "count": 1
+      },
+      {
+        "item_id": "nether_eye_manual",
+        "chance": 0.05,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "divine_phoenix_disciple_spar",
+    "character_id": "divine_phoenix_disciple",
+    "name": "Divine Phoenix Disciple",
+    "body_realm_id": "flesh_training",
+    "essence_realm_id": "houtian",
+    "hp": 90,
+    "attack": 14,
+    "defense": 8,
+    "exp_reward": 30,
+    "loot_table": [
+      {
+        "item_id": "qi_pill",
+        "chance": 0.4,
+        "count": 1
+      },
+      {
+        "item_id": "purple_cloud_sword_art_manual",
+        "chance": 0.05,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "ling_sen_duel",
+    "character_id": "ling_sen",
+    "name": "Ling Sen",
+    "body_realm_id": "flesh_training",
+    "essence_realm_id": "houtian",
+    "hp": 100,
+    "attack": 16,
+    "defense": 9,
+    "exp_reward": 40,
+    "loot_table": [
+      {
+        "item_id": "healing_pill",
+        "chance": 0.5,
+        "count": 1
+      },
+      {
+        "item_id": "purple_cloud_constitution_manual",
+        "chance": 0.05,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "jiang_baoyun_duel",
+    "character_id": "jiang_baoyun",
+    "name": "Jiang Baoyun",
+    "body_realm_id": "flesh_training",
+    "essence_realm_id": "houtian",
+    "hp": 95,
+    "attack": 17,
+    "defense": 8,
+    "exp_reward": 40,
+    "loot_table": [
+      {
+        "item_id": "qi_pill",
+        "chance": 0.5,
+        "count": 1
+      },
+      {
+        "item_id": "blood_sea_kick_manual",
+        "chance": 0.05,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "ouyang_dihua_duel",
+    "character_id": "ouyang_dihua",
+    "name": "Ouyang Dihua",
+    "body_realm_id": "flesh_training",
+    "essence_realm_id": "houtian",
+    "hp": 90,
+    "attack": 16,
+    "defense": 7,
+    "exp_reward": 40,
+    "loot_table": [
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.4,
+        "count": 1
+      },
+      {
+        "item_id": "purple_cloud_guard_manual",
+        "chance": 0.05,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "jiang_lanjian_duel",
+    "character_id": "jiang_lanjian",
+    "name": "Jiang Lanjian",
+    "body_realm_id": "viscera_training",
+    "essence_realm_id": "houtian",
+    "hp": 110,
+    "attack": 19,
+    "defense": 8,
+    "exp_reward": 45,
+    "loot_table": [
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.4,
+        "count": 1
+      },
+      {
+        "item_id": "healing_pill",
+        "chance": 0.4,
+        "count": 1
+      },
+      {
+        "item_id": "myriad_sword_aura_manual",
+        "chance": 0.05,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "feng_shen_duel",
+    "character_id": "feng_shen",
+    "name": "Feng Shen",
+    "body_realm_id": "viscera_training",
+    "essence_realm_id": "houtian",
+    "hp": 115,
+    "attack": 20,
+    "defense": 7,
+    "exp_reward": 45,
+    "loot_table": [
+      {
+        "item_id": "healing_pill",
+        "chance": 0.5,
+        "count": 1
+      },
+      {
+        "item_id": "golden_body_chant_manual",
+        "chance": 0.05,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "blood_slaughter_steppes_warrior_arena",
+    "character_id": "blood_slaughter_steppes_warrior",
+    "name": "Blood Slaughter Steppes Warrior",
+    "body_realm_id": "viscera_training",
+    "essence_realm_id": "houtian",
+    "hp": 120,
+    "attack": 20,
+    "defense": 7,
+    "exp_reward": 50,
+    "loot_table": [
+      {
+        "item_id": "beast_core",
+        "chance": 0.6,
+        "count": 1
+      },
+      {
+        "item_id": "healing_pill",
+        "chance": 0.4,
+        "count": 1
+      },
+      {
+        "item_id": "blood_sea_saber_art_manual",
+        "chance": 0.05,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "duanmu_qun_duel",
+    "character_id": "duanmu_qun",
+    "name": "Duanmu Qun",
+    "body_realm_id": "altering_muscle",
+    "essence_realm_id": "houtian",
+    "hp": 140,
+    "attack": 22,
+    "defense": 10,
+    "exp_reward": 60,
+    "loot_table": [
+      {
+        "item_id": "profound_pill",
+        "chance": 0.3,
+        "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.4,
+        "count": 1
+      },
+      {
+        "item_id": "void_kick_manual",
+        "chance": 0.05,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "ouyang_boyan_duel",
+    "character_id": "ouyang_boyan",
+    "name": "Ouyang Boyan",
+    "body_realm_id": "bone_forging",
+    "essence_realm_id": "houtian",
+    "hp": 200,
+    "attack": 28,
+    "defense": 12,
+    "exp_reward": 90,
+    "loot_table": [
+      {
+        "item_id": "profound_pill",
+        "chance": 0.5,
+        "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.5,
+        "count": 1
+      },
+      {
+        "item_id": "shadowless_roar_manual",
+        "chance": 0.05,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "situ_yaoyue_duel",
+    "character_id": "situ_yaoyue",
+    "name": "Situ Yaoyue",
+    "body_realm_id": "body_pulse_condensation",
+    "essence_realm_id": "xiantian",
+    "hp": 220,
+    "attack": 34,
+    "defense": 12,
+    "exp_reward": 110,
+    "loot_table": [
+      {
+        "item_id": "profound_pill",
+        "chance": 0.5,
+        "count": 1
+      },
+      {
+        "item_id": "qi_pill",
+        "chance": 0.5,
+        "count": 1
+      },
+      {
+        "item_id": "true_dragon_sword_intent_manual",
+        "chance": 0.05,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "situ_bonan_duel",
+    "character_id": "situ_bonan",
+    "name": "Situ Bonan",
+    "body_realm_id": "body_pulse_condensation",
+    "essence_realm_id": "xiantian",
+    "hp": 240,
+    "attack": 32,
+    "defense": 14,
+    "exp_reward": 110,
+    "loot_table": [
+      {
+        "item_id": "profound_pill",
+        "chance": 0.5,
+        "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.5,
+        "count": 2
+      },
+      {
+        "item_id": "dao_heart_roar_manual",
+        "chance": 0.05,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "holy_demon_continent_demon_duel",
+    "character_id": "holy_demon_continent_demon",
+    "name": "Holy Demon Continent Demon",
+    "body_realm_id": "tempering_marrow",
+    "essence_realm_id": "xiantian",
+    "hp": 300,
+    "attack": 38,
+    "defense": 16,
+    "exp_reward": 140,
+    "loot_table": [
+      {
+        "item_id": "beast_core",
+        "chance": 0.8,
+        "count": 1
+      },
+      {
+        "item_id": "profound_pill",
+        "chance": 0.5,
+        "count": 1
+      },
+      {
+        "item_id": "immortal_binding_roar_manual",
+        "chance": 0.05,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "four_divine_kingdoms_prince_or_princess_duel",
+    "character_id": "four_divine_kingdoms_prince_or_princess",
+    "name": "Four Divine Kingdoms Prince or Princess",
+    "body_realm_id": "tempering_marrow",
+    "essence_realm_id": "xiantian",
+    "hp": 280,
+    "attack": 36,
+    "defense": 15,
+    "exp_reward": 140,
+    "loot_table": [
+      {
+        "item_id": "profound_pill",
+        "chance": 0.6,
+        "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.5,
+        "count": 1
+      },
+      {
+        "item_id": "primordial_chaos_sword_art_manual",
+        "chance": 0.05,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "steppes_master_trial",
+    "character_id": "steppes_master",
+    "name": "Steppes Master",
+    "body_realm_id": "tempering_marrow",
+    "essence_realm_id": "xiantian",
+    "hp": 320,
+    "attack": 40,
+    "defense": 15,
+    "exp_reward": 150,
+    "loot_table": [
+      {
+        "item_id": "beast_core",
+        "chance": 0.7,
+        "count": 1
+      },
+      {
+        "item_id": "profound_pill",
+        "chance": 0.4,
+        "count": 1
+      },
+      {
+        "item_id": "void_domain_manual",
+        "chance": 0.05,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "xuan_wuji_boss",
+    "character_id": "xuan_wuji",
+    "name": "Xuan Wuji",
+    "body_realm_id": "eight_gates_hidden_celestial_stems",
+    "essence_realm_id": "revolving_core",
+    "hp": 360,
+    "attack": 44,
+    "defense": 18,
+    "exp_reward": 180,
+    "loot_table": [
+      {
+        "item_id": "profound_pill",
+        "chance": 0.7,
+        "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.6,
+        "count": 2
+      },
+      {
+        "item_id": "dao_heart_fist_intent_manual",
+        "chance": 0.05,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "situ_haotian_boss",
+    "character_id": "situ_haotian",
+    "name": "Situ Haotian",
+    "body_realm_id": "eight_gates_hidden_celestial_stems",
+    "essence_realm_id": "revolving_core",
+    "hp": 380,
+    "attack": 46,
+    "defense": 19,
+    "exp_reward": 190,
+    "loot_table": [
+      {
+        "item_id": "profound_pill",
+        "chance": 0.7,
+        "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.6,
+        "count": 2
+      },
+      {
+        "item_id": "immortal_binding_saber_art_no2_manual",
+        "chance": 0.05,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "yang_yun_boss",
+    "character_id": "yang_yun",
+    "name": "Yang Yun",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "revolving_core",
+    "hp": 400,
+    "attack": 48,
+    "defense": 20,
+    "exp_reward": 200,
+    "loot_table": [
+      {
+        "item_id": "profound_pill",
+        "chance": 0.8,
+        "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.6,
+        "count": 2
+      },
+      {
+        "item_id": "immortal_binding_fist_manual",
+        "chance": 0.05,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "ancient_devil_manifestation",
+    "character_id": "ancient_devil",
+    "name": "Ancient Devil Manifestation",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "life_destruction",
+    "hp": 550,
+    "attack": 60,
+    "defense": 24,
+    "exp_reward": 300,
+    "loot_table": [
+      {
+        "item_id": "profound_pill",
+        "chance": 0.9,
+        "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.7,
+        "count": 3
+      },
+      {
+        "item_id": "golden_body_domain_manual",
+        "chance": 0.05,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "demon_emperor_avatar",
+    "character_id": "demon_emperor",
+    "name": "Demon Emperor Avatar",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": "divine_sea",
+    "hp": 800,
+    "attack": 75,
+    "defense": 30,
+    "exp_reward": 500,
+    "loot_table": [
+      {
+        "item_id": "profound_pill",
+        "chance": 1.0,
+        "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.9,
+        "count": 3
+      },
+      {
+        "item_id": "great_sun_chant_manual",
+        "chance": 0.05,
+        "count": 1
+      }
+    ]
+  }
 ]

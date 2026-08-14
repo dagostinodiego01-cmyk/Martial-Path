@@ -4,6 +4,7 @@ import pytest
 from game.core.constants import EventType
 from game.models.cultivation import CultivationState
 from game.models.player import Player
+from game.models.skill import Skill
 from game.systems.cultivation_system import CultivationSystem
 from game.utils.data_loader import load_json
 from game.utils.rng import RNG
@@ -405,6 +406,37 @@ def test_physique_affects_body_gain_and_strain(monkeypatch: pytest.MonkeyPatch):
 
     assert strong_result["progress_gained"] > frail_result["progress_gained"]
     assert strong_result["strain_gained"] < frail_result["strain_gained"]
+
+
+def test_cultivation_speed_passive_multiplies_training_gain(monkeypatch: pytest.MonkeyPatch):
+    skills = {
+        "primordial_chaos_meditation_no2": Skill.from_dict(
+            {
+                "id": "primordial_chaos_meditation_no2",
+                "name": "Primordial Chaos Meditation No.2",
+                "type": "passive",
+                "effect": "cultivation_speed",
+                "scaling": 2.9,
+            }
+        ),
+    }
+    system = CultivationSystem(
+        load_json("cultivation/body_transformation_realms.json"),
+        load_json("cultivation/essence_gathering_realms.json"),
+        load_json("cultivation/cultivation_config.json"),
+        RNG(seed=1),
+        load_json("cultivation/martial_talents.json"),
+        load_json("cultivation/body_talents.json"),
+        skills,
+    )
+    monkeypatch.setattr(system._rng, "randint", lambda _low, _high: 0)
+    normal = Player(name="Normal")
+    boosted = Player(name="Boosted", skills=["primordial_chaos_meditation_no2"])
+
+    normal_result = system.train_body(normal)
+    boosted_result = system.train_body(boosted)
+
+    assert boosted_result["progress_gained"] > normal_result["progress_gained"]
 
 
 def test_physique_multiplies_successful_body_breakthrough_stats(monkeypatch: pytest.MonkeyPatch):

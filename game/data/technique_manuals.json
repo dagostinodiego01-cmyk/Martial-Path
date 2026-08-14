@@ -1,8 +1,1250 @@
 [
   {
+    "skill_id": "iron_fist",
+    "name": "Iron Fist Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Iron Fist technique. Study it to learn the art."
+  },
+  {
     "skill_id": "spirit_palm",
     "name": "Spirit-Severing Palm Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Spirit-Severing Palm technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "flowing_step",
+    "name": "Flowing Step Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Flowing Step technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "windless_roar",
+    "name": "Windless Roar Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Windless Roar technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "thunderclap_chant",
+    "name": "Thunderclap Chant Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Thunderclap Chant technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "nine_yang_guard",
+    "name": "Nine Yang Guard Manual",
     "rarity": "low_spirit_grade",
-    "description": "A worn palm-art manual. Study it to learn Spirit-Severing Palm."
+    "description": "A manual recording the Nine Yang Guard technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "great_sun_domain",
+    "name": "Great Sun Domain Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the Great Sun Domain technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "nether_eye",
+    "name": "Nether Eye Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the Nether Eye technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "shadowless_body",
+    "name": "Shadowless Body Manual",
+    "rarity": "high_spirit_grade",
+    "description": "A manual recording the Shadowless Body technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "true_dragon_sword_intent",
+    "name": "True Dragon Sword Intent Manual",
+    "rarity": "dao_grade",
+    "description": "A manual recording the True Dragon Sword Intent technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "earth_vein_saber_art",
+    "name": "Earth Vein Saber Art Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Earth Vein Saber Art technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "windless_palm",
+    "name": "Windless Palm Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Windless Palm technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "nether_palm",
+    "name": "Nether Palm Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Nether Palm technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "myriad_sword_body",
+    "name": "Myriad Sword Body Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Myriad Sword Body technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "blood_sea_roar",
+    "name": "Blood Sea Roar Manual",
+    "rarity": "high_spirit_grade",
+    "description": "A manual recording the Blood Sea Roar technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "star_shattering_fist_intent",
+    "name": "Star Shattering Fist Intent Manual",
+    "rarity": "earth_grade",
+    "description": "A manual recording the Star Shattering Fist Intent technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "void_sutra",
+    "name": "Void Sutra Manual",
+    "rarity": "high_spirit_grade",
+    "description": "A manual recording the Void Sutra technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "iron_body",
+    "name": "Iron Body Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Iron Body technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "white_tiger_chant",
+    "name": "White Tiger Chant Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the White Tiger Chant technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "mountain_crushing_sword_art",
+    "name": "Mountain Crushing Sword Art Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Mountain Crushing Sword Art technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "purple_cloud_sword_art",
+    "name": "Purple Cloud Sword Art Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the Purple Cloud Sword Art technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "purple_cloud_constitution",
+    "name": "Purple Cloud Constitution Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the Purple Cloud Constitution technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "mountain_crushing_fist",
+    "name": "Mountain Crushing Fist Manual",
+    "rarity": "earth_grade",
+    "description": "A manual recording the Mountain Crushing Fist technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "nirvana_scripture",
+    "name": "Nirvana Scripture Manual",
+    "rarity": "high_spirit_grade",
+    "description": "A manual recording the Nirvana Scripture technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "roaring_tide_fist_intent",
+    "name": "Roaring Tide Fist Intent Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Roaring Tide Fist Intent technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "roaring_tide_roar",
+    "name": "Roaring Tide Roar Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Roaring Tide Roar technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "thunderclap_sword_intent",
+    "name": "Thunderclap Sword Intent Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Thunderclap Sword Intent technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "black_tortoise_guard",
+    "name": "Black Tortoise Guard Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Black Tortoise Guard technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "blood_sea_palm",
+    "name": "Blood Sea Palm Manual",
+    "rarity": "high_spirit_grade",
+    "description": "A manual recording the Blood Sea Palm technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "primordial_chaos_meditation",
+    "name": "Primordial Chaos Meditation Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Primordial Chaos Meditation technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "dao_heart_meditation",
+    "name": "Dao Heart Meditation Manual",
+    "rarity": "earth_grade",
+    "description": "A manual recording the Dao Heart Meditation technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "vermilion_bird_palm",
+    "name": "Vermilion Bird Palm Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Vermilion Bird Palm technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "nine_yang_domain",
+    "name": "Nine Yang Domain Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Nine Yang Domain technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "glacial_saber_art",
+    "name": "Glacial Saber Art Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Glacial Saber Art technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "blood_sea_kick",
+    "name": "Blood Sea Kick Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the Blood Sea Kick technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "purple_cloud_guard",
+    "name": "Purple Cloud Guard Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the Purple Cloud Guard technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "blood_sea_body",
+    "name": "Blood Sea Body Manual",
+    "rarity": "earth_grade",
+    "description": "A manual recording the Blood Sea Body technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "dao_heart_scripture",
+    "name": "Dao Heart Scripture Manual",
+    "rarity": "earth_grade",
+    "description": "A manual recording the Dao Heart Scripture technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "white_tiger_palm",
+    "name": "White Tiger Palm Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the White Tiger Palm technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "vermilion_bird_ward",
+    "name": "Vermilion Bird Ward Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Vermilion Bird Ward technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "earth_vein_kick",
+    "name": "Earth Vein Kick Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Earth Vein Kick technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "iron_guard",
+    "name": "Iron Guard Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Iron Guard technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "primordial_chaos_claw",
+    "name": "Primordial Chaos Claw Manual",
+    "rarity": "high_spirit_grade",
+    "description": "A manual recording the Primordial Chaos Claw technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "myriad_sword_aura",
+    "name": "Myriad Sword Aura Manual",
+    "rarity": "high_spirit_grade",
+    "description": "A manual recording the Myriad Sword Aura technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "dao_heart_roar",
+    "name": "Dao Heart Roar Manual",
+    "rarity": "dao_grade",
+    "description": "A manual recording the Dao Heart Roar technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "azure_dragon_roar",
+    "name": "Azure Dragon Roar Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Azure Dragon Roar technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "earth_vein_guard",
+    "name": "Earth Vein Guard Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Earth Vein Guard technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "vermilion_bird_meditation",
+    "name": "Vermilion Bird Meditation Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Vermilion Bird Meditation technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "inferno_bloodline",
+    "name": "Inferno Bloodline Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Inferno Bloodline technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "golden_body_chant",
+    "name": "Golden Body Chant Manual",
+    "rarity": "high_spirit_grade",
+    "description": "A manual recording the Golden Body Chant technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "soul_severing_kick",
+    "name": "Soul Severing Kick Manual",
+    "rarity": "earth_grade",
+    "description": "A manual recording the Soul Severing Kick technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "true_dragon_constitution",
+    "name": "True Dragon Constitution Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the True Dragon Constitution technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "glacial_sword_art",
+    "name": "Glacial Sword Art Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Glacial Sword Art technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "nine_yin_sutra",
+    "name": "Nine Yin Sutra Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Nine Yin Sutra technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "windless_sword_art",
+    "name": "Windless Sword Art Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Windless Sword Art technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "star_shattering_guard",
+    "name": "Star Shattering Guard Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Star Shattering Guard technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "blood_sea_saber_art",
+    "name": "Blood Sea Saber Art Manual",
+    "rarity": "high_spirit_grade",
+    "description": "A manual recording the Blood Sea Saber Art technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "purple_cloud_fist_intent",
+    "name": "Purple Cloud Fist Intent Manual",
+    "rarity": "earth_grade",
+    "description": "A manual recording the Purple Cloud Fist Intent technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "primordial_chaos_fist",
+    "name": "Primordial Chaos Fist Manual",
+    "rarity": "heaven_grade",
+    "description": "A manual recording the Primordial Chaos Fist technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "black_tortoise_breathing_method",
+    "name": "Black Tortoise Breathing Method Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Black Tortoise Breathing Method technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "nine_yang_guard_no2",
+    "name": "Nine Yang Guard No.2 Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Nine Yang Guard No.2 technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "iron_roar",
+    "name": "Iron Roar Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Iron Roar technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "great_sun_ward",
+    "name": "Great Sun Ward Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Great Sun Ward technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "nether_claw",
+    "name": "Nether Claw Manual",
+    "rarity": "high_spirit_grade",
+    "description": "A manual recording the Nether Claw technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "phoenix_sword_art",
+    "name": "Phoenix Sword Art Manual",
+    "rarity": "heaven_grade",
+    "description": "A manual recording the Phoenix Sword Art technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "immortal_binding_roar",
+    "name": "Immortal Binding Roar Manual",
+    "rarity": "dao_grade",
+    "description": "A manual recording the Immortal Binding Roar technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "inferno_palm",
+    "name": "Inferno Palm Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Inferno Palm technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "vermilion_bird_fist",
+    "name": "Vermilion Bird Fist Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Vermilion Bird Fist technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "windless_roar_no2",
+    "name": "Windless Roar No.2 Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Windless Roar No.2 technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "glacial_bloodline",
+    "name": "Glacial Bloodline Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Glacial Bloodline technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "great_sun_guard",
+    "name": "Great Sun Guard Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the Great Sun Guard technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "nirvana_chant",
+    "name": "Nirvana Chant Manual",
+    "rarity": "high_spirit_grade",
+    "description": "A manual recording the Nirvana Chant technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "dao_heart_sword_intent",
+    "name": "Dao Heart Sword Intent Manual",
+    "rarity": "heaven_grade",
+    "description": "A manual recording the Dao Heart Sword Intent technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "windless_chant",
+    "name": "Windless Chant Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Windless Chant technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "windless_saber_art",
+    "name": "Windless Saber Art Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Windless Saber Art technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "nine_yin_seal",
+    "name": "Nine Yin Seal Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Nine Yin Seal technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "mountain_crushing_fist_no2",
+    "name": "Mountain Crushing Fist No.2 Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the Mountain Crushing Fist No.2 technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "primordial_chaos_seal",
+    "name": "Primordial Chaos Seal Manual",
+    "rarity": "high_spirit_grade",
+    "description": "A manual recording the Primordial Chaos Seal technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "dao_heart_roar_no2",
+    "name": "Dao Heart Roar No.2 Manual",
+    "rarity": "heaven_grade",
+    "description": "A manual recording the Dao Heart Roar No.2 technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "dao_heart_roar_no3",
+    "name": "Dao Heart Roar No.3 Manual",
+    "rarity": "heaven_grade",
+    "description": "A manual recording the Dao Heart Roar No.3 technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "azure_dragon_sword_art",
+    "name": "Azure Dragon Sword Art Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Azure Dragon Sword Art technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "iron_body_no2",
+    "name": "Iron Body No.2 Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Iron Body No.2 technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "iron_fist_intent",
+    "name": "Iron Fist Intent Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Iron Fist Intent technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "shadowless_domain",
+    "name": "Shadowless Domain Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the Shadowless Domain technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "nirvana_aura",
+    "name": "Nirvana Aura Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the Nirvana Aura technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "true_dragon_seal",
+    "name": "True Dragon Seal Manual",
+    "rarity": "earth_grade",
+    "description": "A manual recording the True Dragon Seal technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "primordial_chaos_sword_art",
+    "name": "Primordial Chaos Sword Art Manual",
+    "rarity": "dao_grade",
+    "description": "A manual recording the Primordial Chaos Sword Art technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "glacial_sword_art_no2",
+    "name": "Glacial Sword Art No.2 Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Glacial Sword Art No.2 technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "nine_yang_finger",
+    "name": "Nine Yang Finger Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Nine Yang Finger technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "purple_cloud_bloodline",
+    "name": "Purple Cloud Bloodline Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the Purple Cloud Bloodline technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "inferno_aura",
+    "name": "Inferno Aura Manual",
+    "rarity": "earth_grade",
+    "description": "A manual recording the Inferno Aura technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "purple_cloud_scripture",
+    "name": "Purple Cloud Scripture Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the Purple Cloud Scripture technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "void_kick",
+    "name": "Void Kick Manual",
+    "rarity": "earth_grade",
+    "description": "A manual recording the Void Kick technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "true_dragon_palm",
+    "name": "True Dragon Palm Manual",
+    "rarity": "heaven_grade",
+    "description": "A manual recording the True Dragon Palm technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "white_tiger_palm_no2",
+    "name": "White Tiger Palm No.2 Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the White Tiger Palm No.2 technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "azure_dragon_eye",
+    "name": "Azure Dragon Eye Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Azure Dragon Eye technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "myriad_sword_roar",
+    "name": "Myriad Sword Roar Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Myriad Sword Roar technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "vermilion_bird_claw",
+    "name": "Vermilion Bird Claw Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the Vermilion Bird Claw technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "nether_aura",
+    "name": "Nether Aura Manual",
+    "rarity": "high_spirit_grade",
+    "description": "A manual recording the Nether Aura technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "void_claw",
+    "name": "Void Claw Manual",
+    "rarity": "earth_grade",
+    "description": "A manual recording the Void Claw technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "void_domain",
+    "name": "Void Domain Manual",
+    "rarity": "dao_grade",
+    "description": "A manual recording the Void Domain technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "glacial_saber_art_no2",
+    "name": "Glacial Saber Art No.2 Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Glacial Saber Art No.2 technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "inferno_sutra",
+    "name": "Inferno Sutra Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Inferno Sutra technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "heaven_splitting_breathing_method",
+    "name": "Heaven Splitting Breathing Method Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the Heaven Splitting Breathing Method technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "glacial_claw",
+    "name": "Glacial Claw Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the Glacial Claw technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "mountain_crushing_fist_no3",
+    "name": "Mountain Crushing Fist No.3 Manual",
+    "rarity": "high_spirit_grade",
+    "description": "A manual recording the Mountain Crushing Fist No.3 technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "heaven_splitting_kick",
+    "name": "Heaven Splitting Kick Manual",
+    "rarity": "earth_grade",
+    "description": "A manual recording the Heaven Splitting Kick technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "dao_heart_fist_intent",
+    "name": "Dao Heart Fist Intent Manual",
+    "rarity": "dao_grade",
+    "description": "A manual recording the Dao Heart Fist Intent technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "azure_dragon_domain",
+    "name": "Azure Dragon Domain Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Azure Dragon Domain technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "earth_vein_aura",
+    "name": "Earth Vein Aura Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Earth Vein Aura technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "windless_saber_art_no2",
+    "name": "Windless Saber Art No.2 Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Windless Saber Art No.2 technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "soul_severing_scripture",
+    "name": "Soul Severing Scripture Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Soul Severing Scripture technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "blood_sea_aura",
+    "name": "Blood Sea Aura Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the Blood Sea Aura technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "nether_roar",
+    "name": "Nether Roar Manual",
+    "rarity": "heaven_grade",
+    "description": "A manual recording the Nether Roar technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "nirvana_sword_intent",
+    "name": "Nirvana Sword Intent Manual",
+    "rarity": "heaven_grade",
+    "description": "A manual recording the Nirvana Sword Intent technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "nine_yin_fist_intent",
+    "name": "Nine Yin Fist Intent Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Nine Yin Fist Intent technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "earth_vein_sutra",
+    "name": "Earth Vein Sutra Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Earth Vein Sutra technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "black_tortoise_body",
+    "name": "Black Tortoise Body Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Black Tortoise Body technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "azure_dragon_eye_no2",
+    "name": "Azure Dragon Eye No.2 Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Azure Dragon Eye No.2 technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "shadowless_footwork",
+    "name": "Shadowless Footwork Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the Shadowless Footwork technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "immortal_binding_saber_art",
+    "name": "Immortal Binding Saber Art Manual",
+    "rarity": "earth_grade",
+    "description": "A manual recording the Immortal Binding Saber Art technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "true_dragon_sword_intent_no2",
+    "name": "True Dragon Sword Intent No.2 Manual",
+    "rarity": "heaven_grade",
+    "description": "A manual recording the True Dragon Sword Intent No.2 technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "iron_kick",
+    "name": "Iron Kick Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Iron Kick technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "thunderclap_eye",
+    "name": "Thunderclap Eye Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Thunderclap Eye technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "myriad_sword_aura_no2",
+    "name": "Myriad Sword Aura No.2 Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Myriad Sword Aura No.2 technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "mountain_crushing_sutra",
+    "name": "Mountain Crushing Sutra Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Mountain Crushing Sutra technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "soul_severing_guard",
+    "name": "Soul Severing Guard Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the Soul Severing Guard technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "heaven_splitting_seal",
+    "name": "Heaven Splitting Seal Manual",
+    "rarity": "heaven_grade",
+    "description": "A manual recording the Heaven Splitting Seal technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "true_dragon_constitution_no2",
+    "name": "True Dragon Constitution No.2 Manual",
+    "rarity": "high_spirit_grade",
+    "description": "A manual recording the True Dragon Constitution No.2 technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "earth_vein_sword_art",
+    "name": "Earth Vein Sword Art Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Earth Vein Sword Art technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "iron_sword_intent",
+    "name": "Iron Sword Intent Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Iron Sword Intent technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "myriad_sword_sutra",
+    "name": "Myriad Sword Sutra Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Myriad Sword Sutra technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "vermilion_bird_roar",
+    "name": "Vermilion Bird Roar Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the Vermilion Bird Roar technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "shadowless_footwork_no2",
+    "name": "Shadowless Footwork No.2 Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the Shadowless Footwork No.2 technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "star_shattering_roar",
+    "name": "Star Shattering Roar Manual",
+    "rarity": "earth_grade",
+    "description": "A manual recording the Star Shattering Roar technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "immortal_binding_saber_art_no2",
+    "name": "Immortal Binding Saber Art No.2 Manual",
+    "rarity": "dao_grade",
+    "description": "A manual recording the Immortal Binding Saber Art No.2 technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "glacial_sword_intent",
+    "name": "Glacial Sword Intent Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Glacial Sword Intent technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "roaring_tide_sword_intent",
+    "name": "Roaring Tide Sword Intent Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Roaring Tide Sword Intent technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "inferno_fist_intent",
+    "name": "Inferno Fist Intent Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Inferno Fist Intent technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "nine_yin_sword_art",
+    "name": "Nine Yin Sword Art Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the Nine Yin Sword Art technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "phoenix_sword_intent",
+    "name": "Phoenix Sword Intent Manual",
+    "rarity": "high_spirit_grade",
+    "description": "A manual recording the Phoenix Sword Intent technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "heaven_splitting_roar",
+    "name": "Heaven Splitting Roar Manual",
+    "rarity": "earth_grade",
+    "description": "A manual recording the Heaven Splitting Roar technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "immortal_binding_fist",
+    "name": "Immortal Binding Fist Manual",
+    "rarity": "dao_grade",
+    "description": "A manual recording the Immortal Binding Fist technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "glacial_footwork",
+    "name": "Glacial Footwork Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Glacial Footwork technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "roaring_tide_sword_intent_no2",
+    "name": "Roaring Tide Sword Intent No.2 Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Roaring Tide Sword Intent No.2 technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "thunderclap_bloodline",
+    "name": "Thunderclap Bloodline Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Thunderclap Bloodline technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "nether_saber_art",
+    "name": "Nether Saber Art Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the Nether Saber Art technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "heaven_splitting_footwork",
+    "name": "Heaven Splitting Footwork Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the Heaven Splitting Footwork technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "shadowless_saber_art",
+    "name": "Shadowless Saber Art Manual",
+    "rarity": "earth_grade",
+    "description": "A manual recording the Shadowless Saber Art technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "primordial_chaos_scripture",
+    "name": "Primordial Chaos Scripture Manual",
+    "rarity": "earth_grade",
+    "description": "A manual recording the Primordial Chaos Scripture technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "inferno_constitution",
+    "name": "Inferno Constitution Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Inferno Constitution technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "black_tortoise_seal",
+    "name": "Black Tortoise Seal Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Black Tortoise Seal technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "earth_vein_chant",
+    "name": "Earth Vein Chant Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Earth Vein Chant technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "great_sun_domain_no2",
+    "name": "Great Sun Domain No.2 Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the Great Sun Domain No.2 technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "void_body",
+    "name": "Void Body Manual",
+    "rarity": "earth_grade",
+    "description": "A manual recording the Void Body technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "shadowless_roar",
+    "name": "Shadowless Roar Manual",
+    "rarity": "heaven_grade",
+    "description": "A manual recording the Shadowless Roar technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "nirvana_aura_no2",
+    "name": "Nirvana Aura No.2 Manual",
+    "rarity": "high_spirit_grade",
+    "description": "A manual recording the Nirvana Aura No.2 technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "white_tiger_fist_intent",
+    "name": "White Tiger Fist Intent Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the White Tiger Fist Intent technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "nine_yin_saber_art",
+    "name": "Nine Yin Saber Art Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Nine Yin Saber Art technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "glacial_body",
+    "name": "Glacial Body Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the Glacial Body technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "nether_roar_no2",
+    "name": "Nether Roar No.2 Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the Nether Roar No.2 technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "soul_severing_sword_intent",
+    "name": "Soul Severing Sword Intent Manual",
+    "rarity": "high_spirit_grade",
+    "description": "A manual recording the Soul Severing Sword Intent technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "myriad_sword_claw",
+    "name": "Myriad Sword Claw Manual",
+    "rarity": "heaven_grade",
+    "description": "A manual recording the Myriad Sword Claw technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "dao_heart_aura",
+    "name": "Dao Heart Aura Manual",
+    "rarity": "high_spirit_grade",
+    "description": "A manual recording the Dao Heart Aura technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "black_tortoise_scripture",
+    "name": "Black Tortoise Scripture Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Black Tortoise Scripture technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "inferno_body",
+    "name": "Inferno Body Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Inferno Body technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "black_tortoise_bloodline",
+    "name": "Black Tortoise Bloodline Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the Black Tortoise Bloodline technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "windless_fist",
+    "name": "Windless Fist Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the Windless Fist technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "phoenix_footwork",
+    "name": "Phoenix Footwork Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the Phoenix Footwork technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "nether_aura_no2",
+    "name": "Nether Aura No.2 Manual",
+    "rarity": "high_spirit_grade",
+    "description": "A manual recording the Nether Aura No.2 technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "primordial_chaos_meditation_no2",
+    "name": "Primordial Chaos Meditation No.2 Manual",
+    "rarity": "heaven_grade",
+    "description": "A manual recording the Primordial Chaos Meditation No.2 technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "white_tiger_chant_no2",
+    "name": "White Tiger Chant No.2 Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the White Tiger Chant No.2 technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "nine_yin_bloodline",
+    "name": "Nine Yin Bloodline Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Nine Yin Bloodline technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "nether_finger",
+    "name": "Nether Finger Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Nether Finger technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "white_tiger_breathing_method",
+    "name": "White Tiger Breathing Method Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the White Tiger Breathing Method technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "nirvana_scripture_no2",
+    "name": "Nirvana Scripture No.2 Manual",
+    "rarity": "high_spirit_grade",
+    "description": "A manual recording the Nirvana Scripture No.2 technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "shadowless_ward",
+    "name": "Shadowless Ward Manual",
+    "rarity": "earth_grade",
+    "description": "A manual recording the Shadowless Ward technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "phoenix_fist",
+    "name": "Phoenix Fist Manual",
+    "rarity": "heaven_grade",
+    "description": "A manual recording the Phoenix Fist technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "thunderclap_constitution",
+    "name": "Thunderclap Constitution Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Thunderclap Constitution technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "windless_roar_no3",
+    "name": "Windless Roar No.3 Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Windless Roar No.3 technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "white_tiger_seal",
+    "name": "White Tiger Seal Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the White Tiger Seal technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "myriad_sword_finger",
+    "name": "Myriad Sword Finger Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the Myriad Sword Finger technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "mountain_crushing_chant",
+    "name": "Mountain Crushing Chant Manual",
+    "rarity": "high_spirit_grade",
+    "description": "A manual recording the Mountain Crushing Chant technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "primordial_chaos_domain",
+    "name": "Primordial Chaos Domain Manual",
+    "rarity": "earth_grade",
+    "description": "A manual recording the Primordial Chaos Domain technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "golden_body_domain",
+    "name": "Golden Body Domain Manual",
+    "rarity": "dao_grade",
+    "description": "A manual recording the Golden Body Domain technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "vermilion_bird_meditation_no2",
+    "name": "Vermilion Bird Meditation No.2 Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Vermilion Bird Meditation No.2 technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "windless_chant_no2",
+    "name": "Windless Chant No.2 Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Windless Chant No.2 technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "inferno_claw",
+    "name": "Inferno Claw Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Inferno Claw technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "soul_severing_kick_no2",
+    "name": "Soul Severing Kick No.2 Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the Soul Severing Kick No.2 technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "great_sun_chant",
+    "name": "Great Sun Chant Manual",
+    "rarity": "dao_grade",
+    "description": "A manual recording the Great Sun Chant technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "nether_constitution",
+    "name": "Nether Constitution Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Nether Constitution technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "dao_heart_sword_intent_no2",
+    "name": "Dao Heart Sword Intent No.2 Manual",
+    "rarity": "heaven_grade",
+    "description": "A manual recording the Dao Heart Sword Intent No.2 technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "inferno_aura_no2",
+    "name": "Inferno Aura No.2 Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Inferno Aura No.2 technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "inferno_seal",
+    "name": "Inferno Seal Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Inferno Seal technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "purple_cloud_sword_intent",
+    "name": "Purple Cloud Sword Intent Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Purple Cloud Sword Intent technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "thunderclap_chant_no2",
+    "name": "Thunderclap Chant No.2 Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Thunderclap Chant No.2 technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "myriad_sword_kick",
+    "name": "Myriad Sword Kick Manual",
+    "rarity": "high_spirit_grade",
+    "description": "A manual recording the Myriad Sword Kick technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "star_shattering_seal",
+    "name": "Star Shattering Seal Manual",
+    "rarity": "heaven_grade",
+    "description": "A manual recording the Star Shattering Seal technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "phoenix_seal",
+    "name": "Phoenix Seal Manual",
+    "rarity": "heaven_grade",
+    "description": "A manual recording the Phoenix Seal technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "nine_yang_seal",
+    "name": "Nine Yang Seal Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Nine Yang Seal technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "nine_yang_footwork",
+    "name": "Nine Yang Footwork Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Nine Yang Footwork technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "shadowless_sword_intent",
+    "name": "Shadowless Sword Intent Manual",
+    "rarity": "low_spirit_grade",
+    "description": "A manual recording the Shadowless Sword Intent technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "nine_yang_roar",
+    "name": "Nine Yang Roar Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the Nine Yang Roar technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "myriad_sword_finger_no2",
+    "name": "Myriad Sword Finger No.2 Manual",
+    "rarity": "high_spirit_grade",
+    "description": "A manual recording the Myriad Sword Finger No.2 technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "purple_cloud_saber_art",
+    "name": "Purple Cloud Saber Art Manual",
+    "rarity": "heaven_grade",
+    "description": "A manual recording the Purple Cloud Saber Art technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "primordial_chaos_finger",
+    "name": "Primordial Chaos Finger Manual",
+    "rarity": "dao_grade",
+    "description": "A manual recording the Primordial Chaos Finger technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "black_tortoise_fist_intent",
+    "name": "Black Tortoise Fist Intent Manual",
+    "rarity": "mortal_grade",
+    "description": "A manual recording the Black Tortoise Fist Intent technique. Study it to learn the art."
+  },
+  {
+    "skill_id": "earth_vein_footwork",
+    "name": "Earth Vein Footwork Manual",
+    "rarity": "middle_spirit_grade",
+    "description": "A manual recording the Earth Vein Footwork technique. Study it to learn the art."
   }
 ]

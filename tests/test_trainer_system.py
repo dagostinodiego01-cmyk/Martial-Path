@@ -96,3 +96,27 @@ def test_trainer_not_at_location_is_rejected():
     assert system.trainer_view(player)["event"] == EventType.ERROR
     assert system.trainers_for_location("somewhere_else") == []
     assert len(system.trainers_for_location("outer_forest")) == 1
+
+
+def test_path_locked_technique_requires_matching_path():
+    skills = _skills()
+    trainers = [
+        {
+            "id": "phoenix_hall",
+            "display_name": "Phoenix Hall",
+            "location_ids": ["divine_phoenix_island"],
+            "techniques": [{"skill_id": "spirit_palm", "price": {"gold": 80}, "required_path": "Divine Phoenix"}],
+        }
+    ]
+    system = TrainerSystem(trainers, skills, SkillSystem(skills))
+
+    wrong_path = Player(name="Tester", current_location="divine_phoenix_island", gold=100, path="Unassigned")
+    blocked = system.learn(wrong_path, "spirit_palm")
+    assert blocked["event"] == EventType.ERROR
+    assert blocked["reason"] == "PATH_LOCKED"
+    assert "spirit_palm" not in wrong_path.skills
+
+    right_path = Player(name="Tester", current_location="divine_phoenix_island", gold=100, path="Divine Phoenix")
+    learned = system.learn(right_path, "spirit_palm")
+    assert learned["event"] == EventType.SKILL_LEARNED
+    assert "spirit_palm" in right_path.skills

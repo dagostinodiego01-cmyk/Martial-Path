@@ -1,6 +1,6 @@
 """Smoke tests for the game engine's UI-agnostic contract."""
 from game.core.constants import Action, EventType
-from game.core.game_engine import GameEngine
+from game.core.game_engine import MODE_COMBAT, GameEngine
 
 
 def _accept_fate(engine: GameEngine):
@@ -112,6 +112,34 @@ def test_engine_rejects_purchase_without_shop_at_location():
 
     assert result["event"] == EventType.ERROR
     assert result["reason"] == "NO_SHOP_AVAILABLE"
+
+
+def test_engine_sells_owned_item_for_gold():
+    engine = GameEngine.new_game(seed=1)
+    engine.player.gold = 0
+
+    result = engine.process_action({"action": Action.SELL_ITEM, "item_id": "healing_pill", "quantity": 1})
+
+    assert result["event"] == EventType.ITEM_SOLD
+    assert result["item_id"] == "healing_pill"
+    assert engine.player.inventory["healing_pill"] == 1
+    assert engine.player.gold == 5
+
+
+def test_buy_then_sell_round_trip_recovers_partial_gold():
+    engine = GameEngine.new_game(seed=1)
+    engine.player.gold = 30
+    engine.process_action({"action": Action.TRAVEL, "location_id": "azure_village"})
+
+    bought = engine.process_action({"action": Action.BUY_ITEM, "item_id": "training_sword"})
+    assert bought["event"] == EventType.ITEM_PURCHASED
+    assert engine.player.gold == 5  # 30 - 25
+
+    sold = engine.process_action({"action": Action.SELL_ITEM, "item_id": "training_sword"})
+
+    assert sold["event"] == EventType.ITEM_SOLD
+    assert "training_sword" not in engine.player.inventory
+    assert engine.player.gold == 17  # 5 + floor(25 * 0.5)
 
 
 def test_rest_recovers_hp_and_qi():
@@ -232,7 +260,10 @@ def test_explore_surfaces_named_character_options_at_location():
 
     assert result["event"] == EventType.CHARACTER_ENCOUNTER
     zhu = next(character for character in result["characters"] if character["id"] == "zhu_yan")
-    assert {option["label"] for option in zhu["options"]} >= {"Talk", "Spar", "Duel"}
+    # Talk and Spar are available immediately; Duel is gated behind a friendly
+    # relationship (see test_relationship_tier_gates_duel).
+    assert {option["label"] for option in zhu["options"]} >= {"Talk", "Spar"}
+    assert "Duel" not in {option["label"] for option in zhu["options"]}
 
 
 def test_explore_still_rolls_events_when_named_characters_present():
@@ -319,3 +350,99 @@ def test_duel_character_respects_unlock_gate():
 
     assert result["event"] == EventType.ERROR
     assert result["reason"] == "LOCKED"
+
+
+def test_join_sect_assigns_path():
+    engine = GameEngine.new_game(seed=1)
+    engine.player.current_location = "lin_academy"
+
+    result = engine.process_action({"action": Action.JOIN_SECT, "sect_id": "lin_academy"})
+
+    assert result["event"] == EventType.SECT_JOINED
+    assert result["path"] == "Lin Academy"
+    assert engine.player.path == "Lin Academy"
+
+
+def test_spar_ends_without_defeat_penalty():
+    engine = GameEngine.new_game(seed=1)
+    engine.player.current_location = "lin_academy"
+    engine.player.cultivation_state.body.progress = 400.0
+    engine.player.progress = 400.0
+    engine.process_action({"action": Action.SPAR_CHARACTER, "character_id": "zhu_yan"})
+
+    engine.player.hp = 1
+    engine._current_enemy.attack = 100
+    result = engine.process_action({"action": Action.ATTACK})
+
+    assert result["event"] == EventType.COMBAT_END
+    assert result["outcome"] == "SPAR_LOST"
+    assert result["spar"] is True
+    assert "penalty" not in result
+    assert engine.player.cultivation_state.body.progress == 400.0
+
+
+def test_defeat_penalty_is_partial_and_data_driven():
+    engine = GameEngine.new_game(seed=1)
+    engine.player.cultivation_state.body.progress = 400.0
+    engine.player.progress = 400.0
+    engine.player.hp = 1
+
+    # Force a losing fight against a deadly exploration enemy.
+    engine._current_enemy = engine._spawn_enemy(next(iter(engine._enemy_templates)))
+    engine._current_enemy.attack = 100
+    engine._mode = MODE_COMBAT
+
+    result = engine.process_action({"action": Action.ATTACK})
+
+    assert result["event"] == EventType.COMBAT_END
+    assert result["outcome"] == "DEFEAT"
+    assert result["penalty"]["progress_lost"] == 100.0  # 25% of 400
+    assert engine.player.cultivation_state.body.progress == 300.0
+    assert engine.player.hp == 50  # half of max_hp
+
+
+def test_dialogue_choose_mutates_social_state():
+    engine = GameEngine.new_game(seed=1)
+    engine.player.morality = 30  # neutral band, one step from righteous
+
+    result = engine.process_action(
+        {
+            "action": Action.DIALOGUE_CHOOSE,
+            "character_id": "zhu_yan",
+            "choice_id": "praise_him",
+        }
+    )
+
+    assert result["event"] == EventType.DIALOGUE_CHOICE
+    # relationship score changed (0 -> 40, neutral -> friendly)
+    assert engine.player.relationships["zhu_yan"]["relationship_score"] == 40
+    assert result["relationship"]["tier"] == "friendly"
+    # morality band changed (30 -> 40, neutral -> righteous)
+    assert engine.player.morality == 40
+    assert result["morality"]["band"] == "righteous"
+    # reputation changed (0 -> 8)
+    assert engine.player.reputation == 8
+    assert result["reputation"] == 8
+    assert result["reputation_delta"] == 8
+
+
+def test_relationship_tier_gates_duel():
+    engine = GameEngine.new_game(seed=1)
+
+    # Zhu Yan only duels once you've earned his respect (friendly tier).
+    assert engine.character_service.can_duel("zhu_yan", engine.player) == {
+        "allowed": False,
+        "reason": "RELATIONSHIP_TOO_LOW",
+    }
+
+    engine.process_action(
+        {
+            "action": Action.DIALOGUE_CHOOSE,
+            "character_id": "zhu_yan",
+            "choice_id": "praise_him",
+        }
+    )
+
+    after = engine.character_service.can_duel("zhu_yan", engine.player)
+    assert after["allowed"] is True
+    assert after["enemy_id"] == "zhu_yan_duel"

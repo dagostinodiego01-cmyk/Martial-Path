@@ -90,6 +90,44 @@ class CharacterService:
         """Return whether the player may duel this NPC, and why not if blocked."""
         return self._can_do(character_id, player, "can_duel")
 
+    # -- dialogue choices -------------------------------------------------
+    def dialogue_choices(self, character_id: str, player: Any) -> List[Dict[str, Any]]:
+        """Return the dialogue choices currently available for one NPC.
+
+        A choice is returned only when its ``requires`` gate (min relationship
+        tier, morality band) is met, so a UI can render exactly what the player
+        may say now. Read-only: this never mutates the player or store.
+        """
+        character = self._by_id.get(character_id)
+        if character is None:
+            return []
+        return [
+            dict(choice)
+            for choice in character.get("dialogue", {}).get("choices", [])
+            if self._choice_available(choice, character_id, player)
+        ]
+
+    def get_dialogue_choice(
+        self, character_id: str, choice_id: str, player: Any
+    ) -> Optional[Dict[str, Any]]:
+        """Return a validated, currently-available dialogue choice, or ``None``.
+
+        The engine applies the returned choice's deltas; this service only
+        resolves and validates, keeping its read-only contract intact.
+        """
+        character = self._by_id.get(character_id)
+        if character is None:
+            return None
+        for choice in character.get("dialogue", {}).get("choices", []):
+            if choice.get("id") != choice_id:
+                continue
+            if not self._choice_available(choice, character_id, player):
+                return None
+            resolved = dict(choice)
+            resolved["character_name"] = character.get("name", character_id)
+            return resolved
+        return None
+
     # -- internal ---------------------------------------------------------
     def _brief(self, character: Dict[str, Any], player: Any) -> Dict[str, Any]:
         hooks = character.get("gameplay_hooks", {})
@@ -113,7 +151,24 @@ class CharacterService:
             return {"allowed": False, "reason": "NOT_AVAILABLE"}
         if not self._is_unlocked(character, player):
             return {"allowed": False, "reason": "LOCKED"}
+        # Optional relationship gate: ``spar_min_tier`` / ``duel_min_tier`` in
+        # the hooks make availability respond to the player's history with this
+        # NPC, not just its static unlock flag.
+        min_tier = hooks.get(f"{hook_key.replace('can_', '')}_min_tier")
+        if min_tier and not self._relationships.meets_min_tier(self._tier(character_id, player), min_tier):
+            return {"allowed": False, "reason": "RELATIONSHIP_TOO_LOW"}
         return {"allowed": True, "reason": None, "enemy_id": hooks.get("enemy_id", "")}
+
+    def _choice_available(self, choice: Dict[str, Any], character_id: str, player: Any) -> bool:
+        """Return whether a dialogue choice's ``requires`` gate is met."""
+        requires = choice.get("requires", {}) or {}
+        min_tier = requires.get("min_tier")
+        if min_tier and not self._relationships.meets_min_tier(self._tier(character_id, player), min_tier):
+            return False
+        band = requires.get("morality_band")
+        if band and self._morality.band_id(getattr(player, "morality", 0)) != band:
+            return False
+        return True
 
     def _is_unlocked(self, character: Dict[str, Any], player: Any) -> bool:
         """Gate by unlock stage. Realm names use a narrative scheme distinct from

@@ -47,6 +47,8 @@ class Player:
     qi: int = 50
     attack: int = 15
     defense: int = 5
+    speed: int = 10
+    evasion: int = 5
     # Cultivation identity and extended attributes. A few carry light gameplay
     # hooks (comprehension -> breakthrough odds, body_strength -> HP/attack on
     # breakthrough); the rest are tracked display values for now. All rules live
@@ -58,6 +60,9 @@ class Player:
     comprehension: int = 10
     reputation: int = 0
     morality: int = 0
+    # Flat years added to the realm-derived maximum lifespan by ``lifespan``
+    # passive techniques. Applied on learn, honoured by LifespanSystem.
+    lifespan_bonus_years: float = 0.0
     current_location: str = "outer_forest"
     current_day: int = 1
     age_years: float = 12.0
@@ -125,6 +130,8 @@ class Player:
             "max_qi": self.max_qi,
             "attack": self.attack,
             "defense": self.defense,
+            "speed": self.speed,
+            "evasion": self.evasion,
             "path": self.path,
             "foundation_quality": self.foundation_quality,
             "body_strength": self.body_strength,
@@ -132,6 +139,7 @@ class Player:
             "comprehension": self.comprehension,
             "reputation": self.reputation,
             "morality": self.morality,
+            "lifespan_bonus_years": self.lifespan_bonus_years,
             "current_location": self.current_location,
             "current_day": self.current_day,
             "age_years": round(self.age_years, 2),
@@ -161,6 +169,8 @@ class Player:
             "qi": self.qi,
             "attack": self.attack,
             "defense": self.defense,
+            "speed": self.speed,
+            "evasion": self.evasion,
             "path": self.path,
             "foundation_quality": self.foundation_quality,
             "body_strength": self.body_strength,
@@ -168,6 +178,7 @@ class Player:
             "comprehension": self.comprehension,
             "reputation": self.reputation,
             "morality": self.morality,
+            "lifespan_bonus_years": self.lifespan_bonus_years,
             "current_location": self.current_location,
             "current_day": self.current_day,
             "age_years": self.age_years,
@@ -197,6 +208,8 @@ class Player:
             qi=int(data.get("qi", 50)),
             attack=int(data.get("attack", 15)),
             defense=int(data.get("defense", 5)),
+            speed=int(data.get("speed", 10)),
+            evasion=int(data.get("evasion", 5)),
             path=str(data.get("path", "Unassigned")),
             foundation_quality=int(data.get("foundation_quality", 50)),
             body_strength=int(data.get("body_strength", 10)),
@@ -204,6 +217,7 @@ class Player:
             comprehension=int(data.get("comprehension", 10)),
             reputation=int(data.get("reputation", 0)),
             morality=int(data.get("morality", 0)),
+            lifespan_bonus_years=float(data.get("lifespan_bonus_years", 0.0)),
             current_location=str(data.get("current_location", "outer_forest")),
             current_day=int(data.get("current_day", 1)),
             age_years=float(data.get("age_years", 12.0)),
