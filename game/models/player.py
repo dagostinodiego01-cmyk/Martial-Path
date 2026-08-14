@@ -71,6 +71,10 @@ class Player:
     # Per-NPC relationship store: {npc_id: {relationship_score, trust, fear, ...}}.
     # Interpreted by the RelationshipSystem; the model only holds the data.
     relationships: Dict[str, Dict[str, Any]] = field(default_factory=dict)
+    # Transient combat state (never persisted): a damage-absorption shield and
+    # timed status effects (e.g. counter). Reset by the engine on combat end.
+    shield: int = 0
+    statuses: Dict[str, Dict[str, float]] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
         """Keep legacy single-progress construction aligned with body progress."""

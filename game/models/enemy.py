@@ -24,6 +24,10 @@ class Enemy:
     defense: int
     exp_reward: int = 0
     loot_table: List[Dict[str, Any]] = field(default_factory=list)
+    # Transient combat state (never persisted): a damage-absorption shield and
+    # timed status effects applied by the player (stun, dot, debuffs).
+    shield: int = 0
+    statuses: Dict[str, Dict[str, float]] = field(default_factory=dict)
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "Enemy":
