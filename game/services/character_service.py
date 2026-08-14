@@ -128,6 +128,51 @@ class CharacterService:
             return resolved
         return None
 
+    # -- relationship rewards (boons) ------------------------------------
+    def available_reward(self, character_id: str, player: Any) -> Optional[Dict[str, Any]]:
+        """Return the first unclaimed relationship reward whose gate is met.
+
+        Rewards live in ``gameplay_hooks.relationship_rewards`` and gate on
+        ``min_tier`` (relationship tier order) and/or ``morality_band`` (exact
+        band). A reward marked ``once`` (default) disappears after it is claimed,
+        tracked via the NPC's relationship memory flags. Read-only: claiming is
+        the engine's job; this only resolves what is currently available.
+        """
+        character = self._by_id.get(character_id)
+        if character is None or not self._is_unlocked(character, player):
+            return None
+        rewards = character.get("gameplay_hooks", {}).get("relationship_rewards", [])
+        if not isinstance(rewards, list):
+            return None
+        tier = self._tier(character_id, player)
+        band = self._morality.band_id(getattr(player, "morality", 0))
+        flags = self._relationship_state(character_id, player).get("personal_memory_flags", {}) or {}
+        for index, reward in enumerate(rewards):
+            if not isinstance(reward, dict):
+                continue
+            min_tier = reward.get("min_tier")
+            if min_tier and not self._relationships.meets_min_tier(tier, min_tier):
+                continue
+            morality_band = reward.get("morality_band")
+            if morality_band and band != morality_band:
+                continue
+            if reward.get("once", True) and flags.get(f"reward_{index}"):
+                continue
+            payload = reward.get("reward", {}) if isinstance(reward.get("reward"), dict) else {}
+            return {
+                "character_id": character_id,
+                "name": character.get("name", character_id),
+                "index": index,
+                "reward": payload,
+                "message": payload.get("message", ""),
+                "tier": tier,
+            }
+        return None
+
+    def can_receive_reward(self, character_id: str, player: Any) -> bool:
+        """Convenience predicate: is a relationship reward currently claimable?"""
+        return self.available_reward(character_id, player) is not None
+
     # -- internal ---------------------------------------------------------
     def _brief(self, character: Dict[str, Any], player: Any) -> Dict[str, Any]:
         hooks = character.get("gameplay_hooks", {})
@@ -139,6 +184,7 @@ class CharacterService:
             "can_talk": bool(hooks.get("can_talk", False)),
             "can_spar": bool(hooks.get("can_spar", False)),
             "can_duel": bool(hooks.get("can_duel", False)),
+            "can_receive_reward": self.can_receive_reward(character["id"], player),
             "unlocked": self._is_unlocked(character, player),
         }
 
@@ -157,6 +203,12 @@ class CharacterService:
         min_tier = hooks.get(f"{hook_key.replace('can_', '')}_min_tier")
         if min_tier and not self._relationships.meets_min_tier(self._tier(character_id, player), min_tier):
             return {"allowed": False, "reason": "RELATIONSHIP_TOO_LOW"}
+        # Optional morality gate: ``spar_morality_band`` / ``duel_morality_band``
+        # require the player to be in a specific morality band, so alignment also
+        # changes what an NPC is willing to do over time.
+        morality_band = hooks.get(f"{hook_key.replace('can_', '')}_morality_band")
+        if morality_band and self._morality.band_id(getattr(player, "morality", 0)) != morality_band:
+            return {"allowed": False, "reason": "MORALITY_BAND_MISMATCH"}
         return {"allowed": True, "reason": None, "enemy_id": hooks.get("enemy_id", "")}
 
     def _choice_available(self, choice: Dict[str, Any], character_id: str, player: Any) -> bool:

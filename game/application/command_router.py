@@ -42,6 +42,9 @@ class CommandRouter:
         "learn": Action.LEARN_SKILL,
         "sects": Action.SECTS,
         "join": Action.JOIN_SECT,
+        "boon": Action.RECEIVE_BOON,
+        "receive": Action.RECEIVE_BOON,
+        "map": Action.MAP,
         "breakthrough": Action.BREAKTHROUGH,
         "b": Action.BREAKTHROUGH,
         "stabilise": Action.STABILISE_FOUNDATION,
@@ -88,6 +91,7 @@ class CommandRouter:
         Action.DUEL_CHARACTER: "character_id",
         Action.JOIN_SECT: "sect_id",
         Action.SECTS: "sect_id",
+        Action.RECEIVE_BOON: "character_id",
         Action.TRAVEL: "location_id",
         Action.SAVE: "slot",
         Action.LOAD: "slot",
@@ -110,6 +114,8 @@ class CommandRouter:
             self._route_train_args(command, args)
         elif action == Action.BREAKTHROUGH:
             self._route_breakthrough_args(command, args)
+        elif action == Action.STABILISE_FOUNDATION:
+            self._route_stabilise_args(command, args)
         elif action == Action.EQUIP_ITEM:
             self._route_equip_args(command, args)
         elif action == Action.BUY_ITEM:
@@ -132,6 +138,10 @@ class CommandRouter:
             return
         if args[0] in {"essence", "qi", "dantian"}:
             command["action"] = Action.ESSENCE_BREAKTHROUGH
+
+    def _route_stabilise_args(self, command: Dict[str, Any], args: List[str]) -> None:
+        if args and args[0] in {"essence", "qi", "dantian"}:
+            command["action"] = Action.STABILISE_ESSENCE
 
     def _route_equip_args(self, command: Dict[str, Any], args: List[str]) -> None:
         if args:
@@ -162,6 +172,9 @@ class CommandRouter:
             {"command": "breakthrough body", "aliases": "breakthrough, b", "desc": "Attempt a Body Transformation breakthrough."},
             {"command": "breakthrough essence", "aliases": "", "desc": "Attempt an Essence Gathering breakthrough."},
             {"command": "stabilise foundation", "aliases": "stabilise, stabilize", "desc": "Reduce cultivation strain and steady foundation stability."},
+            {"command": "stabilise essence", "aliases": "", "desc": "Reduce essence strain and steady its foundation stability."},
+            {"command": "map", "aliases": "", "desc": "Show your current map position and the exits you can reach."},
+            {"command": "boon <character_id>", "aliases": "receive", "desc": "Accept a relationship reward from a character who trusts you."},
             {"command": "explore", "aliases": "e", "desc": "Venture out; may trigger combat, loot, or a special encounter."},
             {"command": "talk <character_id>", "aliases": "", "desc": "Speak with a named character at your location."},
             {"command": "spar <character_id>", "aliases": "", "desc": "Start a sparring match with an available character."},

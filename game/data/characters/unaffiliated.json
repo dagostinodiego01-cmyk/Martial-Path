@@ -123,7 +123,18 @@
       "enemy_id": "duanmu_qun_duel",
       "quest_ids": [],
       "teaches_skills": [],
-      "relationship_rewards": [],
+      "relationship_rewards": [
+        {
+          "min_tier": "friendly",
+          "reward": { "item_id": "profound_pill", "count": 2, "message": "Duanmu Qun gifts you pills to keep your foundations steady." },
+          "once": true
+        },
+        {
+          "min_tier": "trusted",
+          "reward": { "gold": 150, "exp": 200, "message": "Duanmu Qun honours your bond with the spoils of his travels." },
+          "once": true
+        }
+      ],
       "spar_min_tier": "neutral",
       "duel_min_tier": "friendly"
     },

@@ -40,6 +40,9 @@ class CLIInterface:
             EventType.CHARACTER_INTERACTION: self._fmt_character_interaction,
             EventType.SECTS: self._fmt_sects,
             EventType.SECT_JOINED: self._fmt_sect_joined,
+            EventType.MAP: self._fmt_map,
+            EventType.BOON: self._fmt_boon,
+            EventType.PLAYER_DIED: self._fmt_died,
             EventType.HELP: self._fmt_help,
             EventType.ERROR: self._fmt_error,
             EventType.QUIT: self._fmt_quit,
@@ -269,6 +272,42 @@ class CLIInterface:
     def _fmt_sect_joined(self, result: Dict[str, Any]) -> None:
         self._p(result.get("player_message", f"You join the sect and take up the path of {result.get('path')}."))
 
+    def _fmt_map(self, result: Dict[str, Any]) -> None:
+        self._hr()
+        self._p(f"You are at {result.get('location_name', '?')}.")
+        position = result.get("map_position", {})
+        if isinstance(position, dict) and "x" in position and "y" in position:
+            self._p(f"  Map position: ({position['x']:.2f}, {position['y']:.2f})")
+        destinations = result.get("destinations", [])
+        if destinations:
+            self._p("  Reachable:")
+            for dest in destinations:
+                if dest.get("reachable"):
+                    self._p(f"    - {dest.get('display_name', dest.get('id'))} [{dest.get('danger', '?')}]")
+                else:
+                    self._p(f"    - {dest.get('display_name', dest.get('id'))} (locked: {dest.get('reason', 'unknown')})")
+        else:
+            self._p("  Nowhere to travel from here.")
+        self._hr()
+
+    def _fmt_boon(self, result: Dict[str, Any]) -> None:
+        self._p(result.get("player_message", "You receive a gift."))
+        reward = result.get("reward", {})
+        if reward.get("gold"):
+            self._p(f"  Gold +{reward['gold']}.")
+        if reward.get("exp"):
+            self._p(f"  EXP +{reward['exp']}.")
+        for item_id, count in reward.get("items", {}).items():
+            self._p(f"  {item_id} x{count}.")
+        if reward.get("skill_id"):
+            self._p(f"  Learned technique: {reward['skill_id']}.")
+
+    def _fmt_died(self, result: Dict[str, Any]) -> None:
+        self._hr()
+        self._p(result.get("player_message", "Your lifespan is exhausted."))
+        self._p(f"You perished at the age of {result.get('age_years', '?')}. Your journey is over.")
+        self._hr()
+
     def _fmt_help(self, _result: Dict[str, Any]) -> None:
         self._hr()
         self._p("Available commands:")
@@ -344,6 +383,9 @@ class CLIInterface:
             "UNKNOWN_ENEMY": lambda: "That character's combat entry is missing.",
             "NOT_AVAILABLE": lambda: "That interaction is not available.",
             "LOCKED": lambda: "That interaction is not unlocked yet.",
+            "RELATIONSHIP_TOO_LOW": lambda: "Your relationship with them is not close enough yet.",
+            "MORALITY_BAND_MISMATCH": lambda: "Your alignment does not permit that interaction.",
+            "NO_REWARD_AVAILABLE": lambda: "That character has no reward to offer you right now.",
         }
         builder = messages.get(reason)
         return builder() if builder else f"Something went wrong ({reason})."

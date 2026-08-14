@@ -925,6 +925,9 @@ class GUIInterface(QMainWindow):
         if not essence_unlocked:
             locked_reason = f"Locked - {req}." if req else "Essence Gathering is still locked."
 
+        has_shop = bool(state.get("shops"))
+        has_trainer = bool(state.get("trainers"))
+
         cards = [
             self._action_card(
                 "Train Body", "Cultivate your body",
@@ -934,6 +937,16 @@ class GUIInterface(QMainWindow):
                 "Gather Essence",
                 "Absorb spiritual energy" if essence_unlocked else "Locked",
                 lambda: self._do_action({"action": Action.TRAIN_ESSENCE}),
+                enabled=essence_unlocked, locked_reason=locked_reason,
+            ),
+            self._action_card(
+                "Stabilise Foundation", "Settle cultivation strain",
+                lambda: self._do_action({"action": Action.STABILISE_FOUNDATION}),
+            ),
+            self._action_card(
+                "Stabilise Essence",
+                "Settle essence strain" if essence_unlocked else "Locked",
+                lambda: self._do_action({"action": Action.STABILISE_ESSENCE}),
                 enabled=essence_unlocked, locked_reason=locked_reason,
             ),
             self._action_card(
@@ -955,6 +968,16 @@ class GUIInterface(QMainWindow):
                 enabled=essence_unlocked, locked_reason=locked_reason,
             ),
             self._action_card("Travel", "Move to another area", self._open_travel_dialog),
+            self._action_card("World Map", "Show your position and exits", self._open_map_dialog),
+            self._action_card(
+                "Market", "Buy supplies and equipment",
+                self._open_market_dialog, enabled=has_shop, locked_reason="No market is available here.",
+            ),
+            self._action_card(
+                "Masters", "Learn techniques",
+                self._open_master_dialog, enabled=has_trainer, locked_reason="No technique master is here.",
+            ),
+            self._action_card("Use Item", "Use a pill or manual", self._open_use_dialog),
             self._action_card("Inventory", "Manage your items", lambda: self._focus_tab(0)),
         ]
         page = QWidget()
@@ -999,6 +1022,155 @@ class GUIInterface(QMainWindow):
     def _travel_and_close(self, location_id: str, dialog: QDialog) -> None:
         dialog.accept()
         self._do_action({"action": Action.TRAVEL, "location_id": location_id})
+
+    def _open_market_dialog(self) -> None:
+        state = self._engine.get_game_state()
+        dialog = QDialog(self)
+        dialog.setWindowTitle("Market")
+        dialog.resize(380, 360)
+        lay = QVBoxLayout(dialog)
+        lay.addWidget(self._section_title("Choose a market"))
+        for shop in state.get("shops", []):
+            shop_id = shop.get("id")
+            btn = self._btn(str(shop.get("display_name", shop_id)), None, "BagBtn")
+            btn.clicked.connect(lambda _checked=False, sid=shop_id: self._shop_and_close(sid, dialog))
+            lay.addWidget(btn)
+        lay.addStretch(1)
+        lay.addWidget(self._btn("Cancel", dialog.reject, "BattleBtn"))
+        dialog.exec()
+
+    def _shop_and_close(self, shop_id: str, dialog: QDialog) -> None:
+        dialog.accept()
+        self._do_action({"action": Action.SHOP, "shop_id": shop_id})
+
+    def _open_shop_stock_dialog(self, result: Dict[str, Any]) -> None:
+        shop = result.get("shop", {})
+        shop_id = shop.get("id", "")
+        dialog = QDialog(self)
+        dialog.setWindowTitle(str(shop.get("display_name", "Market")))
+        dialog.resize(400, 420)
+        lay = QVBoxLayout(dialog)
+        lay.addWidget(self._section_title("Buy"))
+        for item in result.get("stock", []):
+            item_id = item.get("item_id")
+            price = item.get("price", {})
+            price_text = ", ".join(f"{v} {k.replace('_', ' ')}" for k, v in price.items()) if isinstance(price, dict) else str(price)
+            btn = self._btn(f"{item.get('name', item_id)}   ({price_text})", None, "BagBtn")
+            btn.setToolTip(str(item.get("description", "")))
+            btn.clicked.connect(lambda _checked=False, iid=item_id, sid=shop_id: self._buy_and_close(sid, iid, dialog))
+            lay.addWidget(btn)
+        if not result.get("stock"):
+            empty = QLabel("This market has no stock.")
+            empty.setObjectName("Caption")
+            lay.addWidget(empty)
+        lay.addStretch(1)
+        lay.addWidget(self._btn("Close", dialog.reject, "BattleBtn"))
+        dialog.exec()
+
+    def _buy_and_close(self, shop_id: str, item_id: str, dialog: QDialog) -> None:
+        dialog.accept()
+        self._do_action({"action": Action.BUY_ITEM, "shop_id": shop_id, "item_id": item_id})
+
+    def _open_master_dialog(self) -> None:
+        state = self._engine.get_game_state()
+        dialog = QDialog(self)
+        dialog.setWindowTitle("Masters")
+        dialog.resize(380, 360)
+        lay = QVBoxLayout(dialog)
+        lay.addWidget(self._section_title("Choose a master"))
+        for trainer in state.get("trainers", []):
+            trainer_id = trainer.get("id")
+            btn = self._btn(str(trainer.get("display_name", trainer_id)), None, "BagBtn")
+            btn.clicked.connect(lambda _checked=False, tid=trainer_id: self._master_and_close(tid, dialog))
+            lay.addWidget(btn)
+        lay.addStretch(1)
+        lay.addWidget(self._btn("Cancel", dialog.reject, "BattleBtn"))
+        dialog.exec()
+
+    def _master_and_close(self, trainer_id: str, dialog: QDialog) -> None:
+        dialog.accept()
+        self._do_action({"action": Action.TRAINERS, "trainer_id": trainer_id})
+
+    def _open_trainer_learn_dialog(self, result: Dict[str, Any]) -> None:
+        trainer = result.get("trainer", {})
+        trainer_id = trainer.get("id", "")
+        dialog = QDialog(self)
+        dialog.setWindowTitle(str(trainer.get("display_name", "Master")))
+        dialog.resize(400, 420)
+        lay = QVBoxLayout(dialog)
+        lay.addWidget(self._section_title("Techniques"))
+        for technique in result.get("techniques", []):
+            skill_id = technique.get("skill_id")
+            known = bool(technique.get("already_known", False))
+            affordable = bool(technique.get("affordable", True))
+            price = technique.get("price", {})
+            price_text = ", ".join(f"{v} {k.replace('_', ' ')}" for k, v in price.items()) if isinstance(price, dict) else str(price)
+            label = f"{technique.get('name', skill_id)}   ({price_text})"
+            if known:
+                label += " (known)"
+            elif not affordable:
+                label += " (need funds)"
+            btn = self._btn(label, None, "BagBtn", enabled=not known and affordable)
+            btn.setToolTip(str(technique.get("description", "")))
+            btn.clicked.connect(lambda _checked=False, tid=trainer_id, sid=skill_id: self._learn_and_close(tid, sid, dialog))
+            lay.addWidget(btn)
+        lay.addStretch(1)
+        lay.addWidget(self._btn("Close", dialog.reject, "BattleBtn"))
+        dialog.exec()
+
+    def _learn_and_close(self, trainer_id: str, skill_id: str, dialog: QDialog) -> None:
+        dialog.accept()
+        self._do_action({"action": Action.LEARN_SKILL, "trainer_id": trainer_id, "skill_id": skill_id})
+
+    def _open_use_dialog(self) -> None:
+        items = [i for i in self._engine.get_inventory_items() if i.get("usable") or i.get("type") == "consumable"]
+        dialog = QDialog(self)
+        dialog.setWindowTitle("Use Item")
+        dialog.resize(380, 360)
+        lay = QVBoxLayout(dialog)
+        lay.addWidget(self._section_title("Choose an item"))
+        if not items:
+            empty = QLabel("You have no usable items.")
+            empty.setObjectName("Caption")
+            lay.addWidget(empty)
+        for item in items:
+            item_id = item.get("item_id")
+            btn = self._btn(f"{item.get('name', item_id)}   x{item.get('count', 1)}", None, "BagBtn")
+            btn.setToolTip(str(item.get("description", "")))
+            btn.clicked.connect(lambda _checked=False, iid=item_id: self._use_and_close(iid, dialog))
+            lay.addWidget(btn)
+        lay.addStretch(1)
+        lay.addWidget(self._btn("Cancel", dialog.reject, "BattleBtn"))
+        dialog.exec()
+
+    def _use_and_close(self, item_id: str, dialog: QDialog) -> None:
+        dialog.accept()
+        self._do_action({"action": Action.USE_ITEM, "item_id": item_id})
+
+    def _open_map_dialog(self) -> None:
+        result = self._engine.process_action({"action": Action.MAP})
+        dialog = QDialog(self)
+        dialog.setWindowTitle("World Map")
+        dialog.resize(380, 360)
+        lay = QVBoxLayout(dialog)
+        lay.addWidget(self._section_title(str(result.get("location_name", "?"))))
+        position = result.get("map_position", {})
+        if isinstance(position, dict) and "x" in position and "y" in position:
+            pos = QLabel(f"Map position: ({position['x']:.2f}, {position['y']:.2f})")
+            pos.setObjectName("Caption")
+            lay.addWidget(pos)
+        for dest in result.get("destinations", []):
+            reachable = bool(dest.get("reachable", True))
+            label = f"{dest.get('display_name', dest.get('id'))}   ({dest.get('danger', '?')})"
+            btn = self._btn(label, None, "BagBtn", enabled=reachable)
+            if reachable:
+                btn.clicked.connect(lambda _checked=False, loc=dest["id"]: self._travel_and_close(loc, dialog))
+            else:
+                btn.setToolTip(dest.get("reason", "You cannot travel there yet."))
+            lay.addWidget(btn)
+        lay.addStretch(1)
+        lay.addWidget(self._btn("Close", dialog.reject, "BattleBtn"))
+        dialog.exec()
 
     def _open_settings(self) -> None:
         dialog = QDialog(self)
@@ -1187,6 +1359,27 @@ class GUIInterface(QMainWindow):
             self._focus_tab(0)
         elif ev == EventType.HELP:
             self._show_help_popup()
+        elif ev == EventType.STABILISE_RESULT:
+            self._log(r.get("player_message", "You steady your foundation."), T.SUCCESS)
+        elif ev == EventType.SHOP:
+            self._open_shop_stock_dialog(r)
+        elif ev == EventType.TRAINER:
+            self._open_trainer_learn_dialog(r)
+        elif ev == EventType.ITEM_PURCHASED:
+            self._log(r.get("player_message", "Item purchased."), T.GOLD)
+        elif ev == EventType.ITEM_SOLD:
+            self._log(r.get("player_message", "Item sold."), T.GOLD)
+        elif ev == EventType.SKILL_LEARNED:
+            self._log(r.get("player_message", "You learn a new technique."), T.ACCENT_GLOW)
+        elif ev == EventType.EQUIP_ITEM_RESULT:
+            self._log(r.get("player_message", "Item equipped."), T.SUCCESS)
+        elif ev == EventType.UNEQUIP_ITEM_RESULT:
+            self._log(r.get("player_message", "Item unequipped."), T.SUCCESS)
+        elif ev == EventType.BOON:
+            self._log(r.get("player_message", "You receive a gift."), T.GOLD)
+        elif ev == EventType.PLAYER_DIED:
+            self._log(r.get("player_message", "Your lifespan is exhausted."), T.DANGER)
+            self._log(f"You perished at the age of {r.get('age_years', '?')}.", T.DANGER)
         elif ev == EventType.ERROR:
             self._log("! " + self._describe_error(r), T.DANGER)
 

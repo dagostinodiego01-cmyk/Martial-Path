@@ -8,6 +8,7 @@ allow travel as intended.
 from collections import deque
 from types import SimpleNamespace
 
+from game.core.constants import AVAILABLE_SYSTEMS
 from game.data.registry import GameDataRegistry
 from game.services.travel_service import TravelService
 from game.systems.location_system import LocationSystem
@@ -69,6 +70,12 @@ def _player(body_realm_id, essence_realm_id, location):
 
 def test_start_location_exists():
     assert START_LOCATION in _locations(_registry())
+
+
+def test_available_systems_only_declare_implemented_verbs():
+    for location in _locations(_registry()).values():
+        dead = set(location.get("available_systems", [])) - set(AVAILABLE_SYSTEMS)
+        assert not dead, f"location '{location['id']}' declares unimplemented systems: {sorted(dead)}"
 
 
 def test_all_locations_have_normalized_map_positions():

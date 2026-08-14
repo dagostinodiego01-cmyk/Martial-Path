@@ -14,6 +14,7 @@ from __future__ import annotations
 import re
 from typing import Any, Dict, Iterable, List, Optional, Set
 
+from game.core.constants import AVAILABLE_SYSTEMS
 from game.data.registry import GameDataRegistry
 from game.validation.validation_error import ValidationResult
 
@@ -28,6 +29,7 @@ def validate_all_game_data(registry: Optional[GameDataRegistry] = None) -> Valid
     _validate_character_enemy_links(registry, result)
     _validate_enemy_realms(registry, result)
     _validate_character_reaction_keys(registry, result)
+    _validate_character_hooks(registry, result)
     _validate_locations(registry, result)
     _validate_encounter_pools(registry, result)
     _validate_cultivation_schema(registry, result)
@@ -181,6 +183,44 @@ def _validate_character_reaction_keys(registry: GameDataRegistry, result: Valida
             )
 
 
+def _validate_character_hooks(registry: GameDataRegistry, result: ValidationResult) -> None:
+    """Check relationship/morality gates and relationship rewards reference real
+    tiers, bands, items, and skills."""
+    band_ids = {band["id"] for band in registry.morality.get("bands", [])}
+    tier_ids = {tier["id"] for tier in registry.relationships.get("tiers", [])}
+    skill_ids = {skill["id"] for skill in registry.skills}
+    item_ids = _id_set(registry.items) | set(registry.manual_item_ids())
+
+    for character in registry.characters:
+        character_id = character.get("id")
+        hooks = character.get("gameplay_hooks", {})
+        for hook_key in ("spar_min_tier", "duel_min_tier"):
+            tier = hooks.get(hook_key)
+            if tier and tier_ids and tier not in tier_ids:
+                result.add("bad_relationship_tier", f"character '{character_id}' {hook_key} references unknown tier '{tier}'")
+        for hook_key in ("spar_morality_band", "duel_morality_band"):
+            band = hooks.get(hook_key)
+            if band and band_ids and band not in band_ids:
+                result.add("bad_morality_band", f"character '{character_id}' {hook_key} references unknown band '{band}'")
+
+        for reward in hooks.get("relationship_rewards", []):
+            if not isinstance(reward, dict):
+                continue
+            min_tier = reward.get("min_tier")
+            if min_tier and tier_ids and min_tier not in tier_ids:
+                result.add("bad_relationship_tier", f"character '{character_id}' reward min_tier references unknown tier '{min_tier}'")
+            band = reward.get("morality_band")
+            if band and band_ids and band not in band_ids:
+                result.add("bad_morality_band", f"character '{character_id}' reward morality_band references unknown band '{band}'")
+            payload = reward.get("reward", {})
+            item_id = payload.get("item_id")
+            if item_id and item_id not in item_ids:
+                result.add("bad_item_ref", f"character '{character_id}' reward references unknown item '{item_id}'")
+            skill_id = payload.get("skill_id")
+            if skill_id and skill_id not in skill_ids:
+                result.add("bad_skill_ref", f"character '{character_id}' reward references unknown skill '{skill_id}'")
+
+
 # -- locations -----------------------------------------------------------
 def _validate_locations(registry: GameDataRegistry, result: ValidationResult) -> None:
     location_ids = _id_set(registry.locations)
@@ -199,6 +239,13 @@ def _validate_locations(registry: GameDataRegistry, result: ValidationResult) ->
         _check_level(location_id, "danger_level", location.get("danger_level"), result)
         _check_level(location_id, "qi_density", location.get("qi_density"), result)
         _check_map_position(location_id, location.get("map_position"), result)
+
+        for system in location.get("available_systems", []):
+            if system not in AVAILABLE_SYSTEMS:
+                result.add(
+                    "dead_available_system",
+                    f"location '{location_id}' declares unimplemented system '{system}'",
+                )
 
         requirements = location.get("requirements", {})
         for track in ("body_transformation", "essence_gathering"):

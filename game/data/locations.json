@@ -7,19 +7,37 @@
     "tier": "Tutorial / Early Game",
     "description": "A quiet forest rich with weak spiritual energy. Low-level beasts roam the deeper paths, and herb-gatherers rarely stray far from the tree line.",
     "requirements": {
-      "body_transformation": { "minimum_realm": "Mortal", "minimum_stage": 1 },
-      "essence_gathering": { "minimum_realm": "None", "minimum_stage": 0 },
+      "body_transformation": {
+        "minimum_realm": "Mortal",
+        "minimum_stage": 1
+      },
+      "essence_gathering": {
+        "minimum_realm": "None",
+        "minimum_stage": 0
+      },
       "unlock_flags": [],
       "required_items": [],
       "required_reputation": []
     },
     "danger_level": 2,
     "qi_density": 2,
-    "map_position": {"x": 0.070, "y": 0.665},
-    "connected_locations": ["azure_village", "misty_gorge"],
+    "map_position": {
+      "x": 0.07,
+      "y": 0.665
+    },
+    "connected_locations": [
+      "azure_village",
+      "misty_gorge"
+    ],
     "npc_ids": [],
-    "available_systems": ["explore", "gathering", "minor_beast_combat"],
-    "resources": ["Spirit Grass", "Beast Cores"],
+    "available_systems": [
+      "combat",
+      "explore"
+    ],
+    "resources": [
+      "Spirit Grass",
+      "Beast Cores"
+    ],
     "notes": "Starting area. Safe enough for a fresh cultivator to find their footing."
   },
   {
@@ -30,19 +48,40 @@
     "tier": "Tutorial / Early Game",
     "description": "A small mortal village beside a clear stream. Its people know little of cultivation, but the inn is warm and the wells run sweet -- a safe place to recover.",
     "requirements": {
-      "body_transformation": { "minimum_realm": "Mortal", "minimum_stage": 1 },
-      "essence_gathering": { "minimum_realm": "None", "minimum_stage": 0 },
+      "body_transformation": {
+        "minimum_realm": "Mortal",
+        "minimum_stage": 1
+      },
+      "essence_gathering": {
+        "minimum_realm": "None",
+        "minimum_stage": 0
+      },
       "unlock_flags": [],
       "required_items": [],
       "required_reputation": []
     },
     "danger_level": 0,
     "qi_density": 1,
-    "map_position": {"x": 0.110, "y": 0.625},
-    "connected_locations": ["outer_forest", "sky_fortune_road"],
-    "npc_ids": ["lan_yunyue"],
-    "available_systems": ["rest", "market", "dialogue"],
-    "resources": ["Market", "Rest"],
+    "map_position": {
+      "x": 0.11,
+      "y": 0.625
+    },
+    "connected_locations": [
+      "outer_forest",
+      "sky_fortune_road"
+    ],
+    "npc_ids": [
+      "lan_yunyue"
+    ],
+    "available_systems": [
+      "dialogue",
+      "market",
+      "rest"
+    ],
+    "resources": [
+      "Market",
+      "Rest"
+    ],
     "notes": "The safest early hub and the best place for first relationship anchors. The Sky Fortune Road leads on to the kingdom."
   },
   {
@@ -53,19 +92,37 @@
     "tier": "Early Game",
     "description": "A fog-choked ravine where stronger beasts and rogue cultivators lurk. Spirit stones glint in the damp rock for those bold enough to search.",
     "requirements": {
-      "body_transformation": { "minimum_realm": "Mortal", "minimum_stage": 1 },
-      "essence_gathering": { "minimum_realm": "None", "minimum_stage": 0 },
+      "body_transformation": {
+        "minimum_realm": "Mortal",
+        "minimum_stage": 1
+      },
+      "essence_gathering": {
+        "minimum_realm": "None",
+        "minimum_stage": 0
+      },
       "unlock_flags": [],
       "required_items": [],
       "required_reputation": []
     },
     "danger_level": 4,
     "qi_density": 4,
-    "map_position": {"x": 0.055, "y": 0.600},
-    "connected_locations": ["outer_forest", "ruined_shrine"],
+    "map_position": {
+      "x": 0.055,
+      "y": 0.6
+    },
+    "connected_locations": [
+      "outer_forest",
+      "ruined_shrine"
+    ],
     "npc_ids": [],
-    "available_systems": ["explore", "gathering", "combat"],
-    "resources": ["Spirit Stones", "Rare Herbs"],
+    "available_systems": [
+      "combat",
+      "explore"
+    ],
+    "resources": [
+      "Spirit Stones",
+      "Rare Herbs"
+    ],
     "notes": "First real step up in danger. Rogue cultivators make travel less predictable."
   },
   {
@@ -76,19 +133,36 @@
     "tier": "Early Game",
     "description": "The crumbling remains of an ancient shrine, thick with restless corpse-qi. Old relics are said to sleep beneath the fallen stones.",
     "requirements": {
-      "body_transformation": { "minimum_realm": "Mortal", "minimum_stage": 1 },
-      "essence_gathering": { "minimum_realm": "None", "minimum_stage": 0 },
+      "body_transformation": {
+        "minimum_realm": "Mortal",
+        "minimum_stage": 1
+      },
+      "essence_gathering": {
+        "minimum_realm": "None",
+        "minimum_stage": 0
+      },
       "unlock_flags": [],
       "required_items": [],
       "required_reputation": []
     },
     "danger_level": 6,
     "qi_density": 6,
-    "map_position": {"x": 0.045, "y": 0.545},
-    "connected_locations": ["misty_gorge"],
+    "map_position": {
+      "x": 0.045,
+      "y": 0.545
+    },
+    "connected_locations": [
+      "misty_gorge"
+    ],
     "npc_ids": [],
-    "available_systems": ["explore", "combat"],
-    "resources": ["Ancient Relics", "Profound Pills"],
+    "available_systems": [
+      "combat",
+      "explore"
+    ],
+    "resources": [
+      "Ancient Relics",
+      "Profound Pills"
+    ],
     "notes": "Dense qi at real risk. Corpse-qi makes it a poor place to linger."
   },
   {
@@ -99,19 +173,40 @@
     "tier": "Tutorial / Early Game",
     "description": "A well-trodden road linking the quiet Azure villages to the heart of the Sky Fortune Kingdom. Patrols keep it mostly safe, but bandits still test careless travellers.",
     "requirements": {
-      "body_transformation": { "minimum_realm": "Mortal", "minimum_stage": 1 },
-      "essence_gathering": { "minimum_realm": "None", "minimum_stage": 0 },
+      "body_transformation": {
+        "minimum_realm": "Mortal",
+        "minimum_stage": 1
+      },
+      "essence_gathering": {
+        "minimum_realm": "None",
+        "minimum_stage": 0
+      },
       "unlock_flags": [],
       "required_items": [],
       "required_reputation": []
     },
     "danger_level": 1,
     "qi_density": 2,
-    "map_position": {"x": 0.140, "y": 0.585},
-    "connected_locations": ["azure_village", "starting_village", "beast_mountain"],
-    "npc_ids": ["south_horizon_region_cultivator", "rogue_cultivator"],
-    "available_systems": ["travel", "rumours"],
-    "resources": ["Travel Routes"],
+    "map_position": {
+      "x": 0.14,
+      "y": 0.585
+    },
+    "connected_locations": [
+      "azure_village",
+      "starting_village",
+      "beast_mountain"
+    ],
+    "npc_ids": [
+      "south_horizon_region_cultivator",
+      "rogue_cultivator"
+    ],
+    "available_systems": [
+      "dialogue",
+      "travel"
+    ],
+    "resources": [
+      "Travel Routes"
+    ],
     "notes": "Gateway from the starting wilds into the kingdom proper."
   },
   {
@@ -122,19 +217,46 @@
     "tier": "Tutorial / Early Game",
     "description": "A modest kingdom village of tiled roofs and training yards, home to the Lin family. Warm hearths, familiar faces, and the safest place to gather your strength.",
     "requirements": {
-      "body_transformation": { "minimum_realm": "Mortal", "minimum_stage": 1 },
-      "essence_gathering": { "minimum_realm": "None", "minimum_stage": 0 },
+      "body_transformation": {
+        "minimum_realm": "Mortal",
+        "minimum_stage": 1
+      },
+      "essence_gathering": {
+        "minimum_realm": "None",
+        "minimum_stage": 0
+      },
       "unlock_flags": [],
       "required_items": [],
       "required_reputation": []
     },
     "danger_level": 0,
     "qi_density": 2,
-    "map_position": {"x": 0.130, "y": 0.640},
-    "connected_locations": ["sky_fortune_road", "lin_academy", "beast_mountain"],
-    "npc_ids": ["lin_xiaodong", "lin_xiaoge", "lin_fu", "lin_mu", "lin_ping", "lan_yunyue"],
-    "available_systems": ["rest", "family_dialogue", "early_relationships", "market"],
-    "resources": ["Market", "Rest"],
+    "map_position": {
+      "x": 0.13,
+      "y": 0.64
+    },
+    "connected_locations": [
+      "sky_fortune_road",
+      "lin_academy",
+      "beast_mountain"
+    ],
+    "npc_ids": [
+      "lin_xiaodong",
+      "lin_xiaoge",
+      "lin_fu",
+      "lin_mu",
+      "lin_ping",
+      "lan_yunyue"
+    ],
+    "available_systems": [
+      "dialogue",
+      "market",
+      "rest"
+    ],
+    "resources": [
+      "Market",
+      "Rest"
+    ],
     "notes": "Home-area hub and the best place for early relationship anchors."
   },
   {
@@ -145,19 +267,42 @@
     "tier": "Early Game",
     "description": "A rugged range prowled by spirit beasts and the occasional rogue cultivator. The first proper hunting ground for a rising body cultivator.",
     "requirements": {
-      "body_transformation": { "minimum_realm": "Strength Training", "minimum_stage": 1 },
-      "essence_gathering": { "minimum_realm": "None", "minimum_stage": 0 },
+      "body_transformation": {
+        "minimum_realm": "Strength Training",
+        "minimum_stage": 1
+      },
+      "essence_gathering": {
+        "minimum_realm": "None",
+        "minimum_stage": 0
+      },
       "unlock_flags": [],
       "required_items": [],
       "required_reputation": []
     },
     "danger_level": 3,
     "qi_density": 3,
-    "map_position": {"x": 0.165, "y": 0.530},
-    "connected_locations": ["starting_village", "sky_fortune_road", "lin_academy"],
-    "npc_ids": ["lin_xiaodong", "rogue_cultivator", "south_horizon_region_cultivator"],
-    "available_systems": ["beast_hunting", "gathering", "minor_beast_combat"],
-    "resources": ["Beast Cores", "Spirit Herbs"],
+    "map_position": {
+      "x": 0.165,
+      "y": 0.53
+    },
+    "connected_locations": [
+      "starting_village",
+      "sky_fortune_road",
+      "lin_academy"
+    ],
+    "npc_ids": [
+      "lin_xiaodong",
+      "rogue_cultivator",
+      "south_horizon_region_cultivator"
+    ],
+    "available_systems": [
+      "combat",
+      "explore"
+    ],
+    "resources": [
+      "Beast Cores",
+      "Spirit Herbs"
+    ],
     "notes": "First real step up in danger; good for early material farming."
   },
   {
@@ -168,19 +313,45 @@
     "tier": "Early Game",
     "description": "The martial academy where Sky Fortune's young talents drill the fundamentals of cultivation. Sparring rings, rank boards, and the first taste of young-master rivalry.",
     "requirements": {
-      "body_transformation": { "minimum_realm": "Strength Training", "minimum_stage": 1 },
-      "essence_gathering": { "minimum_realm": "None", "minimum_stage": 0 },
+      "body_transformation": {
+        "minimum_realm": "Strength Training",
+        "minimum_stage": 1
+      },
+      "essence_gathering": {
+        "minimum_realm": "None",
+        "minimum_stage": 0
+      },
       "unlock_flags": [],
       "required_items": [],
       "required_reputation": []
     },
     "danger_level": 1,
     "qi_density": 3,
-    "map_position": {"x": 0.200, "y": 0.560},
-    "connected_locations": ["starting_village", "beast_mountain", "sky_fortune_capital"],
-    "npc_ids": ["lin_academy_instructor", "hong_xi", "ling_sen", "zhu_yan", "qin_xingxuan", "qin_ziya"],
-    "available_systems": ["training", "tutorial_duels", "academy_rank", "basic_technique_learning"],
-    "resources": ["Training"],
+    "map_position": {
+      "x": 0.2,
+      "y": 0.56
+    },
+    "connected_locations": [
+      "starting_village",
+      "beast_mountain",
+      "sky_fortune_capital"
+    ],
+    "npc_ids": [
+      "lin_academy_instructor",
+      "hong_xi",
+      "ling_sen",
+      "zhu_yan",
+      "qin_xingxuan",
+      "qin_ziya"
+    ],
+    "available_systems": [
+      "sects",
+      "sparring",
+      "trainers"
+    ],
+    "resources": [
+      "Training"
+    ],
     "notes": "Core early training hub for sparring, rank, and discipline."
   },
   {
@@ -191,19 +362,47 @@
     "tier": "Early / Mid Game",
     "description": "The bustling capital of the Sky Fortune Kingdom, thick with nobles, merchants, and quiet intrigue. Auctions, politics, and the first powerful antagonists.",
     "requirements": {
-      "body_transformation": { "minimum_realm": "Viscera Training", "minimum_stage": 3 },
-      "essence_gathering": { "minimum_realm": "None", "minimum_stage": 0 },
+      "body_transformation": {
+        "minimum_realm": "Viscera Training",
+        "minimum_stage": 3
+      },
+      "essence_gathering": {
+        "minimum_realm": "None",
+        "minimum_stage": 0
+      },
       "unlock_flags": [],
       "required_items": [],
       "required_reputation": []
     },
     "danger_level": 2,
     "qi_density": 4,
-    "map_position": {"x": 0.235, "y": 0.505},
-    "connected_locations": ["lin_academy", "seven_profound_valleys_gate", "central_region_road"],
-    "npc_ids": ["qin_xingxuan", "qin_ziya", "mister_muyi", "muk_gu", "sky_fortune_kingdom_noble", "li_yifeng", "ouyang_dihua", "ouyang_boyan"],
-    "available_systems": ["auction", "politics", "reputation", "city_quests", "merchant_services"],
-    "resources": ["Auction", "Market"],
+    "map_position": {
+      "x": 0.235,
+      "y": 0.505
+    },
+    "connected_locations": [
+      "lin_academy",
+      "seven_profound_valleys_gate",
+      "central_region_road"
+    ],
+    "npc_ids": [
+      "qin_xingxuan",
+      "qin_ziya",
+      "mister_muyi",
+      "muk_gu",
+      "sky_fortune_kingdom_noble",
+      "li_yifeng",
+      "ouyang_dihua",
+      "ouyang_boyan"
+    ],
+    "available_systems": [
+      "market",
+      "quests"
+    ],
+    "resources": [
+      "Auction",
+      "Market"
+    ],
     "notes": "First large city hub. Introduces nobles, auctions, and faction pressure."
   },
   {
@@ -214,19 +413,45 @@
     "tier": "Mid Game",
     "description": "The tiered outer gate of the Seven Profound Valleys, where applicants are weighed, tested, and ranked before the inner valley opens to them.",
     "requirements": {
-      "body_transformation": { "minimum_realm": "Altering Muscle", "minimum_stage": 4 },
-      "essence_gathering": { "minimum_realm": "None", "minimum_stage": 0 },
+      "body_transformation": {
+        "minimum_realm": "Altering Muscle",
+        "minimum_stage": 4
+      },
+      "essence_gathering": {
+        "minimum_realm": "None",
+        "minimum_stage": 0
+      },
       "unlock_flags": [],
       "required_items": [],
       "required_reputation": []
     },
     "danger_level": 3,
     "qi_density": 5,
-    "map_position": {"x": 0.270, "y": 0.520},
-    "connected_locations": ["sky_fortune_capital", "seven_profound_valleys_inner", "south_horizon_road"],
-    "npc_ids": ["seven_profound_valleys_elder", "jiang_lanjian", "feng_shen", "lan_xin", "jiang_baoyun", "duanmu_qun"],
-    "available_systems": ["sect_entry_trial", "disciple_rank", "sparring", "sect_quests"],
-    "resources": ["Sect Contribution"],
+    "map_position": {
+      "x": 0.27,
+      "y": 0.52
+    },
+    "connected_locations": [
+      "sky_fortune_capital",
+      "seven_profound_valleys_inner",
+      "south_horizon_road"
+    ],
+    "npc_ids": [
+      "seven_profound_valleys_elder",
+      "jiang_lanjian",
+      "feng_shen",
+      "lan_xin",
+      "jiang_baoyun",
+      "duanmu_qun"
+    ],
+    "available_systems": [
+      "quests",
+      "sects",
+      "sparring"
+    ],
+    "resources": [
+      "Sect Contribution"
+    ],
     "notes": "First major sect progression space; gates deeper access by rank."
   },
   {
@@ -237,19 +462,44 @@
     "tier": "Mid Game",
     "description": "The mist-wrapped inner valley where sworn disciples train, scheme, and vie for standing among the profound arts.",
     "requirements": {
-      "body_transformation": { "minimum_realm": "Bone Forging", "minimum_stage": 5 },
-      "essence_gathering": { "minimum_realm": "Houtian", "minimum_stage": 1 },
+      "body_transformation": {
+        "minimum_realm": "Bone Forging",
+        "minimum_stage": 5
+      },
+      "essence_gathering": {
+        "minimum_realm": "Houtian",
+        "minimum_stage": 1
+      },
       "unlock_flags": [],
       "required_items": [],
       "required_reputation": []
     },
     "danger_level": 3,
     "qi_density": 6,
-    "map_position": {"x": 0.245, "y": 0.472},
-    "connected_locations": ["seven_profound_valleys_gate", "forbidden_back_mountain"],
-    "npc_ids": ["jiang_lanjian", "feng_shen", "lan_xin", "jiang_baoyun", "yan_littlemoon"],
-    "available_systems": ["technique_library", "inner_disciple_events", "rival_duels", "sect_reputation"],
-    "resources": ["Spirit Stones", "Techniques"],
+    "map_position": {
+      "x": 0.245,
+      "y": 0.472
+    },
+    "connected_locations": [
+      "seven_profound_valleys_gate",
+      "forbidden_back_mountain"
+    ],
+    "npc_ids": [
+      "jiang_lanjian",
+      "feng_shen",
+      "lan_xin",
+      "jiang_baoyun",
+      "yan_littlemoon"
+    ],
+    "available_systems": [
+      "sects",
+      "sparring",
+      "trainers"
+    ],
+    "resources": [
+      "Spirit Stones",
+      "Techniques"
+    ],
     "notes": "Main sect hub for rival arcs and technique selection."
   },
   {
@@ -260,19 +510,40 @@
     "tier": "Mid Game",
     "description": "A sealed peak behind the valleys, heavy with old danger and older opportunity. Rare fortunes wait here beside real backlash.",
     "requirements": {
-      "body_transformation": { "minimum_realm": "Bone Forging", "minimum_stage": 5 },
-      "essence_gathering": { "minimum_realm": "Houtian", "minimum_stage": 1 },
+      "body_transformation": {
+        "minimum_realm": "Bone Forging",
+        "minimum_stage": 5
+      },
+      "essence_gathering": {
+        "minimum_realm": "Houtian",
+        "minimum_stage": 1
+      },
       "unlock_flags": [],
       "required_items": [],
       "required_reputation": []
     },
     "danger_level": 7,
     "qi_density": 6,
-    "map_position": {"x": 0.280, "y": 0.428},
-    "connected_locations": ["seven_profound_valleys_inner"],
-    "npc_ids": ["good_fortune", "old_man_good_fortune", "ancient_devil", "rogue_cultivator"],
-    "available_systems": ["hidden_trials", "rare_resources", "risk_reward_exploration"],
-    "resources": ["Ancient Relics", "Forbidden Manuals"],
+    "map_position": {
+      "x": 0.28,
+      "y": 0.428
+    },
+    "connected_locations": [
+      "seven_profound_valleys_inner"
+    ],
+    "npc_ids": [
+      "good_fortune",
+      "old_man_good_fortune",
+      "ancient_devil",
+      "rogue_cultivator"
+    ],
+    "available_systems": [
+      "explore"
+    ],
+    "resources": [
+      "Ancient Relics",
+      "Forbidden Manuals"
+    ],
     "notes": "Dangerous optional zone with meaningful risk and reward."
   },
   {
@@ -283,19 +554,44 @@
     "tier": "Mid Game",
     "description": "The long overland route south toward the sea, worn by merchant convoys and wandering cultivators. Ambushes are not uncommon.",
     "requirements": {
-      "body_transformation": { "minimum_realm": "Pulse Condensation", "minimum_stage": 6 },
-      "essence_gathering": { "minimum_realm": "Houtian", "minimum_stage": 1 },
+      "body_transformation": {
+        "minimum_realm": "Pulse Condensation",
+        "minimum_stage": 6
+      },
+      "essence_gathering": {
+        "minimum_realm": "Houtian",
+        "minimum_stage": 1
+      },
       "unlock_flags": [],
       "required_items": [],
       "required_reputation": []
     },
     "danger_level": 4,
     "qi_density": 5,
-    "map_position": {"x": 0.265, "y": 0.640},
-    "connected_locations": ["seven_profound_valleys_gate", "south_horizon_city", "divine_phoenix_island", "south_sea_port"],
-    "npc_ids": ["south_horizon_region_cultivator", "li_yifeng", "rogue_cultivator"],
-    "available_systems": ["regional_travel", "road_events", "merchant_convoys", "ambushes"],
-    "resources": ["Travel Routes"],
+    "map_position": {
+      "x": 0.265,
+      "y": 0.64
+    },
+    "connected_locations": [
+      "seven_profound_valleys_gate",
+      "south_horizon_city",
+      "divine_phoenix_island",
+      "south_sea_port"
+    ],
+    "npc_ids": [
+      "south_horizon_region_cultivator",
+      "li_yifeng",
+      "rogue_cultivator"
+    ],
+    "available_systems": [
+      "combat",
+      "explore",
+      "market",
+      "travel"
+    ],
+    "resources": [
+      "Travel Routes"
+    ],
     "notes": "Travel corridor linking the starting arcs to the South Horizon Region."
   },
   {
@@ -306,19 +602,42 @@
     "tier": "Mid Game",
     "description": "A prosperous port-city and the beating heart of the South Horizon Region's trade, rumor, and shifting alliances.",
     "requirements": {
-      "body_transformation": { "minimum_realm": "Pulse Condensation", "minimum_stage": 6 },
-      "essence_gathering": { "minimum_realm": "Houtian", "minimum_stage": 1 },
+      "body_transformation": {
+        "minimum_realm": "Pulse Condensation",
+        "minimum_stage": 6
+      },
+      "essence_gathering": {
+        "minimum_realm": "Houtian",
+        "minimum_stage": 1
+      },
       "unlock_flags": [],
       "required_items": [],
       "required_reputation": []
     },
     "danger_level": 3,
     "qi_density": 5,
-    "map_position": {"x": 0.300, "y": 0.680},
-    "connected_locations": ["south_horizon_road", "divine_phoenix_island"],
-    "npc_ids": ["south_horizon_region_cultivator", "li_yifeng", "mister_muyi", "situ_yaoyue"],
-    "available_systems": ["market", "city_quests", "reputation", "auction"],
-    "resources": ["Market", "Auction"],
+    "map_position": {
+      "x": 0.3,
+      "y": 0.68
+    },
+    "connected_locations": [
+      "south_horizon_road",
+      "divine_phoenix_island"
+    ],
+    "npc_ids": [
+      "south_horizon_region_cultivator",
+      "li_yifeng",
+      "mister_muyi",
+      "situ_yaoyue"
+    ],
+    "available_systems": [
+      "market",
+      "quests"
+    ],
+    "resources": [
+      "Market",
+      "Auction"
+    ],
     "notes": "Regional trade hub and rumor exchange for the south."
   },
   {
@@ -329,19 +648,48 @@
     "tier": "Mid / Late Mortal World",
     "description": "A sacred island wreathed in phoenix fire, seat of the Divine Phoenix Sect and its bloodline arts. Home to powerful mentors and high-value relationships.",
     "requirements": {
-      "body_transformation": { "minimum_realm": "Pulse Condensation", "minimum_stage": 6 },
-      "essence_gathering": { "minimum_realm": "Houtian", "minimum_stage": 1 },
+      "body_transformation": {
+        "minimum_realm": "Pulse Condensation",
+        "minimum_stage": 6
+      },
+      "essence_gathering": {
+        "minimum_realm": "Houtian",
+        "minimum_stage": 1
+      },
       "unlock_flags": [],
       "required_items": [],
       "required_reputation": []
     },
     "danger_level": 3,
     "qi_density": 7,
-    "map_position": {"x": 0.329, "y": 0.732},
-    "connected_locations": ["south_horizon_road", "south_horizon_city", "divine_phoenix_mystic_realm", "south_sea_port"],
-    "npc_ids": ["mu_qianyu", "mu_bingyun", "mu_yuhuang", "mu_fengxian", "yan_littlemoon", "mo_riverbliss", "divine_phoenix_disciple", "divine_phoenix_island_founder"],
-    "available_systems": ["sect_reputation", "bloodline_training", "fire_technique_training", "mentor_events"],
-    "resources": ["Phoenix Herbs", "Fire Techniques"],
+    "map_position": {
+      "x": 0.329,
+      "y": 0.732
+    },
+    "connected_locations": [
+      "south_horizon_road",
+      "south_horizon_city",
+      "divine_phoenix_mystic_realm",
+      "south_sea_port"
+    ],
+    "npc_ids": [
+      "mu_qianyu",
+      "mu_bingyun",
+      "mu_yuhuang",
+      "mu_fengxian",
+      "yan_littlemoon",
+      "mo_riverbliss",
+      "divine_phoenix_disciple",
+      "divine_phoenix_island_founder"
+    ],
+    "available_systems": [
+      "sects",
+      "trainers"
+    ],
+    "resources": [
+      "Phoenix Herbs",
+      "Fire Techniques"
+    ],
     "notes": "Major sect hub for bloodline, inheritance, and fire arts. End of the V1 core path."
   },
   {
@@ -352,19 +700,41 @@
     "tier": "Late Mortal World",
     "description": "A folded pocket-realm of living flame, opened only to those the sect deems worthy. A high-value instanced trial.",
     "requirements": {
-      "body_transformation": { "minimum_realm": "Tempering Marrow", "minimum_stage": 7 },
-      "essence_gathering": { "minimum_realm": "Xiantian", "minimum_stage": 1 },
+      "body_transformation": {
+        "minimum_realm": "Tempering Marrow",
+        "minimum_stage": 7
+      },
+      "essence_gathering": {
+        "minimum_realm": "Xiantian",
+        "minimum_stage": 1
+      },
       "unlock_flags": [],
       "required_items": [],
       "required_reputation": []
     },
     "danger_level": 8,
     "qi_density": 9,
-    "map_position": {"x": 0.375, "y": 0.772},
-    "connected_locations": ["divine_phoenix_island"],
-    "npc_ids": ["mu_qianyu", "mu_bingyun", "mu_yuhuang", "divine_phoenix_island_founder", "divine_phoenix_disciple"],
-    "available_systems": ["inheritance_trial", "rare_fire_resources", "bloodline_trials", "boss_events"],
-    "resources": ["Phoenix Cores"],
+    "map_position": {
+      "x": 0.375,
+      "y": 0.772
+    },
+    "connected_locations": [
+      "divine_phoenix_island"
+    ],
+    "npc_ids": [
+      "mu_qianyu",
+      "mu_bingyun",
+      "mu_yuhuang",
+      "divine_phoenix_island_founder",
+      "divine_phoenix_disciple"
+    ],
+    "available_systems": [
+      "combat",
+      "explore"
+    ],
+    "resources": [
+      "Phoenix Cores"
+    ],
     "notes": "Locked future content: gated behind late-mortal cultivation."
   },
   {
@@ -375,19 +745,43 @@
     "tier": "Mid / Late Mortal World",
     "description": "A weathered harbor of salt-worn docks, the last safe anchor before the open Southern Sea and the routes to distant, dangerous shores.",
     "requirements": {
-      "body_transformation": { "minimum_realm": "Pulse Condensation", "minimum_stage": 6 },
-      "essence_gathering": { "minimum_realm": "Houtian", "minimum_stage": 1 },
+      "body_transformation": {
+        "minimum_realm": "Pulse Condensation",
+        "minimum_stage": 6
+      },
+      "essence_gathering": {
+        "minimum_realm": "Houtian",
+        "minimum_stage": 1
+      },
       "unlock_flags": [],
       "required_items": [],
       "required_reputation": []
     },
     "danger_level": 5,
     "qi_density": 5,
-    "map_position": {"x": 0.405, "y": 0.818},
-    "connected_locations": ["south_horizon_road", "divine_phoenix_island", "central_region_road", "southern_wilderness", "holy_demon_continent"],
-    "npc_ids": ["south_horizon_region_cultivator", "li_yifeng", "holy_demon_continent_demon"],
-    "available_systems": ["sea_travel", "pirate_events", "storm_events", "route_selection"],
-    "resources": ["Travel Routes"],
+    "map_position": {
+      "x": 0.405,
+      "y": 0.818
+    },
+    "connected_locations": [
+      "south_horizon_road",
+      "divine_phoenix_island",
+      "central_region_road",
+      "southern_wilderness",
+      "holy_demon_continent"
+    ],
+    "npc_ids": [
+      "south_horizon_region_cultivator",
+      "li_yifeng",
+      "holy_demon_continent_demon"
+    ],
+    "available_systems": [
+      "combat",
+      "travel"
+    ],
+    "resources": [
+      "Travel Routes"
+    ],
     "notes": "Sea travel node connecting the south to the Central Region and beyond."
   },
   {
@@ -398,19 +792,44 @@
     "tier": "Late Mortal World",
     "description": "The grand highway into the Central Region, watched over by the banners of four great kingdoms. Elite encounters await the unprepared.",
     "requirements": {
-      "body_transformation": { "minimum_realm": "Tempering Marrow", "minimum_stage": 7 },
-      "essence_gathering": { "minimum_realm": "Xiantian", "minimum_stage": 1 },
+      "body_transformation": {
+        "minimum_realm": "Tempering Marrow",
+        "minimum_stage": 7
+      },
+      "essence_gathering": {
+        "minimum_realm": "Xiantian",
+        "minimum_stage": 1
+      },
       "unlock_flags": [],
       "required_items": [],
       "required_reputation": []
     },
     "danger_level": 5,
     "qi_density": 6,
-    "map_position": {"x": 0.415, "y": 0.455},
-    "connected_locations": ["sky_fortune_capital", "south_sea_port", "vermillion_bird_kingdom", "zenlight_monastery", "ancient_ruins"],
-    "npc_ids": ["li_yifeng", "sky_fortune_kingdom_noble", "four_divine_kingdoms_prince_or_princess", "situ_yaoyue"],
-    "available_systems": ["high_level_travel", "political_events", "elite_road_encounters"],
-    "resources": ["Travel Routes"],
+    "map_position": {
+      "x": 0.415,
+      "y": 0.455
+    },
+    "connected_locations": [
+      "sky_fortune_capital",
+      "south_sea_port",
+      "vermillion_bird_kingdom",
+      "zenlight_monastery",
+      "ancient_ruins"
+    ],
+    "npc_ids": [
+      "li_yifeng",
+      "sky_fortune_kingdom_noble",
+      "four_divine_kingdoms_prince_or_princess",
+      "situ_yaoyue"
+    ],
+    "available_systems": [
+      "combat",
+      "travel"
+    ],
+    "resources": [
+      "Travel Routes"
+    ],
     "notes": "Transition route into large-scale politics and Divine Kingdom threats."
   },
   {
@@ -421,19 +840,47 @@
     "tier": "Late Mortal World",
     "description": "The crimson-walled seat of the Vermillion Bird Kingdom, grandest of the four great powers, where royal quests and elite tournaments decide fortunes.",
     "requirements": {
-      "body_transformation": { "minimum_realm": "Tempering Marrow", "minimum_stage": 7 },
-      "essence_gathering": { "minimum_realm": "Revolving Core", "minimum_stage": 1 },
+      "body_transformation": {
+        "minimum_realm": "Tempering Marrow",
+        "minimum_stage": 7
+      },
+      "essence_gathering": {
+        "minimum_realm": "Revolving Core",
+        "minimum_stage": 1
+      },
       "unlock_flags": [],
       "required_items": [],
       "required_reputation": []
     },
     "danger_level": 6,
     "qi_density": 7,
-    "map_position": {"x": 0.507, "y": 0.170},
-    "connected_locations": ["central_region_road", "asura_divine_kingdom", "nine_furnace_kingdom", "rival_divine_kingdom"],
-    "npc_ids": ["four_divine_kingdoms_prince_or_princess", "situ_haotian", "situ_yaoyue", "yang_yun", "ouyang_boyan", "sky_fortune_kingdom_noble"],
-    "available_systems": ["kingdom_politics", "elite_tournaments", "royal_quests", "high_value_auction"],
-    "resources": ["Auction", "Royal Favor"],
+    "map_position": {
+      "x": 0.507,
+      "y": 0.17
+    },
+    "connected_locations": [
+      "central_region_road",
+      "asura_divine_kingdom",
+      "nine_furnace_kingdom",
+      "rival_divine_kingdom"
+    ],
+    "npc_ids": [
+      "four_divine_kingdoms_prince_or_princess",
+      "situ_haotian",
+      "situ_yaoyue",
+      "yang_yun",
+      "ouyang_boyan",
+      "sky_fortune_kingdom_noble"
+    ],
+    "available_systems": [
+      "market",
+      "quests",
+      "sparring"
+    ],
+    "resources": [
+      "Auction",
+      "Royal Favor"
+    ],
     "notes": "Primary late-mortal political hub for major faction choices."
   },
   {
@@ -444,19 +891,37 @@
     "tier": "Late Mortal World",
     "description": "A kingdom of roaring forge-cities, its nine great furnaces said to temper both peerless blades and dangerous ambitions.",
     "requirements": {
-      "body_transformation": { "minimum_realm": "Tempering Marrow", "minimum_stage": 7 },
-      "essence_gathering": { "minimum_realm": "Revolving Core", "minimum_stage": 1 },
+      "body_transformation": {
+        "minimum_realm": "Tempering Marrow",
+        "minimum_stage": 7
+      },
+      "essence_gathering": {
+        "minimum_realm": "Revolving Core",
+        "minimum_stage": 1
+      },
       "unlock_flags": [],
       "required_items": [],
       "required_reputation": []
     },
     "danger_level": 6,
     "qi_density": 7,
-    "map_position": {"x": 0.343, "y": 0.316},
-    "connected_locations": ["vermillion_bird_kingdom"],
-    "npc_ids": ["yang_yun", "four_divine_kingdoms_prince_or_princess"],
-    "available_systems": ["forge_crafting", "kingdom_politics", "high_value_auction"],
-    "resources": ["Refined Metals"],
+    "map_position": {
+      "x": 0.343,
+      "y": 0.316
+    },
+    "connected_locations": [
+      "vermillion_bird_kingdom"
+    ],
+    "npc_ids": [
+      "yang_yun",
+      "four_divine_kingdoms_prince_or_princess"
+    ],
+    "available_systems": [
+      "market"
+    ],
+    "resources": [
+      "Refined Metals"
+    ],
     "notes": "Locked future content: one of the four great kingdoms."
   },
   {
@@ -467,19 +932,39 @@
     "tier": "Late Mortal World",
     "description": "A grim martial kingdom where rank is bought in blood and every court is a battlefield of ambition.",
     "requirements": {
-      "body_transformation": { "minimum_realm": "Tempering Marrow", "minimum_stage": 7 },
-      "essence_gathering": { "minimum_realm": "Revolving Core", "minimum_stage": 1 },
+      "body_transformation": {
+        "minimum_realm": "Tempering Marrow",
+        "minimum_stage": 7
+      },
+      "essence_gathering": {
+        "minimum_realm": "Revolving Core",
+        "minimum_stage": 1
+      },
       "unlock_flags": [],
       "required_items": [],
       "required_reputation": []
     },
     "danger_level": 7,
     "qi_density": 7,
-    "map_position": {"x": 0.624, "y": 0.294},
-    "connected_locations": ["vermillion_bird_kingdom", "blood_slaughter_steppes"],
-    "npc_ids": ["situ_haotian", "situ_bonan", "situ_yaoyue"],
-    "available_systems": ["kingdom_politics", "elite_tournaments", "military_trials"],
-    "resources": ["War Merits"],
+    "map_position": {
+      "x": 0.624,
+      "y": 0.294
+    },
+    "connected_locations": [
+      "vermillion_bird_kingdom",
+      "blood_slaughter_steppes"
+    ],
+    "npc_ids": [
+      "situ_haotian",
+      "situ_bonan",
+      "situ_yaoyue"
+    ],
+    "available_systems": [
+      "sparring"
+    ],
+    "resources": [
+      "War Merits"
+    ],
     "notes": "Locked future content: militant kingdom bordering the steppes."
   },
   {
@@ -490,19 +975,38 @@
     "tier": "Late Mortal World",
     "description": "The southernmost of the four kingdoms, forever maneuvering against its greater neighbors through marriage, coin, and quiet blades.",
     "requirements": {
-      "body_transformation": { "minimum_realm": "Tempering Marrow", "minimum_stage": 7 },
-      "essence_gathering": { "minimum_realm": "Revolving Core", "minimum_stage": 1 },
+      "body_transformation": {
+        "minimum_realm": "Tempering Marrow",
+        "minimum_stage": 7
+      },
+      "essence_gathering": {
+        "minimum_realm": "Revolving Core",
+        "minimum_stage": 1
+      },
       "unlock_flags": [],
       "required_items": [],
       "required_reputation": []
     },
     "danger_level": 6,
     "qi_density": 7,
-    "map_position": {"x": 0.423, "y": 0.628},
-    "connected_locations": ["vermillion_bird_kingdom"],
-    "npc_ids": ["four_divine_kingdoms_prince_or_princess", "sky_fortune_kingdom_noble"],
-    "available_systems": ["kingdom_politics", "royal_quests", "high_value_auction"],
-    "resources": ["Royal Favor"],
+    "map_position": {
+      "x": 0.423,
+      "y": 0.628
+    },
+    "connected_locations": [
+      "vermillion_bird_kingdom"
+    ],
+    "npc_ids": [
+      "four_divine_kingdoms_prince_or_princess",
+      "sky_fortune_kingdom_noble"
+    ],
+    "available_systems": [
+      "market",
+      "quests"
+    ],
+    "resources": [
+      "Royal Favor"
+    ],
     "notes": "Locked future content: rival court of the Central Region."
   },
   {
@@ -513,19 +1017,39 @@
     "tier": "Late Mortal World",
     "description": "A serene mountain monastery of the Great Zen Region, its bells said to still even demonic hearts. A sanctuary for soul-tempering and reflection.",
     "requirements": {
-      "body_transformation": { "minimum_realm": "Tempering Marrow", "minimum_stage": 7 },
-      "essence_gathering": { "minimum_realm": "Xiantian", "minimum_stage": 1 },
+      "body_transformation": {
+        "minimum_realm": "Tempering Marrow",
+        "minimum_stage": 7
+      },
+      "essence_gathering": {
+        "minimum_realm": "Xiantian",
+        "minimum_stage": 1
+      },
       "unlock_flags": [],
       "required_items": [],
       "required_reputation": []
     },
     "danger_level": 3,
     "qi_density": 7,
-    "map_position": {"x": 0.168, "y": 0.190},
-    "connected_locations": ["central_region_road"],
-    "npc_ids": ["mo_riverbliss", "qin_ziya", "old_man_good_fortune"],
-    "available_systems": ["meditation_trials", "soul_tempering", "mentor_events"],
-    "resources": ["Zen Insight"],
+    "map_position": {
+      "x": 0.168,
+      "y": 0.19
+    },
+    "connected_locations": [
+      "central_region_road"
+    ],
+    "npc_ids": [
+      "mo_riverbliss",
+      "qin_ziya",
+      "old_man_good_fortune"
+    ],
+    "available_systems": [
+      "meditate",
+      "trainers"
+    ],
+    "resources": [
+      "Zen Insight"
+    ],
     "notes": "Locked future content: soul-cultivation sanctuary in the Great Zen Region."
   },
   {
@@ -536,19 +1060,41 @@
     "tier": "Late Mortal World",
     "description": "A trackless expanse of beast territories and unstable qi, littered with untouched ruins and rare materials for those strong enough to claim them.",
     "requirements": {
-      "body_transformation": { "minimum_realm": "Tempering Marrow", "minimum_stage": 7 },
-      "essence_gathering": { "minimum_realm": "Xiantian", "minimum_stage": 1 },
+      "body_transformation": {
+        "minimum_realm": "Tempering Marrow",
+        "minimum_stage": 7
+      },
+      "essence_gathering": {
+        "minimum_realm": "Xiantian",
+        "minimum_stage": 1
+      },
       "unlock_flags": [],
       "required_items": [],
       "required_reputation": []
     },
     "danger_level": 7,
     "qi_density": 6,
-    "map_position": {"x": 0.755, "y": 0.695},
-    "connected_locations": ["south_sea_port", "blood_slaughter_steppes"],
-    "npc_ids": ["blood_slaughter_steppes_warrior", "south_horizon_region_cultivator", "rogue_cultivator"],
-    "available_systems": ["beast_hunting", "material_farming", "ruin_exploration"],
-    "resources": ["Rare Materials", "Beast Cores"],
+    "map_position": {
+      "x": 0.755,
+      "y": 0.695
+    },
+    "connected_locations": [
+      "south_sea_port",
+      "blood_slaughter_steppes"
+    ],
+    "npc_ids": [
+      "blood_slaughter_steppes_warrior",
+      "south_horizon_region_cultivator",
+      "rogue_cultivator"
+    ],
+    "available_systems": [
+      "combat",
+      "explore"
+    ],
+    "resources": [
+      "Rare Materials",
+      "Beast Cores"
+    ],
     "notes": "Locked future content: high-risk wilderness of rare materials."
   },
   {
@@ -559,19 +1105,43 @@
     "tier": "Late Mortal World",
     "description": "A brutal steppe of warring camps where reputation and survival are carved out fist by fist. A proving ground for body cultivators.",
     "requirements": {
-      "body_transformation": { "minimum_realm": "Tempering Marrow", "minimum_stage": 7 },
-      "essence_gathering": { "minimum_realm": "Xiantian", "minimum_stage": 1 },
+      "body_transformation": {
+        "minimum_realm": "Tempering Marrow",
+        "minimum_stage": 7
+      },
+      "essence_gathering": {
+        "minimum_realm": "Xiantian",
+        "minimum_stage": 1
+      },
       "unlock_flags": [],
       "required_items": [],
       "required_reputation": []
     },
     "danger_level": 8,
     "qi_density": 6,
-    "map_position": {"x": 0.700, "y": 0.560},
-    "connected_locations": ["asura_divine_kingdom", "southern_wilderness", "holy_demon_continent"],
-    "npc_ids": ["steppes_master", "blood_slaughter_steppes_warrior", "xuan_wuji", "situ_bonan"],
-    "available_systems": ["arena_ladder", "blood_trials", "survival_chains", "body_cultivation_rewards"],
-    "resources": ["Blood Trials"],
+    "map_position": {
+      "x": 0.7,
+      "y": 0.56
+    },
+    "connected_locations": [
+      "asura_divine_kingdom",
+      "southern_wilderness",
+      "holy_demon_continent"
+    ],
+    "npc_ids": [
+      "steppes_master",
+      "blood_slaughter_steppes_warrior",
+      "xuan_wuji",
+      "situ_bonan"
+    ],
+    "available_systems": [
+      "combat",
+      "sparring",
+      "trainers"
+    ],
+    "resources": [
+      "Blood Trials"
+    ],
     "notes": "Locked future content: body-heavy combat proving ground."
   },
   {
@@ -582,19 +1152,40 @@
     "tier": "Ascension Prep",
     "description": "Five elemental temples humming with dense, dangerous qi and formations from a forgotten age. A gauntlet of elemental trials.",
     "requirements": {
-      "body_transformation": { "minimum_realm": "Eight Gates of Hidden Celestial Stems", "minimum_stage": 8 },
-      "essence_gathering": { "minimum_realm": "Life Destruction", "minimum_stage": 1 },
+      "body_transformation": {
+        "minimum_realm": "Eight Gates of Hidden Celestial Stems",
+        "minimum_stage": 8
+      },
+      "essence_gathering": {
+        "minimum_realm": "Life Destruction",
+        "minimum_stage": 1
+      },
       "unlock_flags": [],
       "required_items": [],
       "required_reputation": []
     },
     "danger_level": 8,
     "qi_density": 8,
-    "map_position": {"x": 0.783, "y": 0.153},
-    "connected_locations": ["ancient_ruins", "planetary_gate_array"],
-    "npc_ids": ["good_fortune", "duanmu_qun", "holy_demon_continent_demon"],
-    "available_systems": ["elemental_trials", "ancient_formations", "rare_resources", "boss_events"],
-    "resources": ["Elemental Cores"],
+    "map_position": {
+      "x": 0.783,
+      "y": 0.153
+    },
+    "connected_locations": [
+      "ancient_ruins",
+      "planetary_gate_array"
+    ],
+    "npc_ids": [
+      "good_fortune",
+      "duanmu_qun",
+      "holy_demon_continent_demon"
+    ],
+    "available_systems": [
+      "combat",
+      "explore"
+    ],
+    "resources": [
+      "Elemental Cores"
+    ],
     "notes": "Locked future content: elemental trial region for ascension prep."
   },
   {
@@ -605,19 +1196,40 @@
     "tier": "Late Mortal World / Ascension Prep",
     "description": "Drowned ruins ringing the Sea of Miracles, where the relics of a lost age still stir. Legendary, story-gated, and mechanically deadly.",
     "requirements": {
-      "body_transformation": { "minimum_realm": "Eight Gates of Hidden Celestial Stems", "minimum_stage": 8 },
-      "essence_gathering": { "minimum_realm": "Life Destruction", "minimum_stage": 1 },
+      "body_transformation": {
+        "minimum_realm": "Eight Gates of Hidden Celestial Stems",
+        "minimum_stage": 8
+      },
+      "essence_gathering": {
+        "minimum_realm": "Life Destruction",
+        "minimum_stage": 1
+      },
       "unlock_flags": [],
       "required_items": [],
       "required_reputation": []
     },
     "danger_level": 8,
     "qi_density": 9,
-    "map_position": {"x": 0.610, "y": 0.467},
-    "connected_locations": ["central_region_road", "planetary_gate_array", "five_element_temples"],
-    "npc_ids": ["good_fortune", "old_man_good_fortune", "ancient_devil", "demon_emperor", "yang_yun"],
-    "available_systems": ["legendary_trials", "ancient_remnants", "forbidden_events", "ascension_preparation"],
-    "resources": ["Ancient Relics"],
+    "map_position": {
+      "x": 0.61,
+      "y": 0.467
+    },
+    "connected_locations": [
+      "central_region_road",
+      "planetary_gate_array",
+      "five_element_temples"
+    ],
+    "npc_ids": [
+      "good_fortune",
+      "old_man_good_fortune",
+      "ancient_devil",
+      "demon_emperor",
+      "yang_yun"
+    ],
+    "available_systems": [],
+    "resources": [
+      "Ancient Relics"
+    ],
     "notes": "Locked future content: legendary high-risk area near the Sea of Miracles."
   },
   {
@@ -628,19 +1240,41 @@
     "tier": "Ascension Gate",
     "description": "A colossal teleportation array bridging the mortal world to the realms above. The final threshold before ascension.",
     "requirements": {
-      "body_transformation": { "minimum_realm": "Eight Gates of Hidden Celestial Stems", "minimum_stage": 8 },
-      "essence_gathering": { "minimum_realm": "Life Destruction", "minimum_stage": 5 },
+      "body_transformation": {
+        "minimum_realm": "Eight Gates of Hidden Celestial Stems",
+        "minimum_stage": 8
+      },
+      "essence_gathering": {
+        "minimum_realm": "Life Destruction",
+        "minimum_stage": 5
+      },
       "unlock_flags": [],
       "required_items": [],
       "required_reputation": []
     },
     "danger_level": 6,
     "qi_density": 9,
-    "map_position": {"x": 0.796, "y": 0.388},
-    "connected_locations": ["ancient_ruins", "five_element_temples"],
-    "npc_ids": ["good_fortune", "old_man_good_fortune", "mu_yuhuang", "qin_ziya", "lin_ming"],
-    "available_systems": ["ascension_check", "world_quest_completion", "realm_transition"],
-    "resources": ["Transmission Array"],
+    "map_position": {
+      "x": 0.796,
+      "y": 0.388
+    },
+    "connected_locations": [
+      "ancient_ruins",
+      "five_element_temples"
+    ],
+    "npc_ids": [
+      "good_fortune",
+      "old_man_good_fortune",
+      "mu_yuhuang",
+      "qin_ziya",
+      "lin_ming"
+    ],
+    "available_systems": [
+      "quests"
+    ],
+    "resources": [
+      "Transmission Array"
+    ],
     "notes": "Locked future content: ascension gateway to higher realms."
   },
   {
@@ -651,20 +1285,42 @@
     "tier": "End Mortal World",
     "description": "A blighted continent across the sea where demonic factions rule and the very qi is corrupt. It punishes the underlevelled and rewards the daring.",
     "requirements": {
-      "body_transformation": { "minimum_realm": "Eight Gates of Hidden Celestial Stems", "minimum_stage": 8 },
-      "essence_gathering": { "minimum_realm": "Life Destruction", "minimum_stage": 1 },
+      "body_transformation": {
+        "minimum_realm": "Eight Gates of Hidden Celestial Stems",
+        "minimum_stage": 8
+      },
+      "essence_gathering": {
+        "minimum_realm": "Life Destruction",
+        "minimum_stage": 1
+      },
       "unlock_flags": [],
       "required_items": [],
       "required_reputation": []
     },
     "danger_level": 10,
     "qi_density": 8,
-    "map_position": {"x": 0.931, "y": 0.811},
-    "connected_locations": ["south_sea_port", "blood_slaughter_steppes"],
-    "npc_ids": ["demon_emperor", "holy_demon_continent_demon", "ancient_devil", "demonshine", "shibai"],
-    "available_systems": ["demonic_faction_reputation", "dangerous_diplomacy", "high_level_combat", "major_boss_arc"],
-    "resources": ["Corrupt Qi Crystals"],
+    "map_position": {
+      "x": 0.931,
+      "y": 0.811
+    },
+    "connected_locations": [
+      "south_sea_port",
+      "blood_slaughter_steppes"
+    ],
+    "npc_ids": [
+      "demon_emperor",
+      "holy_demon_continent_demon",
+      "ancient_devil",
+      "demonshine",
+      "shibai"
+    ],
+    "available_systems": [
+      "combat",
+      "dialogue"
+    ],
+    "resources": [
+      "Corrupt Qi Crystals"
+    ],
     "notes": "Locked future content: extreme demonic continent for end-mortal play."
   }
 ]
-

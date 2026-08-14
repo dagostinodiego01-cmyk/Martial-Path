@@ -20,10 +20,12 @@ from game.core.constants import (
     EventType,
 )
 from game.core.results import (
+    BoonResult,
     CharacterEncounterResult,
     CharacterInteractionResult,
     DialogueChoiceResult,
     HelpResult,
+    MapResult,
     MeditateResult,
     PlayerDiedResult,
     QuitResult,
@@ -340,6 +342,7 @@ class GameEngine:
         return {
             Action.STATUS: lambda action: self._status(),
             Action.INVENTORY: lambda action: self.inventory.list_inventory(self.player),
+            Action.MAP: lambda action: self._map(),
             Action.HELP: lambda action: HelpResult().to_dict(),
             Action.QUIT: lambda action: self._quit(),
         }
@@ -358,6 +361,7 @@ class GameEngine:
             Action.DIALOGUE_CHOOSE: lambda action: self._dialogue_choose(action),
             Action.SPAR_CHARACTER: lambda action: self._start_character_combat(action.get("character_id", ""), "spar"),
             Action.DUEL_CHARACTER: lambda action: self._start_character_combat(action.get("character_id", ""), "duel"),
+            Action.RECEIVE_BOON: lambda action: self._receive_boon(action.get("character_id", "")),
             Action.BREAKTHROUGH: lambda action: self._advance_time_after(self._after_breakthrough(self.cultivation_service.attempt_body_breakthrough("player")), "body_breakthrough"),
             Action.BODY_BREAKTHROUGH: lambda action: self._advance_time_after(self._after_breakthrough(self.cultivation_service.attempt_body_breakthrough("player")), "body_breakthrough"),
             Action.ESSENCE_BREAKTHROUGH: lambda action: self._advance_time_after(self._after_breakthrough(self.cultivation_service.attempt_essence_breakthrough("player")), "essence_breakthrough"),
@@ -495,6 +499,8 @@ class GameEngine:
             duel = self.character_service.can_duel(character_id, self.player)
             if duel.get("allowed") and duel.get("enemy_id"):
                 options.append({"action": Action.DUEL_CHARACTER, "character_id": character_id, "label": "Duel"})
+            if self.character_service.can_receive_reward(character_id, self.player):
+                options.append({"action": Action.RECEIVE_BOON, "character_id": character_id, "label": "Receive Reward"})
             if options:
                 entry = dict(brief)
                 entry["options"] = options
@@ -582,6 +588,15 @@ class GameEngine:
             result["quest_updates"] = updates
         return result
 
+    def _map(self) -> Dict[str, Any]:
+        """Return a text-map view: current location's map position and exits."""
+        view = self.locations.view(self.player.current_location)
+        return MapResult(
+            location_name=view.get("name", self.player.current_location),
+            map_position=view.get("map_position", {}),
+            destinations=self.travel.get_available_destinations(self.player),
+        ).to_dict()
+
     def _after_breakthrough(self, result: Dict[str, Any]) -> Dict[str, Any]:
         """Notify quests on a successful breakthrough and attach any updates."""
         if result.get("success"):
@@ -656,6 +671,48 @@ class GameEngine:
             morality=morality,
             reputation=self.player.reputation,
             reputation_delta=reputation_delta,
+        ).to_dict()
+
+    def _receive_boon(self, character_id: str) -> Dict[str, Any]:
+        """Grant an NPC's currently-available relationship reward (one-time)."""
+        if not character_id:
+            return {"event": EventType.ERROR, "reason": "NO_CHARACTER_SPECIFIED"}
+        available = self.character_service.available_reward(character_id, self.player)
+        if available is None:
+            return {"event": EventType.ERROR, "reason": "NO_REWARD_AVAILABLE", "character_id": character_id}
+        reward = available.get("reward", {})
+        granted: Dict[str, Any] = {}
+        if "gold" in reward:
+            amount = int(reward["gold"])
+            self.player.gold += amount
+            granted["gold"] = amount
+        if "exp" in reward:
+            amount = int(reward["exp"])
+            self.player.exp += amount
+            granted["exp"] = amount
+        item_id = reward.get("item_id")
+        if item_id:
+            count = int(reward.get("count", 1))
+            self.inventory.add_item(self.player, item_id, count)
+            granted["items"] = {item_id: count}
+        skill_id = reward.get("skill_id")
+        if skill_id:
+            learned = self.techniques.learn_skill(self.player, skill_id, source="boon")
+            if learned.get("event") == EventType.SKILL_LEARNED:
+                granted["skill_id"] = skill_id
+        # Mark the reward claimed so ``once`` rewards never fire twice.
+        self.relationships.remember(
+            self.player.relationships,
+            character_id,
+            action="received_reward",
+            flag=f"reward_{available['index']}",
+        )
+        return BoonResult(
+            character_id=character_id,
+            name=available.get("name", character_id),
+            player_message=str(available.get("message") or "They offer you a gift in recognition of your bond."),
+            reward=granted,
+            wallet={"gold": self.player.gold},
         ).to_dict()
 
     def _start_character_combat(self, character_id: str, interaction: str) -> Dict[str, Any]:

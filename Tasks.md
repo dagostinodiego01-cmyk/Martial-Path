@@ -224,14 +224,39 @@ errors.
 
 ---
 
-## Priority 8 — Frontend parity + honest labels
+## Priority 8 — Frontend parity + honest labels  ✅ DONE
 
-- [ ] 8.1 Either implement the dead `available_systems` verbs (gather, etc.) or
-  remove them from `locations.json` so UI labels match reality.
-- [ ] 8.2 Bring CLI/PySide up to Godot parity: Market, Masters, Use Item,
-  essence stabilise, world map, lifespan-death UX.
-  **Done when:** every `available_systems` entry maps to a real action; the
-  CLI/PySide frontends render the same actions the engine supports.
+Implemented 2026-08-14:
+- [x] 8.1 `tools/normalize_available_systems.py` maps the ~70 narrative
+  `available_systems` values onto the 11 implemented verbs
+  (`game.core.constants.AVAILABLE_SYSTEMS`), dropping 24 dead labels. The
+  validator flags any non-canonical value (`dead_available_system`);
+  `test_available_systems_only_declare_implemented_verbs` pins it at 0.
+- [x] 8.2 CLI parity: `stabilise essence` (STABILISE_ESSENCE), `map`
+  (`Action.MAP` + `MapResult`), `boon`/`receive` (`Action.RECEIVE_BOON`), and a
+  `PLAYER_DIED` formatter. PySide gained Market / Masters / Use Item / Stabilise
+  / World Map cards + dialogs and the lifespan-death handler (compiled clean;
+  runtime-untested because PySide6 is not installed in this environment).
+
+---
+
+## Priority 9 — Morality & relationship → gameplay hooks  ✅ DONE
+
+Implemented 2026-08-14:
+- [x] 9.1 Morality gates on interactions: `spar_morality_band` /
+  `duel_morality_band` hooks gate spar/duel on alignment
+  (`MORALITY_BAND_MISMATCH`).
+- [x] 9.2 Relationship-gated rewards: the declared-but-empty
+  `gameplay_hooks.relationship_rewards` is now a real mechanic — `min_tier`
+  and/or `morality_band` gate each one-time reward (gold / exp / item / skill),
+  claimed via `RECEIVE_BOON` and tracked in the NPC's relationship memory flags.
+- [x] 9.3 Encounter options surface a `Receive Reward` action when a reward is
+  available, so relationship/morality changes visibly change what an NPC offers.
+- [x] 9.4 Seeded rewards for `zhu_yan` + `duanmu_qun`; validator checks reward
+  tier/band/item/skill references.
+
+Tests: `tests/test_relationship_rewards.py` (6 tests). Suite: 396 passed, 3
+skipped; validator 0 errors.
 
 ---
 
@@ -261,7 +286,8 @@ errors.
 | 5 | shops: 3 → 12; sell action exists |
 | 6 | spar vs duel outcomes distinct; defeat penalty data-driven (25% progress, not wipe) |
 | 7 | `path` settable via sect (4 sects); 4 path-locked techniques exist |
-| 8 | dead `available_systems` labels: N → 0 |
+| 8 | dead `available_systems` labels: 24 → 0; CLI has essence stabilise, map, boon, death UX |
+| 9 | relationship-gated rewards claimable: 0 → 2 NPCs; morality can gate spar/duel |
 
 Each row is checkable by a test or a validator run — no "feels better" without a
 number attached.

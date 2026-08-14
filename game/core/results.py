@@ -199,3 +199,25 @@ class TravelResult(Result):
 
     EVENT: ClassVar[str] = EventType.TRAVEL_RESULT
     location: Dict[str, Any]
+
+
+@dataclass(frozen=True)
+class MapResult(Result):
+    """Text-map view: the current location's map position and reachable exits."""
+
+    EVENT: ClassVar[str] = EventType.MAP
+    location_name: str
+    map_position: Dict[str, Any]
+    destinations: List[Dict[str, Any]]
+
+
+@dataclass(frozen=True)
+class BoonResult(Result):
+    """Outcome of receiving a relationship-gated reward from an NPC."""
+
+    EVENT: ClassVar[str] = EventType.BOON
+    character_id: str
+    name: str
+    player_message: str
+    reward: Dict[str, Any]
+    wallet: Optional[Dict[str, int]] = None

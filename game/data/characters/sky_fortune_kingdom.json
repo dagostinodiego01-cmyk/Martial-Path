@@ -383,7 +383,19 @@
       "enemy_id": "zhu_yan_duel",
       "quest_ids": [],
       "teaches_skills": [],
-      "relationship_rewards": [],
+      "relationship_rewards": [
+        {
+          "min_tier": "friendly",
+          "reward": { "gold": 60, "message": "Zhu Yan grudgingly parts with a pouch of spirit coins." },
+          "once": true
+        },
+        {
+          "min_tier": "trusted",
+          "morality_band": "righteous",
+          "reward": { "exp": 120, "message": "Zhu Yan admits, quietly, that you are the rival he needed." },
+          "once": true
+        }
+      ],
       "spar_min_tier": "neutral",
       "duel_min_tier": "friendly"
     },

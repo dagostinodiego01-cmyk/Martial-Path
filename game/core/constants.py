@@ -35,6 +35,7 @@ class Action(StrEnum):
     DIALOGUE_CHOOSE = "DIALOGUE_CHOOSE"
     SPAR_CHARACTER = "SPAR_CHARACTER"
     DUEL_CHARACTER = "DUEL_CHARACTER"
+    RECEIVE_BOON = "RECEIVE_BOON"
     JOIN_SECT = "JOIN_SECT"
     SECTS = "SECTS"
     BREAKTHROUGH = "BREAKTHROUGH"
@@ -55,6 +56,7 @@ class Action(StrEnum):
     REST = "REST"
     MEDITATE = "MEDITATE"
     TRAVEL = "TRAVEL"
+    MAP = "MAP"
     TECHNIQUES = "TECHNIQUES"
     SAVE = "SAVE"
     LOAD = "LOAD"
@@ -79,6 +81,7 @@ class EventType(StrEnum):
     CHARACTER_ENCOUNTER = "CHARACTER_ENCOUNTER"
     CHARACTER_INTERACTION = "CHARACTER_INTERACTION"
     DIALOGUE_CHOICE = "DIALOGUE_CHOICE"
+    BOON = "BOON"
     SECTS = "SECTS"
     SECT_JOINED = "SECT_JOINED"
     EXPLORE_RESULT = "EXPLORE_RESULT"
@@ -101,6 +104,7 @@ class EventType(StrEnum):
     MEDITATE_RESULT = "MEDITATE_RESULT"
     TRAVEL_RESULT = "TRAVEL_RESULT"
     LOCATION = "LOCATION"
+    MAP = "MAP"
     QUEST_UPDATE = "QUEST_UPDATE"
     SAVE_RESULT = "SAVE_RESULT"
     LOAD_RESULT = "LOAD_RESULT"
@@ -109,6 +113,26 @@ class EventType(StrEnum):
     ERROR = "ERROR"
     QUIT = "QUIT"
     PLAYER_DIED = "PLAYER_DIED"
+
+
+#: The only ``available_systems`` values a location may declare. Every value
+#: maps to an engine action a frontend can actually perform; narrative-only
+#: verbs (forge_crafting, arena_ladder, ...) are excluded so UI labels stay
+#: honest. ``tools/normalize_available_systems.py`` writes to this contract and
+#: the data validator enforces it.
+AVAILABLE_SYSTEMS: frozenset[str] = frozenset({
+    "explore",
+    "rest",
+    "meditate",
+    "travel",
+    "market",
+    "trainers",
+    "dialogue",
+    "combat",
+    "sparring",
+    "sects",
+    "quests",
+})
 
 
 # Initial player template. Kept here (rather than hard-coded in the engine) so a

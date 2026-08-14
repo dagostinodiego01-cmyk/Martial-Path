@@ -98,3 +98,25 @@ def test_sell_command():
         "item_id": "qi_pill",
         "quantity": 3,
     }
+
+
+def test_stabilise_essence_route():
+    router = CommandRouter()
+    assert router.route("stabilise essence")["action"] == Action.STABILISE_ESSENCE
+    assert router.route("stabilize qi")["action"] == Action.STABILISE_ESSENCE
+    assert router.route("stabilise")["action"] == Action.STABILISE_FOUNDATION
+
+
+def test_map_command():
+    router = CommandRouter()
+    assert router.route("map") == {"action": Action.MAP, "raw": "map"}
+
+
+def test_boon_command_extracts_character_id():
+    router = CommandRouter()
+    assert router.route("boon zhu yan") == {
+        "action": Action.RECEIVE_BOON,
+        "raw": "boon zhu yan",
+        "character_id": "zhu_yan",
+    }
+    assert router.route("receive duanmu qun")["action"] == Action.RECEIVE_BOON
