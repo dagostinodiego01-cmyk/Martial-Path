@@ -1,8 +1,8 @@
 {
   ".vscode/settings.json": {
-    "mtime": 1786204909.349891,
-    "ast_hash": "4aa85c6acde752675b31b354987521ce",
-    "semantic_hash": "4aa85c6acde752675b31b354987521ce"
+    "mtime": 1786736028.5450346,
+    "ast_hash": "3b7d4d879554c41bdd6c9c9a58b218b5",
+    "semantic_hash": "3b7d4d879554c41bdd6c9c9a58b218b5"
   },
   "conftest.py": {
     "mtime": 1786204863.6607366,
@@ -20,9 +20,9 @@
     "semantic_hash": "b8b4776456e44309d079b2504fc1ea95"
   },
   "game/api/server.py": {
-    "mtime": 1786204914.8590114,
-    "ast_hash": "99a486f9b748569ab5351f05de833415",
-    "semantic_hash": "99a486f9b748569ab5351f05de833415"
+    "mtime": 1786742911.9670572,
+    "ast_hash": "b4188d5a5b62f6052f30ad62cc2e14cd",
+    "semantic_hash": "b4188d5a5b62f6052f30ad62cc2e14cd"
   },
   "game/application/__init__.py": {
     "mtime": 1786204914.895529,
@@ -30,9 +30,9 @@
     "semantic_hash": "550813708801c499ab91725433c169ea"
   },
   "game/application/command_router.py": {
-    "mtime": 1786204914.8890295,
-    "ast_hash": "c1d235540df4aeda1018b1e8972a17dd",
-    "semantic_hash": "c1d235540df4aeda1018b1e8972a17dd"
+    "mtime": 1786737626.6325283,
+    "ast_hash": "2e32ec79d617af910140004231fce218",
+    "semantic_hash": "2e32ec79d617af910140004231fce218"
   },
   "game/core/__init__.py": {
     "mtime": 1786204914.9405553,
@@ -40,29 +40,29 @@
     "semantic_hash": "22d028e2c0a322974a043a907044b7bd"
   },
   "game/core/constants.py": {
-    "mtime": 1786204914.9205456,
-    "ast_hash": "b55330e680e1ec14f094b94544250247",
-    "semantic_hash": "b55330e680e1ec14f094b94544250247"
+    "mtime": 1786744330.096068,
+    "ast_hash": "dec08bbccb96f94e756c42255034c44c",
+    "semantic_hash": "dec08bbccb96f94e756c42255034c44c"
   },
   "game/core/game_engine.py": {
-    "mtime": 1786204914.9270518,
-    "ast_hash": "632949b2c36ac7673aeca58e18b6fc79",
-    "semantic_hash": "632949b2c36ac7673aeca58e18b6fc79"
+    "mtime": 1786745352.1894803,
+    "ast_hash": "f66ac06f2bc5d4687781ce8f4250e01c",
+    "semantic_hash": "f66ac06f2bc5d4687781ce8f4250e01c"
   },
   "game/core/results.py": {
-    "mtime": 1786204914.9345572,
-    "ast_hash": "e538116ffcc9ee08dca50915fa619df5",
-    "semantic_hash": "e538116ffcc9ee08dca50915fa619df5"
+    "mtime": 1786738073.7264934,
+    "ast_hash": "68733f46aea86f07be51288c240f3ab2",
+    "semantic_hash": "68733f46aea86f07be51288c240f3ab2"
   },
   "game/data/character_enemies/named_foes.json": {
-    "mtime": 1786204915.0611255,
-    "ast_hash": "0698c0cc438a43ee484a319de912142d",
-    "semantic_hash": "0698c0cc438a43ee484a319de912142d"
+    "mtime": 1786740562.110055,
+    "ast_hash": "564f8eaf9bb70b03ff2d853fec07a9ed",
+    "semantic_hash": "564f8eaf9bb70b03ff2d853fec07a9ed"
   },
   "game/data/characters/divine_phoenix_island.json": {
-    "mtime": 1786204915.0331106,
-    "ast_hash": "607931cc033d339d48fa0fe4e7ea25c9",
-    "semantic_hash": "607931cc033d339d48fa0fe4e7ea25c9"
+    "mtime": 1786738582.4127192,
+    "ast_hash": "71bdf2cc91ceb18549ce74875b521e1b",
+    "semantic_hash": "71bdf2cc91ceb18549ce74875b521e1b"
   },
   "game/data/characters/lin_family.json": {
     "mtime": 1786204915.0366113,
@@ -70,29 +70,29 @@
     "semantic_hash": "f416f00ecdb413d5fed4408ef2910f23"
   },
   "game/data/characters/other_factions.json": {
-    "mtime": 1786204915.0406156,
-    "ast_hash": "04133b58d29b4160078acaf50dce97b2",
-    "semantic_hash": "04133b58d29b4160078acaf50dce97b2"
+    "mtime": 1786738582.4132347,
+    "ast_hash": "324001c9866b9048888e9b03fa2e733e",
+    "semantic_hash": "324001c9866b9048888e9b03fa2e733e"
   },
   "game/data/characters/seven_profound_valleys.json": {
-    "mtime": 1786204915.0446162,
-    "ast_hash": "70eb5359561cec3660ce5766edc960a5",
-    "semantic_hash": "70eb5359561cec3660ce5766edc960a5"
+    "mtime": 1786738582.41372,
+    "ast_hash": "3a827d9753ece3bce5bf2a735cac3002",
+    "semantic_hash": "3a827d9753ece3bce5bf2a735cac3002"
   },
   "game/data/characters/sky_fortune_kingdom.json": {
-    "mtime": 1786204915.048616,
-    "ast_hash": "10d714ffb210d1d36fd1a54934cbfe65",
-    "semantic_hash": "10d714ffb210d1d36fd1a54934cbfe65"
+    "mtime": 1786735882.9303782,
+    "ast_hash": "136dfb52ffbc3fe45b59da2fb9fd13f1",
+    "semantic_hash": "136dfb52ffbc3fe45b59da2fb9fd13f1"
   },
   "game/data/characters/unaffiliated.json": {
-    "mtime": 1786204915.0526152,
-    "ast_hash": "5f26e6571bf37e332ab3f8c871e1b53e",
-    "semantic_hash": "5f26e6571bf37e332ab3f8c871e1b53e"
+    "mtime": 1786735882.9358873,
+    "ast_hash": "224619272d8b103a905234b345bd78c9",
+    "semantic_hash": "224619272d8b103a905234b345bd78c9"
   },
   "game/data/cultivation/body_talents.json": {
-    "mtime": 1786204915.0681329,
-    "ast_hash": "8f084182710f8ae0e1a9f3036dd6b209",
-    "semantic_hash": "8f084182710f8ae0e1a9f3036dd6b209"
+    "mtime": 1786738582.3461616,
+    "ast_hash": "018b3dfa2ac5d6eb25ce92adaddba6f3",
+    "semantic_hash": "018b3dfa2ac5d6eb25ce92adaddba6f3"
   },
   "game/data/cultivation/body_transformation_realms.json": {
     "mtime": 1786204915.072131,
@@ -100,9 +100,9 @@
     "semantic_hash": "5fac82a1d74875929dc71798a4f624ad"
   },
   "game/data/cultivation/cultivation_config.json": {
-    "mtime": 1786204915.0756297,
-    "ast_hash": "527d65ea9cb8d0040be032ca49e1119d",
-    "semantic_hash": "527d65ea9cb8d0040be032ca49e1119d"
+    "mtime": 1786737761.9450648,
+    "ast_hash": "28eab8f671b6143229bc0517a7cf432b",
+    "semantic_hash": "28eab8f671b6143229bc0517a7cf432b"
   },
   "game/data/cultivation/essence_gathering_realms.json": {
     "mtime": 1786204915.0796294,
@@ -110,9 +110,9 @@
     "semantic_hash": "12d716ceada67d125833f1a95904a8ef"
   },
   "game/data/cultivation/martial_talents.json": {
-    "mtime": 1786204915.083637,
-    "ast_hash": "0f718795c9a7c60586591fd2073f8ada",
-    "semantic_hash": "0f718795c9a7c60586591fd2073f8ada"
+    "mtime": 1786738582.3456604,
+    "ast_hash": "84cfa7730285bd6853926ef74a6081b2",
+    "semantic_hash": "84cfa7730285bd6853926ef74a6081b2"
   },
   "game/data/cultivation/talents.json": {
     "mtime": 1786204915.0876389,
@@ -120,19 +120,19 @@
     "semantic_hash": "bdd4ef6db271e73193b2449fb794b338"
   },
   "game/data/encounter_pools.json": {
-    "mtime": 1786204914.9745765,
-    "ast_hash": "134bfa5b8d53f725e271a88943ccbd34",
-    "semantic_hash": "134bfa5b8d53f725e271a88943ccbd34"
+    "mtime": 1786738582.4087198,
+    "ast_hash": "3aadce82cd3515b931066bf7f284e614",
+    "semantic_hash": "3aadce82cd3515b931066bf7f284e614"
   },
   "game/data/enemies/random_enemies.json": {
-    "mtime": 1786204915.0951464,
-    "ast_hash": "39b7488c8f369988b72216efe1e5363b",
-    "semantic_hash": "39b7488c8f369988b72216efe1e5363b"
+    "mtime": 1786738582.4107192,
+    "ast_hash": "468c423e982681f81e91faa22a77c363",
+    "semantic_hash": "468c423e982681f81e91faa22a77c363"
   },
   "game/data/equipment.json": {
-    "mtime": 1786204914.9800837,
-    "ast_hash": "fda6de835c316ee582833334558a46aa",
-    "semantic_hash": "fda6de835c316ee582833334558a46aa"
+    "mtime": 1786737798.500044,
+    "ast_hash": "d2369e4a028645cc7158ca134d1af577",
+    "semantic_hash": "d2369e4a028645cc7158ca134d1af577"
   },
   "game/data/events.json": {
     "mtime": 1786204914.983583,
@@ -140,14 +140,14 @@
     "semantic_hash": "202e51784c435d0f359381555769380c"
   },
   "game/data/items.json": {
-    "mtime": 1786204914.9880915,
-    "ast_hash": "4963395ee4082d15423f384490fe58d2",
-    "semantic_hash": "4963395ee4082d15423f384490fe58d2"
+    "mtime": 1786745275.9450886,
+    "ast_hash": "7bd0c484af062c1f3c6f0e70a4adb3de",
+    "semantic_hash": "7bd0c484af062c1f3c6f0e70a4adb3de"
   },
   "game/data/locations.json": {
-    "mtime": 1786204914.9915912,
-    "ast_hash": "2e1c2905b5a5a9c02adb1ef275f81ea5",
-    "semantic_hash": "2e1c2905b5a5a9c02adb1ef275f81ea5"
+    "mtime": 1786735605.4727907,
+    "ast_hash": "3aba765a37d2bdc0112377e51b9486b3",
+    "semantic_hash": "3aba765a37d2bdc0112377e51b9486b3"
   },
   "game/data/morality.json": {
     "mtime": 1786204914.99559,
@@ -155,9 +155,9 @@
     "semantic_hash": "ed7a61146624a9a151dd87bd9220feb3"
   },
   "game/data/quests.json": {
-    "mtime": 1786204914.9990892,
-    "ast_hash": "a7c74aa60efce150a013d82a2e8be8ae",
-    "semantic_hash": "a7c74aa60efce150a013d82a2e8be8ae"
+    "mtime": 1786743756.265037,
+    "ast_hash": "73d76f405f240cd95e689830e17e9dab",
+    "semantic_hash": "73d76f405f240cd95e689830e17e9dab"
   },
   "game/data/realms.json": {
     "mtime": 1786204915.0020957,
@@ -165,9 +165,9 @@
     "semantic_hash": "52257524750e952acd5db243b2eafed6"
   },
   "game/data/registry.py": {
-    "mtime": 1786204915.0086,
-    "ast_hash": "b13c8a03441837f05cd0eebfaf9f6912",
-    "semantic_hash": "b13c8a03441837f05cd0eebfaf9f6912"
+    "mtime": 1786745311.6096768,
+    "ast_hash": "b2543cd44149ac64434516710fdcf310",
+    "semantic_hash": "b2543cd44149ac64434516710fdcf310"
   },
   "game/data/relationships.json": {
     "mtime": 1786204915.0120995,
@@ -175,24 +175,24 @@
     "semantic_hash": "d8dd493192572875a157418e78b3e8f3"
   },
   "game/data/shops.json": {
-    "mtime": 1786204915.0156074,
-    "ast_hash": "3916cfef663b4cdb028641d0ac4593e7",
-    "semantic_hash": "3916cfef663b4cdb028641d0ac4593e7"
+    "mtime": 1786738582.411719,
+    "ast_hash": "5dc5f560e744647fc43ee79102fe8395",
+    "semantic_hash": "5dc5f560e744647fc43ee79102fe8395"
   },
   "game/data/skills.json": {
-    "mtime": 1786204915.0191073,
-    "ast_hash": "ff6a8f05de1a0870c240adc7c6fe9618",
-    "semantic_hash": "ff6a8f05de1a0870c240adc7c6fe9618"
+    "mtime": 1786741417.8785036,
+    "ast_hash": "d109e195984fb395e3dbe2aaf7f9a2db",
+    "semantic_hash": "d109e195984fb395e3dbe2aaf7f9a2db"
   },
   "game/data/technique_manuals.json": {
-    "mtime": 1786204915.0226033,
-    "ast_hash": "639fbd5f039594bc7652541cdbf4be82",
-    "semantic_hash": "639fbd5f039594bc7652541cdbf4be82"
+    "mtime": 1786733574.853587,
+    "ast_hash": "03a2e086f2054c7f243f0a7804a0182c",
+    "semantic_hash": "03a2e086f2054c7f243f0a7804a0182c"
   },
   "game/data/trainers.json": {
-    "mtime": 1786204915.026105,
-    "ast_hash": "93be071c868b16561ce56a72ec2e348c",
-    "semantic_hash": "93be071c868b16561ce56a72ec2e348c"
+    "mtime": 1786733574.8550863,
+    "ast_hash": "6cafac44a0e27d9ea81f8c26dc64b7a1",
+    "semantic_hash": "6cafac44a0e27d9ea81f8c26dc64b7a1"
   },
   "game/gui_main.py": {
     "mtime": 1786204914.832998,
@@ -215,24 +215,24 @@
     "semantic_hash": "7f08943eba4da3f4a62e58288d32299c"
   },
   "game/models/enemy.py": {
-    "mtime": 1786204915.1571653,
-    "ast_hash": "e7f6e8deb190ad9864a2aa58485a39d8",
-    "semantic_hash": "e7f6e8deb190ad9864a2aa58485a39d8"
+    "mtime": 1786740347.2545402,
+    "ast_hash": "91d94b03dab4a3f41990bb3765b3def8",
+    "semantic_hash": "91d94b03dab4a3f41990bb3765b3def8"
   },
   "game/models/item.py": {
-    "mtime": 1786204915.1641715,
-    "ast_hash": "9c7141825b3cce769b82f2ce31887f09",
-    "semantic_hash": "9c7141825b3cce769b82f2ce31887f09"
+    "mtime": 1786744775.6610744,
+    "ast_hash": "ace18823a9acf2ab2de8b2278d5fa15a",
+    "semantic_hash": "ace18823a9acf2ab2de8b2278d5fa15a"
   },
   "game/models/player.py": {
-    "mtime": 1786204915.170171,
-    "ast_hash": "f0975df42d7f1ed9225fe6a50d993daa",
-    "semantic_hash": "f0975df42d7f1ed9225fe6a50d993daa"
+    "mtime": 1786742696.015574,
+    "ast_hash": "8c7fa06a4052f2ecce81956df6837b7f",
+    "semantic_hash": "8c7fa06a4052f2ecce81956df6837b7f"
   },
   "game/models/skill.py": {
-    "mtime": 1786204915.1771762,
-    "ast_hash": "0de0d4ac113b2f91bfb21ac044e472c1",
-    "semantic_hash": "0de0d4ac113b2f91bfb21ac044e472c1"
+    "mtime": 1786741339.4750383,
+    "ast_hash": "c4bfd064cb22dc959231b4fcc8afc5a5",
+    "semantic_hash": "c4bfd064cb22dc959231b4fcc8afc5a5"
   },
   "game/persistence/__init__.py": {
     "mtime": 1786204915.2417085,
@@ -250,9 +250,9 @@
     "semantic_hash": "b5c5b4f3cd48bdc3037fa792eecdbb40"
   },
   "game/services/character_service.py": {
-    "mtime": 1786204915.2657137,
-    "ast_hash": "6933fb53c5172b0a7db78ae44d787629",
-    "semantic_hash": "6933fb53c5172b0a7db78ae44d787629"
+    "mtime": 1786736160.490538,
+    "ast_hash": "31489f48d940ec99c6ac0193b05ec6e1",
+    "semantic_hash": "31489f48d940ec99c6ac0193b05ec6e1"
   },
   "game/services/cultivation_service.py": {
     "mtime": 1786204915.2727215,
@@ -275,14 +275,14 @@
     "semantic_hash": "4765625f051d2e25d0abaa3dc9c4207f"
   },
   "game/systems/combat_system.py": {
-    "mtime": 1786204915.334755,
-    "ast_hash": "9c9e1e6e99711fbff06fe6da2984bd9b",
-    "semantic_hash": "9c9e1e6e99711fbff06fe6da2984bd9b"
+    "mtime": 1786741530.267529,
+    "ast_hash": "f4d17d4908c0ae369025f6acaeb6503c",
+    "semantic_hash": "f4d17d4908c0ae369025f6acaeb6503c"
   },
   "game/systems/cultivation_system.py": {
-    "mtime": 1786204915.3412519,
-    "ast_hash": "503229c8f61b595e258b9d3d758fb96b",
-    "semantic_hash": "503229c8f61b595e258b9d3d758fb96b"
+    "mtime": 1786730171.6965306,
+    "ast_hash": "828d2423ada0971273bdf9c419607716",
+    "semantic_hash": "828d2423ada0971273bdf9c419607716"
   },
   "game/systems/currency.py": {
     "mtime": 1786204915.3477647,
@@ -295,9 +295,9 @@
     "semantic_hash": "9c71a4e73ee1abe9f5df62f1c8f49928"
   },
   "game/systems/equipment_system.py": {
-    "mtime": 1786204915.3597672,
-    "ast_hash": "22eaf7cc315f364480b2f9c559af41f7",
-    "semantic_hash": "22eaf7cc315f364480b2f9c559af41f7"
+    "mtime": 1786737540.0530038,
+    "ast_hash": "7293668c9cdcd5019fc551ecd6d8afc0",
+    "semantic_hash": "7293668c9cdcd5019fc551ecd6d8afc0"
   },
   "game/systems/event_system.py": {
     "mtime": 1786204915.365769,
@@ -310,14 +310,14 @@
     "semantic_hash": "545aa2ef5d0ba5ef7253e79463edbdcb"
   },
   "game/systems/inventory_system.py": {
-    "mtime": 1786204915.3797748,
-    "ast_hash": "1deac90debb3d53b7c05c68281a3e3fb",
-    "semantic_hash": "1deac90debb3d53b7c05c68281a3e3fb"
+    "mtime": 1786744775.7245755,
+    "ast_hash": "069e36809d2777f4baa13b0f7cb8ee10",
+    "semantic_hash": "069e36809d2777f4baa13b0f7cb8ee10"
   },
   "game/systems/lifespan_system.py": {
-    "mtime": 1786204915.3857791,
-    "ast_hash": "0b8a45780a56ebe2419a57c8cbc22f82",
-    "semantic_hash": "0b8a45780a56ebe2419a57c8cbc22f82"
+    "mtime": 1786737745.544517,
+    "ast_hash": "6c2debbdc04dc28a636062a3a0926913",
+    "semantic_hash": "6c2debbdc04dc28a636062a3a0926913"
   },
   "game/systems/location_system.py": {
     "mtime": 1786204915.3922808,
@@ -335,14 +335,14 @@
     "semantic_hash": "4d2e0aba7365592747c8e9afc8f3a347"
   },
   "game/systems/quest_system.py": {
-    "mtime": 1786204915.4127998,
-    "ast_hash": "11052bf33ea5c8fe9f1ed529ce0085be",
-    "semantic_hash": "11052bf33ea5c8fe9f1ed529ce0085be"
+    "mtime": 1786743728.4385726,
+    "ast_hash": "0ddd7fc549a0344c3ba7e4836590ef77",
+    "semantic_hash": "0ddd7fc549a0344c3ba7e4836590ef77"
   },
   "game/systems/relationship_system.py": {
-    "mtime": 1786204915.4187987,
-    "ast_hash": "3df27175c20cd77967decfa32765a920",
-    "semantic_hash": "3df27175c20cd77967decfa32765a920"
+    "mtime": 1786731450.2692404,
+    "ast_hash": "ea3219e086a7f1ddc0207ad84edb38c0",
+    "semantic_hash": "ea3219e086a7f1ddc0207ad84edb38c0"
   },
   "game/systems/shop_system.py": {
     "mtime": 1786204915.425306,
@@ -350,19 +350,19 @@
     "semantic_hash": "e2666792d10161032d0cc707572ad68e"
   },
   "game/systems/skill_system.py": {
-    "mtime": 1786204915.4318042,
-    "ast_hash": "0fac8fc0629d609c93ef3d266773f568",
-    "semantic_hash": "0fac8fc0629d609c93ef3d266773f568"
+    "mtime": 1786730151.828026,
+    "ast_hash": "47fc03f09e9f665e2eba8e52d26bcc7c",
+    "semantic_hash": "47fc03f09e9f665e2eba8e52d26bcc7c"
   },
   "game/systems/starting_fate_system.py": {
-    "mtime": 1786204915.4383082,
-    "ast_hash": "c00b04d4b78c9f050c8fd194b60368a8",
-    "semantic_hash": "c00b04d4b78c9f050c8fd194b60368a8"
+    "mtime": 1786737434.3095484,
+    "ast_hash": "46035e52f477a05b7ee0d25d587180c4",
+    "semantic_hash": "46035e52f477a05b7ee0d25d587180c4"
   },
   "game/systems/stats_system.py": {
-    "mtime": 1786204915.4443078,
-    "ast_hash": "ef41dc60f1a20f839753087932fe7d6c",
-    "semantic_hash": "ef41dc60f1a20f839753087932fe7d6c"
+    "mtime": 1786729615.752632,
+    "ast_hash": "5c08a26153b4e11747be6a5259c6e231",
+    "semantic_hash": "5c08a26153b4e11747be6a5259c6e231"
   },
   "game/systems/talent_system.py": {
     "mtime": 1786204915.4523191,
@@ -370,9 +370,9 @@
     "semantic_hash": "96bed956f4699a1180a02a18a8e732d7"
   },
   "game/systems/trainer_system.py": {
-    "mtime": 1786204915.4588177,
-    "ast_hash": "9397b43e91c3f7b180a849641de972f0",
-    "semantic_hash": "9397b43e91c3f7b180a849641de972f0"
+    "mtime": 1786733557.3592172,
+    "ast_hash": "7e3b357e3372b4451f0fddcb1ee5dae9",
+    "semantic_hash": "7e3b357e3372b4451f0fddcb1ee5dae9"
   },
   "game/ui/__init__.py": {
     "mtime": 1786204915.6274004,
@@ -380,14 +380,14 @@
     "semantic_hash": "18a12ad30c41313fed58a71e616da8ab"
   },
   "game/ui/cli_interface.py": {
-    "mtime": 1786204915.6063976,
-    "ast_hash": "573a1871955b5992a09c5871c3b27c85",
-    "semantic_hash": "573a1871955b5992a09c5871c3b27c85"
+    "mtime": 1786738465.1674654,
+    "ast_hash": "79a554b6cccb55e1e3034b9e1a5663a0",
+    "semantic_hash": "79a554b6cccb55e1e3034b9e1a5663a0"
   },
   "game/ui/gui_interface.py": {
-    "mtime": 1786204915.6138964,
-    "ast_hash": "33fee5ff440718acd97bdf4aea6ea8ce",
-    "semantic_hash": "33fee5ff440718acd97bdf4aea6ea8ce"
+    "mtime": 1786736252.1430583,
+    "ast_hash": "13b1b291719db2b1902e0b58d5495efe",
+    "semantic_hash": "13b1b291719db2b1902e0b58d5495efe"
   },
   "game/ui/ui_theme.py": {
     "mtime": 1786204915.6208997,
@@ -420,9 +420,9 @@
     "semantic_hash": "0f8cacceb731aee428fb8b10a8cc8c3e"
   },
   "game/validation/data_validator.py": {
-    "mtime": 1786204915.7209532,
-    "ast_hash": "9d7fe6d22cbb657f201ee7f88ef204c4",
-    "semantic_hash": "9d7fe6d22cbb657f201ee7f88ef204c4"
+    "mtime": 1786745384.4493723,
+    "ast_hash": "b16e0aeac607caf6a5c331e7f21889ff",
+    "semantic_hash": "b16e0aeac607caf6a5c331e7f21889ff"
   },
   "game/validation/validation_error.py": {
     "mtime": 1786204915.7274508,
@@ -445,24 +445,24 @@
     "semantic_hash": "de31205b2b72055098f3cc420aa57337"
   },
   "tests/test_all_game_data_valid.py": {
-    "mtime": 1786204916.448226,
-    "ast_hash": "9f10ab069d33f2fb43ef68aed820fd11",
-    "semantic_hash": "9f10ab069d33f2fb43ef68aed820fd11"
+    "mtime": 1786732806.5365543,
+    "ast_hash": "bf28509d2d9fcc75e444559201a43581",
+    "semantic_hash": "bf28509d2d9fcc75e444559201a43581"
   },
   "tests/test_api_server.py": {
-    "mtime": 1786204916.4547248,
-    "ast_hash": "2863f31e818381eb052a70616ad3c710",
-    "semantic_hash": "2863f31e818381eb052a70616ad3c710"
+    "mtime": 1786743076.198075,
+    "ast_hash": "fe7344adeb6f7b92eeef34c6741874a1",
+    "semantic_hash": "fe7344adeb6f7b92eeef34c6741874a1"
   },
   "tests/test_character_enemies_data.py": {
-    "mtime": 1786204916.4682446,
-    "ast_hash": "1b93e4f75df3e2dfe279eb0afe0d0050",
-    "semantic_hash": "1b93e4f75df3e2dfe279eb0afe0d0050"
+    "mtime": 1786730693.0470595,
+    "ast_hash": "91b01ac0d22d23e412aaced7866e6451",
+    "semantic_hash": "91b01ac0d22d23e412aaced7866e6451"
   },
   "tests/test_character_service.py": {
-    "mtime": 1786204916.4747417,
-    "ast_hash": "dcb6837dca534cdd4b0f48363e336318",
-    "semantic_hash": "dcb6837dca534cdd4b0f48363e336318"
+    "mtime": 1786731573.1919777,
+    "ast_hash": "c2ac5d707e3f5af37fd11f970e8918d3",
+    "semantic_hash": "c2ac5d707e3f5af37fd11f970e8918d3"
   },
   "tests/test_characters_data.py": {
     "mtime": 1786204916.4612367,
@@ -470,14 +470,14 @@
     "semantic_hash": "4ce5208ce85923ca2b83e50ee3a59235"
   },
   "tests/test_command_router.py": {
-    "mtime": 1786204916.480741,
-    "ast_hash": "6080ec510439eafacfd2978786f2ec21",
-    "semantic_hash": "6080ec510439eafacfd2978786f2ec21"
+    "mtime": 1786735932.4957552,
+    "ast_hash": "20d9d54b6addb4c194d1049c0440077b",
+    "semantic_hash": "20d9d54b6addb4c194d1049c0440077b"
   },
   "tests/test_cultivation_system.py": {
-    "mtime": 1786204916.4877503,
-    "ast_hash": "f6d79d3cfa673b6253e727c3fe92f871",
-    "semantic_hash": "f6d79d3cfa673b6253e727c3fe92f871"
+    "mtime": 1786730223.0740542,
+    "ast_hash": "6c8079b407e38746c49df1f3ef7724b3",
+    "semantic_hash": "6c8079b407e38746c49df1f3ef7724b3"
   },
   "tests/test_data_loading.py": {
     "mtime": 1786204916.4942548,
@@ -485,9 +485,9 @@
     "semantic_hash": "59cd18569a1e767cd3252ae8ab779a0f"
   },
   "tests/test_data_validation.py": {
-    "mtime": 1786204916.5007546,
-    "ast_hash": "1644e6c8935e1c92e8df463d3272af10",
-    "semantic_hash": "1644e6c8935e1c92e8df463d3272af10"
+    "mtime": 1786730687.4400563,
+    "ast_hash": "3836c5a946dbdbe47e9a6da7787314ee",
+    "semantic_hash": "3836c5a946dbdbe47e9a6da7787314ee"
   },
   "tests/test_effect_system.py": {
     "mtime": 1786204916.507256,
@@ -510,9 +510,9 @@
     "semantic_hash": "bf7f48b92e94fac92e36f916195d425a"
   },
   "tests/test_game_engine.py": {
-    "mtime": 1786204916.5322673,
-    "ast_hash": "d0c25eaa687a5d058d8241f99fd3b7a0",
-    "semantic_hash": "d0c25eaa687a5d058d8241f99fd3b7a0"
+    "mtime": 1786743127.5630772,
+    "ast_hash": "656f88cf2a1242f46b7343e807dcab67",
+    "semantic_hash": "656f88cf2a1242f46b7343e807dcab67"
   },
   "tests/test_gui_escape.py": {
     "mtime": 1786204916.5387764,
@@ -535,9 +535,9 @@
     "semantic_hash": "eebeac1dc6e91d546360989f6a26faf6"
   },
   "tests/test_lifespan_system.py": {
-    "mtime": 1786204916.5743814,
-    "ast_hash": "d5eb94919bfe98ab16f0b54701395846",
-    "semantic_hash": "d5eb94919bfe98ab16f0b54701395846"
+    "mtime": 1786730214.559918,
+    "ast_hash": "6fe1116a6fc19cc650a5f791008b012e",
+    "semantic_hash": "6fe1116a6fc19cc650a5f791008b012e"
   },
   "tests/test_location_system.py": {
     "mtime": 1786204916.587381,
@@ -545,9 +545,9 @@
     "semantic_hash": "20a3b4e291d65e92bcd7b72819306750"
   },
   "tests/test_locations_data.py": {
-    "mtime": 1786204916.580881,
-    "ast_hash": "74dc7abe7381ba6281715daaf4b7a664",
-    "semantic_hash": "74dc7abe7381ba6281715daaf4b7a664"
+    "mtime": 1786735644.324877,
+    "ast_hash": "0d4d0fb00b27d5ca6cdc2decc8981863",
+    "semantic_hash": "0d4d0fb00b27d5ca6cdc2decc8981863"
   },
   "tests/test_loot_system.py": {
     "mtime": 1786204916.5938883,
@@ -565,14 +565,14 @@
     "semantic_hash": "59750ceccf71fd11ad44d5e581caccd1"
   },
   "tests/test_quest_system.py": {
-    "mtime": 1786204916.611892,
-    "ast_hash": "1f547fabedf4bee3d242ed65fc5e5666",
-    "semantic_hash": "1f547fabedf4bee3d242ed65fc5e5666"
+    "mtime": 1786732140.822694,
+    "ast_hash": "b5d4b180658e771122511ac0ea9869b1",
+    "semantic_hash": "b5d4b180658e771122511ac0ea9869b1"
   },
   "tests/test_relationship_system.py": {
-    "mtime": 1786204916.6184018,
-    "ast_hash": "ef99063a7953d8d70dfc2a343048ba1c",
-    "semantic_hash": "ef99063a7953d8d70dfc2a343048ba1c"
+    "mtime": 1786731589.2203114,
+    "ast_hash": "955b7906a6a6a897b906f105e64bccf8",
+    "semantic_hash": "955b7906a6a6a897b906f105e64bccf8"
   },
   "tests/test_results.py": {
     "mtime": 1786204916.625401,
@@ -590,9 +590,9 @@
     "semantic_hash": "b5a02aa072295af42b0e2535de8730f9"
   },
   "tests/test_skill_system.py": {
-    "mtime": 1786204916.6449156,
-    "ast_hash": "14e36cbdc0ff8d0da204b89b48d9be2e",
-    "semantic_hash": "14e36cbdc0ff8d0da204b89b48d9be2e"
+    "mtime": 1786730207.8257132,
+    "ast_hash": "dfbe139c6c17252f456df8ff1021bf90",
+    "semantic_hash": "dfbe139c6c17252f456df8ff1021bf90"
   },
   "tests/test_starting_fate_system.py": {
     "mtime": 1786204916.6519134,
@@ -610,9 +610,9 @@
     "semantic_hash": "a19dfe6812fb94e6445bfb26e8b6575a"
   },
   "tests/test_trainer_system.py": {
-    "mtime": 1786204916.669922,
-    "ast_hash": "b161aa8e5a437fadf69a09ee263058fc",
-    "semantic_hash": "b161aa8e5a437fadf69a09ee263058fc"
+    "mtime": 1786733666.1995535,
+    "ast_hash": "a73c5cfc2e630f0b122df5a92daba28a",
+    "semantic_hash": "a73c5cfc2e630f0b122df5a92daba28a"
   },
   "tests/test_travel_service.py": {
     "mtime": 1786204916.6759217,
@@ -655,8 +655,248 @@
     "semantic_hash": "6831ef50c12eeb86452adab869e4ef9f"
   },
   "handover.md": {
-    "mtime": 1786204863.671746,
-    "ast_hash": "a753e512bc5b389fa8e95e06c5dc6943",
-    "semantic_hash": "a753e512bc5b389fa8e95e06c5dc6943"
+    "mtime": 1786738969.497036,
+    "ast_hash": "fd75c46effc5bdb6a32cab4d2d1fdcf1",
+    "semantic_hash": "fd75c46effc5bdb6a32cab4d2d1fdcf1"
+  },
+  "game/core/engine/__init__.py": {
+    "mtime": 1786744337.6460793,
+    "ast_hash": "6b9a4ec111b6ca09b3e49d96e1dde614",
+    "semantic_hash": "6b9a4ec111b6ca09b3e49d96e1dde614"
+  },
+  "game/core/engine/combat.py": {
+    "mtime": 1786744469.2370894,
+    "ast_hash": "d5ea0544bec8d73dbf42da891020ece9",
+    "semantic_hash": "d5ea0544bec8d73dbf42da891020ece9"
+  },
+  "game/core/engine/dispatch.py": {
+    "mtime": 1786744353.316014,
+    "ast_hash": "44adb1171f28032f7d742a3ec293967f",
+    "semantic_hash": "44adb1171f28032f7d742a3ec293967f"
+  },
+  "game/core/engine/economy.py": {
+    "mtime": 1786744428.6630743,
+    "ast_hash": "95dc57a39141b564278d0e8031251eb3",
+    "semantic_hash": "95dc57a39141b564278d0e8031251eb3"
+  },
+  "game/core/engine/exploration.py": {
+    "mtime": 1786744388.1993651,
+    "ast_hash": "6bb5b50a16e5a57241785070323406f2",
+    "semantic_hash": "6bb5b50a16e5a57241785070323406f2"
+  },
+  "game/core/engine/lifecycle.py": {
+    "mtime": 1786744490.4340339,
+    "ast_hash": "69dcc40a701fee7366112cebbbd984a7",
+    "semantic_hash": "69dcc40a701fee7366112cebbbd984a7"
+  },
+  "game/core/engine/progression.py": {
+    "mtime": 1786744402.2140963,
+    "ast_hash": "1fe4c7c15703d7df4c415eea41c7485f",
+    "semantic_hash": "1fe4c7c15703d7df4c415eea41c7485f"
+  },
+  "game/core/engine/social.py": {
+    "mtime": 1786744417.2640789,
+    "ast_hash": "67c03a12cbb7c6ad6c3404635c192e93",
+    "semantic_hash": "67c03a12cbb7c6ad6c3404635c192e93"
+  },
+  "game/core/engine/systems.py": {
+    "mtime": 1786745352.2114813,
+    "ast_hash": "66c480f7e74fb08a672bd6ebcd676b25",
+    "semantic_hash": "66c480f7e74fb08a672bd6ebcd676b25"
+  },
+  "game/core/engine/views.py": {
+    "mtime": 1786745352.25048,
+    "ast_hash": "439f5cbd6f1792a479a9172a6d7d4210",
+    "semantic_hash": "439f5cbd6f1792a479a9172a6d7d4210"
+  },
+  "game/data/daos.json": {
+    "mtime": 1786740298.6239994,
+    "ast_hash": "1c9146bd72f4ceb9eb006fd2c38844f1",
+    "semantic_hash": "1c9146bd72f4ceb9eb006fd2c38844f1"
+  },
+  "game/data/gathering.json": {
+    "mtime": 1786745275.945589,
+    "ast_hash": "04f3761580a694acadf1382c9eec4906",
+    "semantic_hash": "04f3761580a694acadf1382c9eec4906"
+  },
+  "game/data/narrative_templates.json": {
+    "mtime": 1786742052.220029,
+    "ast_hash": "cc0bd26aa477dddd8b4aa389129119db",
+    "semantic_hash": "cc0bd26aa477dddd8b4aa389129119db"
+  },
+  "game/data/origins.json": {
+    "mtime": 1786742632.418059,
+    "ast_hash": "1ff00bd95cd571f989856b71bd68dfe9",
+    "semantic_hash": "1ff00bd95cd571f989856b71bd68dfe9"
+  },
+  "game/data/refining_recipes.json": {
+    "mtime": 1786745275.9470892,
+    "ast_hash": "9041a7c5d10a1021f3eea18d72a88923",
+    "semantic_hash": "9041a7c5d10a1021f3eea18d72a88923"
+  },
+  "game/data/sects.json": {
+    "mtime": 1786733486.4786496,
+    "ast_hash": "06418f8ffab278946bf52b442eae9027",
+    "semantic_hash": "06418f8ffab278946bf52b442eae9027"
+  },
+  "game/services/meta_service.py": {
+    "mtime": 1786742646.59457,
+    "ast_hash": "c22f6975777f20dad6ae6f95f41b7821",
+    "semantic_hash": "c22f6975777f20dad6ae6f95f41b7821"
+  },
+  "game/systems/alchemy_system.py": {
+    "mtime": 1786745340.0579283,
+    "ast_hash": "86d2eb0089e39480145025268d35a8f2",
+    "semantic_hash": "86d2eb0089e39480145025268d35a8f2"
+  },
+  "game/systems/dao_system.py": {
+    "mtime": 1786740313.5700426,
+    "ast_hash": "896351c98186db9e20f6c567fc1708a5",
+    "semantic_hash": "896351c98186db9e20f6c567fc1708a5"
+  },
+  "game/systems/narrative_system.py": {
+    "mtime": 1786741970.7415414,
+    "ast_hash": "ce7beb210f44739b1e96add4d549e264",
+    "semantic_hash": "ce7beb210f44739b1e96add4d549e264"
+  },
+  "game/systems/origin_system.py": {
+    "mtime": 1786742881.1790712,
+    "ast_hash": "d72bd0a34335c213465f909393cfbbc1",
+    "semantic_hash": "d72bd0a34335c213465f909393cfbbc1"
+  },
+  "game/systems/secret_realm_system.py": {
+    "mtime": 1786745324.860259,
+    "ast_hash": "15e1dd449f8bf780569da9b1aa0e8db8",
+    "semantic_hash": "15e1dd449f8bf780569da9b1aa0e8db8"
+  },
+  "game/systems/sect_system.py": {
+    "mtime": 1786733507.5172863,
+    "ast_hash": "be9a7fc303d2c3bb1cc3eb4dfb3656bb",
+    "semantic_hash": "be9a7fc303d2c3bb1cc3eb4dfb3656bb"
+  },
+  "game/systems/sell_system.py": {
+    "mtime": 1786732424.4060555,
+    "ast_hash": "54a016c46887ecbdad3027c4f17aa79b",
+    "semantic_hash": "54a016c46887ecbdad3027c4f17aa79b"
+  },
+  "tests/test_act_one.py": {
+    "mtime": 1786743875.3700204,
+    "ast_hash": "7c5be4f8f2406807e91175f1649304a6",
+    "semantic_hash": "7c5be4f8f2406807e91175f1649304a6"
+  },
+  "tests/test_alchemy.py": {
+    "mtime": 1786745434.7455516,
+    "ast_hash": "be2d316ec46e57401594fdf075f651ab",
+    "semantic_hash": "be2d316ec46e57401594fdf075f651ab"
+  },
+  "tests/test_all_skills_reachable.py": {
+    "mtime": 1786730789.7060578,
+    "ast_hash": "146645198d7d82df4106994ecba4909a",
+    "semantic_hash": "146645198d7d82df4106994ecba4909a"
+  },
+  "tests/test_combat_system.py": {
+    "mtime": 1786733173.1070576,
+    "ast_hash": "28f621b1aa869f356d22de2a06ee2734",
+    "semantic_hash": "28f621b1aa869f356d22de2a06ee2734"
+  },
+  "tests/test_dao_combat.py": {
+    "mtime": 1786740518.373537,
+    "ast_hash": "5872063e228f8bab535e314165aa3ee5",
+    "semantic_hash": "5872063e228f8bab535e314165aa3ee5"
+  },
+  "tests/test_insight_combat.py": {
+    "mtime": 1786741463.9485505,
+    "ast_hash": "3014a7e0d6027eb82a8ac23606d3c51f",
+    "semantic_hash": "3014a7e0d6027eb82a8ac23606d3c51f"
+  },
+  "tests/test_medium_priority.py": {
+    "mtime": 1786738605.2609692,
+    "ast_hash": "c07f69aa1f41d1ec9b7ab422eb853437",
+    "semantic_hash": "c07f69aa1f41d1ec9b7ab422eb853437"
+  },
+  "tests/test_narrative_system.py": {
+    "mtime": 1786742210.2815804,
+    "ast_hash": "057f38dee1ec2380e656d978f55a4b9e",
+    "semantic_hash": "057f38dee1ec2380e656d978f55a4b9e"
+  },
+  "tests/test_relationship_rewards.py": {
+    "mtime": 1786736021.4645371,
+    "ast_hash": "2746acdac61e4fe8de7c59a23209ccbf",
+    "semantic_hash": "2746acdac61e4fe8de7c59a23209ccbf"
+  },
+  "tests/test_roguelike_meta.py": {
+    "mtime": 1786743044.9925275,
+    "ast_hash": "82600fcd0d551d0aac8bb8df3ac1dc5e",
+    "semantic_hash": "82600fcd0d551d0aac8bb8df3ac1dc5e"
+  },
+  "tests/test_secret_realm.py": {
+    "mtime": 1786745421.8900354,
+    "ast_hash": "cf5b89bf7ee8765a654a3332214c057d",
+    "semantic_hash": "cf5b89bf7ee8765a654a3332214c057d"
+  },
+  "tests/test_sect_system.py": {
+    "mtime": 1786733658.5630538,
+    "ast_hash": "ce15e48f5ad80491f21e3f3d21ec9786",
+    "semantic_hash": "ce15e48f5ad80491f21e3f3d21ec9786"
+  },
+  "tests/test_sell_system.py": {
+    "mtime": 1786732785.805054,
+    "ast_hash": "a8655ccd660d6a51736ded99490bb6c2",
+    "semantic_hash": "a8655ccd660d6a51736ded99490bb6c2"
+  },
+  "tools/expand_alchemy.py": {
+    "mtime": 1786745272.4359474,
+    "ast_hash": "fb311e076604e247d09e16ea60727596",
+    "semantic_hash": "fb311e076604e247d09e16ea60727596"
+  },
+  "tools/gen_missing_location_art.py": {
+    "mtime": 1786737928.401548,
+    "ast_hash": "5757cb3ecf01656551d0c75095e92f89",
+    "semantic_hash": "5757cb3ecf01656551d0c75095e92f89"
+  },
+  "tools/normalize_available_systems.py": {
+    "mtime": 1786735601.2022028,
+    "ast_hash": "6ceabb1c8d27d802bb5a8ba0c9aa900f",
+    "semantic_hash": "6ceabb1c8d27d802bb5a8ba0c9aa900f"
+  },
+  "tools/seed_enemy_abilities.py": {
+    "mtime": 1786737893.7380502,
+    "ast_hash": "be16afa9b97bc4dfa14fd9a450c0e4f9",
+    "semantic_hash": "be16afa9b97bc4dfa14fd9a450c0e4f9"
+  },
+  "tools/seed_enemy_daos.py": {
+    "mtime": 1786740557.63904,
+    "ast_hash": "2464583235ccac3d0b9577df5863ee0d",
+    "semantic_hash": "2464583235ccac3d0b9577df5863ee0d"
+  },
+  "tools/seed_equipment_sets.py": {
+    "mtime": 1786737793.7455437,
+    "ast_hash": "13cdbe215e7a7844965dc0dfcccafba7",
+    "semantic_hash": "13cdbe215e7a7844965dc0dfcccafba7"
+  },
+  "tools/seed_shops.py": {
+    "mtime": 1786732747.7585611,
+    "ast_hash": "aef590524e9585478720eb45e7fbc7c8",
+    "semantic_hash": "aef590524e9585478720eb45e7fbc7c8"
+  },
+  "tools/seed_talent_resources.py": {
+    "mtime": 1786738577.4611106,
+    "ast_hash": "3a4965ec5242fa2b04c53f3eaf0b3308",
+    "semantic_hash": "3a4965ec5242fa2b04c53f3eaf0b3308"
+  },
+  "tools/seed_talent_upgrades.py": {
+    "mtime": 1786738421.9154794,
+    "ast_hash": "070ffebe9b18b575252b0f203e7eab5e",
+    "semantic_hash": "070ffebe9b18b575252b0f203e7eab5e"
+  },
+  "tools/seed_techniques.py": {
+    "mtime": 1786733570.2823398,
+    "ast_hash": "c4d481426d2ccfc4a02a2eb6189921c5",
+    "semantic_hash": "c4d481426d2ccfc4a02a2eb6189921c5"
+  },
+  "ROADMAP.md": {
+    "mtime": 1786745503.0335927,
+    "ast_hash": "558d93627044c002cb693a4f4b1e6d3d",
+    "semantic_hash": "558d93627044c002cb693a4f4b1e6d3d"
   }
 }

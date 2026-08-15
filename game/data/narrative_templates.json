@@ -69,6 +69,14 @@
       {"weight": 2, "template": "A sudden stillness falls, and the veil of the world seems to thin."}
     ]
   },
+  "explore": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "You range through the {season} wilderness, senses open to what it may offer."},
+      {"weight": 2, "template": "The land unfolds around you, and you press deeper into it."},
+      {"weight": 2, "template": "You walk the wild places, watching for danger and chance alike."}
+    ]
+  },
   "travel": {
     "variables": ["destination"],
     "variants": [
@@ -84,6 +92,30 @@
       {"weight": 3, "template": "You close the distance and strike at the {enemy}."},
       {"weight": 2, "template": "Your blow lashes out, aimed to break the {enemy}'s guard."},
       {"weight": 2, "template": "You circle, then lunge at the {enemy}."}
+    ]
+  },
+  "combat_start": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "The air turns sharp as a blade, and the fight is upon you."},
+      {"weight": 2, "template": "All talk is done. The {season} air shivers, and battle begins."},
+      {"weight": 2, "template": "You and your foe measure each other, and then the first move comes."}
+    ]
+  },
+  "combat_turn": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "The exchange quickens, each move a question the other must answer."},
+      {"weight": 2, "template": "Steel and intent cross beneath the {season} sky."},
+      {"weight": 2, "template": "You circle and strike, trading blows with your opponent."}
+    ]
+  },
+  "combat_end": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "The {season} air settles as the fight draws to its close."},
+      {"weight": 2, "template": "Breath ragged, you survey the aftermath of the clash."},
+      {"weight": 2, "template": "The contest is decided, and silence rushes back in."}
     ]
   },
   "breakthrough_success": {
@@ -104,6 +136,14 @@
       {"weight": 2, "template": "The {season} air turns against you; the breakthrough slips away.", "when": {"field": "season", "op": "ne", "value": "Spring"}}
     ]
   },
+  "stabilise": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "You settle the churning foundation, letting {season} calm seep into the cracks of your cultivation."},
+      {"weight": 2, "template": "Breath by breath you smooth the turbulence within, until your footing feels sure again."},
+      {"weight": 2, "template": "You tend the strained foundation until it steadies, firm against the {season} air."}
+    ]
+  },
   "death": {
     "variables": ["cause", "age", "season"],
     "variants": [
@@ -111,6 +151,316 @@
       {"weight": 2, "template": "{cause}. One more name the {season} winds will carry away."},
       {"weight": 2, "template": "The heavens close their book on you: {cause}, at {age}."},
       {"weight": 2, "template": "{cause}. Thus ends a journey begun in hope."}
+    ]
+  },
+  "starting_fate": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "Fate turns its wheel, and the {season} winds lay bare the path set before you."},
+      {"weight": 2, "template": "A quiet certainty settles in as your starting talents take shape."},
+      {"weight": 2, "template": "The heavens have marked your road; you feel it now, in the {season} air."}
+    ]
+  },
+  "character_encounter": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "A figure detaches from the {season} haze and regards you with unreadable eyes."},
+      {"weight": 2, "template": "Someone is here — a cultivator whose presence turns the {season} air watchful."},
+      {"weight": 2, "template": "You cross paths with a stranger, and the world narrows to the space between you."}
+    ]
+  },
+  "talk": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "Words pass between you, each one weighted with the {season} tension of the moment."},
+      {"weight": 2, "template": "You speak and listen in turn, measuring the {season} silence between sentences."},
+      {"weight": 2, "template": "The conversation flows, cautious and measured."}
+    ]
+  },
+  "dialogue": {
+    "variables": ["morality"],
+    "variants": [
+      {"weight": 3, "template": "You answer, and the choice echoes through your {morality} heart."},
+      {"weight": 2, "template": "Your words hang in the air, a small turning in the {morality} road you walk."},
+      {"weight": 2, "template": "You speak your piece; the moment bends around what you have chosen."}
+    ]
+  },
+  "boon": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "A gift is pressed into your keeping, warm against the {season} air."},
+      {"weight": 2, "template": "You are granted a boon, and the weight of it settles in your palms."},
+      {"weight": 2, "template": "Favour finds you, and you accept it with quiet thanks."}
+    ]
+  },
+  "sects": {
+    "variables": [],
+    "variants": [
+      {"weight": 3, "template": "You study the great sects and the paths they offer to the worthy."},
+      {"weight": 2, "template": "The banners of the sects rise before your mind's eye, each a different road."}
+    ]
+  },
+  "sect_joined": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "You bow before the sect's gate, and the {season} wind carries your oath inside."},
+      {"weight": 2, "template": "The sect accepts you; a new name is added to its rolls."},
+      {"weight": 2, "template": "You take your place among them, and the path opens beneath your feet."}
+    ]
+  },
+  "loot": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "You sift through what remains, and fortune leaves something behind."},
+      {"weight": 2, "template": "Among the {season} leaves, a prize glints and waits to be claimed."},
+      {"weight": 2, "template": "The spoils of the fight are yours to gather."}
+    ]
+  },
+  "special": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "Something uncanny stirs at the edge of sight."},
+      {"weight": 2, "template": "The {season} air thickens with a presence that does not belong."},
+      {"weight": 2, "template": "A strange portent crosses your path, and you take it in."}
+    ]
+  },
+  "status": {
+    "variables": [],
+    "variants": [
+      {"weight": 3, "template": "You take stock of yourself, of body and spirit and the road so far."},
+      {"weight": 2, "template": "You review your cultivation, weighing what you have built."}
+    ]
+  },
+  "inventory": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "You lay out your belongings in the {season} light and take account of each."},
+      {"weight": 2, "template": "You check your stores, counting what you carry and what you lack."}
+    ]
+  },
+  "shop": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "The market spreads before you, goods glinting under the {season} sky."},
+      {"weight": 2, "template": "You browse the stalls, weighing prices against your purse."}
+    ]
+  },
+  "item_purchased": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "Coin changes hands, and the purchase is yours."},
+      {"weight": 2, "template": "You hand over payment and tuck the goods away against the {season} air."}
+    ]
+  },
+  "item_sold": {
+    "variables": [],
+    "variants": [
+      {"weight": 3, "template": "You trade what you no longer need for a handful of coin."},
+      {"weight": 2, "template": "The sale is made, lightening your load and fattening your purse."}
+    ]
+  },
+  "item_used": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "You make use of it, and the effect settles through you."},
+      {"weight": 2, "template": "You apply it in the {season} air and feel the change take hold."}
+    ]
+  },
+  "trainer": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "A master regards you, gauging what you might yet become."},
+      {"weight": 2, "template": "You approach the trainer, and the {season} air grows heavy with instruction."}
+    ]
+  },
+  "skill_learned": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "The technique sinks into your understanding, and you feel it become yours."},
+      {"weight": 2, "template": "You study and absorb the art, its movements fitting your {season} footing."},
+      {"weight": 2, "template": "A new technique takes root in your memory, ready to be called."}
+    ]
+  },
+  "equip": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "You settle the gear into place, and its weight feels right."},
+      {"weight": 2, "template": "You arm yourself, readying for what the {season} road may bring."}
+    ]
+  },
+  "unequip": {
+    "variables": [],
+    "variants": [
+      {"weight": 3, "template": "You set the piece aside, lightening your frame."},
+      {"weight": 2, "template": "You unbuckle and stow the gear away."}
+    ]
+  },
+  "location": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "The place lies before you, distinct and familiar in the {season} light."},
+      {"weight": 2, "template": "You take in the surroundings and fix them in your memory."}
+    ]
+  },
+  "map": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "You study the map, tracing the {season} roads that lie ahead."},
+      {"weight": 2, "template": "The world's shape unfolds on the page before you."}
+    ]
+  },
+  "quest_update": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "The task advances, and you feel the {season} road bending toward its end."},
+      {"weight": 2, "template": "Progress. Another step of the journey falls behind you."}
+    ]
+  },
+  "save": {
+    "variables": [],
+    "variants": [
+      {"weight": 3, "template": "Your progress is sealed away against the turning of days."},
+      {"weight": 2, "template": "The record of your journey is safely kept."}
+    ]
+  },
+  "load": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "The {season} past returns to you, and you step back into the journey."},
+      {"weight": 2, "template": "You take up the thread where it was laid down."}
+    ]
+  },
+  "techniques": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "You run through the arts you have mastered, their forms vivid in the {season} air."},
+      {"weight": 2, "template": "Your techniques wait at the edge of thought, ready to be called."}
+    ]
+  },
+  "talents": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "You consider the gifts you were born with and the roads they open."},
+      {"weight": 2, "template": "Talent, once given, now a path — you survey it in the {season} quiet."}
+    ]
+  },
+  "talent_upgraded": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "Your talent sharpens, reaching toward the next grade."},
+      {"weight": 2, "template": "The {season} air seems to approve as your innate gift deepens."}
+    ]
+  },
+  "closed_door": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "You seal the door behind you and let the {season} world fall away."},
+      {"weight": 2, "template": "In seclusion, the days blur and the foundation deepens."},
+      {"weight": 2, "template": "You withdraw from the world and cultivate in the long quiet."}
+    ]
+  },
+  "repair": {
+    "variables": [],
+    "variants": [
+      {"weight": 3, "template": "You work the damage out, restoring the piece to strength."},
+      {"weight": 2, "template": "Careful hands mend what wear had weakened."}
+    ]
+  },
+  "gather": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "You harvest what the {season} earth offers, filling your pouch with herbs."},
+      {"weight": 2, "template": "Your fingers find the plants you sought, and you gather them in."},
+      {"weight": 2, "template": "The {season} wilds yield their medicine to your careful hands."}
+    ]
+  },
+  "refine": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "You tend the cauldron until the {season} air fills with the scent of success."},
+      {"weight": 2, "template": "The ingredients fuse under your care, and the elixir is born."},
+      {"weight": 2, "template": "Flame and patience do their work, and the refinement is complete."}
+    ]
+  },
+  "realm_entered": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "You step through, and the {season} world gives way to the realm's strange law."},
+      {"weight": 2, "template": "The threshold closes behind you; the secret realm opens ahead."},
+      {"weight": 2, "template": "You descend into the realm, and the air itself changes."}
+    ]
+  },
+  "realm_room": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "Room by room the realm tests you, and you press on."},
+      {"weight": 2, "template": "The realm's {season}-less depths shift as you advance."},
+      {"weight": 2, "template": "You move deeper, wary of what the next chamber holds."}
+    ]
+  },
+  "realm_completed": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "The realm yields at last, and you emerge richer than you entered."},
+      {"weight": 2, "template": "You stand at the realm's heart, its trial behind you."},
+      {"weight": 2, "template": "Conquered. The {season} air outside will feel strange after this."}
+    ]
+  },
+  "dao_view": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "You contemplate the Dao, and the {season} world seems to reorder around it."},
+      {"weight": 2, "template": "The ways of the Dao unfold before your mind's eye."}
+    ]
+  },
+  "dao_awakened": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "A new truth stirs within you, and the {season} air bends toward it."},
+      {"weight": 2, "template": "You awaken to the Dao, and the world is never quite the same."},
+      {"weight": 2, "template": "Insight breaks like dawn, and the Dao opens before you."}
+    ]
+  },
+  "save_exported": {
+    "variables": [],
+    "variants": [
+      {"weight": 3, "template": "Your journey is written down, portable and safe."},
+      {"weight": 2, "template": "The record of your path is set down for safekeeping."}
+    ]
+  },
+  "save_imported": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "A past self returns, and you take up the journey once more."},
+      {"weight": 2, "template": "The {season} road resumes where it was left."}
+    ]
+  },
+  "help": {
+    "variables": [],
+    "variants": [
+      {"weight": 3, "template": "You recall the ways you may act, the verbs of this world."},
+      {"weight": 2, "template": "The list of possible actions settles in your mind."}
+    ]
+  },
+  "message": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "A note reaches you through the {season} air."},
+      {"weight": 2, "template": "Word arrives, and you take its meaning."}
+    ]
+  },
+  "error": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "The attempt falters against the {season} air; not everything can be done."},
+      {"weight": 2, "template": "You try, but the world does not yield. Not this way."}
+    ]
+  },
+  "quit": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "You turn from the road for now, the {season} air at your back."},
+      {"weight": 2, "template": "The journey pauses; the world will wait."}
     ]
   },
   "describe_location": {

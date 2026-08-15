@@ -12,7 +12,14 @@ class DispatchMixin:
 
     # -- public engine contract ------------------------------------------
     def process_action(self, action: Dict[str, Any]) -> Dict[str, Any]:
-        """Process a structured command and return a structured result."""
+        """Process a structured command and return a structured result.
+
+        Every result is decorated with a line of narrative prose (ROADMAP A.5),
+        so the frontend always has something to show in the narrative panel.
+        """
+        return self._decorate_narrative(self._process_action_raw(action))
+
+    def _process_action_raw(self, action: Dict[str, Any]) -> Dict[str, Any]:
         if not isinstance(action, dict):
             return {"event": EventType.ERROR, "reason": "MALFORMED_ACTION"}
 
@@ -34,6 +41,49 @@ class DispatchMixin:
         if self._mode == MODE_COMBAT:
             return self._process_combat_action(name, action)
         return self._process_explore_action(name, action)
+
+    # -- narrative decoration (A.5) --------------------------------------
+    def _decorate_narrative(self, result: Dict[str, Any]) -> Dict[str, Any]:
+        """Attach a fallback narrative line to any result that lacks one.
+
+        Results that already carry bespoke prose (explore, travel, breakthrough,
+        death, attack) are left untouched; everything else gets the verb mapped
+        by :data:`~game.systems.narrative_system.EVENT_VERB`.
+        """
+        if not isinstance(result, dict):
+            return result
+        if "narrative" in result:
+            return result
+        event = result.get("event")
+        if not event:
+            return result
+        verb = self.narrative.verb_for_event(event)
+        if event == EventType.TRAIN_RESULT:
+            verb = "train_essence" if result.get("track_id") == "essence_gathering" else "train_body"
+        prose = self.narrative.render(verb, self._narrative_result_context(result))
+        if prose:
+            result["narrative"] = prose
+        return result
+
+    def _narrative_result_context(self, result: Dict[str, Any]) -> Dict[str, Any]:
+        """Build the prose context for a decorated result.
+
+        Starts from the standard context (realm rank, morality, season, ...) and
+        folds in a few result fields plus the current enemy so templates may
+        reference ``{enemy}``, ``{destination}``, etc. without breaking.
+        """
+        context = self._narrative_context()
+        enemy = getattr(self, "_current_enemy", None)
+        if enemy is not None and getattr(enemy, "name", None):
+            context["enemy"] = enemy.name
+        location = result.get("location")
+        if isinstance(location, dict) and location.get("name"):
+            context["destination"] = location.get("name")
+        for key in ("name", "item", "destination", "realm", "dao", "technique", "skill", "sect", "years"):
+            value = result.get(key)
+            if value not in (None, "") and key not in context:
+                context[key] = value
+        return context
 
     # -- action dispatch tables ------------------------------------------
     def _build_info_dispatch(self) -> Dict[str, Any]:

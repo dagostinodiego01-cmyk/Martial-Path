@@ -208,7 +208,7 @@ func _chronicle_line(entry: Dictionary) -> String:
 	var origin := str(entry.get("origin", "?"))
 	var dao := str(entry.get("dao", "?"))
 	var body := str(entry.get("peak_body_realm", "?"))
-	var age := entry.get("age_years", 0)
+	var age := int(entry.get("age_years", 0))
 	var cause := _humanize_cause(str(entry.get("cause", "?")))
 	return "%s · %s · %s at %s yrs (%s)" % [origin, dao, cause, str(age), body]
 

@@ -25,6 +25,10 @@ class CombatMixin:
         if name == Action.ATTACK:
             result = self.combat.attack(self.player, self._current_enemy, spar=self._combat_is_spar)
             self._tick_cooldowns()
+            if result.get("event") == EventType.COMBAT_TURN and self._current_enemy is not None:
+                result["narrative"] = self.narrative.render(
+                    "attack", {**self._narrative_context(), "enemy": self._current_enemy.name}
+                )
         elif name == Action.FLEE:
             result = self.combat.flee(self.player, self._current_enemy, spar=self._combat_is_spar)
             self._tick_cooldowns()

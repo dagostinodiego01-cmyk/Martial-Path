@@ -17,6 +17,7 @@ from typing import Any, Dict, Iterable, List, Optional, Set
 from game.core.constants import AVAILABLE_SYSTEMS
 from game.data.registry import GameDataRegistry
 from game.systems.origin_system import STAT_FIELDS
+from game.validation.narrative_lint import lint_narrative_templates
 from game.validation.validation_error import ValidationResult
 
 
@@ -859,81 +860,10 @@ def _validate_skills(registry: GameDataRegistry, result: ValidationResult) -> No
             result.add("bad_skill", f"skill '{skill_id}' insight_required is only meaningful on active skills")
 
 
-# Core verbs every narrative catalogue must cover with at least three weighted
-# variants (ROADMAP A.1).
-_NARRATIVE_CORE_VERBS = (
-    "train_body",
-    "train_essence",
-    "rest",
-    "meditate",
-    "explore_nothing",
-    "explore_combat",
-    "explore_loot",
-    "explore_special",
-    "travel",
-    "attack",
-    "breakthrough_success",
-    "breakthrough_failure",
-    "death",
-)
-_NARRATIVE_OPS = ("gte", "lte", "gt", "lt", "eq", "ne")
-_SLOT_RE = re.compile(r"\{([a-z_][a-z0-9_]*)\}")
-
-
 def _validate_narrative_templates(registry: GameDataRegistry, result: ValidationResult) -> None:
-    templates = registry.narrative_templates
-    if not isinstance(templates, dict):
-        result.add("bad_narrative", "narrative_templates must be an object mapping verbs to variants")
-        return
-    for verb, entry in templates.items():
-        if not isinstance(entry, dict):
-            result.add("bad_narrative", f"narrative verb '{verb}' must be an object")
-            continue
-        variants = entry.get("variants")
-        if not isinstance(variants, list) or not variants:
-            result.add("bad_narrative", f"narrative verb '{verb}' must declare a non-empty 'variants' list")
-            continue
-        declared = entry.get("variables", [])
-        if not isinstance(declared, list) or not all(isinstance(name, str) and name for name in declared):
-            result.add("bad_narrative", f"narrative verb '{verb}' 'variables' must be a list of strings")
-            declared = []
-        declared_set = set(declared)
-        for variant in variants:
-            if not isinstance(variant, dict):
-                result.add("bad_narrative", f"narrative verb '{verb}' has a non-object variant")
-                continue
-            template = variant.get("template")
-            if not isinstance(template, str) or not template:
-                result.add("bad_narrative", f"narrative verb '{verb}' has a variant missing a 'template' string")
-            weight = variant.get("weight", 1)
-            if isinstance(weight, bool) or not isinstance(weight, (int, float)) or weight < 0:
-                result.add("bad_narrative", f"narrative verb '{verb}' has a variant with a non-numeric 'weight'")
-            if declared_set:
-                for slot in _SLOT_RE.findall(str(template)):
-                    if slot not in declared_set:
-                        result.add("bad_narrative", f"narrative verb '{verb}' uses undeclared slot '{{{slot}}}'")
-            when = variant.get("when")
-            if when is not None:
-                predicates = when if isinstance(when, list) else [when]
-                for predicate in predicates:
-                    if not isinstance(predicate, dict):
-                        result.add("bad_narrative", f"narrative verb '{verb}' has a non-object when-predicate")
-                        continue
-                    if not isinstance(predicate.get("field"), str) or not predicate.get("field"):
-                        result.add("bad_narrative", f"narrative verb '{verb}' when-predicate is missing a 'field'")
-                    if predicate.get("op", "eq") not in _NARRATIVE_OPS:
-                        result.add("bad_narrative", f"narrative verb '{verb}' has an unknown op '{predicate.get('op')}'")
-                    if "value" not in predicate:
-                        result.add("bad_narrative", f"narrative verb '{verb}' when-predicate is missing a 'value'")
-    for verb in _NARRATIVE_CORE_VERBS:
-        entry = templates.get(verb)
-        count = (
-            len(entry.get("variants", []))
-            if isinstance(entry, dict) and isinstance(entry.get("variants"), list)
-            else 0
-        )
-        if count < 3:
-            result.add("bad_narrative", f"core narrative verb '{verb}' must have >= 3 weighted variants (has {count})")
+    """Lint narrative templates (structure, slots, when-clauses, coverage)."""
+    for category, message in lint_narrative_templates(registry.narrative_templates):
+        result.add(category, message)
 
 
 def _validate_origins(registry: GameDataRegistry, result: ValidationResult) -> None:

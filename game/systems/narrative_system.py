@@ -37,6 +37,70 @@ SUPPORTED_OPS = ("gte", "lte", "gt", "lt", "eq", "ne")
 
 _SLOT_RE = re.compile(r"\{([a-z_][a-z0-9_]*)\}")
 
+# Canonical map from every ``EventType`` value to the narrative verb that
+# narrates it. Every key must be a member of ``game.core.constants.EventType``
+# and every value a verb present in ``data/narrative_templates.json`` (both are
+# pinned by ``test_every_event_type_has_a_template`` and the data validator).
+# Results that already carry a bespoke ``narrative`` (explore, travel,
+# breakthrough, death, attack) are left untouched; this map supplies the
+# fallback prose so *every* engine result is narrated (ROADMAP A.5).
+EVENT_VERB: Dict[str, str] = {
+    "TRAIN_RESULT": "train_body",
+    "BREAKTHROUGH_RESULT": "breakthrough_success",
+    "STABILISE_RESULT": "stabilise",
+    "STARTING_FATE_ROLLED": "starting_fate",
+    "STARTING_FATE_ACCEPTED": "starting_fate",
+    "CHARACTER_ENCOUNTER": "character_encounter",
+    "CHARACTER_INTERACTION": "talk",
+    "DIALOGUE_CHOICE": "dialogue",
+    "BOON": "boon",
+    "SECTS": "sects",
+    "SECT_JOINED": "sect_joined",
+    "EXPLORE_RESULT": "explore",
+    "COMBAT": "combat_start",
+    "COMBAT_TURN": "combat_turn",
+    "COMBAT_END": "combat_end",
+    "LOOT": "loot",
+    "SPECIAL": "special",
+    "STATUS": "status",
+    "INVENTORY": "inventory",
+    "SHOP": "shop",
+    "ITEM_PURCHASED": "item_purchased",
+    "ITEM_SOLD": "item_sold",
+    "ITEM_USED": "item_used",
+    "TRAINER": "trainer",
+    "SKILL_LEARNED": "skill_learned",
+    "EQUIP_ITEM_RESULT": "equip",
+    "UNEQUIP_ITEM_RESULT": "unequip",
+    "REST_RESULT": "rest",
+    "MEDITATE_RESULT": "meditate",
+    "TRAVEL_RESULT": "travel",
+    "LOCATION": "location",
+    "MAP": "map",
+    "QUEST_UPDATE": "quest_update",
+    "SAVE_RESULT": "save",
+    "LOAD_RESULT": "load",
+    "TECHNIQUES": "techniques",
+    "TALENTS": "talents",
+    "TALENT_UPGRADED": "talent_upgraded",
+    "CLOSED_DOOR_RESULT": "closed_door",
+    "REPAIR_RESULT": "repair",
+    "GATHER_RESULT": "gather",
+    "REFINE_RESULT": "refine",
+    "REALM_ENTERED": "realm_entered",
+    "REALM_ROOM": "realm_room",
+    "REALM_COMPLETED": "realm_completed",
+    "DAO_VIEW": "dao_view",
+    "DAO_AWAKENED": "dao_awakened",
+    "SAVE_EXPORTED": "save_exported",
+    "SAVE_IMPORTED": "save_imported",
+    "HELP": "help",
+    "MESSAGE": "message",
+    "ERROR": "error",
+    "QUIT": "quit",
+    "PLAYER_DIED": "death",
+}
+
 
 class NarrativeSystem:
     """Renders weighted, conditional template variants into prose."""
@@ -63,6 +127,18 @@ class NarrativeSystem:
             return 0
         variants = entry.get("variants")
         return len(variants) if isinstance(variants, list) else 0
+
+    def verb_for_event(self, event: str) -> str:
+        """Return the narrative verb that narrates ``event`` (A.5).
+
+        Falls back to the lowercased event name when no explicit mapping exists,
+        so an unmapped-but-templated verb still resolves.
+        """
+        return EVENT_VERB.get(str(event), str(event).lower())
+
+    def narrate_event(self, event: str, context: Optional[Dict[str, Any]] = None) -> str:
+        """Render the fallback prose line for an engine event, or ``""`` if none."""
+        return self.render(self.verb_for_event(event), context or {})
 
     # -- rendering -------------------------------------------------------
     def render(self, verb: str, context: Optional[Dict[str, Any]] = None) -> str:
