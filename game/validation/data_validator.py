@@ -16,6 +16,7 @@ from typing import Any, Dict, Iterable, List, Optional, Set
 
 from game.core.constants import AVAILABLE_SYSTEMS
 from game.data.registry import GameDataRegistry
+from game.systems.origin_system import STAT_FIELDS
 from game.validation.validation_error import ValidationResult
 
 
@@ -44,6 +45,13 @@ def validate_all_game_data(registry: Optional[GameDataRegistry] = None) -> Valid
     _validate_shop_data(registry, result)
     _validate_trainers(registry, result)
     _validate_sects(registry, result)
+    _validate_daos(registry, result)
+    _validate_skills(registry, result)
+    _validate_narrative_templates(registry, result)
+    _validate_origins(registry, result)
+    _validate_gathering(registry, result)
+    _validate_refining_recipes(registry, result)
+    _validate_secret_realm(registry, result)
     _validate_technique_manuals(registry, result)
     _validate_find_config(registry, result)
     _validate_quests(registry, result)
@@ -781,6 +789,296 @@ def _validate_sects(registry: GameDataRegistry, result: ValidationResult) -> Non
         ranks = sect.get("contribution_ranks")
         if not isinstance(ranks, list) or not ranks or not all(isinstance(rank, str) and rank for rank in ranks):
             result.add("bad_sect", f"sect '{sect_id}' contribution_ranks must be a non-empty list of names")
+
+
+def _validate_daos(registry: GameDataRegistry, result: ValidationResult) -> None:
+    dao_ids = {dao.get("id") for dao in registry.daos if isinstance(dao, dict) and dao.get("id")}
+    elements = {"metal", "wood", "water", "fire", "earth"}
+    seen: Set[str] = set()
+    for dao in registry.daos:
+        if not isinstance(dao, dict):
+            result.add("bad_dao", "dao entry must be an object")
+            continue
+        dao_id = dao.get("id")
+        if not isinstance(dao_id, str) or not re.fullmatch(r"[a-z][a-z0-9_]*", dao_id):
+            result.add("bad_dao", f"dao id '{dao_id}' must be stable snake_case")
+            continue
+        if dao_id in seen:
+            result.add("duplicate_id", f"dao: duplicate id '{dao_id}'")
+        seen.add(dao_id)
+        if not isinstance(dao.get("display_name"), str) or not dao.get("display_name"):
+            result.add("bad_dao", f"dao '{dao_id}' display_name is required")
+        affinities = dao.get("affinities")
+        if not isinstance(affinities, list) or not all(isinstance(a, str) for a in affinities):
+            result.add("bad_dao", f"dao '{dao_id}' affinities must be a list of strings")
+        else:
+            for affinity in affinities:
+                if affinity not in elements:
+                    result.add("bad_dao", f"dao '{dao_id}' has unknown affinity '{affinity}'")
+        for field in ("counters", "countered_by"):
+            value = dao.get(field, [])
+            if not isinstance(value, list):
+                result.add("bad_dao", f"dao '{dao_id}' {field} must be a list")
+                continue
+            for target in value:
+                if target not in dao_ids:
+                    result.add("bad_dao", f"dao '{dao_id}' {field} references missing dao '{target}'")
+                elif target == dao_id:
+                    result.add("bad_dao", f"dao '{dao_id}' cannot {field} itself")
+    # Symmetry: A counters B <-> B lists A in countered_by (and vice versa).
+    by_id = {dao["id"]: dao for dao in registry.daos if isinstance(dao, dict) and dao.get("id")}
+    for dao in registry.daos:
+        if not isinstance(dao, dict):
+            continue
+        dao_id = dao.get("id")
+        for target in dao.get("counters", []):
+            target_entry = by_id.get(target)
+            if target_entry is not None and dao_id not in target_entry.get("countered_by", []):
+                result.add("bad_dao", f"dao '{dao_id}' counters '{target}' but '{target}' does not list it in countered_by")
+        for source in dao.get("countered_by", []):
+            source_entry = by_id.get(source)
+            if source_entry is not None and dao_id not in source_entry.get("counters", []):
+                result.add("bad_dao", f"dao '{dao_id}' lists '{source}' in countered_by but '{source}' does not counter it")
+    # Enemy dao references must resolve to a known dao.
+    for collection in (registry.enemies, registry.character_enemies):
+        for enemy in collection:
+            dao_id = enemy.get("dao_id")
+            if dao_id is not None and dao_id not in dao_ids:
+                result.add("bad_dao", f"enemy '{enemy.get('id')}' references missing dao '{dao_id}'")
+
+
+def _validate_skills(registry: GameDataRegistry, result: ValidationResult) -> None:
+    for skill in registry.skills:
+        if not isinstance(skill, dict):
+            continue
+        skill_id = skill.get("id", "?")
+        insight_required = skill.get("insight_required", 0)
+        if isinstance(insight_required, bool) or not isinstance(insight_required, int) or insight_required < 0:
+            result.add("bad_skill", f"skill '{skill_id}' insight_required must be a non-negative integer")
+        elif insight_required > 0 and skill.get("type") != "active":
+            result.add("bad_skill", f"skill '{skill_id}' insight_required is only meaningful on active skills")
+
+
+# Core verbs every narrative catalogue must cover with at least three weighted
+# variants (ROADMAP A.1).
+_NARRATIVE_CORE_VERBS = (
+    "train_body",
+    "train_essence",
+    "rest",
+    "meditate",
+    "explore_nothing",
+    "explore_combat",
+    "explore_loot",
+    "explore_special",
+    "travel",
+    "attack",
+    "breakthrough_success",
+    "breakthrough_failure",
+    "death",
+)
+_NARRATIVE_OPS = ("gte", "lte", "gt", "lt", "eq", "ne")
+_SLOT_RE = re.compile(r"\{([a-z_][a-z0-9_]*)\}")
+
+
+def _validate_narrative_templates(registry: GameDataRegistry, result: ValidationResult) -> None:
+    templates = registry.narrative_templates
+    if not isinstance(templates, dict):
+        result.add("bad_narrative", "narrative_templates must be an object mapping verbs to variants")
+        return
+    for verb, entry in templates.items():
+        if not isinstance(entry, dict):
+            result.add("bad_narrative", f"narrative verb '{verb}' must be an object")
+            continue
+        variants = entry.get("variants")
+        if not isinstance(variants, list) or not variants:
+            result.add("bad_narrative", f"narrative verb '{verb}' must declare a non-empty 'variants' list")
+            continue
+        declared = entry.get("variables", [])
+        if not isinstance(declared, list) or not all(isinstance(name, str) and name for name in declared):
+            result.add("bad_narrative", f"narrative verb '{verb}' 'variables' must be a list of strings")
+            declared = []
+        declared_set = set(declared)
+        for variant in variants:
+            if not isinstance(variant, dict):
+                result.add("bad_narrative", f"narrative verb '{verb}' has a non-object variant")
+                continue
+            template = variant.get("template")
+            if not isinstance(template, str) or not template:
+                result.add("bad_narrative", f"narrative verb '{verb}' has a variant missing a 'template' string")
+            weight = variant.get("weight", 1)
+            if isinstance(weight, bool) or not isinstance(weight, (int, float)) or weight < 0:
+                result.add("bad_narrative", f"narrative verb '{verb}' has a variant with a non-numeric 'weight'")
+            if declared_set:
+                for slot in _SLOT_RE.findall(str(template)):
+                    if slot not in declared_set:
+                        result.add("bad_narrative", f"narrative verb '{verb}' uses undeclared slot '{{{slot}}}'")
+            when = variant.get("when")
+            if when is not None:
+                predicates = when if isinstance(when, list) else [when]
+                for predicate in predicates:
+                    if not isinstance(predicate, dict):
+                        result.add("bad_narrative", f"narrative verb '{verb}' has a non-object when-predicate")
+                        continue
+                    if not isinstance(predicate.get("field"), str) or not predicate.get("field"):
+                        result.add("bad_narrative", f"narrative verb '{verb}' when-predicate is missing a 'field'")
+                    if predicate.get("op", "eq") not in _NARRATIVE_OPS:
+                        result.add("bad_narrative", f"narrative verb '{verb}' has an unknown op '{predicate.get('op')}'")
+                    if "value" not in predicate:
+                        result.add("bad_narrative", f"narrative verb '{verb}' when-predicate is missing a 'value'")
+    for verb in _NARRATIVE_CORE_VERBS:
+        entry = templates.get(verb)
+        count = (
+            len(entry.get("variants", []))
+            if isinstance(entry, dict) and isinstance(entry.get("variants"), list)
+            else 0
+        )
+        if count < 3:
+            result.add("bad_narrative", f"core narrative verb '{verb}' must have >= 3 weighted variants (has {count})")
+
+
+def _validate_origins(registry: GameDataRegistry, result: ValidationResult) -> None:
+    dao_ids = {dao.get("id") for dao in registry.daos if isinstance(dao, dict) and dao.get("id")}
+    skill_ids = _id_set(registry.skills)
+    seen: Set[str] = set()
+    for origin in registry.origins:
+        if not isinstance(origin, dict):
+            result.add("bad_origin", "origin entry must be an object")
+            continue
+        origin_id = origin.get("id")
+        if not isinstance(origin_id, str) or not re.fullmatch(r"[a-z][a-z0-9_]*", origin_id):
+            result.add("bad_origin", f"origin id '{origin_id}' must be stable snake_case")
+            continue
+        if origin_id in seen:
+            result.add("duplicate_id", f"origin: duplicate id '{origin_id}'")
+        seen.add(origin_id)
+        if not isinstance(origin.get("display_name"), str) or not origin.get("display_name"):
+            result.add("bad_origin", f"origin '{origin_id}' display_name is required")
+        cost = origin.get("cost", 0)
+        if isinstance(cost, bool) or not isinstance(cost, int) or cost < 0:
+            result.add("bad_origin", f"origin '{origin_id}' cost must be a non-negative integer")
+        dao_id = origin.get("dao_id")
+        if dao_id is not None and dao_id not in dao_ids:
+            result.add("bad_origin", f"origin '{origin_id}' references missing dao '{dao_id}'")
+        skills = origin.get("starting_skills")
+        if not isinstance(skills, list):
+            result.add("bad_origin", f"origin '{origin_id}' starting_skills must be a list")
+        else:
+            for skill_id in skills:
+                if skill_id not in skill_ids:
+                    result.add("bad_origin", f"origin '{origin_id}' references missing skill '{skill_id}'")
+        modifiers = origin.get("stat_modifiers", {})
+        if not isinstance(modifiers, dict):
+            result.add("bad_origin", f"origin '{origin_id}' stat_modifiers must be an object")
+        else:
+            for field, delta in modifiers.items():
+                if field not in STAT_FIELDS:
+                    result.add("bad_origin", f"origin '{origin_id}' has unknown stat modifier '{field}'")
+                if isinstance(delta, bool) or not isinstance(delta, int):
+                    result.add("bad_origin", f"origin '{origin_id}' stat modifier '{field}' must be an integer")
+    if not any(int(entry.get("cost", 0)) == 0 for entry in registry.origins if isinstance(entry, dict)):
+        result.add("bad_origin", "at least one origin must be free (cost 0)")
+
+
+def _validate_gathering(registry: GameDataRegistry, result: ValidationResult) -> None:
+    item_ids = _id_set(registry.items) | _id_set(registry.equipment) | registry.manual_item_ids()
+    location_ids = _id_set(registry.locations)
+    gathering = registry.gathering or {}
+    for label, table in [("default", gathering.get("default", []))] + [
+        (str(location_id), entries) for location_id, entries in (gathering.get("locations") or {}).items()
+    ]:
+        if not isinstance(table, list) or not table:
+            result.add("bad_gathering", f"gathering '{label}' must be a non-empty list")
+            continue
+        for entry in table:
+            if not isinstance(entry, dict) or not entry.get("item_id"):
+                result.add("bad_gathering", f"gathering '{label}' has a malformed entry")
+                continue
+            if entry.get("item_id") not in item_ids:
+                result.add("bad_gathering", f"gathering '{label}' references missing item '{entry.get('item_id')}'")
+            weight = entry.get("weight", 1)
+            if isinstance(weight, bool) or not isinstance(weight, (int, float)) or weight <= 0:
+                result.add("bad_gathering", f"gathering '{label}' has an invalid weight")
+    for location_id in (gathering.get("locations") or {}):
+        if location_id not in location_ids:
+            result.add("bad_gathering", f"gathering references missing location '{location_id}'")
+
+
+def _validate_refining_recipes(registry: GameDataRegistry, result: ValidationResult) -> None:
+    item_ids = _id_set(registry.items) | _id_set(registry.equipment) | registry.manual_item_ids()
+    body_ids = {realm.get("id") for realm in registry.body_realms.get("realms", [])}
+    essence_ids = {realm.get("id") for realm in registry.essence_realms.get("realms", [])}
+    seen: Set[str] = set()
+    for recipe in registry.refining_recipes:
+        if not isinstance(recipe, dict):
+            result.add("bad_recipe", "recipe entry must be an object")
+            continue
+        recipe_id = recipe.get("id")
+        if not isinstance(recipe_id, str) or not re.fullmatch(r"[a-z][a-z0-9_]*", recipe_id):
+            result.add("bad_recipe", f"recipe id '{recipe_id}' must be stable snake_case")
+            continue
+        if recipe_id in seen:
+            result.add("duplicate_id", f"recipe: duplicate id '{recipe_id}'")
+        seen.add(recipe_id)
+        inputs = recipe.get("inputs", {})
+        if not isinstance(inputs, dict) or not inputs:
+            result.add("bad_recipe", f"recipe '{recipe_id}' inputs must be a non-empty object")
+        else:
+            for item_id, quantity in inputs.items():
+                if item_id not in item_ids:
+                    result.add("bad_recipe", f"recipe '{recipe_id}' input references missing item '{item_id}'")
+                if isinstance(quantity, bool) or not isinstance(quantity, int) or quantity <= 0:
+                    result.add("bad_recipe", f"recipe '{recipe_id}' input '{item_id}' must be a positive integer")
+        output = recipe.get("output", {})
+        if not isinstance(output, dict) or not output.get("item_id") or output.get("item_id") not in item_ids:
+            result.add("bad_recipe", f"recipe '{recipe_id}' output references a missing/absent item")
+        elif isinstance(output.get("count"), bool) or not isinstance(output.get("count", 1), int) or int(output.get("count", 1)) <= 0:
+            result.add("bad_recipe", f"recipe '{recipe_id}' output count must be a positive integer")
+        body_realm = recipe.get("minimum_body_realm")
+        if body_realm and body_realm not in body_ids:
+            result.add("bad_recipe", f"recipe '{recipe_id}' minimum_body_realm is unknown")
+        essence_realm = recipe.get("minimum_essence_realm")
+        if essence_realm and essence_realm not in essence_ids:
+            result.add("bad_recipe", f"recipe '{recipe_id}' minimum_essence_realm is unknown")
+
+
+def _validate_secret_realm(registry: GameDataRegistry, result: ValidationResult) -> None:
+    realms = registry.secret_realm or []
+    if not realms:
+        return
+    location_ids = _id_set(registry.locations)
+    random_enemy_ids = _id_set(registry.enemies)
+    named_enemy_ids = _id_set(registry.character_enemies)
+    item_ids = _id_set(registry.items) | _id_set(registry.equipment) | registry.manual_item_ids()
+    seen: Set[str] = set()
+    for realm in realms:
+        if not isinstance(realm, dict):
+            result.add("bad_realm", "secret_realm entry must be an object")
+            continue
+        realm_id = realm.get("id")
+        if not isinstance(realm_id, str) or not re.fullmatch(r"[a-z][a-z0-9_]*", realm_id):
+            result.add("bad_realm", f"secret_realm id '{realm_id}' must be stable snake_case")
+            continue
+        if realm_id in seen:
+            result.add("duplicate_id", f"secret_realm: duplicate id '{realm_id}'")
+        seen.add(realm_id)
+        location_id = realm.get("location_id")
+        if location_id not in location_ids:
+            result.add("bad_realm", f"secret_realm '{realm_id}' references missing location '{location_id}'")
+        room_count = realm.get("room_count", 0)
+        if isinstance(room_count, bool) or not isinstance(room_count, int) or room_count < 1:
+            result.add("bad_realm", f"secret_realm '{realm_id}' room_count must be a positive integer")
+        for enemy_id in realm.get("enemy_pool", []):
+            if enemy_id not in random_enemy_ids:
+                result.add("bad_realm", f"secret_realm '{realm_id}' enemy_pool references missing enemy '{enemy_id}'")
+        boss_id = realm.get("boss_id")
+        if boss_id and boss_id not in named_enemy_ids:
+            result.add("bad_realm", f"secret_realm '{realm_id}' boss '{boss_id}' must be a named foe")
+        for entry in realm.get("treasure_pool", []):
+            if not isinstance(entry, dict) or entry.get("item_id") not in item_ids:
+                result.add("bad_realm", f"secret_realm '{realm_id}' treasure_pool references a missing item")
+        for item_id in realm.get("final_reward", {}).get("items", {}):
+            if item_id not in item_ids:
+                result.add("bad_realm", f"secret_realm '{realm_id}' final_reward references missing item '{item_id}'")
 
 
 def _validate_technique_manuals(registry: GameDataRegistry, result: ValidationResult) -> None:

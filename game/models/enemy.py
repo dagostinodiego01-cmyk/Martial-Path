@@ -28,6 +28,10 @@ class Enemy:
     # to) its basic attack. Each entry: {"type": heavy|poison|stun, "chance":
     # 0..1, "magnitude": number}.
     abilities: List[Dict[str, Any]] = field(default_factory=list)
+    # The enemy's Dao (see ``data/daos.json``). ``None`` means the foe carries no
+    # Dao (wild beasts, mooks), so it neither counters nor is countered by the
+    # player's Dao. Named foes may declare a specific Dao.
+    dao_id: str | None = None
     # Transient combat state (never persisted): a damage-absorption shield and
     # timed status effects applied by the player (stun, dot, debuffs).
     shield: int = 0
@@ -49,6 +53,7 @@ class Enemy:
             exp_reward=int(data.get("exp_reward", 0)),
             loot_table=list(data.get("loot_table", [])),
             abilities=[dict(ability) for ability in data.get("abilities", []) if isinstance(ability, dict)],
+            dao_id=str(data["dao_id"]) if data.get("dao_id") else None,
         )
 
     def is_alive(self) -> bool:
@@ -67,6 +72,7 @@ class Enemy:
             "name": self.name,
             "body_realm_id": self.body_realm_id,
             "essence_realm_id": self.essence_realm_id,
+            "dao_id": self.dao_id,
             "hp": self.hp,
             "max_hp": self.max_hp,
             "attack": self.attack,

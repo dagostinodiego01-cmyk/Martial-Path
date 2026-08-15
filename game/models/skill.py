@@ -21,6 +21,10 @@ class Skill:
         scaling: Multiplier applied to the relevant stat by the effect.
         cooldown: Turns before an active skill may be reused.
         qi_cost: Qi consumed to activate an active skill.
+        insight_required: Minimum insight (see ``combat_system``) needed to
+            invoke this technique mid-fight. ``0`` (the default) means it can
+            always be used once qi/cooldown allow. Intent techniques carry a
+            positive value so they unlock as the fight's insight builds.
         description: Flavour/help text (content, displayed by the UI).
     """
 
@@ -31,6 +35,7 @@ class Skill:
     scaling: float
     cooldown: int
     qi_cost: int
+    insight_required: int = 0
     description: str = ""
 
     @classmethod
@@ -44,6 +49,7 @@ class Skill:
             scaling=float(data.get("scaling", 1.0)),
             cooldown=int(data.get("cooldown", 0)),
             qi_cost=int(data.get("qi_cost", 0)),
+            insight_required=int(data.get("insight_required", 0)),
             description=data.get("description", ""),
         )
 

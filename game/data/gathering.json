@@ -1,0 +1,184 @@
+{
+  "default": [
+    {
+      "item_id": "spirit_grass",
+      "weight": 5
+    }
+  ],
+  "locations": {
+    "sky_fortune_road": [
+      {
+        "item_id": "jade_bamboo_shoot",
+        "weight": 3
+      }
+    ],
+    "starting_village": [
+      {
+        "item_id": "jade_bamboo_shoot",
+        "weight": 3
+      }
+    ],
+    "beast_mountain": [
+      {
+        "item_id": "cloud_pine_needle",
+        "weight": 3
+      },
+      {
+        "item_id": "flame_bloom",
+        "weight": 3
+      },
+      {
+        "item_id": "thunder_essence_herb",
+        "weight": 3
+      }
+    ],
+    "seven_profound_valleys_gate": [
+      {
+        "item_id": "nine_orifice_flower",
+        "weight": 3
+      }
+    ],
+    "seven_profound_valleys_inner": [
+      {
+        "item_id": "cloud_mist_tea_leaf",
+        "weight": 3
+      }
+    ],
+    "south_horizon_road": [
+      {
+        "item_id": "sunfire_ginseng",
+        "weight": 3
+      }
+    ],
+    "south_sea_port": [
+      {
+        "item_id": "deep_sea_coral",
+        "weight": 3
+      }
+    ],
+    "divine_phoenix_island": [
+      {
+        "item_id": "phoenix_feather_bloom",
+        "weight": 3
+      }
+    ],
+    "divine_phoenix_mystic_realm": [
+      {
+        "item_id": "starlight_lotus",
+        "weight": 3
+      }
+    ],
+    "vermillion_bird_kingdom": [
+      {
+        "item_id": "vermilion_jade_root",
+        "weight": 3
+      }
+    ],
+    "nine_furnace_kingdom": [
+      {
+        "item_id": "nine_furnace_ember",
+        "weight": 3
+      }
+    ],
+    "asura_divine_kingdom": [
+      {
+        "item_id": "asura_blood_grass",
+        "weight": 3
+      }
+    ],
+    "rival_divine_kingdom": [
+      {
+        "item_id": "rival_vine",
+        "weight": 3
+      }
+    ],
+    "zenlight_monastery": [
+      {
+        "item_id": "zen_heart_herb",
+        "weight": 3
+      }
+    ],
+    "blood_slaughter_steppes": [
+      {
+        "item_id": "blood_slaughter_fern",
+        "weight": 3
+      }
+    ],
+    "five_element_temples": [
+      {
+        "item_id": "five_element_blossom",
+        "weight": 3
+      }
+    ],
+    "ancient_ruins": [
+      {
+        "item_id": "sea_of_miracles_pearl",
+        "weight": 3
+      }
+    ],
+    "planetary_gate_array": [
+      {
+        "item_id": "ascension_gate_reed",
+        "weight": 3
+      }
+    ],
+    "holy_demon_continent": [
+      {
+        "item_id": "demon_blood_lotus",
+        "weight": 3
+      },
+      {
+        "item_id": "nether_ghost_grass",
+        "weight": 3
+      },
+      {
+        "item_id": "abyssal_bone_flower",
+        "weight": 3
+      },
+      {
+        "item_id": "holy_demon_heartroot",
+        "weight": 3
+      }
+    ],
+    "outer_forest": [
+      {
+        "item_id": "spirit_grass",
+        "weight": 5
+      },
+      {
+        "item_id": "frost_herb",
+        "weight": 2
+      }
+    ],
+    "misty_gorge": [
+      {
+        "item_id": "frost_herb",
+        "weight": 4
+      },
+      {
+        "item_id": "moon_herb",
+        "weight": 2
+      }
+    ],
+    "ruined_shrine": [
+      {
+        "item_id": "moon_herb",
+        "weight": 3
+      },
+      {
+        "item_id": "flame_bloom",
+        "weight": 2
+      }
+    ],
+    "forbidden_back_mountain": [
+      {
+        "item_id": "moon_herb",
+        "weight": 4
+      },
+      {
+        "item_id": "flame_bloom",
+        "weight": 3
+      }
+    ]
+  }
+}

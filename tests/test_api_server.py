@@ -49,6 +49,22 @@ def test_new_game_resets_state():
     assert state["player"]["body_talent_id"]
 
 
+def test_meta_endpoint_returns_meta_shape():
+    server.new_game(NewGameRequest(seed=1))
+    meta = server.get_meta()
+    assert "ancestral_memory" in meta
+    assert "chronicle" in meta
+    assert "origins" in meta
+    assert isinstance(meta["origins"], list)
+    assert any(o["id"] == "orphan" for o in meta["origins"])
+
+
+def test_new_game_accepts_origin_and_hardcore():
+    state = server.new_game(NewGameRequest(seed=1, origin_id="orphan", hardcore=False))
+    assert state["player"]["origin_id"] == "orphan"
+    assert server.engine._hardcore is False
+
+
 def test_save_and_load_endpoints(tmp_path):
     server.new_game(NewGameRequest(seed=1))
     server.engine.saves = SaveService(tmp_path)

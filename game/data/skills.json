@@ -97,6 +97,7 @@
     "scaling": 12.93,
     "cooldown": 2,
     "qi_cost": 433,
+    "insight_required": 5,
     "description": "A focused sword intent strike dealing 1293% of your attack as damage."
   },
   {
@@ -157,6 +158,7 @@
     "scaling": 7.14,
     "cooldown": 4,
     "qi_cost": 247,
+    "insight_required": 5,
     "description": "Pierces all defenses, dealing 714% of your attack as true damage."
   },
   {
@@ -247,6 +249,7 @@
     "scaling": 1.3,
     "cooldown": 4,
     "qi_cost": 9,
+    "insight_required": 2,
     "description": "Drains the enemy for 130% of your attack, healing you for half the damage."
   },
   {
@@ -267,6 +270,7 @@
     "scaling": 2.76,
     "cooldown": 3,
     "qi_cost": 53,
+    "insight_required": 3,
     "description": "Drains the enemy for 276% of your attack, healing you for half the damage."
   },
   {
@@ -577,6 +581,7 @@
     "scaling": 4.44,
     "cooldown": 4,
     "qi_cost": 253,
+    "insight_required": 5,
     "description": "Sears the target, dealing 444% of your attack per turn for 3 turns."
   },
   {
@@ -727,6 +732,7 @@
     "scaling": 12.89,
     "cooldown": 4,
     "qi_cost": 350,
+    "insight_required": 5,
     "description": "Turns the enemy's force back, countering for 1289% of your attack when struck."
   },
   {
@@ -827,6 +833,7 @@
     "scaling": 2.51,
     "cooldown": 6,
     "qi_cost": 47,
+    "insight_required": 2,
     "description": "Pierces all defenses, dealing 250% of your attack as true damage."
   },
   {
@@ -1077,6 +1084,7 @@
     "scaling": 11.79,
     "cooldown": 3,
     "qi_cost": 424,
+    "insight_required": 5,
     "description": "Drains the enemy for 1179% of your attack, healing you for half the damage."
   },
   {
@@ -1147,6 +1155,7 @@
     "scaling": 10.33,
     "cooldown": 6,
     "qi_cost": 384,
+    "insight_required": 5,
     "description": "Pierces all defenses, dealing 1033% of your attack as true damage."
   },
   {
@@ -1157,6 +1166,7 @@
     "scaling": 1.31,
     "cooldown": 3,
     "qi_cost": 11,
+    "insight_required": 2,
     "description": "Turns the enemy's force back, countering for 131% of your attack when struck."
   },
   {
@@ -1307,6 +1317,7 @@
     "scaling": 2.22,
     "cooldown": 2,
     "qi_cost": 22,
+    "insight_required": 2,
     "description": "A focused sword intent strike dealing 222% of your attack as damage."
   },
   {
@@ -1367,6 +1378,7 @@
     "scaling": 1.22,
     "cooldown": 6,
     "qi_cost": 10,
+    "insight_required": 2,
     "description": "A sweeping sword intent that hits all enemies for 122% of your attack."
   },
   {
@@ -1377,6 +1389,7 @@
     "scaling": 1.25,
     "cooldown": 3,
     "qi_cost": 27,
+    "insight_required": 2,
     "description": "Suppresses the enemy's momentum, lowering their attack by 25% for 2 turns."
   },
   {
@@ -1387,6 +1400,7 @@
     "scaling": 3.12,
     "cooldown": 5,
     "qi_cost": 44,
+    "insight_required": 2,
     "description": "Weaves a Qi barrier absorbing damage equal to 312% of your attack for 2 turns."
   },
   {
@@ -1407,6 +1421,7 @@
     "scaling": 6.68,
     "cooldown": 5,
     "qi_cost": 180,
+    "insight_required": 3,
     "description": "Weaves a Qi barrier absorbing damage equal to 668% of your attack for 2 turns."
   },
   {
@@ -1577,6 +1592,7 @@
     "scaling": 1.15,
     "cooldown": 4,
     "qi_cost": 11,
+    "insight_required": 2,
     "description": "Shatters the enemy's guard, lowering their defense by 15% for 2 turns."
   },
   {
@@ -1617,6 +1633,7 @@
     "scaling": 6.5,
     "cooldown": 4,
     "qi_cost": 159,
+    "insight_required": 3,
     "description": "Turns the enemy's force back, countering for 650% of your attack when struck."
   },
   {
@@ -1947,6 +1964,7 @@
     "scaling": 3.25,
     "cooldown": 3,
     "qi_cost": 53,
+    "insight_required": 3,
     "description": "A focused sword intent strike dealing 325% of your attack as damage."
   },
   {
@@ -2017,6 +2035,7 @@
     "scaling": 1.4,
     "cooldown": 4,
     "qi_cost": 53,
+    "insight_required": 3,
     "description": "Shatters the enemy's guard, lowering their defense by 40% for 2 turns."
   },
   {
@@ -2067,6 +2086,7 @@
     "scaling": 0.78,
     "cooldown": 4,
     "qi_cost": 9,
+    "insight_required": 2,
     "description": "Sears the target, dealing 78% of your attack per turn for 3 turns."
   },
   {

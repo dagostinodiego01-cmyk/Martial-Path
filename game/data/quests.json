@@ -98,5 +98,61 @@
       { "type": "defeat", "target": "nine_furnace_fire_golem", "count": 1, "text": "Defeat a Nine Furnace fire golem" }
     ],
     "rewards": { "exp": 300, "gold": 100, "reputation": 50, "manuals": { "great_sun_domain_manual": 1 } }
+  },
+  {
+    "id": "act1_join_sect",
+    "title": "Choose a Path",
+    "description": "Find a sect and pledge yourself to its way. Your path will shape every technique you are taught.",
+    "auto_start": false,
+    "requires": { "completed": ["trial_of_the_forest"] },
+    "objectives": [
+      { "type": "join_sect", "target": "any", "count": 1, "text": "Join a sect" }
+    ],
+    "rewards": { "exp": 50, "gold": 20, "reputation": 10 }
+  },
+  {
+    "id": "act1_first_rival",
+    "title": "The First Rival",
+    "description": "Every path crosses another. Best the academy's rising disciple and take your first step above the crowd.",
+    "auto_start": false,
+    "requires": { "completed": ["act1_join_sect"] },
+    "objectives": [
+      { "type": "defeat", "target": "academy_rival_disciple", "count": 1, "text": "Defeat the academy rival disciple" }
+    ],
+    "rewards": { "exp": 60, "gold": 30, "reputation": 10 }
+  },
+  {
+    "id": "act1_tournament",
+    "title": "The Sect Tournament",
+    "description": "The sect opens its arena to every rising disciple. Win your bout to be counted among the strong.",
+    "auto_start": false,
+    "requires": { "completed": ["act1_first_rival"] },
+    "objectives": [
+      { "type": "tournament", "target": "any", "count": 1, "text": "Win a tournament bout" }
+    ],
+    "rewards": { "exp": 100, "gold": 50, "reputation": 20 }
+  },
+  {
+    "id": "act1_dao_awakening",
+    "title": "Awakening of the Dao Heart",
+    "description": "Victory has opened a door within. Choose the Dao you will walk for the rest of your path.",
+    "auto_start": false,
+    "requires": { "completed": ["act1_tournament"] },
+    "objectives": [
+      { "type": "dao_awakening", "target": "any", "count": 1, "text": "Awaken to a Dao" }
+    ],
+    "rewards": { "exp": 120, "gold": 40, "reputation": 25 }
+  },
+  {
+    "id": "act1_conclusion",
+    "title": "The First Step on the Dao",
+    "description": "A reclusive duelist, Ling Sen, waits at the crossroads. Settle it with the blade, and Act One closes behind you.",
+    "auto_start": false,
+    "requires": { "completed": ["act1_dao_awakening"] },
+    "objectives": [
+      { "type": "defeat", "target": "ling_sen_duel", "count": 1, "text": "Defeat Ling Sen" }
+    ],
+    "rewards": { "exp": 250, "gold": 150, "reputation": 40, "items": { "talent_refining_elixir": 1 } },
+    "act_end": "act_one"
   }
 ]

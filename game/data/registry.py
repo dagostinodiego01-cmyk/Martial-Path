@@ -50,6 +50,12 @@ class GameDataRegistry:
     technique_manuals: List[Dict[str, Any]] = field(default_factory=list)
     trainers: List[Dict[str, Any]] = field(default_factory=list)
     sects: List[Dict[str, Any]] = field(default_factory=list)
+    daos: List[Dict[str, Any]] = field(default_factory=list)
+    narrative_templates: Dict[str, Any] = field(default_factory=dict)
+    origins: List[Dict[str, Any]] = field(default_factory=list)
+    gathering: Dict[str, Any] = field(default_factory=dict)
+    refining_recipes: List[Dict[str, Any]] = field(default_factory=list)
+    secret_realm: List[Dict[str, Any]] = field(default_factory=list)
 
     @classmethod
     def load(cls) -> "GameDataRegistry":
@@ -77,6 +83,12 @@ class GameDataRegistry:
             technique_manuals=_load_optional_collection("technique_manuals"),
             trainers=_load_optional_collection("trainers"),
             sects=_load_optional_collection("sects"),
+            daos=_load_optional_collection("daos"),
+            narrative_templates=_load_optional_object("narrative_templates.json"),
+            origins=_load_optional_collection("origins"),
+            gathering=_load_optional_object("gathering.json"),
+            refining_recipes=_load_optional_collection("refining_recipes"),
+            secret_realm=_load_optional_collection("secret_realm"),
         )
 
     # -- id-indexed views (built on demand) ------------------------------
@@ -137,6 +149,12 @@ class GameDataRegistry:
 
     def sects_by_id(self) -> Dict[str, Dict[str, Any]]:
         return _by_id(self.sects)
+
+    def daos_by_id(self) -> Dict[str, Dict[str, Any]]:
+        return _by_id(self.daos)
+
+    def origins_by_id(self) -> Dict[str, Dict[str, Any]]:
+        return _by_id(self.origins)
 
     def talents_by_id(self) -> Dict[str, Dict[str, Any]]:
         return {entry["id"]: entry for entry in self.talents.get("tiers", []) if "id" in entry}

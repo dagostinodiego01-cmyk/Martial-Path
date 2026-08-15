@@ -1,0 +1,1477 @@
+[
+  {
+    "id": "brew_healing_pill",
+    "display_name": "Brew Healing Pill",
+    "inputs": {
+      "spirit_grass": 2
+    },
+    "output": {
+      "item_id": "healing_pill",
+      "count": 1
+    },
+    "minimum_body_realm": "mortal",
+    "description": "Pound spirit grass into a crude paste and shape it into a healing pill."
+  },
+  {
+    "id": "brew_qi_pill",
+    "display_name": "Brew Qi Recovery Pill",
+    "inputs": {
+      "spirit_grass": 1,
+      "frost_herb": 1
+    },
+    "output": {
+      "item_id": "qi_pill",
+      "count": 1
+    },
+    "minimum_body_realm": "mortal",
+    "description": "Blend cool frost herb with spirit grass to condense a qi-replenishing pill."
+  },
+  {
+    "id": "brew_profound_pill",
+    "display_name": "Brew Profound Grade Pill",
+    "inputs": {
+      "flame_bloom": 2,
+      "moon_herb": 1
+    },
+    "output": {
+      "item_id": "profound_pill",
+      "count": 1
+    },
+    "minimum_body_realm": "strength_training",
+    "description": "Temper flame bloom with a sliver of moon herb to brew a profound-grade restorative."
+  },
+  {
+    "id": "brew_talent_refining_elixir",
+    "display_name": "Brew Talent Refining Elixir",
+    "inputs": {
+      "moon_herb": 3,
+      "flame_bloom": 2
+    },
+    "output": {
+      "item_id": "talent_refining_elixir",
+      "count": 1
+    },
+    "minimum_body_realm": "bone_forging",
+    "description": "A demanding refinement that distils rare herbs into an elixir able to reshape innate talent."
+  },
+  {
+    "id": "refine_healing_pill",
+    "display_name": "Refine Healing Pill",
+    "inputs": {
+      "spirit_grass": 2,
+      "jade_bamboo_shoot": 1
+    },
+    "output": {
+      "item_id": "healing_pill",
+      "count": 1
+    },
+    "minimum_body_realm": "mortal",
+    "description": "Combine Spirit Grass, Jade Bamboo Shoot to refine a Healing Pill."
+  },
+  {
+    "id": "refine_healing_pill_2",
+    "display_name": "Refine Healing Pill",
+    "inputs": {
+      "jade_bamboo_shoot": 2,
+      "cloud_pine_needle": 1
+    },
+    "output": {
+      "item_id": "healing_pill",
+      "count": 1
+    },
+    "minimum_body_realm": "mortal",
+    "description": "Combine Jade Bamboo Shoot, Cloud Pine Needle to refine a Healing Pill."
+  },
+  {
+    "id": "refine_qi_pill",
+    "display_name": "Refine Qi Recovery Pill",
+    "inputs": {
+      "jade_bamboo_shoot": 2,
+      "cloud_pine_needle": 1
+    },
+    "output": {
+      "item_id": "qi_pill",
+      "count": 1
+    },
+    "minimum_body_realm": "mortal",
+    "description": "Combine Jade Bamboo Shoot, Cloud Pine Needle to refine a Qi Recovery Pill."
+  },
+  {
+    "id": "refine_qi_pill_2",
+    "display_name": "Refine Qi Recovery Pill",
+    "inputs": {
+      "cloud_pine_needle": 2,
+      "spirit_grass": 1
+    },
+    "output": {
+      "item_id": "qi_pill",
+      "count": 1
+    },
+    "minimum_body_realm": "mortal",
+    "description": "Combine Cloud Pine Needle, Spirit Grass to refine a Qi Recovery Pill."
+  },
+  {
+    "id": "refine_frost_jade_elixir",
+    "display_name": "Refine Frost Jade Elixir",
+    "inputs": {
+      "cloud_pine_needle": 2,
+      "spirit_grass": 1
+    },
+    "output": {
+      "item_id": "frost_jade_elixir",
+      "count": 1
+    },
+    "minimum_body_realm": "mortal",
+    "description": "Combine Cloud Pine Needle, Spirit Grass to refine a Frost Jade Elixir."
+  },
+  {
+    "id": "refine_frost_jade_elixir_2",
+    "display_name": "Refine Frost Jade Elixir",
+    "inputs": {
+      "spirit_grass": 2,
+      "jade_bamboo_shoot": 1
+    },
+    "output": {
+      "item_id": "frost_jade_elixir",
+      "count": 1
+    },
+    "minimum_body_realm": "mortal",
+    "description": "Combine Spirit Grass, Jade Bamboo Shoot to refine a Frost Jade Elixir."
+  },
+  {
+    "id": "refine_common_tonic",
+    "display_name": "Refine Common Tonic",
+    "inputs": {
+      "spirit_grass": 2,
+      "jade_bamboo_shoot": 1
+    },
+    "output": {
+      "item_id": "common_tonic",
+      "count": 1
+    },
+    "minimum_body_realm": "mortal",
+    "description": "Combine Spirit Grass, Jade Bamboo Shoot to refine a Common Tonic."
+  },
+  {
+    "id": "refine_common_tonic_2",
+    "display_name": "Refine Common Tonic",
+    "inputs": {
+      "jade_bamboo_shoot": 2,
+      "cloud_pine_needle": 1
+    },
+    "output": {
+      "item_id": "common_tonic",
+      "count": 1
+    },
+    "minimum_body_realm": "mortal",
+    "description": "Combine Jade Bamboo Shoot, Cloud Pine Needle to refine a Common Tonic."
+  },
+  {
+    "id": "refine_profound_elixir",
+    "display_name": "Refine Profound Elixir",
+    "inputs": {
+      "jade_bamboo_shoot": 2,
+      "cloud_pine_needle": 1
+    },
+    "output": {
+      "item_id": "profound_elixir",
+      "count": 1
+    },
+    "minimum_body_realm": "mortal",
+    "description": "Combine Jade Bamboo Shoot, Cloud Pine Needle to refine a Profound Elixir."
+  },
+  {
+    "id": "refine_profound_elixir_2",
+    "display_name": "Refine Profound Elixir",
+    "inputs": {
+      "cloud_pine_needle": 2,
+      "spirit_grass": 1
+    },
+    "output": {
+      "item_id": "profound_elixir",
+      "count": 1
+    },
+    "minimum_body_realm": "mortal",
+    "description": "Combine Cloud Pine Needle, Spirit Grass to refine a Profound Elixir."
+  },
+  {
+    "id": "refine_profound_pill",
+    "display_name": "Refine Profound Grade Pill",
+    "inputs": {
+      "frost_herb": 2,
+      "thunder_essence_herb": 1
+    },
+    "output": {
+      "item_id": "profound_pill",
+      "count": 1
+    },
+    "minimum_body_realm": "strength_training",
+    "description": "Combine Frost Herb, Thunder Essence Herb to refine a Profound Grade Pill."
+  },
+  {
+    "id": "refine_profound_pill_2",
+    "display_name": "Refine Profound Grade Pill",
+    "inputs": {
+      "thunder_essence_herb": 2,
+      "nine_orifice_flower": 1
+    },
+    "output": {
+      "item_id": "profound_pill",
+      "count": 1
+    },
+    "minimum_body_realm": "strength_training",
+    "description": "Combine Thunder Essence Herb, Nine Orifice Flower to refine a Profound Grade Pill."
+  },
+  {
+    "id": "refine_frost_jade_tonic",
+    "display_name": "Refine Frost Jade Tonic",
+    "inputs": {
+      "thunder_essence_herb": 2,
+      "nine_orifice_flower": 1
+    },
+    "output": {
+      "item_id": "frost_jade_tonic",
+      "count": 1
+    },
+    "minimum_body_realm": "strength_training",
+    "description": "Combine Thunder Essence Herb, Nine Orifice Flower to refine a Frost Jade Tonic."
+  },
+  {
+    "id": "refine_frost_jade_tonic_2",
+    "display_name": "Refine Frost Jade Tonic",
+    "inputs": {
+      "nine_orifice_flower": 2,
+      "frost_herb": 1
+    },
+    "output": {
+      "item_id": "frost_jade_tonic",
+      "count": 1
+    },
+    "minimum_body_realm": "strength_training",
+    "description": "Combine Nine Orifice Flower, Frost Herb to refine a Frost Jade Tonic."
+  },
+  {
+    "id": "refine_profound_decoction_no3",
+    "display_name": "Refine Profound Decoction No.3",
+    "inputs": {
+      "nine_orifice_flower": 2,
+      "frost_herb": 1
+    },
+    "output": {
+      "item_id": "profound_decoction_no3",
+      "count": 1
+    },
+    "minimum_body_realm": "strength_training",
+    "description": "Combine Nine Orifice Flower, Frost Herb to refine a Profound Decoction No.3."
+  },
+  {
+    "id": "refine_profound_decoction_no3_2",
+    "display_name": "Refine Profound Decoction No.3",
+    "inputs": {
+      "frost_herb": 2,
+      "thunder_essence_herb": 1
+    },
+    "output": {
+      "item_id": "profound_decoction_no3",
+      "count": 1
+    },
+    "minimum_body_realm": "strength_training",
+    "description": "Combine Frost Herb, Thunder Essence Herb to refine a Profound Decoction No.3."
+  },
+  {
+    "id": "refine_mystic_dan",
+    "display_name": "Refine Mystic Dan",
+    "inputs": {
+      "frost_herb": 2,
+      "thunder_essence_herb": 1
+    },
+    "output": {
+      "item_id": "mystic_dan",
+      "count": 1
+    },
+    "minimum_body_realm": "strength_training",
+    "description": "Combine Frost Herb, Thunder Essence Herb to refine a Mystic Dan."
+  },
+  {
+    "id": "refine_mystic_dan_2",
+    "display_name": "Refine Mystic Dan",
+    "inputs": {
+      "thunder_essence_herb": 2,
+      "nine_orifice_flower": 1
+    },
+    "output": {
+      "item_id": "mystic_dan",
+      "count": 1
+    },
+    "minimum_body_realm": "strength_training",
+    "description": "Combine Thunder Essence Herb, Nine Orifice Flower to refine a Mystic Dan."
+  },
+  {
+    "id": "refine_marrow_cleansing_pill",
+    "display_name": "Refine Marrow Cleansing Pill",
+    "inputs": {
+      "thunder_essence_herb": 2,
+      "nine_orifice_flower": 1
+    },
+    "output": {
+      "item_id": "marrow_cleansing_pill",
+      "count": 1
+    },
+    "minimum_body_realm": "strength_training",
+    "description": "Combine Thunder Essence Herb, Nine Orifice Flower to refine a Marrow Cleansing Pill."
+  },
+  {
+    "id": "refine_marrow_cleansing_pill_2",
+    "display_name": "Refine Marrow Cleansing Pill",
+    "inputs": {
+      "nine_orifice_flower": 2,
+      "frost_herb": 1
+    },
+    "output": {
+      "item_id": "marrow_cleansing_pill",
+      "count": 1
+    },
+    "minimum_body_realm": "strength_training",
+    "description": "Combine Nine Orifice Flower, Frost Herb to refine a Marrow Cleansing Pill."
+  },
+  {
+    "id": "refine_frost_jade_pill",
+    "display_name": "Refine Frost Jade Pill",
+    "inputs": {
+      "nine_orifice_flower": 2,
+      "cloud_mist_tea_leaf": 1
+    },
+    "output": {
+      "item_id": "frost_jade_pill",
+      "count": 1
+    },
+    "minimum_body_realm": "flesh_training",
+    "description": "Combine Nine Orifice Flower, Cloud Mist Tea Leaf to refine a Frost Jade Pill."
+  },
+  {
+    "id": "refine_frost_jade_pill_2",
+    "display_name": "Refine Frost Jade Pill",
+    "inputs": {
+      "cloud_mist_tea_leaf": 2,
+      "frost_herb": 1
+    },
+    "output": {
+      "item_id": "frost_jade_pill",
+      "count": 1
+    },
+    "minimum_body_realm": "flesh_training",
+    "description": "Combine Cloud Mist Tea Leaf, Frost Herb to refine a Frost Jade Pill."
+  },
+  {
+    "id": "refine_frost_jade_nectar",
+    "display_name": "Refine Frost Jade Nectar",
+    "inputs": {
+      "cloud_mist_tea_leaf": 2,
+      "frost_herb": 1
+    },
+    "output": {
+      "item_id": "frost_jade_nectar",
+      "count": 1
+    },
+    "minimum_body_realm": "flesh_training",
+    "description": "Combine Cloud Mist Tea Leaf, Frost Herb to refine a Frost Jade Nectar."
+  },
+  {
+    "id": "refine_frost_jade_nectar_2",
+    "display_name": "Refine Frost Jade Nectar",
+    "inputs": {
+      "frost_herb": 2,
+      "nine_orifice_flower": 1
+    },
+    "output": {
+      "item_id": "frost_jade_nectar",
+      "count": 1
+    },
+    "minimum_body_realm": "flesh_training",
+    "description": "Combine Frost Herb, Nine Orifice Flower to refine a Frost Jade Nectar."
+  },
+  {
+    "id": "refine_mystic_pill_no3",
+    "display_name": "Refine Mystic Pill No.3",
+    "inputs": {
+      "frost_herb": 2,
+      "nine_orifice_flower": 1
+    },
+    "output": {
+      "item_id": "mystic_pill_no3",
+      "count": 1
+    },
+    "minimum_body_realm": "flesh_training",
+    "description": "Combine Frost Herb, Nine Orifice Flower to refine a Mystic Pill No.3."
+  },
+  {
+    "id": "refine_mystic_pill_no3_2",
+    "display_name": "Refine Mystic Pill No.3",
+    "inputs": {
+      "nine_orifice_flower": 2,
+      "cloud_mist_tea_leaf": 1
+    },
+    "output": {
+      "item_id": "mystic_pill_no3",
+      "count": 1
+    },
+    "minimum_body_realm": "flesh_training",
+    "description": "Combine Nine Orifice Flower, Cloud Mist Tea Leaf to refine a Mystic Pill No.3."
+  },
+  {
+    "id": "refine_profound_nectar",
+    "display_name": "Refine Profound Nectar",
+    "inputs": {
+      "nine_orifice_flower": 2,
+      "cloud_mist_tea_leaf": 1
+    },
+    "output": {
+      "item_id": "profound_nectar",
+      "count": 1
+    },
+    "minimum_body_realm": "flesh_training",
+    "description": "Combine Nine Orifice Flower, Cloud Mist Tea Leaf to refine a Profound Nectar."
+  },
+  {
+    "id": "refine_profound_nectar_2",
+    "display_name": "Refine Profound Nectar",
+    "inputs": {
+      "cloud_mist_tea_leaf": 2,
+      "frost_herb": 1
+    },
+    "output": {
+      "item_id": "profound_nectar",
+      "count": 1
+    },
+    "minimum_body_realm": "flesh_training",
+    "description": "Combine Cloud Mist Tea Leaf, Frost Herb to refine a Profound Nectar."
+  },
+  {
+    "id": "refine_marrow_cleansing_dan",
+    "display_name": "Refine Marrow Cleansing Dan",
+    "inputs": {
+      "cloud_mist_tea_leaf": 2,
+      "frost_herb": 1
+    },
+    "output": {
+      "item_id": "marrow_cleansing_dan",
+      "count": 1
+    },
+    "minimum_body_realm": "flesh_training",
+    "description": "Combine Cloud Mist Tea Leaf, Frost Herb to refine a Marrow Cleansing Dan."
+  },
+  {
+    "id": "refine_marrow_cleansing_dan_2",
+    "display_name": "Refine Marrow Cleansing Dan",
+    "inputs": {
+      "frost_herb": 2,
+      "nine_orifice_flower": 1
+    },
+    "output": {
+      "item_id": "marrow_cleansing_dan",
+      "count": 1
+    },
+    "minimum_body_realm": "flesh_training",
+    "description": "Combine Frost Herb, Nine Orifice Flower to refine a Marrow Cleansing Dan."
+  },
+  {
+    "id": "refine_profound_decoction",
+    "display_name": "Refine Profound Decoction",
+    "inputs": {
+      "flame_bloom": 2,
+      "sunfire_ginseng": 1
+    },
+    "output": {
+      "item_id": "profound_decoction",
+      "count": 1
+    },
+    "minimum_body_realm": "viscera_training",
+    "description": "Combine Flame Bloom, Sunfire Ginseng to refine a Profound Decoction."
+  },
+  {
+    "id": "refine_profound_decoction_2",
+    "display_name": "Refine Profound Decoction",
+    "inputs": {
+      "sunfire_ginseng": 2,
+      "deep_sea_coral": 1
+    },
+    "output": {
+      "item_id": "profound_decoction",
+      "count": 1
+    },
+    "minimum_body_realm": "viscera_training",
+    "description": "Combine Sunfire Ginseng, Deep Sea Coral to refine a Profound Decoction."
+  },
+  {
+    "id": "refine_mystic_pill",
+    "display_name": "Refine Mystic Pill",
+    "inputs": {
+      "sunfire_ginseng": 2,
+      "deep_sea_coral": 1
+    },
+    "output": {
+      "item_id": "mystic_pill",
+      "count": 1
+    },
+    "minimum_body_realm": "viscera_training",
+    "description": "Combine Sunfire Ginseng, Deep Sea Coral to refine a Mystic Pill."
+  },
+  {
+    "id": "refine_mystic_pill_2",
+    "display_name": "Refine Mystic Pill",
+    "inputs": {
+      "deep_sea_coral": 2,
+      "flame_bloom": 1
+    },
+    "output": {
+      "item_id": "mystic_pill",
+      "count": 1
+    },
+    "minimum_body_realm": "viscera_training",
+    "description": "Combine Deep Sea Coral, Flame Bloom to refine a Mystic Pill."
+  },
+  {
+    "id": "refine_blood_quenching_pill",
+    "display_name": "Refine Blood Quenching Pill",
+    "inputs": {
+      "deep_sea_coral": 2,
+      "flame_bloom": 1
+    },
+    "output": {
+      "item_id": "blood_quenching_pill",
+      "count": 1
+    },
+    "minimum_body_realm": "viscera_training",
+    "description": "Combine Deep Sea Coral, Flame Bloom to refine a Blood Quenching Pill."
+  },
+  {
+    "id": "refine_blood_quenching_pill_2",
+    "display_name": "Refine Blood Quenching Pill",
+    "inputs": {
+      "flame_bloom": 2,
+      "sunfire_ginseng": 1
+    },
+    "output": {
+      "item_id": "blood_quenching_pill",
+      "count": 1
+    },
+    "minimum_body_realm": "viscera_training",
+    "description": "Combine Flame Bloom, Sunfire Ginseng to refine a Blood Quenching Pill."
+  },
+  {
+    "id": "refine_vermilion_elixir",
+    "display_name": "Refine Vermilion Elixir",
+    "inputs": {
+      "flame_bloom": 2,
+      "sunfire_ginseng": 1
+    },
+    "output": {
+      "item_id": "vermilion_elixir",
+      "count": 1
+    },
+    "minimum_body_realm": "viscera_training",
+    "description": "Combine Flame Bloom, Sunfire Ginseng to refine a Vermilion Elixir."
+  },
+  {
+    "id": "refine_vermilion_elixir_2",
+    "display_name": "Refine Vermilion Elixir",
+    "inputs": {
+      "sunfire_ginseng": 2,
+      "deep_sea_coral": 1
+    },
+    "output": {
+      "item_id": "vermilion_elixir",
+      "count": 1
+    },
+    "minimum_body_realm": "viscera_training",
+    "description": "Combine Sunfire Ginseng, Deep Sea Coral to refine a Vermilion Elixir."
+  },
+  {
+    "id": "refine_marrow_cleansing_pellet",
+    "display_name": "Refine Marrow Cleansing Pellet",
+    "inputs": {
+      "sunfire_ginseng": 2,
+      "deep_sea_coral": 1
+    },
+    "output": {
+      "item_id": "marrow_cleansing_pellet",
+      "count": 1
+    },
+    "minimum_body_realm": "viscera_training",
+    "description": "Combine Sunfire Ginseng, Deep Sea Coral to refine a Marrow Cleansing Pellet."
+  },
+  {
+    "id": "refine_marrow_cleansing_pellet_2",
+    "display_name": "Refine Marrow Cleansing Pellet",
+    "inputs": {
+      "deep_sea_coral": 2,
+      "flame_bloom": 1
+    },
+    "output": {
+      "item_id": "marrow_cleansing_pellet",
+      "count": 1
+    },
+    "minimum_body_realm": "viscera_training",
+    "description": "Combine Deep Sea Coral, Flame Bloom to refine a Marrow Cleansing Pellet."
+  },
+  {
+    "id": "refine_blood_quenching_elixir",
+    "display_name": "Refine Blood Quenching Elixir",
+    "inputs": {
+      "sunfire_ginseng": 2,
+      "deep_sea_coral": 1
+    },
+    "output": {
+      "item_id": "blood_quenching_elixir",
+      "count": 1
+    },
+    "minimum_body_realm": "altering_muscle",
+    "description": "Combine Sunfire Ginseng, Deep Sea Coral to refine a Blood Quenching Elixir."
+  },
+  {
+    "id": "refine_blood_quenching_elixir_2",
+    "display_name": "Refine Blood Quenching Elixir",
+    "inputs": {
+      "deep_sea_coral": 2,
+      "flame_bloom": 1
+    },
+    "output": {
+      "item_id": "blood_quenching_elixir",
+      "count": 1
+    },
+    "minimum_body_realm": "altering_muscle",
+    "description": "Combine Deep Sea Coral, Flame Bloom to refine a Blood Quenching Elixir."
+  },
+  {
+    "id": "refine_mystic_elixir",
+    "display_name": "Refine Mystic Elixir",
+    "inputs": {
+      "deep_sea_coral": 2,
+      "flame_bloom": 1
+    },
+    "output": {
+      "item_id": "mystic_elixir",
+      "count": 1
+    },
+    "minimum_body_realm": "altering_muscle",
+    "description": "Combine Deep Sea Coral, Flame Bloom to refine a Mystic Elixir."
+  },
+  {
+    "id": "refine_mystic_elixir_2",
+    "display_name": "Refine Mystic Elixir",
+    "inputs": {
+      "flame_bloom": 2,
+      "sunfire_ginseng": 1
+    },
+    "output": {
+      "item_id": "mystic_elixir",
+      "count": 1
+    },
+    "minimum_body_realm": "altering_muscle",
+    "description": "Combine Flame Bloom, Sunfire Ginseng to refine a Mystic Elixir."
+  },
+  {
+    "id": "refine_vermilion_pill",
+    "display_name": "Refine Vermilion Pill",
+    "inputs": {
+      "flame_bloom": 2,
+      "sunfire_ginseng": 1
+    },
+    "output": {
+      "item_id": "vermilion_pill",
+      "count": 1
+    },
+    "minimum_body_realm": "altering_muscle",
+    "description": "Combine Flame Bloom, Sunfire Ginseng to refine a Vermilion Pill."
+  },
+  {
+    "id": "refine_vermilion_pill_2",
+    "display_name": "Refine Vermilion Pill",
+    "inputs": {
+      "sunfire_ginseng": 2,
+      "deep_sea_coral": 1
+    },
+    "output": {
+      "item_id": "vermilion_pill",
+      "count": 1
+    },
+    "minimum_body_realm": "altering_muscle",
+    "description": "Combine Sunfire Ginseng, Deep Sea Coral to refine a Vermilion Pill."
+  },
+  {
+    "id": "refine_bone_forging_nectar",
+    "display_name": "Refine Bone Forging Nectar",
+    "inputs": {
+      "sunfire_ginseng": 2,
+      "deep_sea_coral": 1
+    },
+    "output": {
+      "item_id": "bone_forging_nectar",
+      "count": 1
+    },
+    "minimum_body_realm": "altering_muscle",
+    "description": "Combine Sunfire Ginseng, Deep Sea Coral to refine a Bone Forging Nectar."
+  },
+  {
+    "id": "refine_bone_forging_nectar_2",
+    "display_name": "Refine Bone Forging Nectar",
+    "inputs": {
+      "deep_sea_coral": 2,
+      "flame_bloom": 1
+    },
+    "output": {
+      "item_id": "bone_forging_nectar",
+      "count": 1
+    },
+    "minimum_body_realm": "altering_muscle",
+    "description": "Combine Deep Sea Coral, Flame Bloom to refine a Bone Forging Nectar."
+  },
+  {
+    "id": "refine_profound_nectar_mortal",
+    "display_name": "Refine Profound Nectar (Mortal)",
+    "inputs": {
+      "deep_sea_coral": 2,
+      "flame_bloom": 1
+    },
+    "output": {
+      "item_id": "profound_nectar_mortal",
+      "count": 1
+    },
+    "minimum_body_realm": "altering_muscle",
+    "description": "Combine Deep Sea Coral, Flame Bloom to refine a Profound Nectar (Mortal)."
+  },
+  {
+    "id": "refine_profound_nectar_mortal_2",
+    "display_name": "Refine Profound Nectar (Mortal)",
+    "inputs": {
+      "flame_bloom": 2,
+      "sunfire_ginseng": 1
+    },
+    "output": {
+      "item_id": "profound_nectar_mortal",
+      "count": 1
+    },
+    "minimum_body_realm": "altering_muscle",
+    "description": "Combine Flame Bloom, Sunfire Ginseng to refine a Profound Nectar (Mortal)."
+  },
+  {
+    "id": "refine_purple_cloud_pill",
+    "display_name": "Refine Purple Cloud Pill",
+    "inputs": {
+      "moon_herb": 2,
+      "phoenix_feather_bloom": 1
+    },
+    "output": {
+      "item_id": "purple_cloud_pill",
+      "count": 1
+    },
+    "minimum_body_realm": "bone_forging",
+    "description": "Combine Moon Herb, Phoenix Feather Bloom to refine a Purple Cloud Pill."
+  },
+  {
+    "id": "refine_purple_cloud_pill_2",
+    "display_name": "Refine Purple Cloud Pill",
+    "inputs": {
+      "phoenix_feather_bloom": 2,
+      "starlight_lotus": 1
+    },
+    "output": {
+      "item_id": "purple_cloud_pill",
+      "count": 1
+    },
+    "minimum_body_realm": "bone_forging",
+    "description": "Combine Phoenix Feather Bloom, Starlight Lotus to refine a Purple Cloud Pill."
+  },
+  {
+    "id": "refine_vermilion_tonic",
+    "display_name": "Refine Vermilion Tonic",
+    "inputs": {
+      "phoenix_feather_bloom": 2,
+      "starlight_lotus": 1
+    },
+    "output": {
+      "item_id": "vermilion_tonic",
+      "count": 1
+    },
+    "minimum_body_realm": "bone_forging",
+    "description": "Combine Phoenix Feather Bloom, Starlight Lotus to refine a Vermilion Tonic."
+  },
+  {
+    "id": "refine_vermilion_tonic_2",
+    "display_name": "Refine Vermilion Tonic",
+    "inputs": {
+      "starlight_lotus": 2,
+      "moon_herb": 1
+    },
+    "output": {
+      "item_id": "vermilion_tonic",
+      "count": 1
+    },
+    "minimum_body_realm": "bone_forging",
+    "description": "Combine Starlight Lotus, Moon Herb to refine a Vermilion Tonic."
+  },
+  {
+    "id": "refine_bone_forging_tonic",
+    "display_name": "Refine Bone Forging Tonic",
+    "inputs": {
+      "starlight_lotus": 2,
+      "moon_herb": 1
+    },
+    "output": {
+      "item_id": "bone_forging_tonic",
+      "count": 1
+    },
+    "minimum_body_realm": "bone_forging",
+    "description": "Combine Starlight Lotus, Moon Herb to refine a Bone Forging Tonic."
+  },
+  {
+    "id": "refine_bone_forging_tonic_2",
+    "display_name": "Refine Bone Forging Tonic",
+    "inputs": {
+      "moon_herb": 2,
+      "phoenix_feather_bloom": 1
+    },
+    "output": {
+      "item_id": "bone_forging_tonic",
+      "count": 1
+    },
+    "minimum_body_realm": "bone_forging",
+    "description": "Combine Moon Herb, Phoenix Feather Bloom to refine a Bone Forging Tonic."
+  },
+  {
+    "id": "refine_mystic_pill_no4",
+    "display_name": "Refine Mystic Pill No.4",
+    "inputs": {
+      "moon_herb": 2,
+      "phoenix_feather_bloom": 1
+    },
+    "output": {
+      "item_id": "mystic_pill_no4",
+      "count": 1
+    },
+    "minimum_body_realm": "bone_forging",
+    "description": "Combine Moon Herb, Phoenix Feather Bloom to refine a Mystic Pill No.4."
+  },
+  {
+    "id": "refine_mystic_pill_no4_2",
+    "display_name": "Refine Mystic Pill No.4",
+    "inputs": {
+      "phoenix_feather_bloom": 2,
+      "starlight_lotus": 1
+    },
+    "output": {
+      "item_id": "mystic_pill_no4",
+      "count": 1
+    },
+    "minimum_body_realm": "bone_forging",
+    "description": "Combine Phoenix Feather Bloom, Starlight Lotus to refine a Mystic Pill No.4."
+  },
+  {
+    "id": "refine_frost_jade_nectar_mortal",
+    "display_name": "Refine Frost Jade Nectar (Mortal)",
+    "inputs": {
+      "phoenix_feather_bloom": 2,
+      "starlight_lotus": 1
+    },
+    "output": {
+      "item_id": "frost_jade_nectar_mortal",
+      "count": 1
+    },
+    "minimum_body_realm": "bone_forging",
+    "description": "Combine Phoenix Feather Bloom, Starlight Lotus to refine a Frost Jade Nectar (Mortal)."
+  },
+  {
+    "id": "refine_frost_jade_nectar_mortal_2",
+    "display_name": "Refine Frost Jade Nectar (Mortal)",
+    "inputs": {
+      "starlight_lotus": 2,
+      "moon_herb": 1
+    },
+    "output": {
+      "item_id": "frost_jade_nectar_mortal",
+      "count": 1
+    },
+    "minimum_body_realm": "bone_forging",
+    "description": "Combine Starlight Lotus, Moon Herb to refine a Frost Jade Nectar (Mortal)."
+  },
+  {
+    "id": "refine_mystic_decoction",
+    "display_name": "Refine Mystic Decoction",
+    "inputs": {
+      "phoenix_feather_bloom": 2,
+      "starlight_lotus": 1
+    },
+    "output": {
+      "item_id": "mystic_decoction",
+      "count": 1
+    },
+    "minimum_body_realm": "body_pulse_condensation",
+    "description": "Combine Phoenix Feather Bloom, Starlight Lotus to refine a Mystic Decoction."
+  },
+  {
+    "id": "refine_mystic_decoction_2",
+    "display_name": "Refine Mystic Decoction",
+    "inputs": {
+      "starlight_lotus": 2,
+      "moon_herb": 1
+    },
+    "output": {
+      "item_id": "mystic_decoction",
+      "count": 1
+    },
+    "minimum_body_realm": "body_pulse_condensation",
+    "description": "Combine Starlight Lotus, Moon Herb to refine a Mystic Decoction."
+  },
+  {
+    "id": "refine_marrow_cleansing_elixir",
+    "display_name": "Refine Marrow Cleansing Elixir",
+    "inputs": {
+      "starlight_lotus": 2,
+      "moon_herb": 1
+    },
+    "output": {
+      "item_id": "marrow_cleansing_elixir",
+      "count": 1
+    },
+    "minimum_body_realm": "body_pulse_condensation",
+    "description": "Combine Starlight Lotus, Moon Herb to refine a Marrow Cleansing Elixir."
+  },
+  {
+    "id": "refine_marrow_cleansing_elixir_2",
+    "display_name": "Refine Marrow Cleansing Elixir",
+    "inputs": {
+      "moon_herb": 2,
+      "phoenix_feather_bloom": 1
+    },
+    "output": {
+      "item_id": "marrow_cleansing_elixir",
+      "count": 1
+    },
+    "minimum_body_realm": "body_pulse_condensation",
+    "description": "Combine Moon Herb, Phoenix Feather Bloom to refine a Marrow Cleansing Elixir."
+  },
+  {
+    "id": "refine_bone_forging_dan",
+    "display_name": "Refine Bone Forging Dan",
+    "inputs": {
+      "moon_herb": 2,
+      "phoenix_feather_bloom": 1
+    },
+    "output": {
+      "item_id": "bone_forging_dan",
+      "count": 1
+    },
+    "minimum_body_realm": "body_pulse_condensation",
+    "description": "Combine Moon Herb, Phoenix Feather Bloom to refine a Bone Forging Dan."
+  },
+  {
+    "id": "refine_bone_forging_dan_2",
+    "display_name": "Refine Bone Forging Dan",
+    "inputs": {
+      "phoenix_feather_bloom": 2,
+      "starlight_lotus": 1
+    },
+    "output": {
+      "item_id": "bone_forging_dan",
+      "count": 1
+    },
+    "minimum_body_realm": "body_pulse_condensation",
+    "description": "Combine Phoenix Feather Bloom, Starlight Lotus to refine a Bone Forging Dan."
+  },
+  {
+    "id": "refine_purple_cloud_nectar",
+    "display_name": "Refine Purple Cloud Nectar",
+    "inputs": {
+      "phoenix_feather_bloom": 2,
+      "starlight_lotus": 1
+    },
+    "output": {
+      "item_id": "purple_cloud_nectar",
+      "count": 1
+    },
+    "minimum_body_realm": "body_pulse_condensation",
+    "description": "Combine Phoenix Feather Bloom, Starlight Lotus to refine a Purple Cloud Nectar."
+  },
+  {
+    "id": "refine_purple_cloud_nectar_2",
+    "display_name": "Refine Purple Cloud Nectar",
+    "inputs": {
+      "starlight_lotus": 2,
+      "moon_herb": 1
+    },
+    "output": {
+      "item_id": "purple_cloud_nectar",
+      "count": 1
+    },
+    "minimum_body_realm": "body_pulse_condensation",
+    "description": "Combine Starlight Lotus, Moon Herb to refine a Purple Cloud Nectar."
+  },
+  {
+    "id": "refine_blood_quenching_pellet",
+    "display_name": "Refine Blood Quenching Pellet",
+    "inputs": {
+      "starlight_lotus": 2,
+      "moon_herb": 1
+    },
+    "output": {
+      "item_id": "blood_quenching_pellet",
+      "count": 1
+    },
+    "minimum_body_realm": "body_pulse_condensation",
+    "description": "Combine Starlight Lotus, Moon Herb to refine a Blood Quenching Pellet."
+  },
+  {
+    "id": "refine_blood_quenching_pellet_2",
+    "display_name": "Refine Blood Quenching Pellet",
+    "inputs": {
+      "moon_herb": 2,
+      "phoenix_feather_bloom": 1
+    },
+    "output": {
+      "item_id": "blood_quenching_pellet",
+      "count": 1
+    },
+    "minimum_body_realm": "body_pulse_condensation",
+    "description": "Combine Moon Herb, Phoenix Feather Bloom to refine a Blood Quenching Pellet."
+  },
+  {
+    "id": "refine_earth_pellet",
+    "display_name": "Refine Earth Pellet",
+    "inputs": {
+      "vermilion_jade_root": 2,
+      "nine_furnace_ember": 1
+    },
+    "output": {
+      "item_id": "earth_pellet",
+      "count": 1
+    },
+    "minimum_body_realm": "tempering_marrow",
+    "description": "Combine Vermilion Jade Root, Nine Furnace Ember to refine a Earth Pellet."
+  },
+  {
+    "id": "refine_earth_pellet_2",
+    "display_name": "Refine Earth Pellet",
+    "inputs": {
+      "nine_furnace_ember": 2,
+      "asura_blood_grass": 1
+    },
+    "output": {
+      "item_id": "earth_pellet",
+      "count": 1
+    },
+    "minimum_body_realm": "tempering_marrow",
+    "description": "Combine Nine Furnace Ember, Asura Blood Grass to refine a Earth Pellet."
+  },
+  {
+    "id": "refine_dragon_blood_dan",
+    "display_name": "Refine Dragon Blood Dan",
+    "inputs": {
+      "nine_furnace_ember": 2,
+      "asura_blood_grass": 1
+    },
+    "output": {
+      "item_id": "dragon_blood_dan",
+      "count": 1
+    },
+    "minimum_body_realm": "tempering_marrow",
+    "description": "Combine Nine Furnace Ember, Asura Blood Grass to refine a Dragon Blood Dan."
+  },
+  {
+    "id": "refine_dragon_blood_dan_2",
+    "display_name": "Refine Dragon Blood Dan",
+    "inputs": {
+      "asura_blood_grass": 2,
+      "rival_vine": 1
+    },
+    "output": {
+      "item_id": "dragon_blood_dan",
+      "count": 1
+    },
+    "minimum_body_realm": "tempering_marrow",
+    "description": "Combine Asura Blood Grass, Rival Vine to refine a Dragon Blood Dan."
+  },
+  {
+    "id": "refine_nine_revolutions_pellet",
+    "display_name": "Refine Nine Revolutions Pellet",
+    "inputs": {
+      "asura_blood_grass": 2,
+      "rival_vine": 1
+    },
+    "output": {
+      "item_id": "nine_revolutions_pellet",
+      "count": 1
+    },
+    "minimum_body_realm": "tempering_marrow",
+    "description": "Combine Asura Blood Grass, Rival Vine to refine a Nine Revolutions Pellet."
+  },
+  {
+    "id": "refine_nine_revolutions_pellet_2",
+    "display_name": "Refine Nine Revolutions Pellet",
+    "inputs": {
+      "rival_vine": 2,
+      "vermilion_jade_root": 1
+    },
+    "output": {
+      "item_id": "nine_revolutions_pellet",
+      "count": 1
+    },
+    "minimum_body_realm": "tempering_marrow",
+    "description": "Combine Rival Vine, Vermilion Jade Root to refine a Nine Revolutions Pellet."
+  },
+  {
+    "id": "refine_mystic_decoction_no3",
+    "display_name": "Refine Mystic Decoction No.3",
+    "inputs": {
+      "rival_vine": 2,
+      "vermilion_jade_root": 1
+    },
+    "output": {
+      "item_id": "mystic_decoction_no3",
+      "count": 1
+    },
+    "minimum_body_realm": "tempering_marrow",
+    "description": "Combine Rival Vine, Vermilion Jade Root to refine a Mystic Decoction No.3."
+  },
+  {
+    "id": "refine_mystic_decoction_no3_2",
+    "display_name": "Refine Mystic Decoction No.3",
+    "inputs": {
+      "vermilion_jade_root": 2,
+      "nine_furnace_ember": 1
+    },
+    "output": {
+      "item_id": "mystic_decoction_no3",
+      "count": 1
+    },
+    "minimum_body_realm": "tempering_marrow",
+    "description": "Combine Vermilion Jade Root, Nine Furnace Ember to refine a Mystic Decoction No.3."
+  },
+  {
+    "id": "refine_star_gathering_pill",
+    "display_name": "Refine Star Gathering Pill",
+    "inputs": {
+      "vermilion_jade_root": 2,
+      "nine_furnace_ember": 1
+    },
+    "output": {
+      "item_id": "star_gathering_pill",
+      "count": 1
+    },
+    "minimum_body_realm": "tempering_marrow",
+    "description": "Combine Vermilion Jade Root, Nine Furnace Ember to refine a Star Gathering Pill."
+  },
+  {
+    "id": "refine_star_gathering_pill_2",
+    "display_name": "Refine Star Gathering Pill",
+    "inputs": {
+      "nine_furnace_ember": 2,
+      "asura_blood_grass": 1
+    },
+    "output": {
+      "item_id": "star_gathering_pill",
+      "count": 1
+    },
+    "minimum_body_realm": "tempering_marrow",
+    "description": "Combine Nine Furnace Ember, Asura Blood Grass to refine a Star Gathering Pill."
+  },
+  {
+    "id": "refine_dragon_blood_tonic",
+    "display_name": "Refine Dragon Blood Tonic",
+    "inputs": {
+      "zen_heart_herb": 2,
+      "five_element_blossom": 1
+    },
+    "output": {
+      "item_id": "dragon_blood_tonic",
+      "count": 1
+    },
+    "minimum_body_realm": "eight_gates_hidden_celestial_stems",
+    "description": "Combine Zen Heart Herb, Five Element Blossom to refine a Dragon Blood Tonic.",
+    "minimum_essence_realm": "revolving_core"
+  },
+  {
+    "id": "refine_dragon_blood_tonic_2",
+    "display_name": "Refine Dragon Blood Tonic",
+    "inputs": {
+      "five_element_blossom": 2,
+      "blood_slaughter_fern": 1
+    },
+    "output": {
+      "item_id": "dragon_blood_tonic",
+      "count": 1
+    },
+    "minimum_body_realm": "eight_gates_hidden_celestial_stems",
+    "description": "Combine Five Element Blossom, Blood Slaughter Fern to refine a Dragon Blood Tonic.",
+    "minimum_essence_realm": "revolving_core"
+  },
+  {
+    "id": "refine_earth_elixir",
+    "display_name": "Refine Earth Elixir",
+    "inputs": {
+      "five_element_blossom": 2,
+      "blood_slaughter_fern": 1
+    },
+    "output": {
+      "item_id": "earth_elixir",
+      "count": 1
+    },
+    "minimum_body_realm": "eight_gates_hidden_celestial_stems",
+    "description": "Combine Five Element Blossom, Blood Slaughter Fern to refine a Earth Elixir.",
+    "minimum_essence_realm": "revolving_core"
+  },
+  {
+    "id": "refine_earth_elixir_2",
+    "display_name": "Refine Earth Elixir",
+    "inputs": {
+      "blood_slaughter_fern": 2,
+      "zen_heart_herb": 1
+    },
+    "output": {
+      "item_id": "earth_elixir",
+      "count": 1
+    },
+    "minimum_body_realm": "eight_gates_hidden_celestial_stems",
+    "description": "Combine Blood Slaughter Fern, Zen Heart Herb to refine a Earth Elixir.",
+    "minimum_essence_realm": "revolving_core"
+  },
+  {
+    "id": "refine_star_gathering_dan",
+    "display_name": "Refine Star Gathering Dan",
+    "inputs": {
+      "blood_slaughter_fern": 2,
+      "zen_heart_herb": 1
+    },
+    "output": {
+      "item_id": "star_gathering_dan",
+      "count": 1
+    },
+    "minimum_body_realm": "eight_gates_hidden_celestial_stems",
+    "description": "Combine Blood Slaughter Fern, Zen Heart Herb to refine a Star Gathering Dan.",
+    "minimum_essence_realm": "revolving_core"
+  },
+  {
+    "id": "refine_star_gathering_dan_2",
+    "display_name": "Refine Star Gathering Dan",
+    "inputs": {
+      "zen_heart_herb": 2,
+      "five_element_blossom": 1
+    },
+    "output": {
+      "item_id": "star_gathering_dan",
+      "count": 1
+    },
+    "minimum_body_realm": "eight_gates_hidden_celestial_stems",
+    "description": "Combine Zen Heart Herb, Five Element Blossom to refine a Star Gathering Dan.",
+    "minimum_essence_realm": "revolving_core"
+  },
+  {
+    "id": "refine_nine_revolutions_nectar",
+    "display_name": "Refine Nine Revolutions Nectar",
+    "inputs": {
+      "zen_heart_herb": 2,
+      "five_element_blossom": 1
+    },
+    "output": {
+      "item_id": "nine_revolutions_nectar",
+      "count": 1
+    },
+    "minimum_body_realm": "eight_gates_hidden_celestial_stems",
+    "description": "Combine Zen Heart Herb, Five Element Blossom to refine a Nine Revolutions Nectar.",
+    "minimum_essence_realm": "revolving_core"
+  },
+  {
+    "id": "refine_nine_revolutions_nectar_2",
+    "display_name": "Refine Nine Revolutions Nectar",
+    "inputs": {
+      "five_element_blossom": 2,
+      "blood_slaughter_fern": 1
+    },
+    "output": {
+      "item_id": "nine_revolutions_nectar",
+      "count": 1
+    },
+    "minimum_body_realm": "eight_gates_hidden_celestial_stems",
+    "description": "Combine Five Element Blossom, Blood Slaughter Fern to refine a Nine Revolutions Nectar.",
+    "minimum_essence_realm": "revolving_core"
+  },
+  {
+    "id": "refine_heaven_decoction",
+    "display_name": "Refine Heaven Decoction",
+    "inputs": {
+      "five_element_blossom": 2,
+      "blood_slaughter_fern": 1
+    },
+    "output": {
+      "item_id": "heaven_decoction",
+      "count": 1
+    },
+    "minimum_body_realm": "eight_gates_hidden_celestial_stems",
+    "description": "Combine Five Element Blossom, Blood Slaughter Fern to refine a Heaven Decoction.",
+    "minimum_essence_realm": "revolving_core"
+  },
+  {
+    "id": "refine_heaven_decoction_2",
+    "display_name": "Refine Heaven Decoction",
+    "inputs": {
+      "blood_slaughter_fern": 2,
+      "zen_heart_herb": 1
+    },
+    "output": {
+      "item_id": "heaven_decoction",
+      "count": 1
+    },
+    "minimum_body_realm": "eight_gates_hidden_celestial_stems",
+    "description": "Combine Blood Slaughter Fern, Zen Heart Herb to refine a Heaven Decoction.",
+    "minimum_essence_realm": "revolving_core"
+  },
+  {
+    "id": "refine_soul_nurturing_pill",
+    "display_name": "Refine Soul Nurturing Pill",
+    "inputs": {
+      "sea_of_miracles_pearl": 2,
+      "ascension_gate_reed": 1
+    },
+    "output": {
+      "item_id": "soul_nurturing_pill",
+      "count": 1
+    },
+    "minimum_body_realm": "nine_stars_dao_palace",
+    "description": "Combine Sea of Miracles Pearl, Ascension Gate Reed to refine a Soul Nurturing Pill.",
+    "minimum_essence_realm": "divine_sea"
+  },
+  {
+    "id": "refine_soul_nurturing_pill_2",
+    "display_name": "Refine Soul Nurturing Pill",
+    "inputs": {
+      "ascension_gate_reed": 2,
+      "demon_blood_lotus": 1
+    },
+    "output": {
+      "item_id": "soul_nurturing_pill",
+      "count": 1
+    },
+    "minimum_body_realm": "nine_stars_dao_palace",
+    "description": "Combine Ascension Gate Reed, Demon Blood Lotus to refine a Soul Nurturing Pill.",
+    "minimum_essence_realm": "divine_sea"
+  },
+  {
+    "id": "refine_dao_enlightenment_pill",
+    "display_name": "Refine Dao Enlightenment Pill",
+    "inputs": {
+      "ascension_gate_reed": 2,
+      "demon_blood_lotus": 1
+    },
+    "output": {
+      "item_id": "dao_enlightenment_pill",
+      "count": 1
+    },
+    "minimum_body_realm": "nine_stars_dao_palace",
+    "description": "Combine Ascension Gate Reed, Demon Blood Lotus to refine a Dao Enlightenment Pill.",
+    "minimum_essence_realm": "divine_sea"
+  },
+  {
+    "id": "refine_dao_enlightenment_pill_2",
+    "display_name": "Refine Dao Enlightenment Pill",
+    "inputs": {
+      "demon_blood_lotus": 2,
+      "nether_ghost_grass": 1
+    },
+    "output": {
+      "item_id": "dao_enlightenment_pill",
+      "count": 1
+    },
+    "minimum_body_realm": "nine_stars_dao_palace",
+    "description": "Combine Demon Blood Lotus, Nether Ghost Grass to refine a Dao Enlightenment Pill.",
+    "minimum_essence_realm": "divine_sea"
+  },
+  {
+    "id": "refine_void_spirit_decoction",
+    "display_name": "Refine Void Spirit Decoction",
+    "inputs": {
+      "demon_blood_lotus": 2,
+      "nether_ghost_grass": 1
+    },
+    "output": {
+      "item_id": "void_spirit_decoction",
+      "count": 1
+    },
+    "minimum_body_realm": "nine_stars_dao_palace",
+    "description": "Combine Demon Blood Lotus, Nether Ghost Grass to refine a Void Spirit Decoction.",
+    "minimum_essence_realm": "divine_sea"
+  },
+  {
+    "id": "refine_void_spirit_decoction_2",
+    "display_name": "Refine Void Spirit Decoction",
+    "inputs": {
+      "nether_ghost_grass": 2,
+      "abyssal_bone_flower": 1
+    },
+    "output": {
+      "item_id": "void_spirit_decoction",
+      "count": 1
+    },
+    "minimum_body_realm": "nine_stars_dao_palace",
+    "description": "Combine Nether Ghost Grass, Abyssal Bone Flower to refine a Void Spirit Decoction.",
+    "minimum_essence_realm": "divine_sea"
+  },
+  {
+    "id": "refine_celestial_decoction",
+    "display_name": "Refine Celestial Decoction",
+    "inputs": {
+      "nether_ghost_grass": 2,
+      "abyssal_bone_flower": 1
+    },
+    "output": {
+      "item_id": "celestial_decoction",
+      "count": 1
+    },
+    "minimum_body_realm": "nine_stars_dao_palace",
+    "description": "Combine Nether Ghost Grass, Abyssal Bone Flower to refine a Celestial Decoction.",
+    "minimum_essence_realm": "divine_sea"
+  },
+  {
+    "id": "refine_celestial_decoction_2",
+    "display_name": "Refine Celestial Decoction",
+    "inputs": {
+      "abyssal_bone_flower": 2,
+      "sea_of_miracles_pearl": 1
+    },
+    "output": {
+      "item_id": "celestial_decoction",
+      "count": 1
+    },
+    "minimum_body_realm": "nine_stars_dao_palace",
+    "description": "Combine Abyssal Bone Flower, Sea of Miracles Pearl to refine a Celestial Decoction.",
+    "minimum_essence_realm": "divine_sea"
+  },
+  {
+    "id": "refine_primordial_pill",
+    "display_name": "Refine Primordial Pill",
+    "inputs": {
+      "abyssal_bone_flower": 2,
+      "sea_of_miracles_pearl": 1
+    },
+    "output": {
+      "item_id": "primordial_pill",
+      "count": 1
+    },
+    "minimum_body_realm": "nine_stars_dao_palace",
+    "description": "Combine Abyssal Bone Flower, Sea of Miracles Pearl to refine a Primordial Pill.",
+    "minimum_essence_realm": "divine_sea"
+  },
+  {
+    "id": "refine_primordial_pill_2",
+    "display_name": "Refine Primordial Pill",
+    "inputs": {
+      "sea_of_miracles_pearl": 2,
+      "ascension_gate_reed": 1
+    },
+    "output": {
+      "item_id": "primordial_pill",
+      "count": 1
+    },
+    "minimum_body_realm": "nine_stars_dao_palace",
+    "description": "Combine Sea of Miracles Pearl, Ascension Gate Reed to refine a Primordial Pill.",
+    "minimum_essence_realm": "divine_sea"
+  }
+]

@@ -86,5 +86,8 @@ class InventorySystem:
                 entry["category"] = item.category
                 entry["rarity"] = item.rarity
                 entry["valid_slots"] = list(item.valid_slots or [])
+                entry["stat_modifiers"] = dict(item.stat_modifiers)
+                entry["cultivation_modifiers"] = dict(item.cultivation_modifiers)
+                entry["utility_modifiers"] = dict(item.utility_modifiers)
             entries.append(entry)
         return {"event": EventType.INVENTORY, "items": entries}

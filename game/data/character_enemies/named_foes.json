@@ -27,7 +27,8 @@
         "chance": 0.25,
         "magnitude": 3
       }
-    ]
+    ],
+    "dao_id": "flame_dao"
   },
   {
     "id": "rogue_cultivator_duel",
@@ -62,7 +63,8 @@
         "chance": 0.3,
         "magnitude": 1
       }
-    ]
+    ],
+    "dao_id": "blood_dao"
   },
   {
     "id": "divine_phoenix_disciple_spar",
@@ -85,7 +87,8 @@
         "chance": 0.05,
         "count": 1
       }
-    ]
+    ],
+    "dao_id": "flame_dao"
   },
   {
     "id": "ling_sen_duel",
@@ -108,7 +111,8 @@
         "chance": 0.05,
         "count": 1
       }
-    ]
+    ],
+    "dao_id": "verdant_dao"
   },
   {
     "id": "jiang_baoyun_duel",
@@ -131,7 +135,8 @@
         "chance": 0.05,
         "count": 1
       }
-    ]
+    ],
+    "dao_id": "tide_dao"
   },
   {
     "id": "ouyang_dihua_duel",
@@ -154,7 +159,8 @@
         "chance": 0.05,
         "count": 1
       }
-    ]
+    ],
+    "dao_id": "sword_dao"
   },
   {
     "id": "jiang_lanjian_duel",
@@ -182,7 +188,8 @@
         "chance": 0.05,
         "count": 1
       }
-    ]
+    ],
+    "dao_id": "sword_dao"
   },
   {
     "id": "feng_shen_duel",
@@ -205,7 +212,8 @@
         "chance": 0.05,
         "count": 1
       }
-    ]
+    ],
+    "dao_id": "space_dao"
   },
   {
     "id": "blood_slaughter_steppes_warrior_arena",
@@ -233,7 +241,8 @@
         "chance": 0.05,
         "count": 1
       }
-    ]
+    ],
+    "dao_id": "blood_dao"
   },
   {
     "id": "duanmu_qun_duel",
@@ -261,7 +270,8 @@
         "chance": 0.05,
         "count": 1
       }
-    ]
+    ],
+    "dao_id": "nether_dao"
   },
   {
     "id": "ouyang_boyan_duel",
@@ -289,7 +299,8 @@
         "chance": 0.05,
         "count": 1
       }
-    ]
+    ],
+    "dao_id": "mountain_dao"
   },
   {
     "id": "situ_yaoyue_duel",
@@ -317,7 +328,8 @@
         "chance": 0.05,
         "count": 1
       }
-    ]
+    ],
+    "dao_id": "astral_dao"
   },
   {
     "id": "situ_bonan_duel",
@@ -345,7 +357,8 @@
         "chance": 0.05,
         "count": 1
       }
-    ]
+    ],
+    "dao_id": "sword_dao"
   },
   {
     "id": "holy_demon_continent_demon_duel",
@@ -373,7 +386,8 @@
         "chance": 0.05,
         "count": 1
       }
-    ]
+    ],
+    "dao_id": "nether_dao"
   },
   {
     "id": "four_divine_kingdoms_prince_or_princess_duel",
@@ -401,7 +415,8 @@
         "chance": 0.05,
         "count": 1
       }
-    ]
+    ],
+    "dao_id": "karma_dao"
   },
   {
     "id": "steppes_master_trial",
@@ -429,7 +444,8 @@
         "chance": 0.05,
         "count": 1
       }
-    ]
+    ],
+    "dao_id": "mountain_dao"
   },
   {
     "id": "xuan_wuji_boss",
@@ -469,7 +485,8 @@
         "chance": 0.2,
         "magnitude": 1
       }
-    ]
+    ],
+    "dao_id": "void_dao"
   },
   {
     "id": "situ_haotian_boss",
@@ -504,7 +521,8 @@
         "chance": 0.3,
         "magnitude": 6
       }
-    ]
+    ],
+    "dao_id": "astral_dao"
   },
   {
     "id": "yang_yun_boss",
@@ -532,7 +550,8 @@
         "chance": 0.05,
         "count": 1
       }
-    ]
+    ],
+    "dao_id": "flame_dao"
   },
   {
     "id": "ancient_devil_manifestation",
@@ -560,7 +579,8 @@
         "chance": 0.05,
         "count": 1
       }
-    ]
+    ],
+    "dao_id": "blood_dao"
   },
   {
     "id": "demon_emperor_avatar",
@@ -588,6 +608,7 @@
         "chance": 0.05,
         "count": 1
       }
-    ]
+    ],
+    "dao_id": "nether_dao"
   }
 ]

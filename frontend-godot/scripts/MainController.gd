@@ -108,6 +108,7 @@ var _inventory_text: RichTextLabel
 var _inventory_count: Label
 var _equipment_slots: GridContainer
 var _equipment_count: Label
+var _equipment_bonus: RichTextLabel
 var _gold_label: Label
 var _stones_label: Label
 var _quest_text: RichTextLabel
@@ -121,6 +122,7 @@ var _exploration_grid: GridContainer
 var _support_grid: GridContainer
 var _combat_actions: HBoxContainer
 var _log: RichTextLabel
+var _narrative_text: RichTextLabel
 
 # Cached destinations for the Travel popup (from the last state snapshot).
 var _destinations: Array = []
@@ -131,6 +133,8 @@ var _unequip_choices: Array = []
 var _shop_choices: Array = []
 var _trainer_choices: Array = []
 var _use_choices: Array = []
+var _refine_ids: Array[String] = []
+var _dao_ids: Array[String] = []
 
 # Cosmetic display state (the engine tracks years via lifespan).
 var _year := 0
@@ -483,10 +487,19 @@ func _render_actions(player: Dictionary) -> void:
 	_exploration_grid.add_child(_make_action_card("Explore", "Search the area", func(): _send("EXPLORE")))
 	_exploration_grid.add_child(_make_action_card("Rest", "Recover HP & Qi", func(): _send("REST")))
 	_exploration_grid.add_child(_make_action_card("Travel", "Move to another area", func(): _open_travel_popup()))
+	_exploration_grid.add_child(_make_action_card("Gather Herbs", "Harvest local herbs", func(): _send("GATHER"), _has_gathering(), "No herbs grow here."))
 	_exploration_grid.add_child(_make_action_card("World Map", "Show your location", Callable(self, "_open_world_map_popup"), _has_map_position(), "This location has no map marker."))
+	if _has_realm_active():
+		_exploration_grid.add_child(_make_action_card("Continue Realm", "Press deeper", func(): _send("REALM_ADVANCE")))
+		_exploration_grid.add_child(_make_action_card("Leave Realm", "Retreat to the surface", func(): _send("REALM_LEAVE")))
+	else:
+		_exploration_grid.add_child(_make_action_card("Secret Realm", "Descend into a hidden realm", func(): _send("ENTER_REALM"), _has_realm(), "No realm opens here."))
 
 	_support_grid.add_child(_make_action_card("Market", "Buy supplies and equipment", func(): _send("SHOP"), _has_available_shop(), "No market is available here."))
 	_support_grid.add_child(_make_action_card("Masters", "Learn techniques", func(): _send("TRAINERS"), _has_available_trainer(), "No technique master is here."))
+	_support_grid.add_child(_make_action_card("Refine Pills", "Refine herbs into pills", func(): _open_refine_popup()))
+	_support_grid.add_child(_make_action_card("Dao", "View and awaken the Dao", func(): _send("DAO_VIEW")))
+	_support_grid.add_child(_make_action_card("Tournament", "Enter the sect tournament", func(): _send("TOURNAMENT"), _has_tournament(), "No tournament is held here."))
 
 
 func _make_action_card(title: String, subtitle: String, cb: Callable, enabled: bool = true, locked_reason: String = "") -> Button:
@@ -829,6 +842,89 @@ func _has_available_trainer() -> bool:
 	return not _last_state.get("trainers", []).is_empty()
 
 
+func _has_gathering() -> bool:
+	return bool(_last_state.get("gathering_available", false))
+
+
+func _has_realm() -> bool:
+	return bool(_last_state.get("realm_available", false))
+
+
+func _has_realm_active() -> bool:
+	var realm = _last_state.get("realm")
+	return typeof(realm) == TYPE_DICTIONARY and not realm.is_empty()
+
+
+func _has_tournament() -> bool:
+	return bool(_last_state.get("tournament_available", false))
+
+
+func _open_refine_popup() -> void:
+	_refine_ids = []
+	var popup := PopupMenu.new()
+	for recipe in _last_state.get("refining_recipes", []):
+		if typeof(recipe) != TYPE_DICTIONARY:
+			continue
+		var recipe_id := str(recipe.get("id", ""))
+		var label := str(recipe.get("display_name", recipe_id))
+		var available := bool(recipe.get("available", true))
+		var tooltip := str(recipe.get("description", ""))
+		if not available:
+			label += " (locked)"
+			var req := str(recipe.get("minimum_body_realm", ""))
+			tooltip += "\nRequires %s cultivation." % _humanize_key(req)
+			var ereq := str(recipe.get("minimum_essence_realm", ""))
+			if ereq != "":
+				tooltip += "\nRequires %s essence." % _humanize_key(ereq)
+		popup.add_item(label, _refine_ids.size())
+		popup.set_item_tooltip(_refine_ids.size(), tooltip)
+		if not available:
+			popup.set_item_disabled(_refine_ids.size(), true)
+		_refine_ids.append(recipe_id)
+	if _refine_ids.is_empty():
+		popup.add_item("No recipes known", 0)
+		popup.set_item_disabled(0, true)
+	add_child(popup)
+	popup.id_pressed.connect(_on_refine_selected)
+	popup.popup_hide.connect(popup.queue_free)
+	popup.reset_size()
+	var mouse := Vector2i(get_viewport().get_mouse_position())
+	popup.popup(Rect2i(mouse.x, mouse.y, 0, 0))
+
+
+func _on_refine_selected(idx: int) -> void:
+	if idx >= 0 and idx < _refine_ids.size():
+		api.send_action({"action": "REFINE", "recipe_id": _refine_ids[idx]})
+
+
+func _show_dao_view(result: Dictionary) -> void:
+	_dao_ids = []
+	var current_id := str(result.get("current_dao_id", ""))
+	var popup := PopupMenu.new()
+	for dao in result.get("daos", []):
+		if typeof(dao) != TYPE_DICTIONARY:
+			continue
+		var dao_id := str(dao.get("id", ""))
+		var label := str(dao.get("display_name", dao_id))
+		if dao_id == current_id:
+			label += "  (current)"
+		popup.add_item(label, _dao_ids.size())
+		popup.set_item_tooltip(_dao_ids.size(), str(dao.get("description", "")))
+		_dao_ids.append(dao_id)
+	add_child(popup)
+	popup.id_pressed.connect(_on_dao_selected)
+	popup.popup_hide.connect(popup.queue_free)
+	popup.reset_size()
+	var mouse := Vector2i(get_viewport().get_mouse_position())
+	popup.popup(Rect2i(mouse.x, mouse.y, 0, 0))
+	_set_situation("Dao", "Current Dao: %s — choose another to awaken to it." % str(result.get("current_dao_name", "")))
+
+
+func _on_dao_selected(idx: int) -> void:
+	if idx >= 0 and idx < _dao_ids.size():
+		api.send_action({"action": "DAO_AWAKEN", "dao_id": _dao_ids[idx]})
+
+
 func _has_usable_item() -> bool:
 	for item in _last_state.get("inventory_items", []):
 		if typeof(item) == TYPE_DICTIONARY and bool(item.get("usable", false)):
@@ -1041,6 +1137,13 @@ func _build_equipment_page() -> void:
 	header.add_child(_equipment_count)
 	box.add_child(header)
 
+	# Aggregated bonus tally: everything worn gear currently contributes.
+	_equipment_bonus = RichTextLabel.new()
+	_equipment_bonus.bbcode_enabled = true
+	_equipment_bonus.fit_content = true
+	_equipment_bonus.add_theme_color_override("default_color", COLOR_PRIMARY_TEXT)
+	box.add_child(_equipment_bonus)
+
 	# Paper-doll: a grid of slot cards, one cell per equipment slot.
 	_equipment_slots = GridContainer.new()
 	_equipment_slots.columns = 2
@@ -1070,6 +1173,23 @@ func _add_text_page(title: String) -> RichTextLabel:
 
 
 func _build_event_log(root: VBoxContainer) -> void:
+	# Dedicated narrative panel: the latest prose, kept above the running log.
+	var narrative_panel := _make_panel()
+	narrative_panel.custom_minimum_size = Vector2(0, 176)
+	root.add_child(narrative_panel)
+	var narrative_box := VBoxContainer.new()
+	narrative_box.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	narrative_box.add_theme_constant_override("separation", 6)
+	narrative_panel.add_child(narrative_box)
+	narrative_box.add_child(_make_label("NARRATIVE", 14, COLOR_ANTIQUE_GOLD))
+	_narrative_text = RichTextLabel.new()
+	_narrative_text.bbcode_enabled = true
+	_narrative_text.fit_content = true
+	_narrative_text.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_narrative_text.add_theme_color_override("default_color", COLOR_PRIMARY_TEXT)
+	narrative_box.add_child(_narrative_text)
+	_set_narrative("Your journey as a cultivator begins.")
+
 	var log_panel := _make_panel()
 	log_panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	root.add_child(log_panel)
@@ -1463,7 +1583,12 @@ func _render_inventory(state: Dictionary) -> void:
 		if str(item.get("item_id", "")) == "spirit_stone":
 			stones = int(item.get("count", 0))
 		lines += "[color=#F2E8D5][b]%s[/b][/color]  [color=#D6A64A]x%s[/color]\n" % [item.get("name", "Item"), _format_quantity(item.get("count", 0))]
-		lines += "[color=#8F8A81]%s[/color]\n\n" % item.get("description", "")
+		lines += "[color=#8F8A81]%s[/color]\n" % item.get("description", "")
+		if str(item.get("type", "")) == "equipment":
+			var mods := _format_item_modifiers(item)
+			if mods != "":
+				lines += "[color=#79C85A]%s[/color]\n" % mods
+		lines += "\n"
 	if lines == "":
 		lines = "[color=#8F8A81]Your storage ring is empty.[/color]"
 	_set_rich_text(_inventory_text, lines.strip_edges())
@@ -1474,6 +1599,7 @@ func _render_inventory(state: Dictionary) -> void:
 func _render_equipment(player: Dictionary) -> void:
 	var slots: Dictionary = player.get("equipment", {})
 	var details: Dictionary = player.get("equipment_details", {})
+	var modifiers: Dictionary = player.get("equipment_modifiers", {})
 	_clear_row(_equipment_slots)
 	var worn := 0
 	for pair in EQUIPMENT_SLOT_ORDER:
@@ -1482,18 +1608,20 @@ func _render_equipment(player: Dictionary) -> void:
 		var item_id = slots.get(slot_id, null)
 		var info: Dictionary = details.get(slot_id, {})
 		if item_id == null or str(item_id) == "":
-			_equipment_slots.add_child(_make_equipment_slot_card(slot_label, "(empty)", "", COLOR_MUTED, -1, -1))
+			_equipment_slots.add_child(_make_equipment_slot_card(slot_label, "(empty)", "", COLOR_MUTED, -1, -1, ""))
 		else:
 			worn += 1
 			var durability: Variant = info.get("durability", null)
 			var max_durability: Variant = info.get("max_durability", null)
 			var broken := bool(info.get("broken", false))
 			var name_color := COLOR_PRIMARY_TEXT if not broken else COLOR_DANGER
-			_equipment_slots.add_child(_make_equipment_slot_card(slot_label, str(info.get("display_name", item_id)), str(info.get("rarity", "")), name_color, durability, max_durability))
+			var card_mods := _format_item_modifiers(info)
+			_equipment_slots.add_child(_make_equipment_slot_card(slot_label, str(info.get("display_name", item_id)), str(info.get("rarity", "")), name_color, durability, max_durability, card_mods))
 	_equipment_count.text = "%d / %d worn" % [worn, EQUIPMENT_SLOT_ORDER.size()]
+	_render_equipment_tally(modifiers)
 
 
-func _make_equipment_slot_card(slot_label: String, item_name: String, rarity: String, name_color: Color, durability: Variant, max_durability: Variant) -> PanelContainer:
+func _make_equipment_slot_card(slot_label: String, item_name: String, rarity: String, name_color: Color, durability: Variant, max_durability: Variant, modifiers: String = "") -> PanelContainer:
 	var card := PanelContainer.new()
 	card.add_theme_stylebox_override("panel", _make_button_style(COLOR_PANEL_SOFT, COLOR_BORDER))
 	var box := VBoxContainer.new()
@@ -1505,9 +1633,117 @@ func _make_equipment_slot_card(slot_label: String, item_name: String, rarity: St
 	box.add_child(name_label)
 	if rarity != "":
 		box.add_child(_make_label(rarity.replace("_", " ").capitalize(), 10, COLOR_MUTED))
+	if modifiers != "":
+		var mod_label := _make_label(modifiers, 10, COLOR_BODY)
+		mod_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		box.add_child(mod_label)
 	if typeof(durability) == TYPE_INT and typeof(max_durability) == TYPE_INT and int(max_durability) > 0:
 		box.add_child(_make_label("Durability %s/%s" % [durability, max_durability], 10, COLOR_WARNING if int(durability) <= 0 else COLOR_MUTED))
 	return card
+
+
+func _format_item_modifiers(item: Dictionary) -> String:
+	var parts := PackedStringArray()
+	for group in [item.get("stat_modifiers", {}), item.get("cultivation_modifiers", {}), item.get("utility_modifiers", {})]:
+		var line := _format_modifier_group(group)
+		if line != "":
+			parts.append(line)
+	return "  ".join(parts)
+
+
+func _format_modifier_group(group: Dictionary) -> String:
+	if typeof(group) != TYPE_DICTIONARY or group.is_empty():
+		return ""
+	var parts := PackedStringArray()
+	for key in group.keys():
+		var value = group[key]
+		var val_str := _format_modifier_value(str(key), value)
+		if val_str == "":
+			continue
+		parts.append("%s %s" % [_humanize_key(str(key)), val_str])
+	if parts.size() == 0:
+		return ""
+	return "  ".join(parts)
+
+
+func _format_modifier_value(key: String, value: Variant) -> String:
+	var n := float(value)
+	if n == 0.0:
+		return ""
+	if key.ends_with("_multiplier"):
+		return "x%.2f" % n
+	if n != floor(n):
+		# Fractional values are percentage-style (e.g. +8% breakthrough chance).
+		return "%+.0f%%" % (n * 100.0)
+	return "%+.0f" % n
+
+
+func _humanize_key(key: String) -> String:
+	match key:
+		"max_hp":
+			return "Max HP"
+		"max_qi":
+			return "Max Qi"
+		"body_strength":
+			return "Body Strength"
+		"foundation_quality":
+			return "Foundation Quality"
+		"body_cultivation_flat_bonus":
+			return "Body Cultivation"
+		"essence_cultivation_flat_bonus":
+			return "Essence Cultivation"
+		"foundation_stability_bonus":
+			return "Foundation Stability"
+		"breakthrough_chance_modifier":
+			return "Breakthrough Chance"
+		"body_breakthrough_modifier":
+			return "Body Breakthrough"
+		"essence_breakthrough_modifier":
+			return "Essence Breakthrough"
+		"comprehension_bonus":
+			return "Comprehension"
+		"body_strain_gain_multiplier":
+			return "Body Strain Gain"
+		"qi_strain_gain_multiplier":
+			return "Qi Strain Gain"
+		"travel_safety_bonus":
+			return "Travel Safety"
+		"stealth_bonus":
+			return "Stealth"
+		"ambush_avoidance_bonus":
+			return "Ambush Avoidance"
+		"spirit_stone_find_bonus":
+			return "Spirit Stone Find"
+		"corpse_qi_resistance":
+			return "Corpse Qi Resist"
+		"rare_event_chance_bonus":
+			return "Rare Event Chance"
+		"herb_gathering_bonus":
+			return "Herb Gathering"
+		"shop_discount_modifier":
+			return "Shop Discount"
+	var words := key.replace("_", " ").split(" ")
+	var out := PackedStringArray()
+	for word in words:
+		if word.length() > 0:
+			out.append(word.substr(0, 1).to_upper() + word.substr(1))
+	return " ".join(out)
+
+
+func _render_equipment_tally(modifiers: Dictionary) -> void:
+	if _equipment_bonus == null:
+		return
+	var lines := "[color=#D6A64A]TOTAL BONUSES[/color]\n"
+	var stat_line := _format_modifier_group(modifiers.get("stat_modifiers", {}))
+	if stat_line != "":
+		lines += "[color=#F2E8D5]Stats:[/color] %s\n" % stat_line
+	var cult_line := _format_modifier_group(modifiers.get("cultivation_modifiers", {}))
+	if cult_line != "":
+		lines += "[color=#3B9FE8]Cultivation:[/color] %s\n" % cult_line
+	var util_line := _format_modifier_group(modifiers.get("utility_modifiers", {}))
+	if util_line != "":
+		lines += "[color=#79C85A]Utility:[/color] %s\n" % util_line
+	_set_rich_text(_equipment_bonus, lines.strip_edges())
 
 
 func _render_status_summary(player: Dictionary) -> void:
@@ -1610,6 +1846,7 @@ func _update_enemy(enemy: Dictionary) -> void:
 func _render_event(result: Dictionary) -> void:
 	_showing_event_result = true
 	var event := str(result.get("event", ""))
+	var prose := str(result.get("narrative", ""))
 	match event:
 		"TRAIN_RESULT":
 			var title := "Body Training" if str(result.get("track_id", "")) == "body_transformation" else "Essence Training"
@@ -1632,8 +1869,18 @@ func _render_event(result: Dictionary) -> void:
 			_set_situation("Starting Talents", str(result.get("player_message", "You accept your starting talents.")))
 		"PLAYER_DIED":
 			var age_text := str(result.get("age_years", "?"))
-			_set_situation("Your Dao Ends", "%s\n\n[color=#C0393A]You perished at the age of %s. Your journey is over.[/color]" % [str(result.get("player_message", "Your lifespan is exhausted.")), age_text])
-			_append("[color=#C0393A]You died of old age at %s.[/color]" % age_text)
+			var summary: Dictionary = result.get("summary", {})
+			var summary_text := ""
+			if not summary.is_empty():
+				var peak := str(summary.get("body_realm", "?"))
+				var essence_name := str(summary.get("essence_realm", ""))
+				if essence_name != "":
+					peak += " / " + essence_name
+				summary_text = "\n\n[color=#C7BCA8]Peak realms: %s[/color]" % peak
+				summary_text += "\nDao: %s  ·  Path: %s" % [str(summary.get("dao", "?")), str(summary.get("path", "Unassigned"))]
+				summary_text += "\nQuests completed: %s  ·  Ancestral Memory: %s" % [str(summary.get("quests_completed", 0)), str(result.get("ancestral_memory", 0))]
+			_set_situation("Your Dao Ends", "%s\n\n[color=#C0393A]You perished at the age of %s. Your journey is over.[/color]%s" % [str(result.get("player_message", "Your lifespan is exhausted.")), age_text, summary_text])
+			_append("[color=#C0393A]You died at %s.[/color]" % age_text)
 		"CHARACTER_ENCOUNTER":
 			_render_character_encounter(result)
 		"CHARACTER_INTERACTION":
@@ -1710,9 +1957,68 @@ func _render_event(result: Dictionary) -> void:
 			_set_situation("Command Reference", "Train, gather essence, explore, rest, meditate, break through, travel, save, or open inventory/status.")
 		"QUIT":
 			_append("Farewell, cultivator.")
+		"BOON":
+			_set_situation("Boon Received", str(result.get("player_message", "They grant you a gift.")))
+			_append("Received a boon from %s" % result.get("name", result.get("character_id", "an ally")))
+		"DIALOGUE_CHOICE":
+			_set_situation(str(result.get("name", "Dialogue")), str(result.get("player_message", "")))
+		"SECTS":
+			_set_situation(str(result.get("sect", {}).get("display_name", "Sect")), str(result.get("sect", {}).get("description", "")))
+		"SECT_JOINED":
+			_set_situation("Sect Joined", str(result.get("player_message", "You join the sect.")))
+			_append("Joined %s" % result.get("name", result.get("sect_id", "a sect")))
+		"ITEM_SOLD":
+			_set_situation("Item Sold", str(result.get("player_message", "You sell the item.")))
+			_append("Sold %s for %s gold" % [result.get("name", "item"), result.get("total", 0)])
+		"TALENTS":
+			_set_situation("Talents", "Your Martial and Body talents, and the paths they may yet take.")
+		"TALENT_UPGRADED":
+			_set_situation("Talent Advanced", str(result.get("player_message", "Your talent advances.")))
+			_append("Talent advanced to %s" % result.get("display_name", result.get("talent_id", "")))
+		"CLOSED_DOOR_RESULT":
+			_set_situation("Closed-Door Cultivation", str(result.get("player_message", "You cultivate in seclusion.")))
+			_append("Secluded cultivation for %s year(s)" % result.get("years", 0))
+		"REPAIR_RESULT":
+			_set_situation("Repaired", str(result.get("player_message", "Item repaired.")))
+			_append("Repaired %s" % result.get("item_id", "item"))
+		"GATHER_RESULT":
+			_set_situation("Herbs Gathered", "Gathered %s x%s." % [result.get("name", "herb"), _format_quantity(result.get("count", 1))])
+			_append("Gathered %s" % result.get("name", "herb"))
+		"REFINE_RESULT":
+			_set_situation("Refined", str(result.get("name", "Refinement complete.")))
+			_append("Refined %s x%s" % [result.get("item_id", "item"), _format_quantity(result.get("count", 1))])
+		"REALM_ENTERED":
+			var realm_name := str(result.get("realm", {}).get("display_name", "a secret realm"))
+			_set_situation(realm_name, str(result.get("player_message", "You descend into the realm.")))
+			_append("[color=#9B6ADB]Entered %s[/color]" % realm_name)
+		"REALM_ROOM":
+			_set_situation("Secret Realm", str(result.get("player_message", "You press on through the realm.")))
+			_append(str(result.get("player_message", "You press on through the realm.")))
+		"REALM_COMPLETED":
+			_set_situation("Realm Conquered", str(result.get("player_message", "You conquer the realm.")))
+			_append("[color=#D6A84F]Realm conquered:[/color] %s" % str(result.get("realm", "")))
+		"DAO_VIEW":
+			_show_dao_view(result)
+		"DAO_AWAKENED":
+			_set_situation("Dao Awakened", str(result.get("player_message", "You awaken to a new Dao.")))
+			_append("[color=#9B6ADB]Awakened to the %s[/color]" % result.get("dao_name", result.get("dao_id", "Dao")))
+		"SAVE_EXPORTED":
+			_set_situation("Save Exported", str(result.get("player_message", "Your save has been exported.")))
+		"SAVE_IMPORTED":
+			_set_situation("Save Imported", str(result.get("player_message", "Your save has been imported.")))
+		"LOCATION":
+			_set_situation("Location", str(result.get("display_name", result.get("name", ""))))
+		"MAP":
+			_set_situation("World Map", str(result.get("location_name", "The known world")))
+		"QUEST_UPDATE":
+			_set_situation("Quest Progress", str(result.get("title", "A quest advances.")))
+		"MESSAGE":
+			_set_situation("Message", str(result.get("text", "")))
 		_:
 			if debug_mode:
 				_append(str(result))
+	if prose != "":
+		_set_narrative(prose)
 
 
 func _render_breakthrough(result: Dictionary) -> void:
@@ -1775,12 +2081,21 @@ func _render_combat_end(result: Dictionary) -> void:
 		text += "\nEXP +%s" % result.get("exp_reward", 0)
 		for drop in result.get("loot", []):
 			text += "\nLoot: %s x%s" % [drop.get("name", "item"), _format_quantity(drop.get("count", 1))]
+		if bool(result.get("tournament_won", false)):
+			text += "\n[color=#D6A84F]You win the tournament bout![/color]"
+		var realm_meta: Dictionary = result.get("realm", {})
+		if not realm_meta.is_empty():
+			text += "\n[color=#9B6ADB]Realm room cleared (%s/%s).[/color]" % [realm_meta.get("room_cleared", 0), realm_meta.get("total", 0)]
+			if bool(realm_meta.get("was_boss", false)):
+				text += "\nThe realm's guardian has fallen. Press on to claim the reward."
 	elif outcome == "DEFEAT":
 		var pen: Dictionary = result.get("penalty", {})
 		text += "\nYou were rescued. Progress lost: %s, revived HP: %s." % [pen.get("progress_lost", 0), pen.get("revived_hp", 0)]
 	_set_situation("Combat Ended", text)
 	_append("Combat ended: %s" % outcome)
 	_render_quest_updates(result.get("quest_updates", []))
+	if str(result.get("act_complete", "")) != "":
+		_append("[color=#D6A84F]Act One is complete. The path ahead is open.[/color]")
 	_set_combat_mode(false)
 
 
@@ -1837,8 +2152,17 @@ func _show_status(result: Dictionary) -> void:
 
 
 func _set_situation(title: String, text: String) -> void:
-	# There is no dedicated situation panel any more; narrate to the event log.
+	# Mirror the latest situation to the narrative panel; richer engine prose may
+	# replace it afterwards via _set_narrative when a "narrative" field exists.
+	_set_narrative("[color=#F0C76A][b]%s[/b][/color]\n%s" % [title, text])
 	_append("[color=#F0C76A][b]%s[/b][/color] %s" % [title, text.replace("\n", "  ")])
+
+
+func _set_narrative(text: String) -> void:
+	if _narrative_text == null:
+		return
+	_narrative_text.clear()
+	_narrative_text.append_text(text)
 
 
 func _set_rich_text(control: RichTextLabel, text: String) -> void:
@@ -1908,6 +2232,30 @@ func _translate_reason(reason: String, result: Dictionary = {}) -> String:
 			return "Choose a valid purchase quantity."
 		"NOT_ENOUGH_QI":
 			return "You do not have enough Qi for that technique."
+		"NO_HERBS_HERE":
+			return "No herbs grow at this location."
+		"UNKNOWN_RECIPE":
+			return "That refinement recipe is not known."
+		"INSUFFICIENT_RESOURCES":
+			return "You do not have the herbs required for that refinement."
+		"REALM_TOO_LOW":
+			return "Your cultivation realm is too low for that. Required: %s." % _humanize_key(str(result.get("required", "a higher realm")))
+		"NO_REALM_HERE":
+			return "No secret realm opens at this location."
+		"ALREADY_IN_REALM":
+			return "You are already within the secret realm."
+		"NOT_IN_REALM":
+			return "You are not inside a secret realm."
+		"NO_TOURNAMENT_HERE":
+			return "No tournament is held at this location."
+		"UNKNOWN_DAO":
+			return "That Dao is not among the paths."
+		"NO_DAO_SPECIFIED":
+			return "Choose a Dao to awaken to."
+		"DAO_AWAKENING_LOCKED":
+			return "The Dao heart has not opened to you yet. Walk the Act One path further."
+		"DAO_ALREADY_AWAKENED":
+			return "You have already awakened to your Dao."
 		_:
 			if debug_mode:
 				return reason

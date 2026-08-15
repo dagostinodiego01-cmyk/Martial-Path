@@ -56,6 +56,8 @@ class NewGameRequest(BaseModel):
 
     player_name: str = "Daoist"
     seed: Optional[int] = None
+    origin_id: Optional[str] = None
+    hardcore: bool = True
 
 
 class SaveRequest(BaseModel):
@@ -76,6 +78,12 @@ def get_state() -> Dict[str, Any]:
     return engine.get_game_state()
 
 
+@app.get("/meta")
+def get_meta() -> Dict[str, Any]:
+    """Return the cross-run meta view (Ancestral Memory, chronicle, origins)."""
+    return engine.get_meta_state()
+
+
 @app.post("/action")
 def process_action(request: ActionRequest) -> Dict[str, Any]:
     """Forward a structured command to the engine and return its result dict."""
@@ -87,7 +95,12 @@ def process_action(request: ActionRequest) -> Dict[str, Any]:
 def new_game(request: NewGameRequest) -> Dict[str, Any]:
     """Reset the in-process engine and return the initial state."""
     global engine
-    engine = GameEngine.new_game(player_name=request.player_name, seed=request.seed)
+    engine = GameEngine.new_game(
+        player_name=request.player_name,
+        seed=request.seed,
+        origin_id=request.origin_id,
+        hardcore=request.hardcore,
+    )
     return engine.get_game_state()
 
 

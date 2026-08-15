@@ -36,6 +36,11 @@ class Item:
     valid_slots: List[str] = field(default_factory=list)
     skill_id: str = ""
     value: int = 0
+    # Equipment-only modifier groups (see ``data/equipment.json``). Empty for
+    # consumables/materials; surfaced to the UI so item stats can be displayed.
+    stat_modifiers: Dict[str, Any] = field(default_factory=dict)
+    cultivation_modifiers: Dict[str, Any] = field(default_factory=dict)
+    utility_modifiers: Dict[str, Any] = field(default_factory=dict)
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "Item":
@@ -54,6 +59,9 @@ class Item:
             valid_slots=[str(slot) for slot in data.get("valid_slots", [])],
             skill_id=str(data.get("skill_id", "")),
             value=int(data.get("value", 0)),
+            stat_modifiers=dict(data.get("stat_modifiers", {})),
+            cultivation_modifiers=dict(data.get("cultivation_modifiers", {})),
+            utility_modifiers=dict(data.get("utility_modifiers", {})),
         )
 
     def is_consumable(self) -> bool:

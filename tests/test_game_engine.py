@@ -382,7 +382,8 @@ def test_spar_ends_without_defeat_penalty():
 
 
 def test_defeat_penalty_is_partial_and_data_driven():
-    engine = GameEngine.new_game(seed=1)
+    # Softcore defeat penalty is the opt-out behaviour; permadeath is the default.
+    engine = GameEngine.new_game(seed=1, hardcore=False)
     engine.player.cultivation_state.body.progress = 400.0
     engine.player.progress = 400.0
     engine.player.hp = 1

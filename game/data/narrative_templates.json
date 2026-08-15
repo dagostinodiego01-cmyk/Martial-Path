@@ -1,0 +1,152 @@
+{
+  "train_body": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "You sink into a low stance and drive your limbs through the old forms until muscle burns and breath steams."},
+      {"weight": 2, "template": "Sweat beads along your brow as you temper the body, one repetition at a time."},
+      {"weight": 2, "template": "Your fists and feet hammer the empty air, and the ache that follows tastes like progress."},
+      {"weight": 2, "template": "In the {season} air you train until your bones remember what your mind still forgets.", "when": {"field": "season", "op": "ne", "value": "Spring"}}
+    ]
+  },
+  "train_essence": {
+    "variables": [],
+    "variants": [
+      {"weight": 3, "template": "You draw the ambient Qi inward, threading it through meridians that hum in answer."},
+      {"weight": 2, "template": "Tendrils of spiritual energy coil about your breath and settle, drop by drop, into your dantian."},
+      {"weight": 2, "template": "You still the mind until the world falls away and only the slow tide of Qi remains."}
+    ]
+  },
+  "rest": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "You find shelter and let sleep knit your wounds back together."},
+      {"weight": 2, "template": "You sit in stillness, breathing away the day's exhaustion."},
+      {"weight": 2, "template": "A short, dreamless rest restores what the road has taken."},
+      {"weight": 2, "template": "You rest against the {season} chill, and slowly your strength returns.", "when": {"field": "season", "op": "ne", "value": "Summer"}}
+    ]
+  },
+  "meditate": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "You close your eyes and listen to the current beneath thought."},
+      {"weight": 2, "template": "In the hush, a fragment of the Dao drifts close enough to touch."},
+      {"weight": 2, "template": "Breath by breath, clarity settles over your spirit like frost."},
+      {"weight": 2, "template": "You meditate beneath the {season} sky, and the world's noise grows distant.", "when": {"field": "season", "op": "ne", "value": "Autumn"}}
+    ]
+  },
+  "explore_nothing": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "You roam the misty wilds but encounter nothing of note."},
+      {"weight": 2, "template": "The path winds on through {season} quiet, and you find only your own footsteps."},
+      {"weight": 2, "template": "You search the undergrowth and come away with little but brambles."},
+      {"weight": 2, "template": "Nothing stirs. You press on, watchful and empty-handed."}
+    ]
+  },
+  "explore_combat": {
+    "variables": ["enemy"],
+    "variants": [
+      {"weight": 3, "template": "The {enemy} lunges from the shadows, teeth bared for blood!"},
+      {"weight": 2, "template": "From the treeline the {enemy} erupts, and the air turns sharp with menace."},
+      {"weight": 2, "template": "Your path is blocked — the {enemy} stands between you and the way forward."},
+      {"weight": 2, "template": "The {enemy} has been stalking you. It chooses this moment to strike."}
+    ]
+  },
+  "explore_loot": {
+    "variables": ["item"],
+    "variants": [
+      {"weight": 3, "template": "Half-buried in the loam, you discover {item}."},
+      {"weight": 2, "template": "A glint catches your eye — {item}, left behind by some luckless predecessor."},
+      {"weight": 2, "template": "You prise open a weathered cache and find {item} within."},
+      {"weight": 2, "template": "By chance and patience you come upon {item}."}
+    ]
+  },
+  "explore_special": {
+    "variables": [],
+    "variants": [
+      {"weight": 3, "template": "Something ancient stirs in the air around you."},
+      {"weight": 2, "template": "The ground hums beneath your feet with a strange, old power."},
+      {"weight": 2, "template": "A sudden stillness falls, and the veil of the world seems to thin."}
+    ]
+  },
+  "travel": {
+    "variables": ["destination"],
+    "variants": [
+      {"weight": 3, "template": "You set out along the old road, and before long the gates of {destination} rise ahead."},
+      {"weight": 2, "template": "The miles fall away beneath your feet until you reach {destination}."},
+      {"weight": 2, "template": "You travel without mishap and arrive at {destination}."},
+      {"weight": 2, "template": "Following the landmarks by heart, you come at last to {destination}."}
+    ]
+  },
+  "attack": {
+    "variables": ["enemy"],
+    "variants": [
+      {"weight": 3, "template": "You close the distance and strike at the {enemy}."},
+      {"weight": 2, "template": "Your blow lashes out, aimed to break the {enemy}'s guard."},
+      {"weight": 2, "template": "You circle, then lunge at the {enemy}."}
+    ]
+  },
+  "breakthrough_success": {
+    "variables": ["realm", "season"],
+    "variants": [
+      {"weight": 3, "template": "A wall inside you shatters, and you step forward into the {realm} realm."},
+      {"weight": 2, "template": "The bottleneck yields at last. You have entered the {realm} realm."},
+      {"weight": 2, "template": "In a rush of {season} Qi, you break through to the {realm} realm."},
+      {"weight": 2, "template": "Your foundation holds, your spirit soars, and the {realm} realm opens before you."}
+    ]
+  },
+  "breakthrough_failure": {
+    "variables": ["season"],
+    "variants": [
+      {"weight": 3, "template": "The bottleneck refuses to yield, and you recoil, foundation trembling."},
+      {"weight": 2, "template": "Your Qi scatters against the barrier. Not this time."},
+      {"weight": 2, "template": "You reach for the next realm and fall short, gasping."},
+      {"weight": 2, "template": "The {season} air turns against you; the breakthrough slips away.", "when": {"field": "season", "op": "ne", "value": "Spring"}}
+    ]
+  },
+  "death": {
+    "variables": ["cause", "age", "season"],
+    "variants": [
+      {"weight": 3, "template": "At the age of {age}, {cause}. Your road ends here."},
+      {"weight": 2, "template": "{cause}. One more name the {season} winds will carry away."},
+      {"weight": 2, "template": "The heavens close their book on you: {cause}, at {age}."},
+      {"weight": 2, "template": "{cause}. Thus ends a journey begun in hope."}
+    ]
+  },
+  "describe_location": {
+    "variables": ["name", "danger", "season"],
+    "variants": [
+      {"weight": 3, "template": "{name} sprawls before you, {danger} and full of {season} light."},
+      {"weight": 2, "template": "You stand within {name}; the air here is {danger}, and the {season} has left its mark."},
+      {"weight": 2, "template": "{name}. A {danger} place, made strange by the turn of {season}."},
+      {"weight": 2, "template": "Even in {season}, {name} keeps a {danger} watch over all who enter.", "when": {"field": "season", "op": "ne", "value": "Winter"}}
+    ]
+  },
+  "describe_npc": {
+    "variables": ["name", "tier", "morality"],
+    "variants": [
+      {"weight": 3, "template": "{name} regards you as {tier}, their {morality} bearing unmistakable."},
+      {"weight": 2, "template": "There is a {morality} cast to {name}, and between you hangs the weight of {tier}."},
+      {"weight": 2, "template": "{name} watches with the calm of the {morality}; to them you are {tier}."},
+      {"weight": 2, "template": "{name} — {morality} to the core, and {tier} toward you.", "when": {"field": "tier", "op": "ne", "value": "hostile"}}
+    ]
+  },
+  "describe_item": {
+    "variables": ["item", "rarity"],
+    "variants": [
+      {"weight": 3, "template": "The {item} is {rarity} work, its edges carrying a quiet history."},
+      {"weight": 2, "template": "You turn the {item} over — a {rarity} piece if ever you saw one."},
+      {"weight": 2, "template": "The {item} rests in your palm, unmistakably {rarity} in make."},
+      {"weight": 2, "template": "A {rarity} find: the {item} gleams with promise."}
+    ]
+  },
+  "describe_technique": {
+    "variables": ["technique", "dao"],
+    "variants": [
+      {"weight": 3, "template": "The {technique} unfolds in your mind, a path of the {dao}."},
+      {"weight": 2, "template": "{technique} — a technique that leans toward the {dao}."},
+      {"weight": 2, "template": "You study the {technique}, feeling the {dao} stir in answer."},
+      {"weight": 2, "template": "Of all the arts of the {dao}, the {technique} suits you best."}
+    ]
+  }
+}

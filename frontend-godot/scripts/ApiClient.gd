@@ -7,6 +7,7 @@ class_name ApiClient
 ## a time (HTTPRequest is single-flight), guarded by ``_busy``.
 
 signal state_loaded(state: Dictionary)
+signal meta_loaded(meta: Dictionary)
 signal action_completed(result: Dictionary)
 signal request_failed(message: String)
 
@@ -14,6 +15,7 @@ const BASE_URL := "http://127.0.0.1:8000"
 
 var _http: HTTPRequest
 var _busy := false
+var _expecting_meta := false
 
 
 func _ready() -> void:
@@ -58,19 +60,34 @@ func load_game(slot: String = "default") -> void:
 	send_action({"action": "LOAD", "slot": slot})
 
 
-func new_game(player_name: String = "Daoist", seed_value = null) -> void:
+func new_game(player_name: String = "Daoist", seed_value = null, origin_id = null, hardcore: bool = true) -> void:
 	if _busy:
 		request_failed.emit("Please wait for the current action to finish.")
 		return
 	_busy = true
 	var headers := ["Content-Type: application/json"]
-	var payload := {"player_name": player_name}
+	var payload := {"player_name": player_name, "hardcore": hardcore}
 	if seed_value != null:
 		payload["seed"] = seed_value
+	if origin_id != null:
+		payload["origin_id"] = origin_id
 	var err := _http.request(BASE_URL + "/new-game", headers, HTTPClient.METHOD_POST, JSON.stringify(payload))
 	if err != OK:
 		_busy = false
 		request_failed.emit("Could not reach backend (new-game). Is uvicorn running? [%s]" % err)
+
+
+func fetch_meta() -> void:
+	if _busy:
+		request_failed.emit("Please wait for the current action to finish.")
+		return
+	_busy = true
+	_expecting_meta = true
+	var err := _http.request(BASE_URL + "/meta")
+	if err != OK:
+		_busy = false
+		_expecting_meta = false
+		request_failed.emit("Could not reach backend (meta). Is uvicorn running? [%s]" % err)
 
 
 func _on_request_completed(result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
@@ -89,8 +106,12 @@ func _on_request_completed(result: int, response_code: int, _headers: PackedStri
 		request_failed.emit("API returned unexpected payload.")
 		return
 
-	# Results carry an "event"; state snapshots do not.
-	if parsed.has("event"):
+	# Results carry an "event"; state snapshots do not. Meta snapshots are routed
+	# by the in-flight request type (``fetch_meta``) instead of payload shape.
+	if _expecting_meta:
+		_expecting_meta = false
+		meta_loaded.emit(parsed)
+	elif parsed.has("event"):
 		action_completed.emit(parsed)
 	else:
 		state_loaded.emit(parsed)

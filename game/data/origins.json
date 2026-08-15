@@ -1,0 +1,42 @@
+[
+  {
+    "id": "orphan",
+    "display_name": "Orphan",
+    "cost": 0,
+    "dao_id": "sword_dao",
+    "starting_skills": ["iron_fist", "flowing_step"],
+    "stat_modifiers": {},
+    "story_hook": "A street child of the outer provinces, you have nothing to your name but a stubborn will to rise.",
+    "description": "The baseline path: no birthright, no backing, only what you carve out for yourself."
+  },
+  {
+    "id": "noble_scion",
+    "display_name": "Noble Scion",
+    "cost": 20,
+    "dao_id": "astral_dao",
+    "starting_skills": ["iron_fist", "flowing_step", "spirit_palm"],
+    "stat_modifiers": {"gold": 200, "reputation": 15},
+    "story_hook": "Born to a fading house, you carry a name that once commanded armies — and the debts to match.",
+    "description": "Wealth, a famous name, and the Star Dao — but your house watches your every step."
+  },
+  {
+    "id": "sect_foundling",
+    "display_name": "Sect Foundling",
+    "cost": 20,
+    "dao_id": "verdant_dao",
+    "starting_skills": ["iron_fist", "flowing_step", "nine_yang_domain"],
+    "stat_modifiers": {"comprehension": 5, "body_strength": 3, "foundation_quality": 10},
+    "story_hook": "Left at the sect gates as an infant, you were raised in the shadow of the mountain hall.",
+    "description": "A sect upbringing sharpens your comprehension and steadies your foundation."
+  },
+  {
+    "id": "fallen_immortal",
+    "display_name": "Fallen Immortal",
+    "cost": 50,
+    "dao_id": "time_dao",
+    "starting_skills": ["iron_fist", "flowing_step", "iron_sword_intent"],
+    "stat_modifiers": {"attack": 10, "comprehension": 10, "max_qi": 30, "gold": 100},
+    "story_hook": "Once you stood among the deathless. Now, cast down and mortal, you begin again.",
+    "description": "Fragments of a deathless past linger: a sharper blade, a deeper well, and the Time Dao."
+  }
+]

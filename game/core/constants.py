@@ -14,6 +14,10 @@ from __future__ import annotations
 from enum import StrEnum
 from typing import Any, Dict
 
+# Game "modes" gate which actions are valid (exploration vs a single combat).
+MODE_EXPLORE = "explore"
+MODE_COMBAT = "combat"
+
 
 class Action(StrEnum):
     """Canonical action identifiers produced by the command router.
@@ -62,6 +66,14 @@ class Action(StrEnum):
     UPGRADE_TALENT = "UPGRADE_TALENT"
     CLOSED_DOOR = "CLOSED_DOOR"
     REPAIR_ITEM = "REPAIR_ITEM"
+    GATHER = "GATHER"
+    REFINE = "REFINE"
+    ENTER_REALM = "ENTER_REALM"
+    REALM_ADVANCE = "REALM_ADVANCE"
+    REALM_LEAVE = "REALM_LEAVE"
+    TOURNAMENT = "TOURNAMENT"
+    DAO_VIEW = "DAO_VIEW"
+    DAO_AWAKEN = "DAO_AWAKEN"
     EXPORT_SAVE = "EXPORT_SAVE"
     IMPORT_SAVE = "IMPORT_SAVE"
     SAVE = "SAVE"
@@ -119,6 +131,13 @@ class EventType(StrEnum):
     TALENT_UPGRADED = "TALENT_UPGRADED"
     CLOSED_DOOR_RESULT = "CLOSED_DOOR_RESULT"
     REPAIR_RESULT = "REPAIR_RESULT"
+    GATHER_RESULT = "GATHER_RESULT"
+    REFINE_RESULT = "REFINE_RESULT"
+    REALM_ENTERED = "REALM_ENTERED"
+    REALM_ROOM = "REALM_ROOM"
+    REALM_COMPLETED = "REALM_COMPLETED"
+    DAO_VIEW = "DAO_VIEW"
+    DAO_AWAKENED = "DAO_AWAKENED"
     SAVE_EXPORTED = "SAVE_EXPORTED"
     SAVE_IMPORTED = "SAVE_IMPORTED"
     HELP = "HELP"
@@ -145,8 +164,20 @@ AVAILABLE_SYSTEMS: frozenset[str] = frozenset({
     "sparring",
     "sects",
     "quests",
+    "gather",
+    "refine",
+    "secret_realm",
+    "tournament",
 })
 
+
+# The Dao a brand-new cultivator begins with before any Dao awakening. Must be a
+# valid id in ``data/daos.json`` (pinned by a test).
+DEFAULT_DAO_ID = "sword_dao"
+
+# The free starting origin every new run falls back to when none (or an
+# unaffordable one) is chosen. Must be a valid id in ``data/origins.json``.
+DEFAULT_ORIGIN_ID = "orphan"
 
 # Initial player template. Kept here (rather than hard-coded in the engine) so a
 # future save/character-creation system can supply a different starting sheet.
@@ -158,6 +189,7 @@ STARTING_PLAYER: Dict[str, Any] = {
     "attack": 15,
     "defense": 5,
     "path": "Unassigned",
+    "dao_id": DEFAULT_DAO_ID,
     "foundation_quality": 50,
     "body_strength": 10,
     "soul_strength": 10,

@@ -156,6 +156,33 @@ class QuestSystem:
             )
         return entries
 
+    def completed_count(self) -> int:
+        """Return how many quests have been completed (used by the run summary)."""
+        return sum(
+            1 for state in self._state.values() if state.get("status") == self.STATUS_COMPLETED
+        )
+
+    def objective_active(self, event_type: str) -> bool:
+        """Return ``True`` when any active quest has an objective of ``event_type``."""
+        return self._any_objective_with(event_type, self.STATUS_ACTIVE)
+
+    def objective_completed(self, event_type: str) -> bool:
+        """Return ``True`` when a quest with an ``event_type`` objective is done."""
+        return self._any_objective_with(event_type, self.STATUS_COMPLETED)
+
+    def _any_objective_with(self, event_type: str, status: str) -> bool:
+        for quest_id, state in self._state.items():
+            if state.get("status") != status:
+                continue
+            for objective in self._defs.get(quest_id, {}).get("objectives", []):
+                if objective.get("type") == event_type:
+                    return True
+        return False
+
+    def act_end(self, quest_id: str) -> str:
+        """Return the campaign act this quest concludes (``""`` if none)."""
+        return str(self._defs.get(quest_id, {}).get("act_end", ""))
+
     def _all_objectives_met(self, quest_id: str) -> bool:
         definition = self._defs[quest_id]
         state = self._state[quest_id]

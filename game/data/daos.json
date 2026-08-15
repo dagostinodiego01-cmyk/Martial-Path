@@ -1,0 +1,98 @@
+[
+  {
+    "id": "sword_dao",
+    "display_name": "Sword Dao",
+    "affinities": ["metal"],
+    "counters": ["verdant_dao"],
+    "countered_by": ["flame_dao"],
+    "description": "The way of the edge: a single, unbending will that cleaves all that grows."
+  },
+  {
+    "id": "verdant_dao",
+    "display_name": "Verdant Dao",
+    "affinities": ["wood"],
+    "counters": ["mountain_dao"],
+    "countered_by": ["sword_dao"],
+    "description": "The way of ten thousand living things: growth that breaks stone and endures."
+  },
+  {
+    "id": "mountain_dao",
+    "display_name": "Mountain Dao",
+    "affinities": ["earth"],
+    "counters": ["tide_dao"],
+    "countered_by": ["verdant_dao"],
+    "description": "The way of the immovable peak: stillness that banks the flood."
+  },
+  {
+    "id": "tide_dao",
+    "display_name": "Tide Dao",
+    "affinities": ["water"],
+    "counters": ["flame_dao"],
+    "countered_by": ["mountain_dao"],
+    "description": "The way of the endless current: patience that quenches every fire."
+  },
+  {
+    "id": "flame_dao",
+    "display_name": "Flame Dao",
+    "affinities": ["fire"],
+    "counters": ["sword_dao"],
+    "countered_by": ["tide_dao"],
+    "description": "The way of the consuming blaze: heat that melts even tempered steel."
+  },
+  {
+    "id": "time_dao",
+    "display_name": "Time Dao",
+    "affinities": [],
+    "counters": ["space_dao"],
+    "countered_by": ["astral_dao"],
+    "description": "The way of the turning years: time bends all distance to nothing."
+  },
+  {
+    "id": "space_dao",
+    "display_name": "Space Dao",
+    "affinities": [],
+    "counters": ["karma_dao"],
+    "countered_by": ["time_dao"],
+    "description": "The way of the boundless span: distance that severs every binding thread."
+  },
+  {
+    "id": "karma_dao",
+    "display_name": "Karma Dao",
+    "affinities": [],
+    "counters": ["blood_dao"],
+    "countered_by": ["space_dao"],
+    "description": "The way of cause and consequence: every debt, repaid."
+  },
+  {
+    "id": "blood_dao",
+    "display_name": "Blood Dao",
+    "affinities": [],
+    "counters": ["nether_dao"],
+    "countered_by": ["karma_dao"],
+    "description": "The way of the crimson tide: vitality taken and given by force."
+  },
+  {
+    "id": "nether_dao",
+    "display_name": "Nether Dao",
+    "affinities": [],
+    "counters": ["astral_dao"],
+    "countered_by": ["blood_dao"],
+    "description": "The way of the yin abyss: shadow that swallows the light."
+  },
+  {
+    "id": "astral_dao",
+    "display_name": "Astral Dao",
+    "affinities": [],
+    "counters": ["time_dao"],
+    "countered_by": ["nether_dao"],
+    "description": "The way of the fixed star: a light that outlasts even time."
+  },
+  {
+    "id": "void_dao",
+    "display_name": "Void Dao",
+    "affinities": [],
+    "counters": [],
+    "countered_by": [],
+    "description": "The unmanifest way: above the turning wheel, answerable to nothing."
+  }
+]

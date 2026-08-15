@@ -33,6 +33,7 @@ from game.core.constants import EventType
 from game.models.enemy import Enemy
 from game.models.player import Player
 from game.models.skill import Skill
+from game.systems.dao_system import DaoSystem
 from game.utils.rng import RNG
 
 if TYPE_CHECKING:
@@ -53,25 +54,44 @@ EVASION_CHANCE_PER_POINT = 0.01
 EVASION_CAP = 0.5
 # ponytail: a spar is called off once either side drops to this HP fraction.
 SPAR_END_HP_FRACTION = 0.25
+# Insight (B.5): a mid-fight resource built from comprehension and successful
+# exchanges. Active skills with ``insight_required > 0`` need this much insight
+# to fire, so intent techniques unlock as a fight's exchanges accumulate.
+INSIGHT_COMPREHENSION_DIVISOR = 10  # per-round drip: comprehension // 10
+INSIGHT_PER_HIT = 1                 # landing a damaging blow (incl. a counter wound)
+INSIGHT_PER_CRIT = 1                # extra for a critical hit
 
 
 class CombatSystem:
     """Resolves individual combat rounds between the player and an enemy."""
 
-    def __init__(self, rng: RNG, stats: Optional["StatsSystem"] = None) -> None:
+    def __init__(
+        self,
+        rng: RNG,
+        stats: Optional["StatsSystem"] = None,
+        dao: Optional[DaoSystem] = None,
+    ) -> None:
         self._rng = rng
         self._stats = stats
+        self._dao = dao
+
+    def begin_combat(self, player: Player) -> int:
+        """Reset the player's insight pool at the start of a fresh fight."""
+        player.insight = 0
+        return player.insight
 
     def attack(self, player: Player, enemy: Enemy, spar: bool = False) -> Dict[str, Any]:
         """Player performs a basic attack, then the enemy retaliates if alive."""
         raw = int(self._player_attack(player))
         is_crit, mult = self._roll_crit(player)
         raw = int(raw * mult)
-        dealt, _ = self._deal_damage(enemy, self._damage(raw, self._enemy_defense_value(enemy)))
+        dealt, _ = self._deal_damage(enemy, self._player_damage(player, enemy, raw))
         event: TurnEvent = {"actor": "PLAYER", "action": "ATTACK", "damage": dealt, "target_hp": enemy.hp}
         if is_crit:
             event["crit"] = True
-        return self._resolve_round(player, enemy, [event], spar)
+        events: List[TurnEvent] = [event]
+        self._record_insight(events, player, self._gain_exchange_insight(player, dealt, is_crit), "exchange")
+        return self._resolve_round(player, enemy, events, spar)
 
     def use_skill(self, player: Player, enemy: Enemy, skill: Skill, spar: bool = False) -> Dict[str, Any]:
         """Player invokes an active skill, then the enemy retaliates if alive.
@@ -163,7 +183,7 @@ class CombatSystem:
         raw = int(raw * mult)
         if execute and enemy.max_hp > 0 and enemy.hp < enemy.max_hp * EXECUTE_THRESHOLD:
             raw *= 2
-        dealt, absorbed = self._deal_damage(enemy, self._damage(raw, 0 if ignore_defense else self._enemy_defense_value(enemy)))
+        dealt, absorbed = self._deal_damage(enemy, self._player_damage(player, enemy, raw, ignore_defense=ignore_defense))
         event: TurnEvent = {"actor": "PLAYER", "action": "SKILL", "skill": skill.name, "damage": dealt, "target_hp": enemy.hp}
         if absorbed:
             event["shield_absorbed"] = absorbed
@@ -171,7 +191,9 @@ class CombatSystem:
             event["crit"] = True
         if life_steal and dealt > 0:
             event["life_steal"] = player.heal(dealt)
-        return [event]
+        events: List[TurnEvent] = [event]
+        self._record_insight(events, player, self._gain_exchange_insight(player, dealt, is_crit), "exchange")
+        return events
 
     # -- round resolution ------------------------------------------------
     def _resolve_round(self, player: Player, enemy: Enemy, events: List[TurnEvent], spar: bool = False) -> Dict[str, Any]:
@@ -181,6 +203,7 @@ class CombatSystem:
             player.heal(hp_regen)
         if qi_regen:
             player.restore_qi(qi_regen)
+        self._record_insight(events, player, self._gain_comprehension_insight(player), "comprehension")
         if not enemy.is_alive():
             if spar:
                 return self._spar_end(player, enemy, events, "SPAR_WON")
@@ -255,13 +278,13 @@ class CombatSystem:
             return {"actor": "ENEMY", "action": "POISON", "dot": tick, "turns": DOT_TURNS, "enemy_name": enemy.name}
         if kind == "heavy":
             dealt, _ = self._deal_damage(
-                player, self._damage(int(self._enemy_attack_value(enemy) * 1.5), self._player_defense(player))
+                player, self._enemy_damage(player, enemy, int(self._enemy_attack_value(enemy) * 1.5))
             )
             return {"actor": "ENEMY", "action": "HEAVY_ATTACK", "damage": dealt, "target_hp": player.hp, "enemy_name": enemy.name}
         return self._enemy_attack(player, enemy)
 
     def _enemy_attack(self, player: Player, enemy: Enemy) -> TurnEvent:
-        dealt, _ = self._deal_damage(player, self._damage(self._enemy_attack_value(enemy), self._player_defense(player)))
+        dealt, _ = self._deal_damage(player, self._enemy_damage(player, enemy, self._enemy_attack_value(enemy)))
         event: TurnEvent = {
             "actor": "ENEMY",
             "action": "ATTACK",
@@ -273,6 +296,10 @@ class CombatSystem:
         if counter and enemy.is_alive():
             counter_dealt, _ = self._deal_damage(enemy, int(counter["magnitude"]))
             event["counter_damage"] = counter_dealt
+            gained = self._gain_exchange_insight(player, counter_dealt, False)
+            if gained:
+                event["insight_gain"] = gained
+                event["insight_total"] = player.insight
         return event
 
     def _tick_enemy_statuses(self, enemy: Enemy, events: List[TurnEvent]) -> None:
@@ -302,6 +329,84 @@ class CombatSystem:
         status["turns"] -= 1
         if status["turns"] <= 0:
             del target.statuses[effect]
+
+    # -- insight (B.5) ---------------------------------------------------
+    def _gain_comprehension_insight(self, player: Player) -> int:
+        """Grant the per-round insight drip derived from comprehension."""
+        gained = max(0, player.comprehension // INSIGHT_COMPREHENSION_DIVISOR)
+        if gained:
+            player.insight += gained
+        return gained
+
+    def _gain_exchange_insight(self, player: Player, dealt: int, is_crit: bool) -> int:
+        """Grant insight for a successful exchange and return the amount gained."""
+        gained = 0
+        if dealt > 0:
+            gained += INSIGHT_PER_HIT
+        if is_crit:
+            gained += INSIGHT_PER_CRIT
+        if gained:
+            player.insight += gained
+        return gained
+
+    def _record_insight(
+        self,
+        events: List[TurnEvent],
+        player: Player,
+        gained: int,
+        source: str,
+    ) -> None:
+        """Append an insight turn event when a source granted some insight."""
+        if gained:
+            events.append(
+                {
+                    "actor": "PLAYER",
+                    "action": "INSIGHT",
+                    "gain": gained,
+                    "total": player.insight,
+                    "source": source,
+                }
+            )
+
+    # -- dao & realm pressure -------------------------------------------
+    def _offense_scale(self, player: Player, enemy: Enemy, attacker_is_player: bool) -> float:
+        """Suppression + Dao-matchup multiplier for the attacker's outgoing damage."""
+        if self._dao is None:
+            return 1.0
+        pressure = self._dao.pressure(player, enemy)
+        if attacker_is_player:
+            return pressure["player_multiplier"] * self._dao.matchup(player.dao_id, enemy.dao_id)
+        return pressure["enemy_multiplier"] * self._dao.matchup(enemy.dao_id, player.dao_id)
+
+    def _defense_scale(self, player: Player, enemy: Enemy, defender_is_player: bool) -> float:
+        """Suppression multiplier for the defender's effective defense."""
+        if self._dao is None:
+            return 1.0
+        pressure = self._dao.pressure(player, enemy)
+        return pressure["player_multiplier"] if defender_is_player else pressure["enemy_multiplier"]
+
+    def _player_damage(self, player: Player, enemy: Enemy, raw: int, ignore_defense: bool = False) -> int:
+        """Player's attack value scaled by realm pressure and Dao matchup."""
+        attack = int(raw * self._offense_scale(player, enemy, True))
+        defense = 0 if ignore_defense else int(self._enemy_defense_value(enemy) * self._defense_scale(player, enemy, False))
+        return self._damage(attack, defense)
+
+    def _enemy_damage(self, player: Player, enemy: Enemy, raw: int) -> int:
+        """Enemy's attack value scaled by realm pressure and Dao matchup."""
+        attack = int(raw * self._offense_scale(player, enemy, False))
+        defense = int(self._player_defense(player) * self._defense_scale(player, enemy, True))
+        return self._damage(attack, defense)
+
+    def _pressure_view(self, player: Player, enemy: Enemy) -> Dict[str, Any]:
+        """UI-visible realm-pressure and Dao match-up summary for the current round."""
+        if self._dao is None:
+            return {"gap": 0, "player_multiplier": 1.0, "enemy_multiplier": 1.0}
+        pressure = self._dao.pressure(player, enemy)
+        pressure["player_dao"] = self._dao.dao_name(player.dao_id)
+        pressure["enemy_dao"] = self._dao.dao_name(enemy.dao_id)
+        pressure["player_offense"] = round(self._offense_scale(player, enemy, True), 2)
+        pressure["enemy_offense"] = round(self._offense_scale(player, enemy, False), 2)
+        return pressure
 
     # -- damage & stats --------------------------------------------------
     def _deal_damage(self, target: Any, amount: int) -> tuple[int, int]:
@@ -368,6 +473,8 @@ class CombatSystem:
             "enemy_hp": enemy.hp,
             "enemy_max_hp": enemy.max_hp,
             "enemy_name": enemy.name,
+            "insight": player.insight,
+            "pressure": self._pressure_view(player, enemy),
         }
 
     def _victory(self, player: Player, enemy: Enemy, events: List[TurnEvent]) -> Dict[str, Any]:

@@ -607,7 +607,10 @@
     "type": "material",
     "effect": "none",
     "magnitude": 0,
-    "description": "A Xiantian-grade herb prized by alchemists and refiners. Valuable to the right buyer."
+    "description": "A Xiantian-grade herb prized by alchemists and refiners. Valuable to the right buyer.",
+    "category": "herb",
+    "rarity": "low_spirit_grade",
+    "value": 12
   },
   {
     "id": "nine_revolutions_essence",
@@ -1731,5 +1734,280 @@
     "effect": "none",
     "magnitude": 0,
     "description": "A Houtian-grade petal prized by alchemists and refiners. Valuable to the right buyer."
+  },
+  {
+    "id": "spirit_grass",
+    "name": "Spirit Grass",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "category": "herb",
+    "rarity": "mortal_grade",
+    "value": 5,
+    "description": "A common herb laced with faint spiritual energy. The base of countless simple pills."
+  },
+  {
+    "id": "frost_herb",
+    "name": "Frost Herb",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "category": "herb",
+    "rarity": "low_spirit_grade",
+    "value": 12,
+    "description": "A cool-stemmed herb that grows where mist clings to stone. Steadies the qi in a refining cauldron."
+  },
+  {
+    "id": "flame_bloom",
+    "name": "Flame Bloom",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "category": "herb",
+    "rarity": "middle_spirit_grade",
+    "value": 25,
+    "description": "A hot-breathed blossom found near volcanic stone. Its heat tempers potent elixirs."
+  },
+  {
+    "id": "moon_herb",
+    "name": "Moon Herb",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "category": "herb",
+    "rarity": "high_spirit_grade",
+    "value": 60,
+    "description": "A pale herb that opens only under moonlight. Prized by alchemists for the finest elixirs."
+  },
+  {
+    "id": "jade_bamboo_shoot",
+    "name": "Jade Bamboo Shoot",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "category": "herb",
+    "rarity": "mortal_grade",
+    "value": 5,
+    "description": "A young bamboo shoot that glints faintly green. The first herb a travelling alchemist learns to cut."
+  },
+  {
+    "id": "cloud_pine_needle",
+    "name": "Cloud Pine Needle",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "category": "herb",
+    "rarity": "mortal_grade",
+    "value": 5,
+    "description": "Silvery needles shed by the cloud pines of the beast mountains. A humble but steady base."
+  },
+  {
+    "id": "nine_orifice_flower",
+    "name": "Nine Orifice Flower",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "category": "herb",
+    "rarity": "low_spirit_grade",
+    "value": 12,
+    "description": "A blossom whose nine pores drink mist and exhale qi. Grows only on the valley's rim."
+  },
+  {
+    "id": "cloud_mist_tea_leaf",
+    "name": "Cloud Mist Tea Leaf",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "category": "herb",
+    "rarity": "low_spirit_grade",
+    "value": 12,
+    "description": "Tea leaves cured in the valley's cloud banks. Soothes a turbulent foundation."
+  },
+  {
+    "id": "sunfire_ginseng",
+    "name": "Sunfire Ginseng",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "category": "herb",
+    "rarity": "middle_spirit_grade",
+    "value": 25,
+    "description": "A ginseng root that pulses with trapped sunlight. Prized for mid-grade elixirs."
+  },
+  {
+    "id": "deep_sea_coral",
+    "name": "Deep Sea Coral",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "category": "herb",
+    "rarity": "middle_spirit_grade",
+    "value": 25,
+    "description": "Coral harvested from the southern trenches, dense with cold water qi."
+  },
+  {
+    "id": "phoenix_feather_bloom",
+    "name": "Phoenix Feather Bloom",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "category": "herb",
+    "rarity": "high_spirit_grade",
+    "value": 60,
+    "description": "A bloom the colour of embers, said to grow where a phoenix once preened."
+  },
+  {
+    "id": "starlight_lotus",
+    "name": "Starlight Lotus",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "category": "herb",
+    "rarity": "high_spirit_grade",
+    "value": 60,
+    "description": "A lotus that opens only under starlight, drinking the mystic realm's glow."
+  },
+  {
+    "id": "vermilion_jade_root",
+    "name": "Vermilion Jade Root",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "category": "herb",
+    "rarity": "earth_grade",
+    "value": 150,
+    "description": "A root veined like carved jade, heavy with the southern kingdom's fire."
+  },
+  {
+    "id": "nine_furnace_ember",
+    "name": "Nine Furnace Ember",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "category": "herb",
+    "rarity": "earth_grade",
+    "value": 150,
+    "description": "An ember that never cools, harvested from the lips of the kingdom's furnaces."
+  },
+  {
+    "id": "asura_blood_grass",
+    "name": "Asura Blood Grass",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "category": "herb",
+    "rarity": "earth_grade",
+    "value": 150,
+    "description": "Blade-edged grass that drinks the battlefield. Sharp and vital in equal measure."
+  },
+  {
+    "id": "rival_vine",
+    "name": "Rival Vine",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "category": "herb",
+    "rarity": "earth_grade",
+    "value": 150,
+    "description": "A thorned vine that twists toward competing stems — a fierce catalyst in a cauldron."
+  },
+  {
+    "id": "zen_heart_herb",
+    "name": "Zen Heart Herb",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "category": "herb",
+    "rarity": "earth_grade",
+    "value": 150,
+    "description": "An herb that grows in the monastery's still gardens, calming the mind that refines it."
+  },
+  {
+    "id": "blood_slaughter_fern",
+    "name": "Blood Slaughter Fern",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "category": "herb",
+    "rarity": "heaven_grade",
+    "value": 400,
+    "description": "A fern that flourishes on the steppes' killing grounds. Potent and dangerous."
+  },
+  {
+    "id": "five_element_blossom",
+    "name": "Five Element Blossom",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "category": "herb",
+    "rarity": "heaven_grade",
+    "value": 400,
+    "description": "A single bloom that carries all five elements in perfect balance."
+  },
+  {
+    "id": "sea_of_miracles_pearl",
+    "name": "Sea of Miracles Pearl",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "category": "herb",
+    "rarity": "heaven_grade",
+    "value": 400,
+    "description": "A pearl formed where the Sea of Miracles laps against drowned ruins."
+  },
+  {
+    "id": "ascension_gate_reed",
+    "name": "Ascension Gate Reed",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "category": "herb",
+    "rarity": "heaven_grade",
+    "value": 400,
+    "description": "A reed that hums at the threshold of ascension, threaded with gate-light."
+  },
+  {
+    "id": "demon_blood_lotus",
+    "name": "Demon Blood Lotus",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "category": "herb",
+    "rarity": "dao_grade",
+    "value": 1000,
+    "description": "A black lotus that blooms in demon blood. The heart of the continent's forbidden alchemy."
+  },
+  {
+    "id": "nether_ghost_grass",
+    "name": "Nether Ghost Grass",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "category": "herb",
+    "rarity": "dao_grade",
+    "value": 1000,
+    "description": "Pale grass that grows on corpse-qi and whispers. Never gathered by the faint-hearted."
+  },
+  {
+    "id": "abyssal_bone_flower",
+    "name": "Abyssal Bone Flower",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "category": "herb",
+    "rarity": "dao_grade",
+    "value": 1000,
+    "description": "A flower that takes root in ancient bone, blooming only in the demon continent's abyss."
+  },
+  {
+    "id": "holy_demon_heartroot",
+    "name": "Holy Demon Heartroot",
+    "type": "material",
+    "effect": "none",
+    "magnitude": 0,
+    "category": "herb",
+    "rarity": "dao_grade",
+    "value": 1000,
+    "description": "A root that beats like a heart when pulled from the soil — the rarest demonic ingredient."
   }
 ]

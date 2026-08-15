@@ -54,6 +54,13 @@ class Player:
     # breakthrough); the rest are tracked display values for now. All rules live
     # in the systems, never in this model.
     path: str = "Unassigned"
+    # The cultivator's Dao (see ``data/daos.json``). Defaults to the starter Dao;
+    # a later "Dao awakening" beat can swap it. ``dao_system.DaoSystem`` reads it
+    # for realm-pressure and counter-graph combat math.
+    dao_id: str = "sword_dao"
+    # The starting origin that shaped this run (see ``data/origins.json``).
+    # Persisted so a loaded run (and the chronicle) remembers where it began.
+    origin_id: str = "orphan"
     foundation_quality: int = 50
     body_strength: int = 10
     soul_strength: int = 10
@@ -85,6 +92,10 @@ class Player:
     # timed status effects (e.g. counter). Reset by the engine on combat end.
     shield: int = 0
     statuses: Dict[str, Dict[str, float]] = field(default_factory=dict)
+    # Insight (B.5): a mid-fight resource built from comprehension and successful
+    # exchanges; gates techniques with ``insight_required``. Transient like
+    # ``shield``/``statuses`` -- reset each fight, never persisted.
+    insight: int = 0
 
     def __post_init__(self) -> None:
         """Keep legacy single-progress construction aligned with body progress."""
@@ -138,6 +149,8 @@ class Player:
             "speed": self.speed,
             "evasion": self.evasion,
             "path": self.path,
+            "dao_id": self.dao_id,
+            "origin_id": self.origin_id,
             "foundation_quality": self.foundation_quality,
             "body_strength": self.body_strength,
             "soul_strength": self.soul_strength,
@@ -178,6 +191,8 @@ class Player:
             "speed": self.speed,
             "evasion": self.evasion,
             "path": self.path,
+            "dao_id": self.dao_id,
+            "origin_id": self.origin_id,
             "foundation_quality": self.foundation_quality,
             "body_strength": self.body_strength,
             "soul_strength": self.soul_strength,
@@ -218,6 +233,8 @@ class Player:
             speed=int(data.get("speed", 10)),
             evasion=int(data.get("evasion", 5)),
             path=str(data.get("path", "Unassigned")),
+            dao_id=str(data.get("dao_id", "sword_dao")),
+            origin_id=str(data.get("origin_id", "orphan")),
             foundation_quality=int(data.get("foundation_quality", 50)),
             body_strength=int(data.get("body_strength", 10)),
             soul_strength=int(data.get("soul_strength", 10)),
