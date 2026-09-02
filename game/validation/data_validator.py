@@ -12,10 +12,11 @@ This module reads data only; it never mutates the registry or touches gameplay.
 from __future__ import annotations
 
 import re
-from typing import Any, Dict, Iterable, List, Optional, Set
+from typing import Any, Dict, Iterable, List, Optional, Set, Tuple
 
 from game.core.constants import AVAILABLE_SYSTEMS
 from game.data.registry import GameDataRegistry
+from game.systems.combat_system import COMBO_ROLES
 from game.systems.origin_system import STAT_FIELDS
 from game.validation.narrative_lint import lint_narrative_templates
 from game.validation.validation_error import ValidationResult
@@ -49,6 +50,7 @@ def validate_all_game_data(registry: Optional[GameDataRegistry] = None) -> Valid
     _validate_daos(registry, result)
     _validate_skills(registry, result)
     _validate_narrative_templates(registry, result)
+    _validate_lore_glossary(registry, result)
     _validate_origins(registry, result)
     _validate_gathering(registry, result)
     _validate_refining_recipes(registry, result)
@@ -858,6 +860,42 @@ def _validate_skills(registry: GameDataRegistry, result: ValidationResult) -> No
             result.add("bad_skill", f"skill '{skill_id}' insight_required must be a non-negative integer")
         elif insight_required > 0 and skill.get("type") != "active":
             result.add("bad_skill", f"skill '{skill_id}' insight_required is only meaningful on active skills")
+        # B.6 combo roles: an optional stance role on active combat techniques.
+        # Chain order is fixed (opening -> response -> finisher) and enforced by
+        # CombatSystem; data declares only the role.
+        role = skill.get("combo_role")
+        if role is not None:
+            if role not in COMBO_ROLES:
+                result.add("bad_skill", f"skill '{skill_id}' combo_role '{role}' must be one of {sorted(COMBO_ROLES)}")
+            elif skill.get("type") != "active":
+                result.add("bad_skill", f"skill '{skill_id}' combo_role is only meaningful on active skills")
+
+
+def _validate_lore_glossary(registry: GameDataRegistry, result: ValidationResult) -> None:
+    """A.6: glossary entries must be well-formed, unique per slot, and slot-valid."""
+    from game.validation.narrative_lint import GLOSSARY_SLOTS
+
+    seen: Set[Tuple[str, str]] = set()
+    for entry in registry.lore_glossary:
+        if not isinstance(entry, dict):
+            result.add("bad_glossary", "lore glossary entry must be an object")
+            continue
+        term = entry.get("term")
+        slot = entry.get("slot", "any")
+        if not isinstance(term, str) or not term:
+            result.add("bad_glossary", "lore glossary entry is missing a non-empty 'term'")
+            continue
+        if not isinstance(slot, str) or not slot:
+            result.add("bad_glossary", f"glossary term '{term}' has an invalid 'slot'")
+            continue
+        if slot != "any" and slot not in GLOSSARY_SLOTS:
+            result.add("bad_glossary", f"glossary term '{term}' declares unknown slot '{slot}'")
+        key = (slot, term)
+        if key in seen:
+            result.add("duplicate_id", f"lore glossary: duplicate term '{term}' for slot '{slot}'")
+        seen.add(key)
+        if not isinstance(entry.get("summary", ""), str):
+            result.add("bad_glossary", f"glossary term '{term}' summary must be a string")
 
 
 def _validate_narrative_templates(registry: GameDataRegistry, result: ValidationResult) -> None:

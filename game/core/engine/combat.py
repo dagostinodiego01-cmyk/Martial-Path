@@ -4,6 +4,7 @@ from __future__ import annotations
 from typing import Any, Dict
 
 from game.core.constants import Action, EventType, MODE_COMBAT, MODE_EXPLORE
+from game.systems.combat_system import COMBO_ROLES
 
 
 class CombatMixin:
@@ -76,6 +77,19 @@ class CombatMixin:
                 "insight": self.player.insight,
                 "skill_id": skill_id,
             }
+        # B.6 stances: an out-of-sequence stance is refused with the reason (and
+        # the stance the fighter must return to) instead of silently dropping the
+        # banked chain. Neutral techniques (no combo_role) are allowed and simply
+        # let the chain go -- losing the flow is the cost, not a hard block.
+        next_role = self.combat.next_combo_role(self.player)
+        if next_role is not None and skill.combo_role not in ("", next_role):
+            return {
+                "event": EventType.ERROR,
+                "reason": "COMBO_OUT_OF_SEQUENCE",
+                "expected_role": next_role,
+                "combo_roles": list(COMBO_ROLES),
+                "skill_id": skill_id,
+            }
         qi_cost = self.stats.effective_qi_cost(skill, self.player)
         if self.player.qi < qi_cost:
             return {
@@ -128,6 +142,7 @@ class CombatMixin:
         self.player.statuses.clear()
         self.player.shield = 0
         self.player.insight = 0
+        self.player.combo_stage = 0
         self._combat_is_spar = False
 
         if outcome == "VICTORY":

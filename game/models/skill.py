@@ -25,6 +25,10 @@ class Skill:
             invoke this technique mid-fight. ``0`` (the default) means it can
             always be used once qi/cooldown allow. Intent techniques carry a
             positive value so they unlock as the fight's insight builds.
+        combo_role: Optional stance role for combo sequences (ROADMAP B.6):
+            ``"opening"``, ``"response"``, or ``"finisher"``. Landing these in
+            order grants escalating damage bonuses (see ``CombatSystem``);
+            empty string means the technique takes no stance.
         description: Flavour/help text (content, displayed by the UI).
     """
 
@@ -36,6 +40,7 @@ class Skill:
     cooldown: int
     qi_cost: int
     insight_required: int = 0
+    combo_role: str = ""
     description: str = ""
 
     @classmethod
@@ -50,6 +55,7 @@ class Skill:
             cooldown=int(data.get("cooldown", 0)),
             qi_cost=int(data.get("qi_cost", 0)),
             insight_required=int(data.get("insight_required", 0)),
+            combo_role=str(data.get("combo_role", "")),
             description=data.get("description", ""),
         )
 

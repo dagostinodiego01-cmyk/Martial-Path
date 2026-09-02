@@ -86,6 +86,11 @@ class ViewsMixin:
             brief["cooldown_remaining"] = self._cooldowns.get(skill_id, 0)
             brief["affordable"] = self.player.qi >= int(brief.get("qi_cost", 0))
             brief["insight_met"] = self.player.insight >= int(brief.get("insight_required", 0))
+            expected_role = self.combat.next_combo_role(self.player)
+            brief["expected_combo_role"] = expected_role
+            brief["combo_ready"] = (
+                expected_role is not None and str(brief.get("combo_role", "")) == expected_role
+            )
             briefs.append(brief)
         return briefs
 
@@ -122,12 +127,13 @@ class ViewsMixin:
         data["shield"] = self.player.shield
         data["statuses"] = {k: dict(v) for k, v in self.player.statuses.items()}
         data["insight"] = self.player.insight
+        data["combo_stage"] = self.player.combo_stage
         return data
 
     def _skill_brief(self, skill_id: str) -> Dict[str, Any]:
         skill = self._skills.get(skill_id)
         if skill is None:
-            return {"id": skill_id, "name": skill_id, "type": "unknown"}
+            return {"id": skill_id, "name": skill_id, "type": "unknown", "combo_role": ""}
         return {
             "id": skill_id,
             "name": skill.name,
@@ -135,6 +141,7 @@ class ViewsMixin:
             "qi_cost": skill.qi_cost,
             "cooldown": skill.cooldown,
             "insight_required": skill.insight_required,
+            "combo_role": skill.combo_role,
             "description": skill.description,
             "narrative": self.narrative.describe_technique(
                 skill.name, self.dao.dao_name(self.player.dao_id)

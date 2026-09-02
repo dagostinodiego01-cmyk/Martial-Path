@@ -61,6 +61,14 @@ INSIGHT_COMPREHENSION_DIVISOR = 10  # per-round drip: comprehension // 10
 INSIGHT_PER_HIT = 1                 # landing a damaging blow (incl. a counter wound)
 INSIGHT_PER_CRIT = 1                # extra for a critical hit
 
+# Combos (B.6): the stance roles an active technique may declare. A chain of
+# opening -> response -> finisher grants escalating damage bonuses; using a
+# role out of order drops the chain. Sequencing/bonus tuning lives here; which
+# techniques carry which role lives in ``data/skills.json`` (``combo_role``).
+COMBO_ROLES = ("opening", "response", "finisher")
+COMBO_BONUS_PER_STAGE = 0.25  # damage bonus per completed chain stage (1.25x, 1.5x, 1.75x)
+COMBO_RESET_ROLES = frozenset({"none"})
+
 
 class CombatSystem:
     """Resolves individual combat rounds between the player and an enemy."""
@@ -70,14 +78,18 @@ class CombatSystem:
         rng: RNG,
         stats: Optional["StatsSystem"] = None,
         dao: Optional[DaoSystem] = None,
+        skills: Optional[Dict[str, Skill]] = None,
     ) -> None:
         self._rng = rng
         self._stats = stats
         self._dao = dao
+        # Technique catalogue (id -> Skill) for combo sequencing (B.6).
+        self._skills: Dict[str, Skill] = skills or {}
 
     def begin_combat(self, player: Player) -> int:
-        """Reset the player's insight pool at the start of a fresh fight."""
+        """Reset the player's insight pool and combo chain at the start of a fight."""
         player.insight = 0
+        player.combo_stage = 0
         return player.insight
 
     def attack(self, player: Player, enemy: Enemy, spar: bool = False) -> Dict[str, Any]:
@@ -100,6 +112,21 @@ class CombatSystem:
         time this is called the activation has already been paid for.
         """
         events = self._apply_active_skill(player, enemy, skill)
+        stage_before = player.combo_stage
+        expected = self.next_combo_role(player)
+        stage = self._advance_combo(player, skill)
+        if stage == 3:
+            # The opening -> response -> finisher chain completed: bank the
+            # flourish as a turn event and reset for the next sequence.
+            events.append({"actor": "PLAYER", "action": "COMBO_FINISH"})
+            player.combo_stage = 0
+        elif stage_before > 0 and stage == 0:
+            # A banked chain was broken (a neutral technique, or an
+            # out-of-sequence stance from a direct caller): surface the drop so
+            # frontends can narrate the lost flow.
+            events.append(
+                {"actor": "PLAYER", "action": "COMBO_DROPPED", "expected_role": expected, "used_role": skill.combo_role}
+            )
         return self._resolve_round(player, enemy, events, spar)
 
     def enemy_turn_only(self, player: Player, enemy: Enemy, spar: bool = False) -> Dict[str, Any]:
@@ -137,12 +164,13 @@ class CombatSystem:
     def _apply_active_skill(self, player: Player, enemy: Enemy, skill: Skill) -> List[TurnEvent]:
         """Apply ``skill``'s effect and return the turn events describing it."""
         effect = skill.effect
+        combo_mult = self._combo_multiplier(player, skill)
         if effect in ("damage", "true_damage", "aoe_damage"):
-            return self._hit(player, enemy, skill, ignore_defense=effect == "true_damage")
+            return self._hit(player, enemy, skill, ignore_defense=effect == "true_damage", combo_mult=combo_mult)
         if effect == "execute":
-            return self._hit(player, enemy, skill, execute=True)
+            return self._hit(player, enemy, skill, execute=True, combo_mult=combo_mult)
         if effect == "life_steal":
-            return self._hit(player, enemy, skill, life_steal=True)
+            return self._hit(player, enemy, skill, life_steal=True, combo_mult=combo_mult)
         if effect == "heal_self":
             healed = player.heal(int(self._player_attack(player) * skill.scaling))
             return [{"actor": "PLAYER", "action": "SKILL", "skill": skill.name, "healed": healed, "hp": player.hp}]
@@ -176,9 +204,10 @@ class CombatSystem:
         ignore_defense: bool = False,
         execute: bool = False,
         life_steal: bool = False,
+        combo_mult: float = 1.0,
     ) -> List[TurnEvent]:
         """Resolve a damage-dealing skill hit and return its event."""
-        raw = int(self._player_attack(player) * skill.scaling)
+        raw = int(self._player_attack(player) * skill.scaling * combo_mult)
         is_crit, mult = self._roll_crit(player)
         raw = int(raw * mult)
         if execute and enemy.max_hp > 0 and enemy.hp < enemy.max_hp * EXECUTE_THRESHOLD:
@@ -330,6 +359,54 @@ class CombatSystem:
         if status["turns"] <= 0:
             del target.statuses[effect]
 
+    # -- combos (B.6) ----------------------------------------------------
+    def next_combo_role(self, player: Player) -> Optional[str]:
+        """Return the stance role the chain currently expects, or ``None``.
+
+        ``None`` means any technique may be used (no chain banked and no
+        expectation set); otherwise the named role continues (or the engine may
+        refuse out-of-sequence stances to protect the banked chain).
+        """
+        stage = player.combo_stage
+        if stage <= 0:
+            return None
+        if stage < len(COMBO_ROLES):
+            return COMBO_ROLES[stage]
+        return None
+
+    def _combo_multiplier(self, player: Player, skill: Skill) -> float:
+        """Damage multiplier the banked chain grants ``skill`` before it lands.
+
+        Stage N of an opening -> response -> finisher chain multiplies any
+        damage-dealing technique by ``1 + N * COMBO_BONUS_PER_STAGE`` -- built-up
+        momentum flows into the next strike, so the finisher itself lands at the
+        top of the ladder. Called before the chain advances or resets.
+        """
+        if player.combo_stage <= 0:
+            return 1.0
+        return 1.0 + player.combo_stage * COMBO_BONUS_PER_STAGE
+
+    def _advance_combo(self, player: Player, skill: Skill) -> int:
+        """Advance (or reset) the stance chain after ``skill`` resolves.
+
+        ``opening`` arms stage 1, ``response`` continues to stage 2 when armed,
+        and ``finisher`` completes the chain (stage 3). A role out of sequence
+        drops the chain. The caller banks the ``COMBO_FINISH`` turn event and
+        resets to 0 when stage 3 is reached. Returns the new stage.
+        """
+        role = skill.combo_role
+        if role == "opening":
+            player.combo_stage = 1
+        elif role == "response" and player.combo_stage == 1:
+            player.combo_stage = 2
+        elif role == "finisher" and player.combo_stage == 2:
+            player.combo_stage = 3
+        else:
+            # A neutral technique or an out-of-sequence stance lets the flow go:
+            # the banked chain drops (surfaced as COMBO_DROPPED by the caller).
+            player.combo_stage = 0
+        return player.combo_stage
+
     # -- insight (B.5) ---------------------------------------------------
     def _gain_comprehension_insight(self, player: Player) -> int:
         """Grant the per-round insight drip derived from comprehension."""
@@ -474,6 +551,7 @@ class CombatSystem:
             "enemy_max_hp": enemy.max_hp,
             "enemy_name": enemy.name,
             "insight": player.insight,
+            "combo_stage": player.combo_stage,
             "pressure": self._pressure_view(player, enemy),
         }
 

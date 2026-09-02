@@ -96,6 +96,10 @@ class Player:
     # exchanges; gates techniques with ``insight_required``. Transient like
     # ``shield``/``statuses`` -- reset each fight, never persisted.
     insight: int = 0
+    # Combos (B.6): how many stages of the opening -> response -> finisher
+    # stance chain are currently banked (0-2; 3 wraps to 0 on completion).
+    # Transient like ``insight`` -- reset each fight, never persisted.
+    combo_stage: int = 0
 
     def __post_init__(self) -> None:
         """Keep legacy single-progress construction aligned with body progress."""

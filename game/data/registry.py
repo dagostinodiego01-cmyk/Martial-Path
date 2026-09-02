@@ -56,6 +56,7 @@ class GameDataRegistry:
     gathering: Dict[str, Any] = field(default_factory=dict)
     refining_recipes: List[Dict[str, Any]] = field(default_factory=list)
     secret_realm: List[Dict[str, Any]] = field(default_factory=list)
+    lore_glossary: List[Dict[str, Any]] = field(default_factory=list)
 
     @classmethod
     def load(cls) -> "GameDataRegistry":
@@ -89,6 +90,7 @@ class GameDataRegistry:
             gathering=_load_optional_object("gathering.json"),
             refining_recipes=_load_optional_collection("refining_recipes"),
             secret_realm=_load_optional_collection("secret_realm"),
+            lore_glossary=_load_optional_collection("lore_glossary"),
         )
 
     # -- id-indexed views (built on demand) ------------------------------

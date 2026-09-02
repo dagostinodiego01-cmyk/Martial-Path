@@ -3,7 +3,7 @@
 **Status:** vision + phased plan. Supersedes the closed `Tasks.md` (the 17-priority
 GROK-review backlog, now DONE). This document is the forward plan.
 
-**Last updated:** 2026-08-14.
+**Last updated:** 2026-09-02.
 
 ---
 
@@ -208,15 +208,26 @@ unlocks meaningfully change successive runs; procedural prose covers every actio
 #### A — Narrative engine full coverage
 - [ ] **A.5** Prose for 100% of actions/events (zero fallback "debug" strings in
   Godot). (Instrumentation test: every `EventType` has a template.)
-- [ ] **A.6** Voice consistency: tone guide + lore glossary enforced by validator
+- [x] **A.6** Voice consistency: tone guide + lore glossary enforced by validator
   (terminology whitelist, no Mad-Libs artifacts). (0 template errors; a "sameness"
   metric — min distinct variants across a 100-event run.)
+  `game/docs/VOICE_GUIDE.md` + `game/data/lore_glossary.json` (seeded from real
+  display names/ids) + 4 linter checks in `narrative_lint.py` (gamey terms,
+  brace artifacts, ≥2 variants/verb, glossary conformance); sameness property
+  test drives a 100-event mixed-action run (`tests/test_narrative_voice.py`).
 - [ ] **A.7** Authoring ergonomics: `tools/` linter for templates (unused vars,
   missing vars, unbalanced branches). (CI-checks on template data.)
 
 #### B — Dao combat full
-- [ ] **B.6** Stances + combos: techniques typed opening/response/finisher; chained
+- [x] **B.6** Stances + combos: techniques typed opening/response/finisher; chained
   sequences grant bonuses. (Combo system tested for balance and legibility.)
+  `combo_role` on 9 chain techniques (3 chains); each banked chain stage grants
+  +25% damage into the next technique (1.25x/1.5x/1.75x); neutral techniques
+  don't break a chain but don't advance it; engine blocks a wrong-role chain
+  skill mid-sequence, refunds qi otherwise, and surfaces
+  `combo_stage`/`expected_combo_role`. Chain state is transient (reset each
+  fight); validator enforces role vocab/one-role-per-skill.
+  (`tests/test_combo_combat.py`, 17 tests.)
 - [ ] **B.7** Dao debates (non-lethal philosophical duels won by insight) and
   spirit-oath duels with asymmetric stakes. (Distinct from spar/duel/death duel.)
 - [ ] **B.8** Enemy/foe AI uses dao + pressure + stances, not just abilities.

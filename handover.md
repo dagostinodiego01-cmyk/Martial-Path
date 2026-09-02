@@ -4,7 +4,7 @@ A data-driven cultivation (xianxia) RPG. The authoritative game logic is a Pytho
 engine in `game/`; several frontends render its state and send commands. **All
 gameplay rules live in the engine — never in a UI.**
 
-Last updated: 2026-08-14. Test suite: **414 passing, 3 skipped** (`pytest -q`).
+Last updated: 2026-09-02. Test suite: **558 passing, 3 skipped** (`pytest -q`).
 Data validation: clean (**0 errors**).
 
 ---
@@ -57,6 +57,44 @@ ui/ (+ frontends)  ->  application/  ->  core/  ->  services/  ->  systems/  -> 
 - `game/validation/data_validator.py` — central cross-reference validation.
 - `game/core/results.py` / `constants.py` — typed result dataclasses + `Action` /
   `EventType` StrEnums (the UI contract).
+
+---
+
+## 2.5 Recent work (2026-09-02, ROADMAP Phase 2: A.6 + B.6)
+
+### A.6 — Voice consistency (prose quality gates)
+- **Voice guide** at `game/docs/VOICE_GUIDE.md`: tone rules, sentence-shape
+  guidance, and the banned-gamey-terms list ("level up", "quest log", "HP"...).
+- **Lore glossary** at `game/data/lore_glossary.json`: canonical terms seeded
+  from *actual* display labels (realms, daos, tiers, seasons, morality ids),
+  with per-slot vocabulary for narrative slots (`realm`, `dao`, `tier`,
+  `season`, `morality`). Registered in `GameDataRegistry` and validated.
+- **Four new linter checks** in `game/validation/narrative_lint.py` (also run
+  by `tools/narrative_lint.py` and `validate_all_game_data`): gamey-term
+  blocklist, `{`/`}` brace artifacts, ≥2 weighted variants per verb, and
+  glossary conformance of template literals per slot.
+- **Sameness metric** (`tests/test_narrative_voice.py`): drives a 100-event
+  mixed-action run through the narrative system and asserts repeated verbs
+  produce distinct variants — the roadmap's anti-Mad-Libs floor.
+
+### B.6 — Stances + combos (technique chains)
+- Techniques may carry `combo_role` (`opening`/`response`/`finisher`); 3 chains
+  seeded on 9 skills in `game/data/skills.json` (validator enforces the role
+  vocabulary and one role per skill).
+- `CombatSystem` tracks a banked chain: a chained sequence grants **+25% damage
+  per banked stage** (1.25x/1.5x/1.75x) into the next technique. A banked chain
+  flows into *any* damaging technique; neutral techniques neither advance nor
+  break it; a correct-role chain skill advances and consumes the bank.
+- Engine gating (`game/core/engine/combat.py`): using a chain skill out of
+  sequence is refused **without** wasting qi; the chain drops cleanly when
+  combat ends and on wrong use.
+- Surfaced to UI: `combo_stage`/`expected_combo_role` on the player/status
+  views and `combo_role`/`expected_combo_role`/`combo_ready` on technique
+  briefs (`views.py`). Chain state is transient — reset each fight, like
+  insight; a refused out-of-sequence stance leaves the banked chain intact.
+- Tests: `tests/test_combo_combat.py` (17 tests) cover banking, multipliers,
+  neutral-skill pass-through, wrong-role refusal + qi refund, cleanup, and
+  save round-trip.
 
 ---
 

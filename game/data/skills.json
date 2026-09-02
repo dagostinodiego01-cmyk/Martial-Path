@@ -98,7 +98,8 @@
     "cooldown": 2,
     "qi_cost": 433,
     "insight_required": 5,
-    "description": "A focused sword intent strike dealing 1293% of your attack as damage."
+    "combo_role": "finisher",
+    "description": "A focused sword intent strike dealing 1293% of your attack as damage. Completes the dragon sequence with a rising multiplier."
   },
   {
     "id": "earth_vein_saber_art",
@@ -341,7 +342,8 @@
     "scaling": 2,
     "cooldown": 4,
     "qi_cost": 50,
-    "description": "A jarring saber art that stuns the target for 2 turn(s)."
+    "combo_role": "response",
+    "description": "A jarring saber art that stuns the target for 2 turn(s). Continues the glacial sequence."
   },
   {
     "id": "blood_sea_kick",
@@ -391,7 +393,8 @@
     "scaling": 1.23,
     "cooldown": 4,
     "qi_cost": 10,
-    "description": "A sweeping palm that hits all enemies for 123% of your attack."
+    "combo_role": "opening",
+    "description": "A sweeping palm that hits all enemies for 123% of your attack. Opens the tiger sequence."
   },
   {
     "id": "vermilion_bird_ward",
@@ -531,7 +534,8 @@
     "scaling": 0.72,
     "cooldown": 3,
     "qi_cost": 9,
-    "description": "Sears the target, dealing 72% of your attack per turn for 3 turns."
+    "combo_role": "opening",
+    "description": "Sears the target, dealing 72% of your attack per turn for 3 turns. Opens the glacial sequence."
   },
   {
     "id": "nine_yin_sutra",
@@ -864,7 +868,8 @@
     "scaling": 8.88,
     "cooldown": 4,
     "qi_cost": 233,
-    "description": "Weaves a Qi barrier absorbing damage equal to 888% of your attack for 2 turns."
+    "combo_role": "response",
+    "description": "Weaves a Qi barrier absorbing damage equal to 888% of your attack for 2 turns. Continues the dragon sequence."
   },
   {
     "id": "primordial_chaos_sword_art",
@@ -944,7 +949,8 @@
     "scaling": 2.9,
     "cooldown": 4,
     "qi_cost": 353,
-    "description": "Suppresses the enemy's momentum, lowering their attack by 190% for 2 turns."
+    "combo_role": "opening",
+    "description": "Suppresses the enemy's momentum, lowering their attack by 190% for 2 turns. Opens the dragon sequence."
   },
   {
     "id": "white_tiger_palm_no2",
@@ -1054,7 +1060,8 @@
     "scaling": 3.9,
     "cooldown": 4,
     "qi_cost": 96,
-    "description": "Drains the enemy for 390% of your attack, healing you for half the damage."
+    "combo_role": "finisher",
+    "description": "Drains the enemy for 390% of your attack, healing you for half the damage. Completes the glacial sequence with a rising multiplier."
   },
   {
     "id": "mountain_crushing_fist_no3",
@@ -1593,7 +1600,8 @@
     "cooldown": 4,
     "qi_cost": 11,
     "insight_required": 2,
-    "description": "Shatters the enemy's guard, lowering their defense by 15% for 2 turns."
+    "combo_role": "response",
+    "description": "Shatters the enemy's guard, lowering their defense by 15% for 2 turns. Continues the tiger sequence."
   },
   {
     "id": "nine_yin_saber_art",
@@ -1824,7 +1832,8 @@
     "scaling": 2.61,
     "cooldown": 4,
     "qi_cost": 57,
-    "description": "Pierces all defenses, dealing 261% of your attack as true damage."
+    "combo_role": "finisher",
+    "description": "Pierces all defenses, dealing 261% of your attack as true damage. Completes the tiger sequence with a rising multiplier."
   },
   {
     "id": "myriad_sword_finger",
