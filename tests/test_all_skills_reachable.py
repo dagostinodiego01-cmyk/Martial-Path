@@ -2,9 +2,9 @@
 
 Technique manuals are auto-generated per skill; this test asserts the content
 layer actually routes them into the game through a trainer, a shop, an enemy
-loot table, or an encounter-pool loot entry. It is the regression guard for the
-"martial identity never grows" gap: add a new skill without seeding it and this
-fails, naming exactly which skills are stranded.
+loot table, an encounter-pool loot entry, or a sect technique hall. It is the
+regression guard for the "martial identity never grows" gap: add a new skill
+without seeding it and this fails, naming exactly which skills are stranded.
 """
 from game.data.registry import GameDataRegistry
 
@@ -52,6 +52,11 @@ def test_every_skill_is_reachable() -> None:
             skill_id = manual_to_skill.get(entry.get("item_id"))
             if skill_id:
                 reachable.add(skill_id)
+
+    # Sect technique halls teach skills directly.
+    for sect in registry.sects:
+        for entry in sect.get("techniques", []):
+            reachable.add(str(entry["skill_id"]))
 
     missing = all_skills - reachable
     assert not missing, f"unreachable skills: {sorted(missing)}"

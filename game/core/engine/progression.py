@@ -20,13 +20,35 @@ class ProgressionMixin:
         return TechniquesResult(skills=self.get_known_skills()).to_dict()
 
     def _talents(self) -> Dict[str, Any]:
-        """Return the player's Martial/Body talents and their upgrade paths."""
+        """Return the player's Martial/Body talents and their upgrade paths.
+
+        Each upgrade option is annotated with ``affordable`` (whether the player
+        holds enough of every cost item, e.g. ``talent_refining_elixir``) so the
+        frontend can disable unaffordable upgrades without its own game rules.
+        """
         return TalentsResult(
             martial_talent=self.starting_fate.martial_talent_view(self.player.martial_talent_id),
             body_talent=self.starting_fate.body_talent_view(self.player.body_talent_id),
-            martial_upgrades=self.starting_fate.upgrade_options_view("martial", self.player.martial_talent_id),
-            body_upgrades=self.starting_fate.upgrade_options_view("body", self.player.body_talent_id),
+            martial_upgrades=self._annotate_upgrade_affordability(
+                self.starting_fate.upgrade_options_view("martial", self.player.martial_talent_id)
+            ),
+            body_upgrades=self._annotate_upgrade_affordability(
+                self.starting_fate.upgrade_options_view("body", self.player.body_talent_id)
+            ),
         ).to_dict()
+
+    def _annotate_upgrade_affordability(self, options: list[Dict[str, Any]]) -> list[Dict[str, Any]]:
+        """Annotate talent upgrade options with an ``affordable`` flag."""
+        annotated: list[Dict[str, Any]] = []
+        for option in options:
+            entry = dict(option)
+            cost = entry.get("cost") or {}
+            entry["affordable"] = all(
+                int(self.player.inventory.get(item_id, 0)) >= int(quantity)
+                for item_id, quantity in cost.items()
+            )
+            annotated.append(entry)
+        return annotated
 
     def _upgrade_talent(self, track: str, target_id: str) -> Dict[str, Any]:
         """Upgrade a Martial or Body talent to the next grade, spending its cost."""
@@ -103,8 +125,11 @@ class ProgressionMixin:
         """Notify quests on a successful breakthrough and attach narrative prose."""
         if result.get("success"):
             updates = self.quests.notify("breakthrough", self.player, self.inventory)
+            # D.4 polish: state-satisfied objectives complete alongside events.
+            updates += self.quests.state_completions(self.player, self.inventory)
             if updates:
                 result["quest_updates"] = updates
+                self._maybe_complete_campaign_graceful(updates)
         result["narrative"] = self.narrative.describe_breakthrough(
             bool(result.get("success")),
             str(result.get("cultivation", "")),

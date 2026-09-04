@@ -32,6 +32,13 @@ class Enemy:
     # Dao (wild beasts, mooks), so it neither counters nor is countered by the
     # player's Dao. Named foes may declare a specific Dao.
     dao_id: str | None = None
+    # Techniques the foe may invoke (ids into the skill catalogue); data-driven
+    # so named foes can fight stances instead of only basic attacks.
+    skills: List[str] = field(default_factory=list)
+    # B.8 foe AI: the foe's banked stance-chain stage (transient, never saved).
+    ai_stage: int = 0
+    # B.7 debates: the foe's insight, the pressure behind its arguments.
+    insight: int = 2
     # Transient combat state (never persisted): a damage-absorption shield and
     # timed status effects applied by the player (stun, dot, debuffs).
     shield: int = 0
@@ -54,6 +61,7 @@ class Enemy:
             loot_table=list(data.get("loot_table", [])),
             abilities=[dict(ability) for ability in data.get("abilities", []) if isinstance(ability, dict)],
             dao_id=str(data["dao_id"]) if data.get("dao_id") else None,
+            skills=[str(skill_id) for skill_id in data.get("skills", [])],
         )
 
     def is_alive(self) -> bool:
@@ -73,6 +81,7 @@ class Enemy:
             "body_realm_id": self.body_realm_id,
             "essence_realm_id": self.essence_realm_id,
             "dao_id": self.dao_id,
+            "combo_stage": int(self.ai_stage),
             "hp": self.hp,
             "max_hp": self.max_hp,
             "attack": self.attack,

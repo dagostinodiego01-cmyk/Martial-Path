@@ -279,6 +279,37 @@ class RepairResult(Result):
 
 
 @dataclass(frozen=True)
+class UnlockPurchasedResult(Result):
+    """Outcome of buying a legacy-tree unlock (C.5)."""
+
+    EVENT: ClassVar[str] = EventType.UNLOCK_PURCHASED
+    unlock_id: str
+    kind: str
+    target_id: str
+    cost: int
+    ancestral_memory: int
+    player_message: str
+
+
+@dataclass(frozen=True)
+class RetiredResult(Result):
+    """The run ends by ascension (C.7): a win, not a death.
+
+    The character banks the ascension reward, the chronicle records an
+    ``ascended`` entry, and the run is over (the endless post-game continues
+    from a fresh run shaped by this legacy).
+    """
+
+    EVENT: ClassVar[str] = EventType.RETIRED
+    cause: str
+    age_years: float
+    player_message: str
+    reward: int
+    ancestral_memory: int
+    summary: Dict[str, Any]
+
+
+@dataclass(frozen=True)
 class SaveExportedResult(Result):
     """A portable JSON snapshot of the current session."""
 
@@ -295,3 +326,37 @@ class SaveImportedResult(Result):
     success: bool
     player_message: str
     slot: Optional[str] = None
+
+
+@dataclass(frozen=True)
+class DebateStartedResult(Result):
+    """A dao debate opens (B.7): the contest of conviction begins."""
+
+    EVENT: ClassVar[str] = EventType.DEBATE_STARTED
+    character_id: str
+    foe_name: str
+    debate: Dict[str, Any]
+    player_message: str
+
+
+@dataclass(frozen=True)
+class OathDuelStartedResult(Result):
+    """A spirit-oath duel opens (B.7): a debate with asymmetric stakes sworn."""
+
+    EVENT: ClassVar[str] = EventType.OATH_DUEL_STARTED
+    character_id: str
+    foe_name: str
+    debate: Dict[str, Any]
+    stakes: Dict[str, Any]
+    player_message: str
+
+
+@dataclass(frozen=True)
+class DebateRoundResult(Result):
+    """One exchange of stances in an active debate (B.7)."""
+
+    EVENT: ClassVar[str] = EventType.DEBATE_ROUND
+    outcome: str
+    debate: Dict[str, Any]
+    turn_events: List[Dict[str, Any]]
+    player_message: str

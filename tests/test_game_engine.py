@@ -91,7 +91,7 @@ def test_state_includes_location_and_quests():
 
 def test_engine_lists_and_buys_from_current_location_shop():
     engine = GameEngine.new_game(seed=1)
-    engine.player.gold = 30
+    engine.player.gold = 1000
     engine.process_action({"action": Action.TRAVEL, "location_id": "azure_village"})
 
     shop = engine.process_action({"action": Action.SHOP})
@@ -100,7 +100,13 @@ def test_engine_lists_and_buys_from_current_location_shop():
     assert shop["event"] == EventType.SHOP
     assert shop["shop"]["id"] == "azure_stream_market"
     assert bought["event"] == EventType.ITEM_PURCHASED
-    assert engine.player.gold == 5
+    # The C.6 world seed scales prices per seed (cheap/fair/pricey); the charge
+    # must match the displayed shop price exactly.
+    displayed = next(
+        entry["price"] for entry in shop["stock"] if entry["item_id"] == "training_sword"
+    )
+    assert bought["price"] == displayed
+    assert engine.player.gold == 1000 - sum(displayed.values())
     assert engine.player.inventory["training_sword"] == 1
 
 
@@ -128,18 +134,20 @@ def test_engine_sells_owned_item_for_gold():
 
 def test_buy_then_sell_round_trip_recovers_partial_gold():
     engine = GameEngine.new_game(seed=1)
-    engine.player.gold = 30
+    engine.player.gold = 1000
     engine.process_action({"action": Action.TRAVEL, "location_id": "azure_village"})
 
     bought = engine.process_action({"action": Action.BUY_ITEM, "item_id": "training_sword"})
     assert bought["event"] == EventType.ITEM_PURCHASED
-    assert engine.player.gold == 5  # 30 - 25
+    paid = bought["price"].get("gold", 0)
 
     sold = engine.process_action({"action": Action.SELL_ITEM, "item_id": "training_sword"})
 
     assert sold["event"] == EventType.ITEM_SOLD
     assert "training_sword" not in engine.player.inventory
-    assert engine.player.gold == 17  # 5 + floor(25 * 0.5)
+    # Selling recovers half the item's *worth* (data value), regardless of the
+    # world-seed price band the purchase used.
+    assert engine.player.gold == 1000 - paid + 12
 
 
 def test_rest_recovers_hp_and_qi():
@@ -379,6 +387,26 @@ def test_spar_ends_without_defeat_penalty():
     assert result["spar"] is True
     assert "penalty" not in result
     assert engine.player.cultivation_state.body.progress == 400.0
+
+
+def test_combat_victory_converts_exp_to_comprehension():
+    engine = GameEngine.new_game(seed=1)
+    engine.player.exp = 120  # banked from prior training/quests
+    engine._current_enemy = engine._spawn_enemy(next(iter(engine._enemy_templates)))
+    engine._current_enemy.attack = 0
+    engine._current_enemy.hp = 1
+    engine._current_enemy.exp_reward = 0  # isolate the pre-banked exp
+    engine.player.attack = 1000
+    engine._mode = MODE_COMBAT
+
+    result = engine.process_action({"action": Action.ATTACK})
+
+    assert result["event"] == EventType.COMBAT_END
+    assert result["outcome"] == "VICTORY"
+    assert result["comprehension_gained"] == 2
+    assert result["comprehension"] == engine.player.comprehension
+    assert engine.player.comprehension == 12  # 10 + 2
+    assert engine.player.exp == 20  # 120 - 2 * 50
 
 
 def test_defeat_penalty_is_partial_and_data_driven():

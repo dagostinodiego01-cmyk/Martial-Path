@@ -25,6 +25,10 @@ META_VERSION = 1
 DEATH_REWARD = 10
 #: Bonus Ancestral Memory per composite realm rank reached before death.
 DEATH_REALM_BONUS = 1
+#: Ancestral Memory multiplier for a *won* run (C.7): reaching the campaign
+#: ending -- or retiring at the ascension point -- banks ``DEATH_REWARD`` x
+#: this factor, making a win strictly more valuable than a death.
+ASCENSION_REWARD_MULTIPLIER = 3
 
 #: Keep the chronicle bounded so a long-lived meta-save never grows unbounded.
 MAX_CHRONICLE_ENTRIES = 100
@@ -63,6 +67,8 @@ class MetaService:
         data.setdefault("ancestral_memory", 0)
         if not isinstance(data.get("chronicle"), list):
             data["chronicle"] = []
+        if not isinstance(data.get("unlocks"), list):
+            data["unlocks"] = []  # purchased legacy-tree unlock ids (C.5)
         return data
 
     def save(self, data: Dict[str, Any]) -> None:
@@ -106,10 +112,39 @@ class MetaService:
         """Return the run chronicle (most recent last)."""
         return [dict(entry) for entry in self.load().get("chronicle", [])]
 
+    # -- legacy unlocks (C.5) ---------------------------------------------
+    def unlocks(self) -> List[str]:
+        """Return every purchased legacy-tree unlock id."""
+        return [str(entry) for entry in self.load().get("unlocks", [])]
+
+    def add_unlock(self, unlock_id: str) -> bool:
+        """Record an unlock id once; return ``False`` if already owned."""
+        data = self.load()
+        owned = [str(entry) for entry in data.get("unlocks", [])]
+        if unlock_id in owned:
+            return False
+        owned.append(str(unlock_id))
+        data["unlocks"] = owned
+        self.save(data)
+        return True
+
+    def has_unlock(self, unlock_id: str) -> bool:
+        """Return ``True`` when ``unlock_id`` has been purchased."""
+        return unlock_id in self.unlocks()
+
+    # -- retirement (C.7) ---------------------------------------------------
+    def mark_retired(self) -> None:
+        """Flag that at least one run has ended by retirement/ascension (C.7)."""
+        data = self.load()
+        data["retired"] = True
+        self.save(data)
+
     def state(self) -> Dict[str, Any]:
         """Return the full meta-save snapshot (memory + chronicle)."""
         data = self.load()
         return {
             "ancestral_memory": int(data.get("ancestral_memory", 0)),
             "chronicle": [dict(entry) for entry in data.get("chronicle", [])],
+            "unlocks": [str(entry) for entry in data.get("unlocks", [])],
+            "retired": bool(data.get("retired", False)),
         }

@@ -5,6 +5,7 @@
     "zone": "Sky Spill World",
     "location_type": "starter_wilderness",
     "tier": "Tutorial / Early Game",
+    "story_tier": 1,
     "description": "A quiet forest rich with weak spiritual energy. Low-level beasts roam the deeper paths, and herb-gatherers rarely stray far from the tree line.",
     "requirements": {
       "body_transformation": {
@@ -27,7 +28,10 @@
     },
     "connected_locations": [
       "azure_village",
-      "misty_gorge"
+      "misty_gorge",
+      "stream_fisher_wharf",
+      "thornwood_hollow",
+      "deepwood_drift_outpost"
     ],
     "npc_ids": [],
     "available_systems": [
@@ -46,6 +50,7 @@
     "zone": "Sky Spill World",
     "location_type": "starter_hub",
     "tier": "Tutorial / Early Game",
+    "story_tier": 1,
     "description": "A small mortal village beside a clear stream. Its people know little of cultivation, but the inn is warm and the wells run sweet -- a safe place to recover.",
     "requirements": {
       "body_transformation": {
@@ -68,7 +73,8 @@
     },
     "connected_locations": [
       "outer_forest",
-      "sky_fortune_road"
+      "sky_fortune_road",
+      "stream_fisher_wharf"
     ],
     "npc_ids": [
       "lan_yunyue"
@@ -90,6 +96,7 @@
     "zone": "Sky Spill World",
     "location_type": "wilderness",
     "tier": "Early Game",
+    "story_tier": 1,
     "description": "A fog-choked ravine where stronger beasts and rogue cultivators lurk. Spirit stones glint in the damp rock for those bold enough to search.",
     "requirements": {
       "body_transformation": {
@@ -112,7 +119,8 @@
     },
     "connected_locations": [
       "outer_forest",
-      "ruined_shrine"
+      "ruined_shrine",
+      "thornwood_hollow"
     ],
     "npc_ids": [],
     "available_systems": [
@@ -131,6 +139,7 @@
     "zone": "Sky Spill World",
     "location_type": "dungeon",
     "tier": "Early Game",
+    "story_tier": 1,
     "description": "The crumbling remains of an ancient shrine, thick with restless corpse-qi. Old relics are said to sleep beneath the fallen stones.",
     "requirements": {
       "body_transformation": {
@@ -171,6 +180,7 @@
     "zone": "Sky Fortune Kingdom",
     "location_type": "starter_road",
     "tier": "Tutorial / Early Game",
+    "story_tier": 1,
     "description": "A well-trodden road linking the quiet Azure villages to the heart of the Sky Fortune Kingdom. Patrols keep it mostly safe, but bandits still test careless travellers.",
     "requirements": {
       "body_transformation": {
@@ -215,6 +225,7 @@
     "zone": "Sky Fortune Kingdom",
     "location_type": "starter_home_hub",
     "tier": "Tutorial / Early Game",
+    "story_tier": 1,
     "description": "A modest kingdom village of tiled roofs and training yards, home to the Lin family. Warm hearths, familiar faces, and the safest place to gather your strength.",
     "requirements": {
       "body_transformation": {
@@ -265,6 +276,7 @@
     "zone": "Sky Fortune Kingdom Wilderness",
     "location_type": "combat_wilderness",
     "tier": "Early Game",
+    "story_tier": 2,
     "description": "A rugged range prowled by spirit beasts and the occasional rogue cultivator. The first proper hunting ground for a rising body cultivator.",
     "requirements": {
       "body_transformation": {
@@ -311,6 +323,7 @@
     "zone": "Sky Fortune Kingdom",
     "location_type": "academy_hub",
     "tier": "Early Game",
+    "story_tier": 2,
     "description": "The martial academy where Sky Fortune's young talents drill the fundamentals of cultivation. Sparring rings, rank boards, and the first taste of young-master rivalry.",
     "requirements": {
       "body_transformation": {
@@ -334,7 +347,8 @@
     "connected_locations": [
       "starting_village",
       "beast_mountain",
-      "sky_fortune_capital"
+      "sky_fortune_capital",
+      "sky_fortune_outskirts"
     ],
     "npc_ids": [
       "lin_academy_instructor",
@@ -360,6 +374,7 @@
     "zone": "Sky Fortune Kingdom",
     "location_type": "kingdom_city_hub",
     "tier": "Early / Mid Game",
+    "story_tier": 2,
     "description": "The bustling capital of the Sky Fortune Kingdom, thick with nobles, merchants, and quiet intrigue. Auctions, politics, and the first powerful antagonists.",
     "requirements": {
       "body_transformation": {
@@ -383,7 +398,9 @@
     "connected_locations": [
       "lin_academy",
       "seven_profound_valleys_gate",
-      "central_region_road"
+      "central_region_road",
+      "sky_fortune_outskirts",
+      "cloud_terrace_village"
     ],
     "npc_ids": [
       "qin_xingxuan",
@@ -411,6 +428,7 @@
     "zone": "Seven Profound Valleys",
     "location_type": "sect_gate",
     "tier": "Mid Game",
+    "story_tier": 3,
     "description": "The tiered outer gate of the Seven Profound Valleys, where applicants are weighed, tested, and ranked before the inner valley opens to them.",
     "requirements": {
       "body_transformation": {
@@ -434,7 +452,9 @@
     "connected_locations": [
       "sky_fortune_capital",
       "seven_profound_valleys_inner",
-      "south_horizon_road"
+      "south_horizon_road",
+      "seven_profound_low_peaks",
+      "valleys_hidden_market"
     ],
     "npc_ids": [
       "seven_profound_valleys_elder",
@@ -460,6 +480,7 @@
     "zone": "Seven Profound Valleys",
     "location_type": "sect_inner_hub",
     "tier": "Mid Game",
+    "story_tier": 3,
     "description": "The mist-wrapped inner valley where sworn disciples train, scheme, and vie for standing among the profound arts.",
     "requirements": {
       "body_transformation": {
@@ -482,7 +503,8 @@
     },
     "connected_locations": [
       "seven_profound_valleys_gate",
-      "forbidden_back_mountain"
+      "forbidden_back_mountain",
+      "seven_profound_low_peaks"
     ],
     "npc_ids": [
       "jiang_lanjian",
@@ -508,6 +530,7 @@
     "zone": "Seven Profound Valleys",
     "location_type": "hidden_trial_zone",
     "tier": "Mid Game",
+    "story_tier": 3,
     "description": "A sealed peak behind the valleys, heavy with old danger and older opportunity. Rare fortunes wait here beside real backlash.",
     "requirements": {
       "body_transformation": {
@@ -529,7 +552,8 @@
       "y": 0.428
     },
     "connected_locations": [
-      "seven_profound_valleys_inner"
+      "seven_profound_valleys_inner",
+      "seven_profound_low_peaks"
     ],
     "npc_ids": [
       "good_fortune",
@@ -552,6 +576,7 @@
     "zone": "South Horizon Region",
     "location_type": "regional_route",
     "tier": "Mid Game",
+    "story_tier": 3,
     "description": "The long overland route south toward the sea, worn by merchant convoys and wandering cultivators. Ambushes are not uncommon.",
     "requirements": {
       "body_transformation": {
@@ -576,7 +601,9 @@
       "seven_profound_valleys_gate",
       "south_horizon_city",
       "divine_phoenix_island",
-      "south_sea_port"
+      "south_sea_port",
+      "valleys_hidden_market",
+      "cloud_terrace_village"
     ],
     "npc_ids": [
       "south_horizon_region_cultivator",
@@ -600,6 +627,7 @@
     "zone": "South Horizon Region",
     "location_type": "regional_city_hub",
     "tier": "Mid Game",
+    "story_tier": 3,
     "description": "A prosperous port-city and the beating heart of the South Horizon Region's trade, rumor, and shifting alliances.",
     "requirements": {
       "body_transformation": {
@@ -622,7 +650,8 @@
     },
     "connected_locations": [
       "south_horizon_road",
-      "divine_phoenix_island"
+      "divine_phoenix_island",
+      "tidecrook_cove"
     ],
     "npc_ids": [
       "south_horizon_region_cultivator",
@@ -646,6 +675,7 @@
     "zone": "South Horizon Region",
     "location_type": "major_sect_hub",
     "tier": "Mid / Late Mortal World",
+    "story_tier": 4,
     "description": "A sacred island wreathed in phoenix fire, seat of the Divine Phoenix Sect and its bloodline arts. Home to powerful mentors and high-value relationships.",
     "requirements": {
       "body_transformation": {
@@ -698,6 +728,7 @@
     "zone": "South Horizon Region",
     "location_type": "mystic_realm_trial",
     "tier": "Late Mortal World",
+    "story_tier": 4,
     "description": "A folded pocket-realm of living flame, opened only to those the sect deems worthy. A high-value instanced trial.",
     "requirements": {
       "body_transformation": {
@@ -743,6 +774,7 @@
     "zone": "Southern Sea",
     "location_type": "sea_travel_hub",
     "tier": "Mid / Late Mortal World",
+    "story_tier": 4,
     "description": "A weathered harbor of salt-worn docks, the last safe anchor before the open Southern Sea and the routes to distant, dangerous shores.",
     "requirements": {
       "body_transformation": {
@@ -768,12 +800,18 @@
       "divine_phoenix_island",
       "central_region_road",
       "southern_wilderness",
-      "holy_demon_continent"
+      "holy_demon_continent",
+      "pearl_pavilion",
+      "tidecrook_cove",
+      "coral_prison_atoll",
+      "sea_of_mist_expanse"
     ],
     "npc_ids": [
       "south_horizon_region_cultivator",
       "li_yifeng",
-      "holy_demon_continent_demon"
+      "holy_demon_continent_demon",
+      "tide_oracle_sable",
+      "sea_lantern_tender_uma"
     ],
     "available_systems": [
       "combat",
@@ -790,6 +828,7 @@
     "zone": "Central Region",
     "location_type": "regional_route",
     "tier": "Late Mortal World",
+    "story_tier": 5,
     "description": "The grand highway into the Central Region, watched over by the banners of four great kingdoms. Elite encounters await the unprepared.",
     "requirements": {
       "body_transformation": {
@@ -838,6 +877,7 @@
     "zone": "Central Region",
     "location_type": "major_political_hub",
     "tier": "Late Mortal World",
+    "story_tier": 5,
     "description": "The crimson-walled seat of the Vermillion Bird Kingdom, grandest of the four great powers, where royal quests and elite tournaments decide fortunes.",
     "requirements": {
       "body_transformation": {
@@ -862,7 +902,8 @@
       "central_region_road",
       "asura_divine_kingdom",
       "nine_furnace_kingdom",
-      "rival_divine_kingdom"
+      "rival_divine_kingdom",
+      "furnace_pillar_city"
     ],
     "npc_ids": [
       "four_divine_kingdoms_prince_or_princess",
@@ -889,6 +930,7 @@
     "zone": "Central Region",
     "location_type": "kingdom_hub",
     "tier": "Late Mortal World",
+    "story_tier": 5,
     "description": "A kingdom of roaring forge-cities, its nine great furnaces said to temper both peerless blades and dangerous ambitions.",
     "requirements": {
       "body_transformation": {
@@ -910,7 +952,8 @@
       "y": 0.316
     },
     "connected_locations": [
-      "vermillion_bird_kingdom"
+      "vermillion_bird_kingdom",
+      "furnace_pillar_city"
     ],
     "npc_ids": [
       "yang_yun",
@@ -930,6 +973,7 @@
     "zone": "Central Region",
     "location_type": "militant_kingdom_hub",
     "tier": "Late Mortal World",
+    "story_tier": 5,
     "description": "A grim martial kingdom where rank is bought in blood and every court is a battlefield of ambition.",
     "requirements": {
       "body_transformation": {
@@ -952,7 +996,8 @@
     },
     "connected_locations": [
       "vermillion_bird_kingdom",
-      "blood_slaughter_steppes"
+      "blood_slaughter_steppes",
+      "emberfall_citadel"
     ],
     "npc_ids": [
       "situ_haotian",
@@ -973,6 +1018,7 @@
     "zone": "Central Region",
     "location_type": "kingdom_hub",
     "tier": "Late Mortal World",
+    "story_tier": 5,
     "description": "The southernmost of the four kingdoms, forever maneuvering against its greater neighbors through marriage, coin, and quiet blades.",
     "requirements": {
       "body_transformation": {
@@ -1015,6 +1061,7 @@
     "zone": "Great Zen Region",
     "location_type": "monastery_hub",
     "tier": "Late Mortal World",
+    "story_tier": 5,
     "description": "A serene mountain monastery of the Great Zen Region, its bells said to still even demonic hearts. A sanctuary for soul-tempering and reflection.",
     "requirements": {
       "body_transformation": {
@@ -1036,7 +1083,8 @@
       "y": 0.19
     },
     "connected_locations": [
-      "central_region_road"
+      "central_region_road",
+      "zen_wilds_shrine"
     ],
     "npc_ids": [
       "mo_riverbliss",
@@ -1058,6 +1106,7 @@
     "zone": "Southern Wilderness",
     "location_type": "dangerous_wilderness",
     "tier": "Late Mortal World",
+    "story_tier": 5,
     "description": "A trackless expanse of beast territories and unstable qi, littered with untouched ruins and rare materials for those strong enough to claim them.",
     "requirements": {
       "body_transformation": {
@@ -1103,6 +1152,7 @@
     "zone": "Southern Wilderness",
     "location_type": "arena_trial_region",
     "tier": "Late Mortal World",
+    "story_tier": 5,
     "description": "A brutal steppe of warring camps where reputation and survival are carved out fist by fist. A proving ground for body cultivators.",
     "requirements": {
       "body_transformation": {
@@ -1126,7 +1176,8 @@
     "connected_locations": [
       "asura_divine_kingdom",
       "southern_wilderness",
-      "holy_demon_continent"
+      "holy_demon_continent",
+      "emberfall_citadel"
     ],
     "npc_ids": [
       "steppes_master",
@@ -1150,6 +1201,7 @@
     "zone": "Five Element Region",
     "location_type": "elemental_trial_region",
     "tier": "Ascension Prep",
+    "story_tier": 6,
     "description": "Five elemental temples humming with dense, dangerous qi and formations from a forgotten age. A gauntlet of elemental trials.",
     "requirements": {
       "body_transformation": {
@@ -1172,7 +1224,8 @@
     },
     "connected_locations": [
       "ancient_ruins",
-      "planetary_gate_array"
+      "planetary_gate_array",
+      "rune_temple_undercroft"
     ],
     "npc_ids": [
       "good_fortune",
@@ -1194,6 +1247,7 @@
     "zone": "Sea of Miracles",
     "location_type": "legendary_landmark",
     "tier": "Late Mortal World / Ascension Prep",
+    "story_tier": 6,
     "description": "Drowned ruins ringing the Sea of Miracles, where the relics of a lost age still stir. Legendary, story-gated, and mechanically deadly.",
     "requirements": {
       "body_transformation": {
@@ -1224,7 +1278,8 @@
       "old_man_good_fortune",
       "ancient_devil",
       "demon_emperor",
-      "yang_yun"
+      "yang_yun",
+      "ruin_broker_song"
     ],
     "available_systems": [],
     "resources": [
@@ -1238,6 +1293,7 @@
     "zone": "Ascension Gate",
     "location_type": "ascension_gateway",
     "tier": "Ascension Gate",
+    "story_tier": 6,
     "description": "A colossal teleportation array bridging the mortal world to the realms above. The final threshold before ascension.",
     "requirements": {
       "body_transformation": {
@@ -1260,7 +1316,8 @@
     },
     "connected_locations": [
       "ancient_ruins",
-      "five_element_temples"
+      "five_element_temples",
+      "gate_array_approach"
     ],
     "npc_ids": [
       "good_fortune",
@@ -1283,6 +1340,7 @@
     "zone": "Holy Demon Continent",
     "location_type": "extreme_foreign_region",
     "tier": "End Mortal World",
+    "story_tier": 6,
     "description": "A blighted continent across the sea where demonic factions rule and the very qi is corrupt. It punishes the underlevelled and rewards the daring.",
     "requirements": {
       "body_transformation": {
@@ -1322,5 +1380,797 @@
       "Corrupt Qi Crystals"
     ],
     "notes": "Locked future content: extreme demonic continent for end-mortal play."
+  },
+  {
+    "id": "stream_fisher_wharf",
+    "display_name": "Stream Fisher Wharf",
+    "zone": "Sky Spill World",
+    "location_type": "river_wharf",
+    "tier": "Early Game",
+    "story_tier": 2,
+    "description": "A weathered wharf where fishers and drifting cultivators trade tales for coin. Flat-bottomed boats tie up at thepilings, and the river current carries whispers from the far kingdoms.",
+    "requirements": {
+      "body_transformation": {
+        "minimum_realm": "Mortal",
+        "minimum_stage": 1
+      },
+      "essence_gathering": {
+        "minimum_realm": "None",
+        "minimum_stage": 0
+      },
+      "unlock_flags": [],
+      "required_items": [],
+      "required_reputation": []
+    },
+    "danger_level": 1,
+    "qi_density": 2,
+    "map_position": {
+      "x": 0.095,
+      "y": 0.71
+    },
+    "connected_locations": [
+      "azure_village",
+      "outer_forest"
+    ],
+    "npc_ids": [
+      "old_fisher_yan",
+      "wharf_captain_bao",
+      "reed_cutter_min"
+    ],
+    "available_systems": [
+      "explore",
+      "rest",
+      "travel",
+      "gather",
+      "combat",
+      "dialogue",
+      "quests"
+    ],
+    "resources": [
+      "River Carp",
+      "Reed Cuttings"
+    ],
+    "notes": "Story-tier 2 river wharf; early gathering and rumors."
+  },
+  {
+    "id": "thornwood_hollow",
+    "display_name": "Thornwood Hollow",
+    "zone": "Sky Spill World",
+    "location_type": "deep_forest_wilderness",
+    "tier": "Early Game",
+    "story_tier": 2,
+    "description": "Past the gorge the forest thickens into thorn-choked hollows where the Mistwood Rangers run their lines. Beasts here have learned to fear the trail-marked trees.",
+    "requirements": {
+      "body_transformation": {
+        "minimum_realm": "Flesh Training",
+        "minimum_stage": 1
+      },
+      "essence_gathering": {
+        "minimum_realm": "None",
+        "minimum_stage": 0
+      },
+      "unlock_flags": [],
+      "required_items": [],
+      "required_reputation": []
+    },
+    "danger_level": 3,
+    "qi_density": 3,
+    "map_position": {
+      "x": 0.03,
+      "y": 0.66
+    },
+    "connected_locations": [
+      "misty_gorge",
+      "outer_forest",
+      "deepwood_drift_outpost"
+    ],
+    "npc_ids": [
+      "mistwood_ranger_elder",
+      "feral_hunter_karu"
+    ],
+    "available_systems": [
+      "explore",
+      "travel",
+      "gather",
+      "combat",
+      "meditate"
+    ],
+    "resources": [
+      "Thornfruit",
+      "Beast Cores"
+    ],
+    "notes": "Story-tier 2 hunting grounds; home range of the Mistwood Rangers."
+  },
+  {
+    "id": "sky_fortune_outskirts",
+    "display_name": "Sky Fortune Outskirts",
+    "zone": "Sky Fortune Kingdom",
+    "location_type": "farmland_outskirts",
+    "tier": "Early Game",
+    "story_tier": 2,
+    "description": "Terraced farms and roadside shrines ring the capital's outer wall. Merchant carts and pilgrims crowd the road, and pickpockets work the shadowed gaps between lantern posts.",
+    "requirements": {
+      "body_transformation": {
+        "minimum_realm": "Viscera Training",
+        "minimum_stage": 1
+      },
+      "essence_gathering": {
+        "minimum_realm": "None",
+        "minimum_stage": 0
+      },
+      "unlock_flags": [],
+      "required_items": [],
+      "required_reputation": []
+    },
+    "danger_level": 2,
+    "qi_density": 2,
+    "map_position": {
+      "x": 0.235,
+      "y": 0.57
+    },
+    "connected_locations": [
+      "sky_fortune_capital",
+      "lin_academy"
+    ],
+    "npc_ids": [
+      "farmhand_olive"
+    ],
+    "available_systems": [
+      "explore",
+      "rest",
+      "travel",
+      "gather",
+      "combat",
+      "quests"
+    ],
+    "resources": [
+      "Golden Rice",
+      "Roadside Herbs"
+    ],
+    "notes": "Story-tier 2 farmland ring; connects academy and capital."
+  },
+  {
+    "id": "deepwood_drift_outpost",
+    "display_name": "Deepwood Drift Outpost",
+    "zone": "Sky Spill World",
+    "location_type": "wilderness_outpost_hub",
+    "tier": "Mid Game",
+    "story_tier": 3,
+    "description": "A palisade outpost carved into the deepwood's heart, where hunters, herb-gatherers, and wandering sect scouts trade under lantern light. The drift changes hands often; the market never closes.",
+    "requirements": {
+      "body_transformation": {
+        "minimum_realm": "Altering Muscle",
+        "minimum_stage": 1
+      },
+      "essence_gathering": {
+        "minimum_realm": "Houtian",
+        "minimum_stage": 1
+      },
+      "unlock_flags": [],
+      "required_items": [],
+      "required_reputation": []
+    },
+    "danger_level": 4,
+    "qi_density": 4,
+    "map_position": {
+      "x": 0.045,
+      "y": 0.72
+    },
+    "connected_locations": [
+      "thornwood_hollow",
+      "outer_forest"
+    ],
+    "npc_ids": [
+      "drift_broker_lan",
+      "deepwood_beast_singer"
+    ],
+    "available_systems": [
+      "explore",
+      "rest",
+      "travel",
+      "market",
+      "trainers",
+      "gather",
+      "combat",
+      "sparring",
+      "meditate",
+      "quests",
+      "dialogue"
+    ],
+    "resources": [
+      "Deepwood Herbs",
+      "Hunter Trophies"
+    ],
+    "notes": "Story-tier 3 wilderness hub with market and trainer."
+  },
+  {
+    "id": "seven_profound_low_peaks",
+    "display_name": "Seven Profound Low Peaks",
+    "zone": "Seven Profound Valleys",
+    "location_type": "sect_outer_peaks",
+    "tier": "Mid Game",
+    "story_tier": 3,
+    "description": "The valleys' outer peaks host the trial courses where outer disciples earn their jade tokens. Cloud pools gather between the crags, and older disciples spar above the mist line.",
+    "requirements": {
+      "body_transformation": {
+        "minimum_realm": "Altering Muscle",
+        "minimum_stage": 1
+      },
+      "essence_gathering": {
+        "minimum_realm": "Houtian",
+        "minimum_stage": 1
+      },
+      "unlock_flags": [],
+      "required_items": [],
+      "required_reputation": []
+    },
+    "danger_level": 4,
+    "qi_density": 5,
+    "map_position": {
+      "x": 0.3,
+      "y": 0.462
+    },
+    "connected_locations": [
+      "seven_profound_valleys_gate",
+      "seven_profound_valleys_inner",
+      "forbidden_back_mountain"
+    ],
+    "npc_ids": [
+      "cloud_pool_hermit_bai"
+    ],
+    "available_systems": [
+      "explore",
+      "travel",
+      "gather",
+      "combat",
+      "sparring",
+      "meditate"
+    ],
+    "resources": [
+      "Cloud Pool Dew",
+      "Spirit Stones"
+    ],
+    "notes": "Story-tier 3 sect trial peaks."
+  },
+  {
+    "id": "valleys_hidden_market",
+    "display_name": "Valleys Hidden Market",
+    "zone": "Seven Profound Valleys",
+    "location_type": "hidden_market_canyon",
+    "tier": "Mid Game",
+    "story_tier": 3,
+    "description": "A canyon market that appears only when the valley fog thins. Gamblers hawk technique slips beside alchemists selling mislabeled pills, and every stall takes spirit stones or a wager.",
+    "requirements": {
+      "body_transformation": {
+        "minimum_realm": "Altering Muscle",
+        "minimum_stage": 1
+      },
+      "essence_gathering": {
+        "minimum_realm": "Houtian",
+        "minimum_stage": 1
+      },
+      "unlock_flags": [],
+      "required_items": [],
+      "required_reputation": []
+    },
+    "danger_level": 3,
+    "qi_density": 4,
+    "map_position": {
+      "x": 0.3,
+      "y": 0.575
+    },
+    "connected_locations": [
+      "seven_profound_valleys_gate",
+      "south_horizon_road"
+    ],
+    "npc_ids": [
+      "gambler_king_tan",
+      "market_crier_duo",
+      "valley_wandering_poet_xu"
+    ],
+    "available_systems": [
+      "explore",
+      "travel",
+      "market",
+      "rest",
+      "dialogue",
+      "quests"
+    ],
+    "resources": [
+      "Gambling Slips",
+      "Spirit Stones"
+    ],
+    "notes": "Story-tier 3 black market; shortcut between valleys and the south."
+  },
+  {
+    "id": "cloud_terrace_village",
+    "display_name": "Cloud Terrace Village",
+    "zone": "South Horizon Region",
+    "location_type": "mountain_village",
+    "tier": "Mid Game",
+    "story_tier": 3,
+    "description": "Rice terraces climb the mountain shoulder in green steps. The village rites honor a river spirit, and travelers heading south stop here for the last honest beds before the coast.",
+    "requirements": {
+      "body_transformation": {
+        "minimum_realm": "Altering Muscle",
+        "minimum_stage": 1
+      },
+      "essence_gathering": {
+        "minimum_realm": "Houtian",
+        "minimum_stage": 1
+      },
+      "unlock_flags": [],
+      "required_items": [],
+      "required_reputation": []
+    },
+    "danger_level": 2,
+    "qi_density": 3,
+    "map_position": {
+      "x": 0.235,
+      "y": 0.62
+    },
+    "connected_locations": [
+      "south_horizon_road",
+      "sky_fortune_capital"
+    ],
+    "npc_ids": [
+      "terrace_shrine_keeper"
+    ],
+    "available_systems": [
+      "explore",
+      "rest",
+      "travel",
+      "gather",
+      "market",
+      "dialogue",
+      "quests"
+    ],
+    "resources": [
+      "Terrace Rice",
+      "Mountain Herbs"
+    ],
+    "notes": "Story-tier 3 waystation between the capital and the south road."
+  },
+  {
+    "id": "pearl_pavilion",
+    "display_name": "Pearl Pavilion",
+    "zone": "Southern Sea",
+    "location_type": "sea_pavilion_hub",
+    "tier": "Mid / Late Mortal World",
+    "story_tier": 4,
+    "description": "A pavilion of white coral and pearl gauze floats on the tide, moored by chains older than the kingdom. Pearlers, pirate envoys, and sect buyers bid quietly and leave by separate boats.",
+    "requirements": {
+      "body_transformation": {
+        "minimum_realm": "Tempering Marrow",
+        "minimum_stage": 1
+      },
+      "essence_gathering": {
+        "minimum_realm": "Xiantian",
+        "minimum_stage": 1
+      },
+      "unlock_flags": [],
+      "required_items": [],
+      "required_reputation": []
+    },
+    "danger_level": 4,
+    "qi_density": 5,
+    "map_position": {
+      "x": 0.355,
+      "y": 0.79
+    },
+    "connected_locations": [
+      "south_sea_port",
+      "sea_of_mist_expanse"
+    ],
+    "npc_ids": [
+      "pearl_mistress_sui",
+      "diver_maru",
+      "pearl_auctioneer_lo_fan"
+    ],
+    "available_systems": [
+      "explore",
+      "rest",
+      "travel",
+      "market",
+      "trainers",
+      "sparring",
+      "dialogue",
+      "quests"
+    ],
+    "resources": [
+      "Sea Pearls",
+      "Tide Herbs"
+    ],
+    "notes": "Story-tier 4 sea trade hub with market and trainer."
+  },
+  {
+    "id": "tidecrook_cove",
+    "display_name": "Tidecrook Cove",
+    "zone": "Southern Sea",
+    "location_type": "pirate_cove",
+    "tier": "Mid / Late Mortal World",
+    "story_tier": 4,
+    "description": "A crooked harbor where the Tidecrook pirates beach their hulls. Bonfires light the sand, loot is sorted openly, and duels settle every argument worth having.",
+    "requirements": {
+      "body_transformation": {
+        "minimum_realm": "Tempering Marrow",
+        "minimum_stage": 1
+      },
+      "essence_gathering": {
+        "minimum_realm": "Xiantian",
+        "minimum_stage": 1
+      },
+      "unlock_flags": [],
+      "required_items": [],
+      "required_reputation": []
+    },
+    "danger_level": 5,
+    "qi_density": 4,
+    "map_position": {
+      "x": 0.405,
+      "y": 0.75
+    },
+    "connected_locations": [
+      "south_sea_port",
+      "south_horizon_city"
+    ],
+    "npc_ids": [
+      "tide_king_hei",
+      "cove_quartermaster_vex",
+      "mist_shipwright_halloo",
+      "pearl_smuggler_gale"
+    ],
+    "available_systems": [
+      "explore",
+      "travel",
+      "combat",
+      "sparring",
+      "gather"
+    ],
+    "resources": [
+      "Salvage",
+      "Beast Cores"
+    ],
+    "notes": "Story-tier 4 pirate haven; dangerous but lucrative."
+  },
+  {
+    "id": "coral_prison_atoll",
+    "display_name": "Coral Prison Atoll",
+    "zone": "Southern Sea",
+    "location_type": "sunken_prison",
+    "tier": "Mid / Late Mortal World",
+    "story_tier": 4,
+    "description": "A ring of coral towers rises from the reef, its cells drowned at high tide. The kingdom's worst cultivators were left here when the sea rose; some are still breathing.",
+    "requirements": {
+      "body_transformation": {
+        "minimum_realm": "Tempering Marrow",
+        "minimum_stage": 3
+      },
+      "essence_gathering": {
+        "minimum_realm": "Xiantian",
+        "minimum_stage": 1
+      },
+      "unlock_flags": [],
+      "required_items": [],
+      "required_reputation": []
+    },
+    "danger_level": 6,
+    "qi_density": 6,
+    "map_position": {
+      "x": 0.44,
+      "y": 0.86
+    },
+    "connected_locations": [
+      "south_sea_port"
+    ],
+    "npc_ids": [
+      "atoll_turnkey_owl"
+    ],
+    "available_systems": [
+      "explore",
+      "travel",
+      "combat",
+      "meditate"
+    ],
+    "resources": [
+      "Black Coral",
+      "Sunken Relics"
+    ],
+    "notes": "Story-tier 4 high-danger dungeon atoll."
+  },
+  {
+    "id": "sea_of_mist_expanse",
+    "display_name": "Sea of Mist Expanse",
+    "zone": "Southern Sea",
+    "location_type": "open_sea_expanse",
+    "tier": "Mid / Late Mortal World",
+    "story_tier": 4,
+    "description": "Beyond the pearl lanes the sea fog closes into a white void. Compass needles spin, birds refuse to cross, and the mist carries the taste of old lightning.",
+    "requirements": {
+      "body_transformation": {
+        "minimum_realm": "Tempering Marrow",
+        "minimum_stage": 2
+      },
+      "essence_gathering": {
+        "minimum_realm": "Xiantian",
+        "minimum_stage": 1
+      },
+      "unlock_flags": [],
+      "required_items": [],
+      "required_reputation": []
+    },
+    "danger_level": 5,
+    "qi_density": 5,
+    "map_position": {
+      "x": 0.33,
+      "y": 0.845
+    },
+    "connected_locations": [
+      "pearl_pavilion",
+      "south_sea_port"
+    ],
+    "npc_ids": [
+      "reef_warden_nimbus"
+    ],
+    "available_systems": [
+      "explore",
+      "travel",
+      "combat",
+      "gather"
+    ],
+    "resources": [
+      "Mist Condensate",
+      "Deep-Sea Herb"
+    ],
+    "notes": "Story-tier 4 open-sea wilderness."
+  },
+  {
+    "id": "furnace_pillar_city",
+    "display_name": "Furnace Pillar City",
+    "zone": "Central Region",
+    "location_type": "forge_city_hub",
+    "tier": "Late Mortal World",
+    "story_tier": 5,
+    "description": "Pillars of everburning fire vent the city's ten thousand forges. Weaponwrights temper spirit steel by feel, and the Furnace Forge Society sells to any hand that can pay and any cause that can.",
+    "requirements": {
+      "body_transformation": {
+        "minimum_realm": "Tempering Marrow",
+        "minimum_stage": 7
+      },
+      "essence_gathering": {
+        "minimum_realm": "Revolving Core",
+        "minimum_stage": 1
+      },
+      "unlock_flags": [],
+      "required_items": [],
+      "required_reputation": []
+    },
+    "danger_level": 6,
+    "qi_density": 6,
+    "map_position": {
+      "x": 0.395,
+      "y": 0.29
+    },
+    "connected_locations": [
+      "nine_furnace_kingdom",
+      "vermillion_bird_kingdom",
+      "zen_wilds_shrine"
+    ],
+    "npc_ids": [
+      "forge_master_yan_huo",
+      "forge_apprentice_cinder",
+      "furnace_ore_scout_bram"
+    ],
+    "available_systems": [
+      "explore",
+      "rest",
+      "travel",
+      "market",
+      "trainers",
+      "sparring",
+      "combat",
+      "dialogue",
+      "quests",
+      "meditate"
+    ],
+    "resources": [
+      "Spirit Steel",
+      "Forge Salamander Cores"
+    ],
+    "notes": "Story-tier 5 forge city; market and trainer."
+  },
+  {
+    "id": "emberfall_citadel",
+    "display_name": "Emberfall Citadel",
+    "zone": "Central Region",
+    "location_type": "militant_fortress",
+    "tier": "Late Mortal World",
+    "story_tier": 5,
+    "description": "A fortress of black basalt where the ash never settles. The Asura Kingdom's war pavilions drill here between campaigns, and the only law is the dueling ring at the gate.",
+    "requirements": {
+      "body_transformation": {
+        "minimum_realm": "Eight Gates of Hidden Celestial Stems",
+        "minimum_stage": 1
+      },
+      "essence_gathering": {
+        "minimum_realm": "Revolving Core",
+        "minimum_stage": 1
+      },
+      "unlock_flags": [],
+      "required_items": [],
+      "required_reputation": []
+    },
+    "danger_level": 7,
+    "qi_density": 6,
+    "map_position": {
+      "x": 0.66,
+      "y": 0.4
+    },
+    "connected_locations": [
+      "asura_divine_kingdom",
+      "blood_slaughter_steppes"
+    ],
+    "npc_ids": [
+      "war_pavilion_envoy_ru",
+      "ash_priestess_solene",
+      "ember_armsmith_juno"
+    ],
+    "available_systems": [
+      "explore",
+      "travel",
+      "combat",
+      "sparring",
+      "quests"
+    ],
+    "resources": [
+      "War Spoils",
+      "Blood Crystals"
+    ],
+    "notes": "Story-tier 5 Asura war-fortress."
+  },
+  {
+    "id": "zen_wilds_shrine",
+    "display_name": "Zen Wilds Shrine",
+    "zone": "Great Zen Region",
+    "location_type": "mountain_shrine",
+    "tier": "Late Mortal World",
+    "story_tier": 5,
+    "description": "A chain of abandoned shrines climbs into the high wilds. Monks from Zenlight still walk here in silence, sweeping paths no pilgrim uses, and the beasts leave the bells alone.",
+    "requirements": {
+      "body_transformation": {
+        "minimum_realm": "Eight Gates of Hidden Celestial Stems",
+        "minimum_stage": 1
+      },
+      "essence_gathering": {
+        "minimum_realm": "Xiantian",
+        "minimum_stage": 1
+      },
+      "unlock_flags": [],
+      "required_items": [],
+      "required_reputation": []
+    },
+    "danger_level": 5,
+    "qi_density": 7,
+    "map_position": {
+      "x": 0.19,
+      "y": 0.28
+    },
+    "connected_locations": [
+      "zenlight_monastery",
+      "furnace_pillar_city"
+    ],
+    "npc_ids": [
+      "nameless_zen_wanderer",
+      "zen_bell_ringer_mo",
+      "zen_gardener_pale"
+    ],
+    "available_systems": [
+      "explore",
+      "travel",
+      "meditate",
+      "gather",
+      "combat"
+    ],
+    "resources": [
+      "Zen Heart Herbs",
+      "Bell Bronze"
+    ],
+    "notes": "Story-tier 5 meditative wilds linking monastery and furnace roads."
+  },
+  {
+    "id": "rune_temple_undercroft",
+    "display_name": "Rune Temple Undercroft",
+    "zone": "Five Element Region",
+    "location_type": "elemental_undercroft",
+    "tier": "End Mortal World",
+    "story_tier": 6,
+    "description": "Beneath the temples, buried rune-halls cycle the five elements in slow, patient circuits. The wardens here answer to no kingdom and test every intruder against a living element.",
+    "requirements": {
+      "body_transformation": {
+        "minimum_realm": "Eight Gates of Hidden Celestial Stems",
+        "minimum_stage": 8
+      },
+      "essence_gathering": {
+        "minimum_realm": "Life Destruction",
+        "minimum_stage": 1
+      },
+      "unlock_flags": [],
+      "required_items": [],
+      "required_reputation": []
+    },
+    "danger_level": 8,
+    "qi_density": 8,
+    "map_position": {
+      "x": 0.82,
+      "y": 0.1
+    },
+    "connected_locations": [
+      "five_element_temples"
+    ],
+    "npc_ids": [
+      "rune_temple_warden",
+      "temple_scribe_quin",
+      "undercroft_convict_nine"
+    ],
+    "available_systems": [
+      "explore",
+      "travel",
+      "combat",
+      "meditate",
+      "gather"
+    ],
+    "resources": [
+      "Rune Stones",
+      "Elemental Cores"
+    ],
+    "notes": "Story-tier 6 elemental dungeon beneath the temples."
+  },
+  {
+    "id": "gate_array_approach",
+    "display_name": "Gate Array Approach",
+    "zone": "Ascension Gate",
+    "location_type": "ascension_approach",
+    "tier": "End Mortal World",
+    "story_tier": 6,
+    "description": "The last stair winds up through drifting star-fields to the planetary gate itself. Cultivators who pause here say the air tastes of distance, and few descend the way they came.",
+    "requirements": {
+      "body_transformation": {
+        "minimum_realm": "Nine Stars Dao Palace",
+        "minimum_stage": 1
+      },
+      "essence_gathering": {
+        "minimum_realm": "Divine Sea",
+        "minimum_stage": 1
+      },
+      "unlock_flags": [],
+      "required_items": [],
+      "required_reputation": []
+    },
+    "danger_level": 9,
+    "qi_density": 9,
+    "map_position": {
+      "x": 0.79,
+      "y": 0.44
+    },
+    "connected_locations": [
+      "planetary_gate_array"
+    ],
+    "npc_ids": [
+      "gate_stair_hermit",
+      "stair_ascendant_lo",
+      "gate_warden_prime_astrid"
+    ],
+    "available_systems": [
+      "explore",
+      "travel",
+      "combat",
+      "sparring",
+      "meditate"
+    ],
+    "resources": [
+      "Starlight Condensate",
+      "Ascension Gate Reeds"
+    ],
+    "notes": "Story-tier 6 final approach to the ascension gate."
   }
 ]

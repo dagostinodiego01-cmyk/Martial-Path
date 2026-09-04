@@ -24,6 +24,13 @@ def make_inventory_system():
             magnitude=25,
             consumed_on_use=True,
         ),
+        "talent_refining_elixir": Item(
+            id="talent_refining_elixir",
+            name="Talent Refining Elixir",
+            type="material",
+            effect="none",
+            magnitude=0,
+        ),
     }
     return InventorySystem(items, EffectSystem())
 
@@ -58,3 +65,17 @@ def test_consumed_on_use_material_is_removed():
     assert result["event"] == EventType.ITEM_USED
     assert player.progress == 25
     assert player.inventory.get("spirit_stone", 0) == 0
+
+
+def test_use_effectless_material_returns_not_usable():
+    # The Talent Refining Elixir is spent by UPGRADE_TALENT, not USE_ITEM; using
+    # it directly must error honestly instead of reporting a no-op success.
+    inventory = make_inventory_system()
+    player = Player(name="Tester", inventory={"talent_refining_elixir": 2})
+
+    result = inventory.use_item(player, "talent_refining_elixir")
+
+    assert result["event"] == EventType.ERROR
+    assert result["reason"] == "ITEM_NOT_USABLE"
+    # Nothing consumed, nothing changed.
+    assert player.inventory.get("talent_refining_elixir") == 2

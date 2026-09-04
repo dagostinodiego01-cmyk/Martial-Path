@@ -94,6 +94,19 @@ class LocationSystem:
         loc = self._locations.get(location_id, {})
         return list(loc.get("npc_ids", []))
 
+    def story_tier(self, location_id: str) -> int:
+        """Return the story-tier (1-6) of ``location_id`` (0 when unknown).
+
+        Story tiers order the campaign: ``1`` marks the starting wilds and the
+        highest tier marks end-mortal/ascension regions. Systems read this to
+        scale sect offerings and who the world sends to meet the player.
+        """
+        loc = self._locations.get(location_id, {})
+        try:
+            return int(loc.get("story_tier", 0))
+        except (TypeError, ValueError):
+            return 0
+
     def requirements(self, location_id: str) -> Dict[str, Any]:
         """Return the entry requirements for ``location_id`` (or ``{}``)."""
         loc = self._locations.get(location_id, {})
@@ -123,6 +136,7 @@ class LocationSystem:
             "zone": loc.get("zone", ""),
             "location_type": loc.get("location_type", ""),
             "tier": loc.get("tier", ""),
+            "story_tier": self.story_tier(loc["id"]),
             "description": loc.get("description", ""),
             "danger_level": danger_level,
             "danger": danger_label(danger_level),

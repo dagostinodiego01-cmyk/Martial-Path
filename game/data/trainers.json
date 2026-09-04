@@ -1330,5 +1330,61 @@
         }
       }
     ]
+  },
+  {
+    "id": "drift_drillmaster_guan",
+    "display_name": "Drillmaster Guan",
+    "location_ids": [
+      "deepwood_drift_outpost"
+    ],
+    "description": "A retired valley outer-disciple who drills drift hands in the fundamentals — for coin, and only in coin.",
+    "techniques": [
+      {
+        "skill_id": "spirit_palm",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "iron_guard",
+        "price": {
+          "gold": 150
+        }
+      },
+      {
+        "skill_id": "mountain_crushing_fist",
+        "price": {
+          "gold": 300
+        }
+      }
+    ]
+  },
+  {
+    "id": "furnace_elder_fenhuo",
+    "display_name": "Elder Fenhuo of the Forges",
+    "location_ids": [
+      "furnace_pillar_city"
+    ],
+    "description": "A Society elder who teaches the great-sun and blood arts to anyone whose spirit stones survive the tuition.",
+    "techniques": [
+      {
+        "skill_id": "great_sun_chant",
+        "price": {
+          "spirit_stone": 75
+        }
+      },
+      {
+        "skill_id": "inferno_palm",
+        "price": {
+          "spirit_stone": 85
+        }
+      },
+      {
+        "skill_id": "blood_sea_aura",
+        "price": {
+          "spirit_stone": 90
+        }
+      }
+    ]
   }
 ]

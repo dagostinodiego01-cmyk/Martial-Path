@@ -2022,5 +2022,118 @@
         "stock": 1
       }
     ]
+  },
+  {
+    "id": "drift_outpost_market",
+    "display_name": "Deepwood Drift Market",
+    "location_ids": [
+      "deepwood_drift_outpost",
+      "thornwood_hollow"
+    ],
+    "description": "Broker Lan's open-air stalls: hunter manuals, trail pills, and whatever the deepwood yielded this week.",
+    "stock": [
+      {
+        "item_id": "flowing_step_manual",
+        "price": {
+          "gold": 90
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "iron_guard_manual",
+        "price": {
+          "gold": 100
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "mountain_crushing_fist_manual",
+        "price": {
+          "spirit_stone": 22
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "earth_vein_guard_manual",
+        "price": {
+          "spirit_stone": 30
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "marrow_cleansing_elixir",
+        "price": {
+          "gold": 85
+        },
+        "stock": 3
+      },
+      {
+        "item_id": "mystic_pill",
+        "price": {
+          "gold": 60
+        },
+        "stock": 5
+      },
+      {
+        "item_id": "healing_pill",
+        "price": {
+          "gold": 20
+        },
+        "stock": 10
+      }
+    ]
+  },
+  {
+    "id": "pearl_pavilion_market",
+    "display_name": "Pearl Pavilion Exchange",
+    "location_ids": [
+      "pearl_pavilion",
+      "south_sea_port"
+    ],
+    "description": "Quiet bids under pearl gauze: sea-route manuals, deep-sea salves, and pills graded for the long cultivation tracks.",
+    "stock": [
+      {
+        "item_id": "roaring_tide_sword_intent_manual",
+        "price": {
+          "spirit_stone": 58
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "phoenix_footwork_manual",
+        "price": {
+          "spirit_stone": 72
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "white_tiger_breathing_method_manual",
+        "price": {
+          "spirit_stone": 64
+        },
+        "stock": 1
+      },
+      {
+        "item_id": "phoenix_marrow_pill",
+        "price": {
+          "spirit_stone": 45
+        },
+        "stock": 3
+      },
+      {
+        "item_id": "soul_nurturing_pill",
+        "price": {
+          "gold": 120
+        },
+        "stock": 4
+      },
+      {
+        "item_id": "star_gathering_pill",
+        "price": {
+          "gold": 95
+        },
+        "stock": 4
+      }
+    ]
   }
 ]

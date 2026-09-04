@@ -203,6 +203,7 @@
     "alignment": "hostile",
     "importance": "antagonist",
     "faction": "Asura Divine Kingdom",
+    "min_story_tier": 5,
     "encounter_type": "antagonist",
     "unlock": {
       "realm": "Qi Condensation",
@@ -268,6 +269,7 @@
     "alignment": "hostile",
     "importance": "antagonist",
     "faction": "Asura Divine Kingdom",
+    "min_story_tier": 5,
     "encounter_type": "antagonist",
     "unlock": {
       "realm": "Qi Condensation",
@@ -333,6 +335,7 @@
     "alignment": "neutral_hostile",
     "importance": "trial_giver",
     "faction": "Blood Slaughter Steppes",
+    "min_story_tier": 5,
     "encounter_type": "antagonist",
     "unlock": {
       "realm": "Qi Condensation",
@@ -408,6 +411,7 @@
     "alignment": "neutral_hostile",
     "importance": "rival",
     "faction": "Asura Divine Kingdom",
+    "min_story_tier": 5,
     "encounter_type": "rival",
     "unlock": {
       "realm": "Qi Condensation",
@@ -473,6 +477,7 @@
     "alignment": "hostile",
     "importance": "major_antagonist",
     "faction": "Nine Furnace Divine Kingdom",
+    "min_story_tier": 5,
     "encounter_type": "antagonist",
     "unlock": {
       "realm": "Qi Condensation",
@@ -538,6 +543,7 @@
     "alignment": "demonic",
     "importance": "major_threat",
     "faction": "Forbidden Remnants",
+    "min_story_tier": 6,
     "encounter_type": "entity",
     "unlock": {
       "realm": "Qi Condensation",
@@ -603,6 +609,7 @@
     "alignment": "demonic",
     "importance": "legendary_threat",
     "faction": "Holy Demon Continent",
+    "min_story_tier": 6,
     "encounter_type": "entity",
     "unlock": {
       "realm": "Qi Condensation",
@@ -733,6 +740,7 @@
     "alignment": "neutral_hostile",
     "importance": "minor",
     "faction": "Blood Slaughter Steppes",
+    "min_story_tier": 5,
     "encounter_type": "antagonist",
     "unlock": {
       "realm": "Body Tempering",
@@ -863,6 +871,7 @@
     "alignment": "demonic",
     "importance": "antagonist",
     "faction": "Holy Demon Continent",
+    "min_story_tier": 6,
     "encounter_type": "antagonist",
     "unlock": {
       "realm": "Qi Condensation",
@@ -928,6 +937,7 @@
     "alignment": "neutral",
     "importance": "rival",
     "faction": "Four Divine Kingdoms",
+    "min_story_tier": 5,
     "encounter_type": "rival",
     "unlock": {
       "realm": "Qi Condensation",

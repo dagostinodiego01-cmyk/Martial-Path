@@ -38,6 +38,8 @@ class SocialMixin:
             speech_notes=context.get("ai_prompt_notes") or None,
         ).to_dict()
         result["narrative"] = self.describe_npc(character_id)
+        # E.5: gossip travels -- an unlearned rumor surfaces in conversation.
+        result = self._rumor_hook_for(character_id, result)
         return result
 
     def _dialogue_choose(self, action: Dict[str, Any]) -> Dict[str, Any]:

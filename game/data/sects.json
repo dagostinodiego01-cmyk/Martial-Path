@@ -3,48 +3,611 @@
     "id": "lin_academy",
     "display_name": "Lin Academy",
     "path": "Lin Academy",
-    "location_ids": ["lin_academy"],
+    "location_ids": [
+      "lin_academy"
+    ],
+    "tier": 1,
     "description": "The scholarly academy where fledgling cultivators first learn to temper body and will.",
     "join_requirements": {
       "min_reputation": 0,
       "min_body_realm": "mortal"
     },
-    "contribution_ranks": ["outer_disciple", "inner_disciple", "core_disciple"]
+    "contribution_ranks": [
+      "outer_disciple",
+      "inner_disciple",
+      "core_disciple"
+    ],
+    "techniques": [
+      {
+        "skill_id": "iron_fist",
+        "price": {
+          "gold": 40
+        }
+      },
+      {
+        "skill_id": "flowing_step",
+        "price": {
+          "gold": 40
+        }
+      },
+      {
+        "skill_id": "windless_roar",
+        "price": {
+          "gold": 40
+        }
+      },
+      {
+        "skill_id": "thunderclap_chant",
+        "price": {
+          "gold": 40
+        }
+      },
+      {
+        "skill_id": "iron_body",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "skill_id": "windless_chant",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "skill_id": "azure_dragon_roar",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "skill_id": "vermilion_bird_palm",
+        "price": {
+          "gold": 60
+        }
+      }
+    ]
   },
   {
     "id": "seven_profound_valleys",
     "display_name": "Seven Profound Valleys",
     "path": "Seven Profound Valleys",
-    "location_ids": ["seven_profound_valleys_gate", "seven_profound_valleys_inner"],
+    "location_ids": [
+      "seven_profound_valleys_gate",
+      "seven_profound_valleys_inner"
+    ],
+    "tier": 3,
     "description": "A valley sect that prizes steady foundations and unbroken lineage over flashy power.",
     "join_requirements": {
       "min_reputation": 5,
-      "min_body_realm": "flesh_training"
+      "min_body_realm": "flesh_training",
+      "min_story_tier": 3
     },
-    "contribution_ranks": ["outer_disciple", "inner_disciple", "core_disciple", "elder"]
+    "contribution_ranks": [
+      "outer_disciple",
+      "inner_disciple",
+      "core_disciple",
+      "elder"
+    ],
+    "techniques": [
+      {
+        "skill_id": "mountain_crushing_sword_art",
+        "price": {
+          "spirit_stone": 2
+        }
+      },
+      {
+        "skill_id": "purple_cloud_sword_art",
+        "price": {
+          "spirit_stone": 2
+        }
+      },
+      {
+        "skill_id": "purple_cloud_constitution",
+        "price": {
+          "spirit_stone": 2
+        }
+      },
+      {
+        "skill_id": "myriad_sword_body",
+        "price": {
+          "spirit_stone": 2
+        }
+      },
+      {
+        "skill_id": "nether_palm",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "skill_id": "great_sun_domain",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "skill_id": "thunderclap_sword_intent",
+        "price": {
+          "spirit_stone": 3
+        }
+      },
+      {
+        "skill_id": "primordial_chaos_meditation",
+        "price": {
+          "spirit_stone": 3
+        }
+      }
+    ]
+  },
+  {
+    "join_requirements": {
+      "max_reputation": -10,
+      "min_body_realm": "body_pulse_condensation",
+      "min_story_tier": 5
+    },
+    "contribution_ranks": [
+      "blood_disciple",
+      "asura_candidate",
+      "asura_lord"
+    ],
+    "description": "A demonic kingdom that welcomes only those who have stained their name in blood.",
+    "display_name": "Asura Divine Kingdom",
+    "id": "asura_divine_kingdom",
+    "location_ids": [
+      "asura_divine_kingdom"
+    ],
+    "path": "Asura Path",
+    "tier": 5,
+    "techniques": [
+      {
+        "skill_id": "blood_sea_palm",
+        "price": {
+          "spirit_stone": 6
+        }
+      },
+      {
+        "skill_id": "blood_sea_roar",
+        "price": {
+          "spirit_stone": 6
+        }
+      },
+      {
+        "skill_id": "blood_sea_saber_art",
+        "price": {
+          "spirit_stone": 6
+        }
+      },
+      {
+        "skill_id": "blood_sea_body",
+        "price": {
+          "spirit_stone": 6
+        }
+      },
+      {
+        "skill_id": "soul_severing_guard",
+        "price": {
+          "spirit_stone": 7
+        }
+      },
+      {
+        "skill_id": "star_shattering_roar",
+        "price": {
+          "spirit_stone": 7
+        }
+      }
+    ]
   },
   {
     "id": "divine_phoenix_island",
     "display_name": "Divine Phoenix Island",
     "path": "Divine Phoenix",
-    "location_ids": ["divine_phoenix_island"],
+    "location_ids": [
+      "divine_phoenix_island"
+    ],
+    "tier": 4,
     "description": "A proud island sect whose disciples walk the rebirth path of the divine phoenix.",
     "join_requirements": {
       "min_reputation": 15,
       "min_body_realm": "bone_forging"
     },
-    "contribution_ranks": ["outer_disciple", "inner_disciple", "core_disciple", "elder"]
+    "contribution_ranks": [
+      "outer_disciple",
+      "inner_disciple",
+      "core_disciple",
+      "elder"
+    ],
+    "techniques": [
+      {
+        "skill_id": "phoenix_sword_art",
+        "price": {
+          "spirit_stone": 5
+        },
+        "required_path": "Divine Phoenix"
+      },
+      {
+        "skill_id": "phoenix_fist",
+        "price": {
+          "spirit_stone": 5
+        },
+        "required_path": "Divine Phoenix"
+      },
+      {
+        "skill_id": "phoenix_sword_intent",
+        "price": {
+          "spirit_stone": 6
+        }
+      },
+      {
+        "skill_id": "phoenix_seal",
+        "price": {
+          "spirit_stone": 6
+        }
+      }
+    ]
   },
   {
-    "id": "asura_divine_kingdom",
-    "display_name": "Asura Divine Kingdom",
-    "path": "Asura Path",
-    "location_ids": ["asura_divine_kingdom"],
-    "description": "A demonic kingdom that welcomes only those who have stained their name in blood.",
+    "id": "mistwood_rangers",
+    "display_name": "Mistwood Rangers",
+    "path": "Mistwood Rangers",
+    "tier": 2,
+    "location_ids": [
+      "thornwood_hollow"
+    ],
+    "description": "Hunter-wardens of the deepwood who track beasts by broken dew and keep the wilds from swallowing the roads.",
     "join_requirements": {
-      "max_reputation": -10,
-      "min_body_realm": "body_pulse_condensation"
+      "min_reputation": 0,
+      "min_body_realm": "flesh_training",
+      "min_story_tier": 2
     },
-    "contribution_ranks": ["blood_disciple", "asura_candidate", "asura_lord"]
+    "contribution_ranks": [
+      "trail_hunter",
+      "mist_warden",
+      "ranger_elder"
+    ],
+    "techniques": [
+      {
+        "skill_id": "flowing_step",
+        "price": {
+          "gold": 90
+        }
+      },
+      {
+        "skill_id": "iron_guard",
+        "price": {
+          "gold": 110
+        }
+      },
+      {
+        "skill_id": "nine_yang_footwork",
+        "price": {
+          "gold": 150
+        }
+      }
+    ]
+  },
+  {
+    "id": "stream_cloud_pavilion",
+    "display_name": "Stream Cloud Pavilion",
+    "path": "Stream Cloud Pavilion",
+    "tier": 2,
+    "location_ids": [
+      "stream_fisher_wharf",
+      "cloud_terrace_village"
+    ],
+    "description": "River-folk cultivators who read the current like scripture and trade soft-water techniques to anyone who shares their table.",
+    "join_requirements": {
+      "min_reputation": 0,
+      "min_body_realm": "strength_training",
+      "min_story_tier": 2
+    },
+    "contribution_ranks": [
+      "river_hand",
+      "tide_reader",
+      "pavilion_elder"
+    ],
+    "techniques": [
+      {
+        "skill_id": "spirit_palm",
+        "price": {
+          "gold": 80
+        }
+      },
+      {
+        "skill_id": "windless_fist",
+        "price": {
+          "gold": 120
+        }
+      },
+      {
+        "skill_id": "thunderclap_chant",
+        "price": {
+          "gold": 160
+        }
+      }
+    ]
+  },
+  {
+    "id": "valleys_gamblers_market",
+    "display_name": "Valleys Gamblers' Market",
+    "path": "Valleys Gamblers' Market",
+    "tier": 3,
+    "location_ids": [
+      "valleys_hidden_market"
+    ],
+    "description": "Not a sect so much as a standing wager. Its 'disciples' stake technique slips against spirit stones and honor the debts with startling violence.",
+    "join_requirements": {
+      "min_reputation": 0,
+      "min_body_realm": "altering_muscle",
+      "min_story_tier": 3
+    },
+    "contribution_ranks": [
+      "slip_holder",
+      "odds_runner",
+      "market_king"
+    ],
+    "techniques": [
+      {
+        "skill_id": "shadowless_footwork",
+        "price": {
+          "spirit_stone": 25
+        }
+      },
+      {
+        "skill_id": "nether_finger",
+        "price": {
+          "spirit_stone": 30
+        }
+      },
+      {
+        "skill_id": "purple_cloud_guard",
+        "price": {
+          "spirit_stone": 35
+        }
+      }
+    ]
+  },
+  {
+    "id": "deepwood_drift_hall",
+    "display_name": "Deepwood Drift Hall",
+    "path": "Deepwood Drift Hall",
+    "tier": 3,
+    "location_ids": [
+      "deepwood_drift_outpost",
+      "seven_profound_low_peaks"
+    ],
+    "description": "An outpost hall where out-of-favor valley disciples teach the mountain-crushing arts they were raised on — for a fair share of the hunt.",
+    "join_requirements": {
+      "min_reputation": 0,
+      "min_body_realm": "altering_muscle",
+      "min_story_tier": 3
+    },
+    "contribution_ranks": [
+      "drift_hand",
+      "hall_warden",
+      "drift_master"
+    ],
+    "techniques": [
+      {
+        "skill_id": "mountain_crushing_fist",
+        "price": {
+          "spirit_stone": 20
+        }
+      },
+      {
+        "skill_id": "earth_vein_guard",
+        "price": {
+          "spirit_stone": 28
+        }
+      },
+      {
+        "skill_id": "glacial_claw",
+        "price": {
+          "spirit_stone": 36
+        }
+      }
+    ]
+  },
+  {
+    "id": "pearl_tide_pavilion",
+    "display_name": "Pearl Tide Pavilion",
+    "path": "Pearl Tide Pavilion",
+    "tier": 4,
+    "location_ids": [
+      "pearl_pavilion"
+    ],
+    "description": "Mistress Sui's quiet federation of pearlers and tide-wardens. Its arts move like the sea: patient, enveloping, and impossible to outrun once committed.",
+    "join_requirements": {
+      "min_reputation": 10,
+      "min_body_realm": "tempering_marrow",
+      "min_story_tier": 4
+    },
+    "contribution_ranks": [
+      "pearler",
+      "tide_warden",
+      "pavilion_mistress"
+    ],
+    "techniques": [
+      {
+        "skill_id": "roaring_tide_sword_intent",
+        "price": {
+          "spirit_stone": 55
+        }
+      },
+      {
+        "skill_id": "white_tiger_breathing_method",
+        "price": {
+          "spirit_stone": 60
+        }
+      },
+      {
+        "skill_id": "phoenix_footwork",
+        "price": {
+          "spirit_stone": 70
+        }
+      }
+    ]
+  },
+  {
+    "id": "furnace_forge_society",
+    "display_name": "Furnace Forge Society",
+    "path": "Furnace Forge Society",
+    "tier": 5,
+    "location_ids": [
+      "furnace_pillar_city"
+    ],
+    "description": "The smith-cult of the pillar city. Its members temper their own bodies in everburning fire and sell great-sun arts to the highest-standing bidder.",
+    "join_requirements": {
+      "min_reputation": 5,
+      "min_body_realm": "eight_gates_hidden_celestial_stems",
+      "min_story_tier": 5
+    },
+    "contribution_ranks": [
+      "hammer_hand",
+      "forge_adept",
+      "society_master"
+    ],
+    "techniques": [
+      {
+        "skill_id": "great_sun_chant",
+        "price": {
+          "spirit_stone": 70
+        }
+      },
+      {
+        "skill_id": "inferno_palm",
+        "price": {
+          "spirit_stone": 80
+        }
+      },
+      {
+        "skill_id": "earth_vein_sutra",
+        "price": {
+          "spirit_stone": 90
+        }
+      },
+      {
+        "skill_id": "everburning_forge_body",
+        "price": {
+          "spirit_stone": 110
+        }
+      },
+      {
+        "skill_id": "pillar_of_the_sun",
+        "price": {
+          "spirit_stone": 130
+        }
+      }
+    ]
+  },
+  {
+    "id": "emberfall_war_pavilion",
+    "display_name": "Emberfall War Pavilion",
+    "path": "Emberfall War Pavilion",
+    "tier": 5,
+    "location_ids": [
+      "emberfall_citadel"
+    ],
+    "description": "The Asura Kingdom's own war school. It teaches the severing arts to soldiers of proved cruelty and asks no questions about whose blood paid the tuition.",
+    "join_requirements": {
+      "max_reputation": 0,
+      "min_body_realm": "eight_gates_hidden_celestial_stems",
+      "min_story_tier": 5
+    },
+    "contribution_ranks": [
+      "ash_recruit",
+      "war_banner",
+      "pavilion_executioner"
+    ],
+    "techniques": [
+      {
+        "skill_id": "soul_severing_kick",
+        "price": {
+          "spirit_stone": 75
+        }
+      },
+      {
+        "skill_id": "blood_sea_aura",
+        "price": {
+          "spirit_stone": 85
+        }
+      },
+      {
+        "skill_id": "windless_roar",
+        "price": {
+          "spirit_stone": 95
+        }
+      },
+      {
+        "skill_id": "blood_ledger_aura",
+        "price": {
+          "spirit_stone": 115
+        }
+      },
+      {
+        "skill_id": "ashen_verdict",
+        "price": {
+          "spirit_stone": 135
+        }
+      }
+    ]
+  },
+  {
+    "id": "rune_temple_order",
+    "display_name": "Rune Temple Order",
+    "path": "Rune Temple Order",
+    "tier": 6,
+    "location_ids": [
+      "rune_temple_undercroft"
+    ],
+    "description": "Wardens of the buried rune-halls who guard the five-element circuits beneath the temples. Joining means surrendering your name to the circuit and your years to study.",
+    "join_requirements": {
+      "min_reputation": 20,
+      "min_body_realm": "nine_stars_dao_palace",
+      "min_story_tier": 6
+    },
+    "contribution_ranks": [
+      "rune_scribe",
+      "hall_warden",
+      "order_patriarch"
+    ],
+    "techniques": [
+      {
+        "skill_id": "great_sun_domain_no2",
+        "price": {
+          "spirit_stone": 130
+        }
+      },
+      {
+        "skill_id": "primordial_chaos_seal",
+        "price": {
+          "spirit_stone": 150
+        }
+      },
+      {
+        "skill_id": "void_sutra",
+        "price": {
+          "spirit_stone": 170
+        }
+      },
+      {
+        "skill_id": "rune_circuit_body",
+        "price": {
+          "spirit_stone": 140
+        }
+      },
+      {
+        "skill_id": "five_element_world_seal",
+        "price": {
+          "spirit_stone": 160
+        }
+      },
+      {
+        "skill_id": "gate_star_severing_step",
+        "price": {
+          "spirit_stone": 180
+        }
+      }
+    ]
   }
 ]

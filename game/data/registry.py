@@ -57,6 +57,7 @@ class GameDataRegistry:
     refining_recipes: List[Dict[str, Any]] = field(default_factory=list)
     secret_realm: List[Dict[str, Any]] = field(default_factory=list)
     lore_glossary: List[Dict[str, Any]] = field(default_factory=list)
+    legacy_tree: Dict[str, Any] = field(default_factory=dict)
 
     @classmethod
     def load(cls) -> "GameDataRegistry":
@@ -91,6 +92,7 @@ class GameDataRegistry:
             refining_recipes=_load_optional_collection("refining_recipes"),
             secret_realm=_load_optional_collection("secret_realm"),
             lore_glossary=_load_optional_collection("lore_glossary"),
+            legacy_tree=_load_optional_object("legacy_tree.json"),
         )
 
     # -- id-indexed views (built on demand) ------------------------------

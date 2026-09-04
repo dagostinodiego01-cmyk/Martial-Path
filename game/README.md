@@ -56,7 +56,7 @@ pip install -r requirements.txt   # fastapi + uvicorn
 uvicorn game.api.server:app --reload
 ```
 
-Endpoints (default `http://127.0.0.1:8000`):
+Endpoints (default `http://127.0.0.1:8001`):
 
 | Method & path    | Body                                              | Returns                          |
 | ---------------- | ------------------------------------------------- | -------------------------------- |

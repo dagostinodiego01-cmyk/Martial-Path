@@ -2107,5 +2107,69 @@
     "cooldown": 0,
     "qi_cost": 0,
     "description": "An efficient footwork that reduces the Qi cost of all skills by 7%."
+  },
+  {
+    "id": "everburning_forge_body",
+    "name": "Everburning Forge Body",
+    "type": "passive",
+    "effect": "buff_max_hp",
+    "scaling": 3.0,
+    "description": "The Society's master tempering: your body holds the forge's heat, passively raising your vitality by 200%."
+  },
+  {
+    "id": "pillar_of_the_sun",
+    "name": "Pillar of the Sun",
+    "type": "active",
+    "effect": "aoe_damage",
+    "scaling": 11.9,
+    "cooldown": 4,
+    "qi_cost": 410,
+    "description": "Condenses the forge-fires into a standing pillar of sun that sears every foe before you."
+  },
+  {
+    "id": "ashen_verdict",
+    "name": "Ashen Verdict",
+    "type": "active",
+    "effect": "execute",
+    "scaling": 16.1,
+    "cooldown": 5,
+    "qi_cost": 465,
+    "description": "The pavilion's sentence carried out in one stroke: what is judged broken, breaks."
+  },
+  {
+    "id": "blood_ledger_aura",
+    "name": "Blood Ledger Aura",
+    "type": "passive",
+    "effect": "buff_attack",
+    "scaling": 3.1,
+    "description": "Every debt of blood the pavilion has collected fuels you, passively raising your attack by 210%."
+  },
+  {
+    "id": "five_element_world_seal",
+    "name": "Five Element World Seal",
+    "type": "active",
+    "effect": "true_damage",
+    "scaling": 11.2,
+    "cooldown": 4,
+    "qi_cost": 440,
+    "description": "Imprints the five-element circuit onto space itself; the seal's judgment cannot be parried or turned."
+  },
+  {
+    "id": "rune_circuit_body",
+    "name": "Rune Circuit Body",
+    "type": "passive",
+    "effect": "qi_cost_reduction",
+    "scaling": 0.35,
+    "description": "Living runes circuit through your meridians, passively lowering the qi cost of every technique by 35%."
+  },
+  {
+    "id": "gate_star_severing_step",
+    "name": "Gate Star-Severing Step",
+    "type": "active",
+    "effect": "counter",
+    "scaling": 13.4,
+    "cooldown": 4,
+    "qi_cost": 420,
+    "description": "A footwork art learned on the last stair: step between a blow and its mark, and return the stars' cold answer."
   }
 ]

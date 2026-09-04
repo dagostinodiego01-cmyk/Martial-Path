@@ -1,7 +1,7 @@
 """The newer MVP systems: alchemy, Dao awakening, tournament, secret realm."""
 from __future__ import annotations
 
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 
 from game.core.constants import EventType, MODE_COMBAT, MODE_EXPLORE
 
@@ -43,14 +43,15 @@ class SystemsMixin:
     def _dao_awaken(self, dao_id: str) -> Dict[str, Any]:
         """Awaken a new Dao, swapping the player's Dao and notifying quests.
 
-        Gated behind the Act-1 ``dao_awakening`` beat: it opens once a quest with
-        a ``dao_awakening`` objective is active and is a one-time choice per run.
+        Gated behind an active ``dao_awakening`` story beat (Act One's first
+        awakening, Act Two's rekindling): each window allows one genuine
+        change, and the choice locks again once the beat's quest completes.
         """
         if not dao_id:
             return {"event": EventType.ERROR, "reason": "NO_DAO_SPECIFIED"}
-        if self.quests.objective_completed("dao_awakening"):
-            return {"event": EventType.ERROR, "reason": "DAO_ALREADY_AWAKENED", "dao_id": dao_id}
         if not self.quests.objective_active("dao_awakening"):
+            if self.quests.objective_completed("dao_awakening"):
+                return {"event": EventType.ERROR, "reason": "DAO_ALREADY_AWAKENED", "dao_id": dao_id}
             return {"event": EventType.ERROR, "reason": "DAO_AWAKENING_LOCKED"}
         if not self.dao.has_dao(dao_id):
             return {"event": EventType.ERROR, "reason": "UNKNOWN_DAO", "dao_id": dao_id}
@@ -139,6 +140,7 @@ class SystemsMixin:
         if kind in ("encounter", "boss"):
             enemy_id = room.get("enemy_id", "")
             enemy = self._spawn_character_enemy(enemy_id) if room.get("named") else self._spawn_enemy(enemy_id)
+            self._scale_endless_room(room)
             self._current_enemy = enemy
             self._mode = MODE_COMBAT
             self._cooldowns = {}
@@ -209,12 +211,24 @@ class SystemsMixin:
             granted.setdefault("items", {})[item_id] = int(count)
         self._realm = None
         self._mode = MODE_EXPLORE
+        # D.4: surviving a secret realm feeds the faction campaigns.
+        updates = self.quests.notify("realm_completed", self.player, self.inventory)
+        if updates:
+            granted["quest_updates"] = updates
+            self._maybe_complete_campaign_graceful(updates)
         return {
             "event": EventType.REALM_COMPLETED,
             "realm": realm.get("display_name", "secret realm"),
             "reward": granted,
             "player_message": f"You conquer {realm.get('display_name', 'the realm')} and claim its reward.",
         }
+
+    def _maybe_complete_campaign_graceful(self, updates: List[Dict[str, Any]]) -> None:
+        """Surface campaign completion from non-combat quest completions."""
+        for update in updates:
+            act = self.quests.act_end(update.get("id", ""))
+            if act:
+                self._maybe_complete_campaign({"act_complete": act})
 
     def _realm_view(self) -> Optional[Dict[str, Any]]:
         """UI snapshot of the active realm (``None`` when not inside one)."""

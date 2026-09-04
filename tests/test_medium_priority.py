@@ -25,6 +25,28 @@ def test_techniques_action_lists_known_skills():
     assert "flowing_step" in known
 
 
+def test_skill_briefs_classify_active_stats_growth():
+    engine = GameEngine.new_game(seed=1)
+    # One of each technique family: an invokable active, an always-on stat
+    # passive, and a permanent learn-time growth passive.
+    engine.player.skills.extend(
+        ["iron_fist", "flowing_step", "dao_heart_scripture", "inferno_aura"]
+    )
+
+    briefs = {b["id"]: b for b in engine.get_known_skills()}
+    assert briefs["iron_fist"]["category"] == "Active"
+    assert briefs["iron_fist"]["effect_label"] == "Damage"
+    assert briefs["flowing_step"]["category"] == "Stats"
+    assert briefs["flowing_step"]["effect_label"] == "Defense"
+    assert briefs["dao_heart_scripture"]["category"] == "Growth"
+    assert briefs["inferno_aura"]["category"] == "Growth"
+
+    # The authoritative player view carries the same briefs for the Godot UI.
+    state_skills = engine.get_game_state()["player"]["skills"]
+    state_briefs = {b["id"]: b for b in state_skills}
+    assert state_briefs["iron_fist"]["category"] == "Active"
+
+
 # -- P11: talent upgrades ----------------------------------------------------
 def test_talents_view_and_upgrade():
     engine = GameEngine.new_game(seed=1)
@@ -42,6 +64,20 @@ def test_talents_view_and_upgrade():
     assert result["event"] == EventType.TALENT_UPGRADED
     assert engine.player.martial_talent_id == "common_grade_1"
     assert engine.player.inventory.get("talent_refining_elixir", 0) == 0
+
+
+def test_talents_view_annotates_upgrade_affordability():
+    engine = GameEngine.new_game(seed=1)
+    engine.player.martial_talent_id = "no_talent"
+
+    view = engine.process_action({"action": Action.TALENTS})
+    assert view["martial_upgrades"][0]["affordable"] is False
+    assert view["body_upgrades"][0]["affordable"] is False
+
+    engine.player.inventory["talent_refining_elixir"] = 1
+    view = engine.process_action({"action": Action.TALENTS})
+    assert view["martial_upgrades"][0]["affordable"] is True
+    assert view["body_upgrades"][0]["affordable"] is True
 
 
 def test_talent_upgrade_rejected_when_unaffordable():

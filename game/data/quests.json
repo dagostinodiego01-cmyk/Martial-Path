@@ -5,9 +5,21 @@
     "description": "Prove your strength by defeating the beasts that prowl the Outer Forest.",
     "auto_start": true,
     "objectives": [
-      { "type": "defeat", "target": "any", "count": 3, "text": "Defeat 3 foes" }
+      {
+        "type": "defeat",
+        "target": "any",
+        "count": 3,
+        "text": "Defeat 3 foes"
+      }
     ],
-    "rewards": { "exp": 40, "gold": 20, "reputation": 5, "items": { "healing_pill": 2 } }
+    "rewards": {
+      "exp": 40,
+      "gold": 20,
+      "reputation": 5,
+      "items": {
+        "healing_pill": 2
+      }
+    }
   },
   {
     "id": "a_steady_foundation",
@@ -15,9 +27,21 @@
     "description": "Temper your body until you break through to your next cultivation realm.",
     "auto_start": true,
     "objectives": [
-      { "type": "breakthrough", "target": "any", "count": 1, "text": "Achieve 1 breakthrough" }
+      {
+        "type": "breakthrough",
+        "target": "any",
+        "count": 1,
+        "text": "Achieve 1 breakthrough"
+      }
     ],
-    "rewards": { "exp": 60, "gold": 0, "reputation": 10, "items": { "spirit_stone": 1 } }
+    "rewards": {
+      "exp": 60,
+      "gold": 0,
+      "reputation": 10,
+      "items": {
+        "spirit_stone": 1
+      }
+    }
   },
   {
     "id": "wanderers_path",
@@ -25,64 +49,156 @@
     "description": "Broaden your horizons by travelling beyond the Outer Forest.",
     "auto_start": true,
     "objectives": [
-      { "type": "visit_location", "target": "misty_gorge", "count": 1, "text": "Reach the Misty Gorge" }
+      {
+        "type": "visit_location",
+        "target": "misty_gorge",
+        "count": 1,
+        "text": "Reach the Misty Gorge"
+      }
     ],
-    "rewards": { "exp": 30, "gold": 10, "reputation": 8, "items": {} }
+    "rewards": {
+      "exp": 30,
+      "gold": 10,
+      "reputation": 8,
+      "items": {}
+    }
   },
   {
     "id": "azure_stream_guardian",
     "title": "Guardian of Azure Stream",
     "description": "The village elders ask you to cull the beasts threatening their homes.",
     "auto_start": false,
-    "requires": { "completed": ["trial_of_the_forest"] },
+    "requires": {
+      "completed": [
+        "trial_of_the_forest"
+      ]
+    },
     "objectives": [
-      { "type": "defeat", "target": "any", "count": 5, "text": "Defeat 5 foes" }
+      {
+        "type": "defeat",
+        "target": "any",
+        "count": 5,
+        "text": "Defeat 5 foes"
+      }
     ],
-    "rewards": { "exp": 50, "gold": 30, "reputation": 10, "items": { "healing_pill": 2 } }
+    "rewards": {
+      "exp": 50,
+      "gold": 30,
+      "reputation": 10,
+      "items": {
+        "healing_pill": 2
+      }
+    }
   },
   {
     "id": "azure_stream_paragon",
     "title": "Paragon of Azure Stream",
     "description": "Hunt down the rogue cultivator preying on the village roads.",
     "auto_start": false,
-    "requires": { "completed": ["azure_stream_guardian"] },
+    "requires": {
+      "completed": [
+        "azure_stream_guardian"
+      ]
+    },
     "objectives": [
-      { "type": "defeat", "target": "rogue_cultivator", "count": 1, "text": "Defeat a rogue cultivator" }
+      {
+        "type": "defeat",
+        "target": "rogue_cultivator",
+        "count": 1,
+        "text": "Defeat a rogue cultivator"
+      }
     ],
-    "rewards": { "exp": 80, "gold": 20, "reputation": 20, "skills": ["windless_roar"] }
+    "rewards": {
+      "exp": 80,
+      "gold": 20,
+      "reputation": 20,
+      "skills": [
+        "windless_roar"
+      ]
+    }
   },
   {
     "id": "sky_fortune_scion",
     "title": "Scion of Sky Fortune",
     "description": "The capital watches rising talents. Break through twice more to earn its notice.",
     "auto_start": false,
-    "requires": { "completed": ["a_steady_foundation"], "min_reputation": 15 },
+    "requires": {
+      "completed": [
+        "a_steady_foundation"
+      ],
+      "min_reputation": 15
+    },
     "objectives": [
-      { "type": "breakthrough", "target": "any", "count": 2, "text": "Achieve 2 breakthroughs" }
+      {
+        "type": "breakthrough",
+        "target": "any",
+        "count": 2,
+        "text": "Achieve 2 breakthroughs"
+      }
     ],
-    "rewards": { "exp": 90, "gold": 40, "reputation": 15, "manuals": { "spirit_palm_manual": 1 } }
+    "rewards": {
+      "exp": 90,
+      "gold": 40,
+      "reputation": 15,
+      "manuals": {
+        "spirit_palm_manual": 1
+      }
+    }
   },
   {
     "id": "sky_fortune_champion",
     "title": "Champion of Sky Fortune",
     "description": "Prove your standing by besting the capital's challengers in open combat.",
     "auto_start": false,
-    "requires": { "completed": ["sky_fortune_scion"] },
+    "requires": {
+      "completed": [
+        "sky_fortune_scion"
+      ]
+    },
     "objectives": [
-      { "type": "defeat", "target": "any", "count": 3, "text": "Defeat 3 foes" }
+      {
+        "type": "defeat",
+        "target": "any",
+        "count": 3,
+        "text": "Defeat 3 foes"
+      }
     ],
-    "rewards": { "exp": 120, "gold": 50, "reputation": 25, "skills": ["nine_yang_guard"] }
+    "rewards": {
+      "exp": 120,
+      "gold": 50,
+      "reputation": 25,
+      "skills": [
+        "nine_yang_guard"
+      ]
+    }
   },
   {
     "id": "dao_heart_awakening",
     "title": "Dao Heart Awakening",
     "description": "With a name made, turn inward and temper the heart of the Dao.",
     "auto_start": false,
-    "requires": { "completed": ["sky_fortune_champion"], "min_reputation": 30 },
+    "requires": {
+      "completed": [
+        "sky_fortune_champion"
+      ],
+      "min_reputation": 30
+    },
     "objectives": [
-      { "type": "breakthrough", "target": "any", "count": 1, "text": "Achieve 1 breakthrough" }
+      {
+        "type": "breakthrough",
+        "target": "any",
+        "count": 1,
+        "text": "Achieve 1 breakthrough"
+      }
     ],
-    "rewards": { "exp": 150, "gold": 60, "reputation": 30, "skills": ["thunderclap_chant"] }
+    "rewards": {
+      "exp": 150,
+      "gold": 60,
+      "reputation": 30,
+      "skills": [
+        "thunderclap_chant"
+      ]
+    }
   },
   {
     "id": "transcendent_horizon",
@@ -90,69 +206,1573 @@
     "description": "Only in the Nine Furnace Kingdom, with a legend behind you, may you fell its fire golem.",
     "auto_start": false,
     "requires": {
-      "completed": ["dao_heart_awakening"],
+      "completed": [
+        "dao_heart_awakening"
+      ],
       "min_reputation": 60,
       "location": "nine_furnace_kingdom"
     },
     "objectives": [
-      { "type": "defeat", "target": "nine_furnace_fire_golem", "count": 1, "text": "Defeat a Nine Furnace fire golem" }
+      {
+        "type": "defeat",
+        "target": "nine_furnace_fire_golem",
+        "count": 1,
+        "text": "Defeat a Nine Furnace fire golem"
+      }
     ],
-    "rewards": { "exp": 300, "gold": 100, "reputation": 50, "manuals": { "great_sun_domain_manual": 1 } }
+    "rewards": {
+      "exp": 300,
+      "gold": 100,
+      "reputation": 50,
+      "manuals": {
+        "great_sun_domain_manual": 1
+      }
+    }
   },
   {
     "id": "act1_join_sect",
     "title": "Choose a Path",
     "description": "Find a sect and pledge yourself to its way. Your path will shape every technique you are taught.",
     "auto_start": false,
-    "requires": { "completed": ["trial_of_the_forest"] },
+    "requires": {
+      "completed": [
+        "trial_of_the_forest"
+      ]
+    },
     "objectives": [
-      { "type": "join_sect", "target": "any", "count": 1, "text": "Join a sect" }
+      {
+        "type": "join_sect",
+        "target": "any",
+        "count": 1,
+        "text": "Join a sect"
+      }
     ],
-    "rewards": { "exp": 50, "gold": 20, "reputation": 10 }
+    "rewards": {
+      "exp": 50,
+      "gold": 20,
+      "reputation": 10
+    }
   },
   {
     "id": "act1_first_rival",
     "title": "The First Rival",
     "description": "Every path crosses another. Best the academy's rising disciple and take your first step above the crowd.",
     "auto_start": false,
-    "requires": { "completed": ["act1_join_sect"] },
+    "requires": {
+      "completed": [
+        "act1_join_sect"
+      ]
+    },
     "objectives": [
-      { "type": "defeat", "target": "academy_rival_disciple", "count": 1, "text": "Defeat the academy rival disciple" }
+      {
+        "type": "defeat",
+        "target": "academy_rival_disciple",
+        "count": 1,
+        "text": "Defeat the academy rival disciple"
+      }
     ],
-    "rewards": { "exp": 60, "gold": 30, "reputation": 10 }
+    "rewards": {
+      "exp": 60,
+      "gold": 30,
+      "reputation": 10
+    }
   },
   {
     "id": "act1_tournament",
     "title": "The Sect Tournament",
     "description": "The sect opens its arena to every rising disciple. Win your bout to be counted among the strong.",
     "auto_start": false,
-    "requires": { "completed": ["act1_first_rival"] },
+    "requires": {
+      "completed": [
+        "act1_first_rival"
+      ]
+    },
     "objectives": [
-      { "type": "tournament", "target": "any", "count": 1, "text": "Win a tournament bout" }
+      {
+        "type": "tournament",
+        "target": "any",
+        "count": 1,
+        "text": "Win a tournament bout"
+      }
     ],
-    "rewards": { "exp": 100, "gold": 50, "reputation": 20 }
+    "rewards": {
+      "exp": 100,
+      "gold": 50,
+      "reputation": 20
+    }
   },
   {
     "id": "act1_dao_awakening",
     "title": "Awakening of the Dao Heart",
     "description": "Victory has opened a door within. Choose the Dao you will walk for the rest of your path.",
     "auto_start": false,
-    "requires": { "completed": ["act1_tournament"] },
+    "requires": {
+      "completed": [
+        "act1_tournament"
+      ]
+    },
     "objectives": [
-      { "type": "dao_awakening", "target": "any", "count": 1, "text": "Awaken to a Dao" }
+      {
+        "type": "dao_awakening",
+        "target": "any",
+        "count": 1,
+        "text": "Awaken to a Dao"
+      }
     ],
-    "rewards": { "exp": 120, "gold": 40, "reputation": 25 }
+    "rewards": {
+      "exp": 120,
+      "gold": 40,
+      "reputation": 25
+    }
   },
   {
     "id": "act1_conclusion",
     "title": "The First Step on the Dao",
     "description": "A reclusive duelist, Ling Sen, waits at the crossroads. Settle it with the blade, and Act One closes behind you.",
     "auto_start": false,
-    "requires": { "completed": ["act1_dao_awakening"] },
+    "requires": {
+      "completed": [
+        "act1_dao_awakening"
+      ]
+    },
     "objectives": [
-      { "type": "defeat", "target": "ling_sen_duel", "count": 1, "text": "Defeat Ling Sen" }
+      {
+        "type": "defeat",
+        "target": "ling_sen_duel",
+        "count": 1,
+        "text": "Defeat Ling Sen"
+      }
     ],
-    "rewards": { "exp": 250, "gold": 150, "reputation": 40, "items": { "talent_refining_elixir": 1 } },
+    "rewards": {
+      "exp": 250,
+      "gold": 150,
+      "reputation": 40,
+      "items": {
+        "talent_refining_elixir": 1
+      }
+    },
     "act_end": "act_one"
+  },
+  {
+    "id": "act2_shadows_of_the_valleys",
+    "title": "Shadows Over the Valleys",
+    "description": "Act Two opens: the Seven Profound Valleys court new disciples while old grudges between great powers curdle into open shadow war. A sect's fate hangs on your blade.",
+    "auto_start": false,
+    "requires": {
+      "completed": [
+        "act1_conclusion"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "join_sect",
+        "target": "any",
+        "count": 1,
+        "text": "Bind your path to a great sect"
+      }
+    ],
+    "rewards": {
+      "exp": 300,
+      "gold": 200,
+      "reputation": 30
+    }
+  },
+  {
+    "id": "act2_faction_conflict",
+    "title": "The Schism War",
+    "description": "Rival sects maneuver for the Nine Furnace throne's favor. Settle the feud in debate and duel: seven clashes turn whispers into open war.",
+    "auto_start": false,
+    "requires": {
+      "completed": [
+        "act2_shadows_of_the_valleys"
+      ],
+      "min_reputation": 45
+    },
+    "objectives": [
+      {
+        "type": "defeat",
+        "target": "any",
+        "count": 7,
+        "text": "Win seven duels against rival cultivators"
+      }
+    ],
+    "rewards": {
+      "exp": 500,
+      "gold": 300,
+      "reputation": 40
+    }
+  },
+  {
+    "id": "act2_dao_awakening",
+    "title": "The Dao Rekindled",
+    "description": "The schism's pressure cracks your old dao. At the Zenlight Monastery you may seize a new dao and be remade by it.",
+    "auto_start": false,
+    "requires": {
+      "completed": [
+        "act2_faction_conflict"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "dao_awakening",
+        "target": "any",
+        "count": 1,
+        "text": "Awaken a new dao"
+      }
+    ],
+    "rewards": {
+      "exp": 400,
+      "gold": 150,
+      "reputation": 30
+    }
+  },
+  {
+    "act_end": "act_two",
+    "auto_start": false,
+    "description": "The great sects are no more than burning banners. The ancient devil stirs in its containing array beneath the Ancient Ruins; only you can hold it.",
+    "id": "act2_realm_war",
+    "objectives": [
+      {
+        "count": 1,
+        "target": "ancient_devil_manifestation",
+        "text": "Slay the ancient devil",
+        "type": "defeat"
+      }
+    ],
+    "rewards": {
+      "exp": 700,
+      "gold": 400,
+      "reputation": 60,
+      "items": {
+        "talent_refining_elixir": 1
+      }
+    },
+    "requires": {
+      "completed": [
+        "act2_dao_awakening"
+      ]
+    },
+    "title": "The Realm War"
+  },
+  {
+    "id": "act3_threshold_of_heaven",
+    "title": "The Threshold of Heaven",
+    "description": "Act Three: the Planar Gate Array opens for those the world cannot hold. One last gatekeeper tests whether heaven itself must make room.",
+    "auto_start": false,
+    "requires": {
+      "completed": [
+        "act2_realm_war"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "defeat",
+        "target": "demon_emperor_avatar",
+        "count": 1,
+        "text": "Defeat the Demon Emperor's avatar at the gate"
+      }
+    ],
+    "rewards": {
+      "exp": 900,
+      "gold": 500,
+      "reputation": 80
+    }
+  },
+  {
+    "act_end": "act_three",
+    "auto_start": false,
+    "description": "You have walked past every ladder heaven built. Raise your own: break through beyond the worlds, or stand down. The ending is yours to choose.",
+    "id": "act3_final_ascension",
+    "objectives": [
+      {
+        "count": 1,
+        "target": "any",
+        "text": "Break through a realm boundary as the world watches",
+        "type": "breakthrough"
+      }
+    ],
+    "rewards": {
+      "exp": 1200,
+      "gold": 800,
+      "reputation": 100,
+      "items": {
+        "talent_refining_elixir": 1
+      }
+    },
+    "requires": {
+      "completed": [
+        "act3_threshold_of_heaven"
+      ]
+    },
+    "title": "Beyond the Sky"
+  },
+  {
+    "auto_start": false,
+    "chain": "phoenix",
+    "description": "Divine Phoenix Island remembers you. Its elders open the inner flame trials to those who wear the island's colors.",
+    "id": "phoenix_inner_trial",
+    "objectives": [
+      {
+        "count": 3,
+        "target": "any",
+        "text": "Win three duels in the island's colors",
+        "type": "defeat"
+      }
+    ],
+    "rewards": {
+      "exp": 350,
+      "gold": 200,
+      "reputation": 25
+    },
+    "requires": {
+      "path_any": [
+        "divine_phoenix_island",
+        "Divine Phoenix"
+      ],
+      "min_reputation": 20
+    }
+  },
+  {
+    "chain": "phoenix",
+    "description": "Saint Li of the righteous road begs the island to burn the steppes' war camps. Raise the island's flame and let the records call it mercy.",
+    "id": "phoenix_righteous_flame",
+    "objectives": [
+      {
+        "count": 1,
+        "target": "blood_slaughter_steppes_warrior_arena",
+        "text": "Burn out the steppes war camps (ruthless)",
+        "type": "defeat"
+      }
+    ],
+    "rewards": {
+      "exp": 500,
+      "gold": 100,
+      "reputation": 30,
+      "morality": 15
+    },
+    "requires": {
+      "completed": [
+        "phoenix_inner_trial"
+      ],
+      "min_morality": 10
+    }
+  },
+  {
+    "chain": "phoenix",
+    "description": "The flame is a covenant, not a whip. Shield the steppes camp from the island's zealots: saints and devils are made of the same fire.",
+    "id": "phoenix_merciful_shield",
+    "objectives": [
+      {
+        "count": 5,
+        "target": "any",
+        "text": "Spar five island zealots into doubt without drawing blood (gentle)",
+        "type": "spar"
+      },
+      {
+        "count": 1,
+        "target": "any",
+        "text": "Hold your conviction in open debate",
+        "type": "debate"
+      }
+    ],
+    "rewards": {
+      "exp": 500,
+      "gold": 250,
+      "reputation": 35,
+      "morality": -10
+    },
+    "requires": {
+      "completed": [
+        "phoenix_inner_trial"
+      ],
+      "max_morality": -5
+    }
+  },
+  {
+    "auto_start": false,
+    "chain": "valleys",
+    "description": "Seven Profound Valleys weighs your ambition against your loyalty. The elders set the stepping stones of a true Asura.",
+    "id": "valleys_road_of_ambition",
+    "objectives": [
+      {
+        "count": 1,
+        "target": "any",
+        "text": "Enter a secret realm and return alive",
+        "type": "realm_completed"
+      }
+    ],
+    "rewards": {
+      "exp": 350,
+      "gold": 200,
+      "reputation": 20
+    },
+    "requires": {
+      "path_any": [
+        "seven_profound_valleys",
+        "Seven Profound Valleys",
+        "asura_divine_kingdom",
+        "Asura Path"
+      ],
+      "min_reputation": 20
+    }
+  },
+  {
+    "chain": "valleys",
+    "description": "The valleys reward audacity. Shatter the Lin Academy's prestige in open debate, whatever the elders' smiles cost.",
+    "id": "valleys_ruthless_coup",
+    "objectives": [
+      {
+        "count": 1,
+        "target": "any",
+        "text": "Defeat an academy loyalist in dao debate (ruthless)",
+        "type": "debate"
+      }
+    ],
+    "rewards": {
+      "exp": 500,
+      "gold": 300,
+      "reputation": 30,
+      "morality": 15
+    },
+    "requires": {
+      "completed": [
+        "valleys_road_of_ambition"
+      ],
+      "min_morality": 10
+    }
+  },
+  {
+    "chain": "valleys",
+    "description": "Power without principle is a landslide. Hold the valleys to their own law before their elders, and make them listen.",
+    "id": "valleys_honorable_reform",
+    "objectives": [
+      {
+        "count": 2,
+        "target": "any",
+        "text": "Speak truth to elders in two debates (honorable)",
+        "type": "debate"
+      },
+      {
+        "count": 5,
+        "target": "any",
+        "text": "Win five clean duels by strength alone (honorable)",
+        "type": "defeat"
+      }
+    ],
+    "rewards": {
+      "exp": 500,
+      "gold": 250,
+      "reputation": 40,
+      "morality": -10
+    },
+    "requires": {
+      "completed": [
+        "valleys_road_of_ambition"
+      ],
+      "max_morality": -5
+    }
+  },
+  {
+    "id": "spv_outer_sea_ward",
+    "title": "Ward the Outer Sea of Mist",
+    "description": "The Deepwood Drift's ledgers show mist-beasts drifting down from the sea toward the valleys' trade roads. Cull them before the caravans notice.",
+    "requires": {
+      "completed": [
+        "act1_conclusion"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "defeat",
+        "target": "any",
+        "count": 6,
+        "text": "Cull 6 mist-road beasts"
+      }
+    ],
+    "rewards": {
+      "exp": 140,
+      "gold": 60,
+      "reputation": 8,
+      "items": {
+        "marrow_cleansing_elixir": 1
+      }
+    }
+  },
+  {
+    "id": "spv_forbidden_scout",
+    "title": "Scout the Forbidden Drift",
+    "description": "The broker wants a mapped route to the Deepwood Drift Outpost — the hall there has grown bold enough to bid for valley pupils.",
+    "requires": {
+      "completed": [
+        "spv_outer_sea_ward"
+      ],
+      "location": "seven_profound_valleys_inner"
+    },
+    "objectives": [
+      {
+        "type": "visit_location",
+        "target": "deepwood_drift_outpost",
+        "count": 1,
+        "text": "Reach the Deepwood Drift Outpost"
+      },
+      {
+        "type": "defeat",
+        "target": "deepwood_wraith",
+        "count": 3,
+        "text": "Cut down 3 deepwood wraiths"
+      }
+    ],
+    "rewards": {
+      "exp": 180,
+      "gold": 70,
+      "reputation": 10
+    }
+  },
+  {
+    "id": "spv_marrow_pact",
+    "title": "The Marrow Pact",
+    "description": "With the drift mapped and the roads quiet, the valleys' elders teach the gla­cial breathing art they once withheld — to a disciple who has bled for the trade roads.",
+    "requires": {
+      "completed": [
+        "spv_forbidden_scout"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "breakthrough",
+        "target": "any",
+        "count": 1,
+        "text": "Achieve 1 breakthrough"
+      },
+      {
+        "type": "defeat",
+        "target": "misty_elder",
+        "count": 1,
+        "text": "Defeat the Misty Elder"
+      }
+    ],
+    "rewards": {
+      "exp": 260,
+      "gold": 120,
+      "reputation": 12,
+      "skills": [
+        "glacial_sword_art"
+      ]
+    }
+  },
+  {
+    "id": "dpa_pearl_tribute",
+    "title": "The Pearl Tribute",
+    "description": "Pirate zealots harry the pearl routes that feed the island's tribute. Mistress Sui asks the Phoenix's disciples to break them, quietly and completely.",
+    "requires": {
+      "completed": [
+        "act1_conclusion"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "defeat",
+        "target": "sea_zealot",
+        "count": 4,
+        "text": "Break 4 pirate zealots"
+      }
+    ],
+    "rewards": {
+      "exp": 200,
+      "gold": 90,
+      "reputation": 8,
+      "items": {
+        "phoenix_marrow_pill": 1
+      }
+    }
+  },
+  {
+    "id": "dpa_tide_trial",
+    "title": "Trial of the Tidecrook",
+    "description": "The Tide King's cove shelters the raiders' sponsor. Walk into the cove, thin the vultures, and let the pirates learn what the tide costs.",
+    "requires": {
+      "completed": [
+        "dpa_pearl_tribute"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "visit_location",
+        "target": "tidecrook_cove",
+        "count": 1,
+        "text": "Enter Tidecrook Cove"
+      },
+      {
+        "type": "defeat",
+        "target": "sea_vulture",
+        "count": 3,
+        "text": "Fell 3 sea vultures"
+      }
+    ],
+    "rewards": {
+      "exp": 260,
+      "gold": 110,
+      "reputation": 12
+    }
+  },
+  {
+    "id": "dpa_phoenix_ascendant",
+    "title": "Phoenix Ascendant",
+    "description": "With the routes safe, the island names its debt. Two breakthroughs by the ember pools, and the phoenix-fist lineage opens to you.",
+    "requires": {
+      "completed": [
+        "dpa_tide_trial"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "breakthrough",
+        "target": "any",
+        "count": 2,
+        "text": "Achieve 2 breakthroughs"
+      }
+    ],
+    "rewards": {
+      "exp": 380,
+      "gold": 150,
+      "reputation": 15,
+      "skills": [
+        "phoenix_fist"
+      ]
+    }
+  },
+  {
+    "id": "asura_steppes_oath",
+    "title": "Oath of the Steppes",
+    "description": "The War Pavilion buys blades with proved blood. Cut down four of the slaughter-dogs hunting the steppes and the envoy will draft your name into the ledger.",
+    "requires": {
+      "completed": [
+        "act1_conclusion"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "defeat",
+        "target": "slaughter_rogue_cultivator",
+        "count": 4,
+        "text": "Cut down 4 steppe rogues"
+      }
+    ],
+    "rewards": {
+      "exp": 320,
+      "gold": 130,
+      "items": {
+        "blood_quenching_elixir": 2
+      }
+    },
+    "chain": "asura"
+  },
+  {
+    "id": "asura_blood_hunt",
+    "title": "The Blood Hunt",
+    "description": "The pavilion's banner wants raising where the kingdom's enemies watch. Take the citadel road, thin the bandit hosts, and let Emberfall see your work.",
+    "requires": {
+      "completed": [
+        "asura_steppes_oath"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "visit_location",
+        "target": "emberfall_citadel",
+        "count": 1,
+        "text": "Reach Emberfall Citadel"
+      },
+      {
+        "type": "defeat",
+        "target": "blood_bandit",
+        "count": 4,
+        "text": "Slay 4 blood bandits"
+      }
+    ],
+    "rewards": {
+      "exp": 420,
+      "gold": 180,
+      "items": {
+        "blood_quenching_elixir": 2
+      }
+    },
+    "chain": "asura"
+  },
+  {
+    "id": "asura_demon_trial",
+    "title": "Trial of the Demon Gate",
+    "description": "The final proof: two breakthroughs of the body and the blood golem of the ring broken beneath your hands. The pavilion answers in kind.",
+    "requires": {
+      "completed": [
+        "asura_blood_hunt"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "breakthrough",
+        "target": "any",
+        "count": 2,
+        "text": "Achieve 2 breakthroughs"
+      },
+      {
+        "type": "defeat",
+        "target": "blood_golem",
+        "count": 1,
+        "text": "Break the blood golem"
+      }
+    ],
+    "rewards": {
+      "exp": 560,
+      "gold": 240,
+      "skills": [
+        "blood_sea_roar"
+      ]
+    },
+    "chain": "asura"
+  },
+  {
+    "id": "wharf_silt_beasts",
+    "title": "Silt-Beasts of the Wharf",
+    "description": "Reed-Cutter Min's nets keep coming up torn: silt-beasts have nested in the pilings. Clear them and the wharf pays in fish and coin.",
+    "requires": {
+      "completed": [
+        "act1_conclusion"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "defeat",
+        "target": "field_bandit",
+        "count": 3,
+        "text": "Drive off 3 pilings raiders"
+      },
+      {
+        "type": "defeat",
+        "target": "thornwood_cutpurse",
+        "count": 2,
+        "text": "Break 2 cutpurses' dens"
+      }
+    ],
+    "rewards": {
+      "exp": 120,
+      "gold": 70,
+      "reputation": 5,
+      "items": {
+        "healing_pill": 3
+      }
+    }
+  },
+  {
+    "id": "thornline_cull",
+    "title": "Cull on the Thorn Line",
+    "description": "Karu's trail marks have been crossed by something heavy. Walk the thorn line with him and put down what's breaking it.",
+    "requires": {
+      "completed": [
+        "act1_conclusion"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "spar",
+        "target": "mistwood_ranger_elder_spar",
+        "count": 1,
+        "text": "Trade blows with Elder Shan"
+      },
+      {
+        "type": "defeat",
+        "target": "thornwood_bull",
+        "count": 3,
+        "text": "Fell 3 thornwood bulls"
+      }
+    ],
+    "rewards": {
+      "exp": 150,
+      "gold": 60,
+      "reputation": 6
+    }
+  },
+  {
+    "id": "outskirts_fences",
+    "title": "Fences Against the Night",
+    "description": "Olive's farmland loses stock every moonless night. Mend the fences by clearing whatever uses the gaps, and the terraces feed you well.",
+    "requires": {
+      "completed": [
+        "act1_conclusion"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "defeat",
+        "target": "field_scorpion",
+        "count": 3,
+        "text": "Clear 3 scorpion nests"
+      },
+      {
+        "type": "defeat",
+        "target": "shade_lizard",
+        "count": 2,
+        "text": "Drive off 2 shade lizards"
+      }
+    ],
+    "rewards": {
+      "exp": 110,
+      "gold": 55,
+      "reputation": 4,
+      "items": {
+        "great_return_tonic": 2
+      }
+    }
+  },
+  {
+    "id": "peaks_pool_trial",
+    "title": "The Cloud Pool Trial",
+    "description": "Hermit Bai offers the peaks' oldest lesson: stillness that answers back. Match the pool's breathing, then match his.",
+    "requires": {
+      "completed": [
+        "act1_conclusion"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "visit_location",
+        "target": "seven_profound_low_peaks",
+        "count": 1,
+        "text": "Climb to the low peaks"
+      },
+      {
+        "type": "spar",
+        "target": "cloud_pool_hermit_bai_spar",
+        "count": 1,
+        "text": "Match blows with the hermit"
+      }
+    ],
+    "rewards": {
+      "exp": 190,
+      "gold": 80,
+      "reputation": 8,
+      "items": {
+        "qi_pill": 3
+      }
+    }
+  },
+  {
+    "id": "market_stall_wars",
+    "title": "The Stall Wars",
+    "description": "Duo the crier has brokered a truce between two stall cartels — both immediately hired enforcers. Restore the canyon's peace, loudly.",
+    "requires": {
+      "completed": [
+        "act1_conclusion"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "defeat",
+        "target": "capital_cutpurse",
+        "count": 3,
+        "text": "Dissuade 3 hired cutpurses"
+      },
+      {
+        "type": "debate",
+        "target": "gambler_king_tan",
+        "count": 1,
+        "text": "Win Tan's public concession"
+      }
+    ],
+    "rewards": {
+      "exp": 170,
+      "gold": 90,
+      "reputation": 6,
+      "items": {
+        "mystic_pill": 2
+      }
+    }
+  },
+  {
+    "id": "terrace_bells",
+    "title": "Ring the River Bells",
+    "description": "Shrine Keeper Wen asks a pilgrim's errand: carry the river spirit's blessing down to the coast shrine, clearing the road's trouble as you go.",
+    "requires": {
+      "completed": [
+        "act1_conclusion"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "visit_location",
+        "target": "south_sea_port",
+        "count": 1,
+        "text": "Carry the blessing to the sea"
+      },
+      {
+        "type": "defeat",
+        "target": "misty_boar",
+        "count": 3,
+        "text": "Clear 3 road beasts"
+      }
+    ],
+    "rewards": {
+      "exp": 160,
+      "gold": 70,
+      "reputation": 8,
+      "items": {
+        "soul_nurturing_pill": 2
+      }
+    }
+  },
+  {
+    "id": "pack_boundaries",
+    "title": "Sing the Pack Boundaries",
+    "description": "Beast-Singer Ilsabet needs a blade that walks quiet: the packs' boundaries are being crossed by something that hunts like a man.",
+    "requires": {
+      "completed": [
+        "act1_conclusion"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "defeat",
+        "target": "deepwood_assassin",
+        "count": 2,
+        "text": "Put down 2 false beasts"
+      },
+      {
+        "type": "visit_location",
+        "target": "deepwood_drift_outpost",
+        "count": 1,
+        "text": "Report the boundary at the drift"
+      }
+    ],
+    "rewards": {
+      "exp": 180,
+      "gold": 80,
+      "reputation": 7
+    }
+  },
+  {
+    "id": "deep_reef_lanterns",
+    "title": "Reef Lanterns Dark",
+    "description": "Diver Maru will dive where boats won't, with a blade at her back. Relight the reef lanterns and learn what snuffed them.",
+    "requires": {
+      "completed": [
+        "act1_conclusion"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "defeat",
+        "target": "sea_mantis",
+        "count": 3,
+        "text": "Clear 3 reef mantises"
+      },
+      {
+        "type": "defeat",
+        "target": "tidal_leopard",
+        "count": 2,
+        "text": "Fell 2 tide leopards"
+      }
+    ],
+    "rewards": {
+      "exp": 210,
+      "gold": 100,
+      "reputation": 6,
+      "items": {
+        "celestial_nectar": 2
+      }
+    }
+  },
+  {
+    "id": "cove_ledger_fires",
+    "title": "The Ledger Fires",
+    "description": "Quartermaster Vex's holding-house ledger burned with the pier — and several pirates are suddenly owed enormous sums. Recover the true ledger from the burners.",
+    "requires": {
+      "completed": [
+        "act1_conclusion"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "defeat",
+        "target": "sea_vulture",
+        "count": 3,
+        "text": "Ground 3 ledger-burners' wings"
+      },
+      {
+        "type": "defeat",
+        "target": "tidal_duelist",
+        "count": 2,
+        "text": "Break 2 of the burners' champions"
+      }
+    ],
+    "rewards": {
+      "exp": 230,
+      "gold": 120
+    }
+  },
+  {
+    "id": "atoll_nightfall_rounds",
+    "title": "Nightfall Rounds",
+    "description": "Turnkey Owl wants a visitor to walk the night rounds: cells that hold at dusk don't always hold at tide-turn. Keep the count at four hundred eleven.",
+    "requires": {
+      "completed": [
+        "act1_conclusion"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "visit_location",
+        "target": "coral_prison_atoll",
+        "count": 1,
+        "text": "Walk the atoll's night rounds"
+      },
+      {
+        "type": "defeat",
+        "target": "coral_serpent",
+        "count": 3,
+        "text": "Return 3 escaped swimmers"
+      }
+    ],
+    "rewards": {
+      "exp": 240,
+      "gold": 110,
+      "items": {
+        "void_spirit_pill": 2
+      }
+    }
+  },
+  {
+    "id": "mist_keel_timbers",
+    "title": "Timbers the Fog Kept",
+    "description": "Shipwright Halloo swears the mist returns what it takes. Wreckage has been washing into the cove — salvage it before the pirates do.",
+    "requires": {
+      "completed": [
+        "act1_conclusion"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "visit_location",
+        "target": "sea_of_mist_expanse",
+        "count": 1,
+        "text": "Search the mist expanse"
+      },
+      {
+        "type": "defeat",
+        "target": "tidal_ape",
+        "count": 3,
+        "text": "Break 3 fog-possessed timbers' guardians"
+      }
+    ],
+    "rewards": {
+      "exp": 220,
+      "gold": 130,
+      "items": {
+        "great_return_pill": 2
+      }
+    }
+  },
+  {
+    "id": "salvage_lots",
+    "title": "The Salvage Lots",
+    "description": "Auctioneer Lo Fan's dusk auction lacks a headliner: salvage fresh enough to draw the pavilion's big buyers. Fill the lot, quietly.",
+    "requires": {
+      "completed": [
+        "deep_reef_lanterns"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "defeat",
+        "target": "coral_tiger",
+        "count": 2,
+        "text": "Clear 2 lot-guarding reef tigers"
+      },
+      {
+        "type": "visit_location",
+        "target": "pearl_pavilion",
+        "count": 1,
+        "text": "Deliver the lots by dusk"
+      }
+    ],
+    "rewards": {
+      "exp": 260,
+      "gold": 180,
+      "items": {
+        "star_gathering_pill": 2
+      }
+    }
+  },
+  {
+    "id": "red_tide_reading",
+    "title": "The Red Under-Tide",
+    "description": "Tide Oracle Sable read blood beneath the tide-turn. Find what bleeds the sea — or what the sea bleeds — before the reading comes true.",
+    "requires": {
+      "completed": [
+        "deep_reef_lanterns"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "defeat",
+        "target": "sea_zealot",
+        "count": 4,
+        "text": "End 4 red-tide zealots"
+      },
+      {
+        "type": "visit_location",
+        "target": "tidecrook_cove",
+        "count": 1,
+        "text": "Trace the reading to the cove"
+      }
+    ],
+    "rewards": {
+      "exp": 280,
+      "gold": 140,
+      "reputation": 5
+    }
+  },
+  {
+    "id": "moonless_run",
+    "title": "The Moonless Run",
+    "description": "Smuggler Gale's moonless run needs a blade: the pearl routes are watched by both the pavilion and the pirates this week. See the hull through.",
+    "requires": {
+      "completed": [
+        "salvage_lots"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "spar",
+        "target": "pearl_smuggler_gale_duel",
+        "count": 1,
+        "text": "Prove your blade to Gale"
+      },
+      {
+        "type": "visit_location",
+        "target": "south_sea_port",
+        "count": 1,
+        "text": "Run the hull past the lantern line"
+      }
+    ],
+    "rewards": {
+      "exp": 300,
+      "gold": 200,
+      "items": {
+        "phoenix_marrow_pill": 1
+      }
+    }
+  },
+  {
+    "id": "drowned_lanterns",
+    "title": "What the Drowned Lanterns Saw",
+    "description": "Lantern Tender Uma has kept a secret: the snuffed lane-lights show the same turning-place on their dark nights. Go and see it.",
+    "requires": {
+      "completed": [
+        "red_tide_reading"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "visit_location",
+        "target": "sea_of_mist_expanse",
+        "count": 1,
+        "text": "Row to the turning-place"
+      },
+      {
+        "type": "defeat",
+        "target": "tidal_serpent",
+        "count": 2,
+        "text": "Fell 2 turn-guardians"
+      }
+    ],
+    "rewards": {
+      "exp": 320,
+      "gold": 160,
+      "reputation": 8,
+      "items": {
+        "celestial_nectar": 3
+      }
+    }
+  },
+  {
+    "id": "salamander_cores",
+    "title": "Herd the Salamander Cores",
+    "description": "Apprentice Cinder's salamanders escaped into the vent-shafts again. Drive them home before the master's forge cools — and before they find the spirit-steel stores.",
+    "requires": {
+      "completed": [
+        "act1_conclusion"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "defeat",
+        "target": "flame_warfiend",
+        "count": 3,
+        "text": "Herd 3 wayward cores"
+      },
+      {
+        "type": "spar",
+        "target": "forge_apprentice_cinder_spar",
+        "count": 1,
+        "text": "Prove your hammer-hands"
+      }
+    ],
+    "rewards": {
+      "exp": 250,
+      "gold": 120,
+      "items": {
+        "dragon_blood_pill": 2,
+        "spirit_stone": 8
+      }
+    }
+  },
+  {
+    "id": "humming_seam",
+    "title": "The Humming Seam",
+    "description": "Ore Scout Bram's third seam hums a note no vein should. Descend, silence what hums, and the Society's maps open to you.",
+    "requires": {
+      "completed": [
+        "act1_conclusion"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "defeat",
+        "target": "temple_hound",
+        "count": 3,
+        "text": "Silence 3 seam-hounds"
+      },
+      {
+        "type": "defeat",
+        "target": "elemental_leopard",
+        "count": 2,
+        "text": "Break 2 elemental prowlers"
+      }
+    ],
+    "rewards": {
+      "exp": 270,
+      "gold": 140,
+      "items": {
+        "phoenix_marrow_pill": 2,
+        "spirit_stone": 10
+      }
+    }
+  },
+  {
+    "id": "citadel_unburied",
+    "title": "The Unburied of the Citadel",
+    "description": "Ash Priestess Solene will not sing a funeral for the unburied. Settle the citadel's walking dead, and the pavilion's verse gains your name.",
+    "requires": {
+      "completed": [
+        "act1_conclusion"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "defeat",
+        "target": "slaughter_revenant",
+        "count": 3,
+        "text": "Settle 3 unburied revenants"
+      },
+      {
+        "type": "defeat",
+        "target": "blood_golem",
+        "count": 1,
+        "text": "Put down the ring golem"
+      }
+    ],
+    "rewards": {
+      "exp": 300,
+      "gold": 150,
+      "items": {
+        "blood_quenching_elixir": 2,
+        "spirit_stone": 12
+      }
+    }
+  },
+  {
+    "id": "ring_steel_standards",
+    "title": "Steel Standards for the Ring",
+    "description": "Armsmith Juno's dueling racks empty nightly. Catch the thieves — and whichever enforcer is buying — before the next duels are fought on rotten steel.",
+    "requires": {
+      "completed": [
+        "citadel_unburied"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "defeat",
+        "target": "blood_bandit",
+        "count": 4,
+        "text": "Take down 4 rack thieves"
+      },
+      {
+        "type": "visit_location",
+        "target": "emberfall_citadel",
+        "count": 1,
+        "text": "Inspect the citadel's ring"
+      }
+    ],
+    "rewards": {
+      "exp": 330,
+      "gold": 170,
+      "items": {
+        "spirit_stone": 10
+      }
+    }
+  },
+  {
+    "id": "wilds_silent_bells",
+    "title": "The Silent Bells",
+    "description": "Someone is stealing the wilds' bell-clappers, shrine by shrine. Bell Ringer Mo cannot hear which way they went — but you can follow.",
+    "requires": {
+      "completed": [
+        "act1_conclusion"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "defeat",
+        "target": "zen_wolf",
+        "count": 3,
+        "text": "Fell 3 clapper-thieving wolves"
+      },
+      {
+        "type": "visit_location",
+        "target": "zen_wilds_shrine",
+        "count": 1,
+        "text": "Recover the clappers' hoard"
+      }
+    ],
+    "rewards": {
+      "exp": 260,
+      "gold": 120,
+      "items": {
+        "soul_nurturing_pill": 3,
+        "spirit_stone": 8
+      }
+    }
+  },
+  {
+    "id": "wilds_strangling_vines",
+    "title": "Strangler Vines in Pilgrim's Robes",
+    "description": "The Pale Gardener's strangler vines have learned to dress as pilgrims. Root them out before they reach the monastery gates.",
+    "requires": {
+      "completed": [
+        "wilds_silent_bells"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "defeat",
+        "target": "zen_lizard",
+        "count": 3,
+        "text": "Uproot 3 robed stranglers"
+      },
+      {
+        "type": "visit_location",
+        "target": "zenlight_monastery",
+        "count": 1,
+        "text": "Warn the monastery paths"
+      }
+    ],
+    "rewards": {
+      "exp": 300,
+      "gold": 140,
+      "reputation": 6,
+      "items": {
+        "zen_heart_herb": 3,
+        "spirit_stone": 8
+      }
+    }
+  },
+  {
+    "id": "circuit_prime_rubbings",
+    "title": "Rubbing the Prime Circuit",
+    "description": "Scribe Quin needs rubbings of the prime meridian's outer runes — taken, of course, while the wardens test the taker.",
+    "requires": {
+      "completed": [
+        "act1_conclusion"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "visit_location",
+        "target": "rune_temple_undercroft",
+        "count": 1,
+        "text": "Descend to the undercroft"
+      },
+      {
+        "type": "defeat",
+        "target": "rune_qilin",
+        "count": 2,
+        "text": "Survive 2 rune-qilin trials"
+      }
+    ],
+    "rewards": {
+      "exp": 380,
+      "gold": 200,
+      "items": {
+        "dao_palace_star_core": 2,
+        "spirit_stone": 12
+      }
+    }
+  },
+  {
+    "id": "convict_name_verse",
+    "title": "The Convict's Name-Verse",
+    "description": "Convict Nine will trade the verse that unlocks his cell for one thing: a name spoken by someone who isn't a warden. He asks for yours.",
+    "requires": {
+      "completed": [
+        "circuit_prime_rubbings"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "defeat",
+        "target": "undercroft_convict_nine_duel",
+        "count": 1,
+        "text": "Answer the convict in the circuit's tongue"
+      },
+      {
+        "type": "visit_location",
+        "target": "rune_temple_undercroft",
+        "count": 1,
+        "text": "Speak the name at his cell"
+      }
+    ],
+    "rewards": {
+      "exp": 420,
+      "gold": 220,
+      "reputation": 5,
+      "items": {
+        "spirit_stone": 10
+      }
+    }
+  },
+  {
+    "id": "seven_landings",
+    "title": "The Seven Landings",
+    "description": "Ascendant Lo duels at every seventh stair of the approach. Match her through the seven landings and earn the stair's count.",
+    "requires": {
+      "completed": [
+        "act1_conclusion"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "spar",
+        "target": "stair_ascendant_lo_duel",
+        "count": 1,
+        "text": "Match Lo at the first landing"
+      },
+      {
+        "type": "visit_location",
+        "target": "gate_array_approach",
+        "count": 1,
+        "text": "Climb to the seventh landing"
+      }
+    ],
+    "rewards": {
+      "exp": 400,
+      "gold": 210,
+      "items": {
+        "celestial_gate_essence": 2,
+        "spirit_stone": 25
+      }
+    }
+  },
+  {
+    "id": "gate_terms_proof",
+    "title": "Proof of Terms",
+    "description": "Warden Prime Astrid accepts only proofs. Climb the star-field, survive the stair's wardens, and present yourself at the gate as a proved climber.",
+    "requires": {
+      "completed": [
+        "seven_landings"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "defeat",
+        "target": "gate_warder",
+        "count": 3,
+        "text": "Prove yourself against 3 wardens"
+      },
+      {
+        "type": "defeat",
+        "target": "gate_warden_prime_astrid_duel",
+        "count": 1,
+        "text": "Face the Warden Prime herself"
+      }
+    ],
+    "rewards": {
+      "exp": 520,
+      "gold": 260,
+      "reputation": 10,
+      "items": {
+        "immortal_ascension_elixir": 1,
+        "spirit_stone": 30
+      }
+    }
+  },
+  {
+    "id": "poets_lost_verse",
+    "title": "The Poet's Lost Verse",
+    "description": "Wandering Poet Xu left his masterwork in a gambling slip-game he lost decades ago. The slip still circulates in the hidden market. Win it back.",
+    "requires": {
+      "completed": [
+        "market_stall_wars"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "visit_location",
+        "target": "valleys_hidden_market",
+        "count": 1,
+        "text": "Find the slip's holder"
+      },
+      {
+        "type": "defeat",
+        "target": "capital_warlock",
+        "count": 2,
+        "text": "Best 2 slip-holders' enforcers"
+      }
+    ],
+    "rewards": {
+      "exp": 280,
+      "gold": 150,
+      "reputation": 6
+    }
+  },
+  {
+    "id": "ruin_provenance_run",
+    "title": "The Provenance Run",
+    "description": "Broker Song has a buyer for relics 'recovered' from the ancient ruins — and needs a runner unafraid of wardens. The pay insults neither party.",
+    "requires": {
+      "completed": [
+        "act1_conclusion"
+      ]
+    },
+    "objectives": [
+      {
+        "type": "visit_location",
+        "target": "ancient_ruins",
+        "count": 1,
+        "text": "Run the ruins' edge lots"
+      },
+      {
+        "type": "defeat",
+        "target": "ancient_ruin_sentinel",
+        "count": 1,
+        "text": "Slip past a ruin sentinel"
+      }
+    ],
+    "rewards": {
+      "exp": 340,
+      "gold": 220,
+      "items": {
+        "dao_enlightenment_pill": 1
+      }
+    }
   }
 ]

@@ -159,3 +159,32 @@ def test_core_verbs_have_at_least_three_variants():
     )
     for verb in core:
         assert system.variant_count(verb) >= 3, verb
+
+
+# -- A.5 full event coverage --------------------------------------------
+def test_every_event_type_has_a_template():
+    """Every engine event must map (via EVENT_VERB) to a narrated verb."""
+    from game.core.constants import EventType
+    from game.systems.narrative_system import EVENT_VERB
+
+    system = NarrativeSystem(_templates(), RNG(1), seed=1)
+    missing = [
+        (event.value, EVENT_VERB.get(event.value, event.value.lower()))
+        for event in EventType
+        if system.variant_count(EVENT_VERB.get(event.value, event.value.lower())) < 1
+    ]
+    assert not missing, missing
+
+
+def test_engine_decorates_results_with_narrative():
+    """Every processed action returns a non-empty narrative line (A.5)."""
+    engine = GameEngine.new_game(seed=1)
+    for action in (
+        {"action": "STATUS"},
+        {"action": "INVENTORY"},
+        {"action": "REST"},
+        {"action": "MEDITATE"},
+        {"action": "MAP"},
+    ):
+        result = engine.process_action(action)
+        assert result.get("narrative"), f"{action} produced no narrative: {result}"

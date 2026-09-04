@@ -11,7 +11,7 @@ signal meta_loaded(meta: Dictionary)
 signal action_completed(result: Dictionary)
 signal request_failed(message: String)
 
-const BASE_URL := "http://127.0.0.1:8000"
+const BASE_URL := "http://127.0.0.1:8001"  # 8000 belongs to the godot-ai MCP helper
 
 var _http: HTTPRequest
 var _busy := false

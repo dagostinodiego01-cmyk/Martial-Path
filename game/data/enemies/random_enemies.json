@@ -620,6 +620,11 @@
         "item_id": "talent_refining_elixir",
         "chance": 0.03,
         "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.7,
+        "count": 2
       }
     ]
   },
@@ -684,6 +689,11 @@
         "item_id": "talent_refining_elixir",
         "chance": 0.03,
         "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.9,
+        "count": 4
       }
     ]
   },
@@ -748,6 +758,11 @@
         "item_id": "talent_refining_elixir",
         "chance": 0.03,
         "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.9,
+        "count": 4
       }
     ]
   },
@@ -812,6 +827,11 @@
         "item_id": "talent_refining_elixir",
         "chance": 0.03,
         "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.6,
+        "count": 2
       }
     ]
   },
@@ -876,6 +896,11 @@
         "item_id": "talent_refining_elixir",
         "chance": 0.03,
         "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.9,
+        "count": 4
       }
     ]
   },
@@ -908,6 +933,11 @@
         "item_id": "talent_refining_elixir",
         "chance": 0.03,
         "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.8,
+        "count": 3
       }
     ]
   },
@@ -3366,6 +3396,11 @@
         "item_id": "talent_refining_elixir",
         "chance": 0.03,
         "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.8,
+        "count": 2
       }
     ],
     "area": "South Horizon Desert"
@@ -4333,6 +4368,11 @@
         "item_id": "talent_refining_elixir",
         "chance": 0.03,
         "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.75,
+        "count": 2
       }
     ],
     "area": "Great Zen Region"
@@ -4455,6 +4495,11 @@
         "item_id": "talent_refining_elixir",
         "chance": 0.03,
         "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.5,
+        "count": 1
       }
     ],
     "area": "Great Zen Region"
@@ -4521,6 +4566,11 @@
         "item_id": "talent_refining_elixir",
         "chance": 0.03,
         "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.7,
+        "count": 2
       }
     ],
     "area": "Great Zen Region"
@@ -4587,6 +4637,11 @@
         "item_id": "talent_refining_elixir",
         "chance": 0.03,
         "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.7,
+        "count": 2
       }
     ],
     "area": "Great Zen Region"
@@ -5181,6 +5236,11 @@
         "item_id": "talent_refining_elixir",
         "chance": 0.03,
         "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.7,
+        "count": 2
       }
     ],
     "area": "Blood Slaughter Steppes"
@@ -5450,6 +5510,11 @@
         "item_id": "talent_refining_elixir",
         "chance": 0.03,
         "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.7,
+        "count": 2
       }
     ],
     "area": "Five Element Temples"
@@ -5478,6 +5543,11 @@
         "item_id": "talent_refining_elixir",
         "chance": 0.03,
         "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.85,
+        "count": 3
       }
     ],
     "area": "Five Element Temples"
@@ -5511,6 +5581,11 @@
         "item_id": "talent_refining_elixir",
         "chance": 0.03,
         "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.85,
+        "count": 3
       }
     ],
     "area": "Five Element Temples"
@@ -5625,6 +5700,11 @@
         "item_id": "talent_refining_elixir",
         "chance": 0.03,
         "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.75,
+        "count": 2
       }
     ],
     "area": "Five Element Temples"
@@ -5729,6 +5809,11 @@
         "item_id": "talent_refining_elixir",
         "chance": 0.03,
         "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.5,
+        "count": 1
       }
     ],
     "area": "Five Element Temples"
@@ -5762,6 +5847,11 @@
         "item_id": "talent_refining_elixir",
         "chance": 0.03,
         "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.8,
+        "count": 3
       }
     ],
     "area": "Five Element Temples"
@@ -5818,6 +5908,11 @@
         "item_id": "talent_refining_elixir",
         "chance": 0.03,
         "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.85,
+        "count": 3
       }
     ],
     "area": "Five Element Temples"
@@ -6274,6 +6369,11 @@
       {
         "item_id": "talent_refining_elixir",
         "chance": 0.03,
+        "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.6,
         "count": 1
       }
     ],
@@ -6732,6 +6832,11 @@
         "item_id": "talent_refining_elixir",
         "chance": 0.03,
         "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.85,
+        "count": 3
       }
     ],
     "area": "Planetary Gate Array"
@@ -6765,6 +6870,11 @@
         "item_id": "talent_refining_elixir",
         "chance": 0.03,
         "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.9,
+        "count": 4
       }
     ],
     "area": "Planetary Gate Array"
@@ -6802,6 +6912,11 @@
       {
         "item_id": "talent_refining_elixir",
         "chance": 0.03,
+        "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.6,
         "count": 1
       }
     ],
@@ -7051,6 +7166,11 @@
       {
         "item_id": "talent_refining_elixir",
         "chance": 0.03,
+        "count": 1
+      },
+      {
+        "item_id": "spirit_stone",
+        "chance": 0.6,
         "count": 1
       }
     ],

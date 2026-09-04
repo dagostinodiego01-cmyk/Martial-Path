@@ -22,10 +22,13 @@ from typing import Any, Dict, List, Optional
 from game.core.constants import (
     DEFAULT_ORIGIN_ID,
     MODE_COMBAT,
+    MODE_DEBATE,
     MODE_EXPLORE,
     STARTING_PLAYER,
 )
+from game.core.engine.campaign import CampaignMixin
 from game.core.engine.combat import CombatMixin
+from game.core.engine.debate import DebateMixin
 from game.core.engine.dispatch import DispatchMixin
 from game.core.engine.economy import EconomyMixin
 from game.core.engine.exploration import ExplorationMixin
@@ -34,6 +37,7 @@ from game.core.engine.progression import ProgressionMixin
 from game.core.engine.social import SocialMixin
 from game.core.engine.systems import SystemsMixin
 from game.core.engine.views import ViewsMixin
+from game.core.engine.world import WorldMixin
 from game.data.registry import GameDataRegistry
 from game.models.enemy import Enemy
 from game.models.item import Item
@@ -47,12 +51,15 @@ from game.services.travel_service import TravelService
 from game.systems.alchemy_system import GatherSystem, RefineSystem
 from game.systems.combat_system import CombatSystem
 from game.systems.cultivation_system import CultivationSystem
+from game.systems.debate_system import DebateSystem
+from game.systems.foe_ai import FoeAI
 from game.systems.dao_system import DaoSystem
 from game.systems.effect_system import EffectSystem
 from game.systems.equipment_system import EquipmentSystem
 from game.systems.event_system import EventSystem
 from game.systems.find_system import FindSystem
 from game.systems.inventory_system import InventorySystem
+from game.systems.legacy_system import LegacySystem
 from game.systems.lifespan_system import LifespanSystem
 from game.systems.location_system import LocationSystem
 from game.systems.loot_system import LootSystem
@@ -70,6 +77,7 @@ from game.systems.starting_fate_system import StartingFateSystem
 from game.systems.stats_system import StatsSystem
 from game.systems.talent_system import TalentSystem
 from game.systems.trainer_system import TrainerSystem
+from game.systems.world_simulation import WorldSimulationSystem, default_world_state
 from game.utils.logger import get_logger
 from game.utils.rng import RNG
 
@@ -81,9 +89,12 @@ class GameEngine(
     ProgressionMixin,
     SocialMixin,
     EconomyMixin,
+    CampaignMixin,
     SystemsMixin,
     CombatMixin,
+    DebateMixin,
     LifecycleMixin,
+    WorldMixin,
 ):
     """Coordinates systems, manages state, and processes actions.
 
@@ -128,6 +139,7 @@ class GameEngine(
         gathering: Optional[Dict[str, Any]] = None,
         refining_recipes: Optional[List[Dict[str, Any]]] = None,
         secret_realm: Optional[List[Dict[str, Any]]] = None,
+        legacy_tree: Optional[Dict[str, Any]] = None,
         ironman: bool = False,
         ng_plus: int = 0,
     ) -> None:
@@ -152,6 +164,24 @@ class GameEngine(
             realm["id"]: realm.get("display_name", realm["id"])
             for realm in essence_realms.get("realms", [])
         }
+        self._essence_realm_orders = {
+            realm["id"]: int(realm.get("order", 0))
+            for realm in essence_realms.get("realms", [])
+            if realm.get("id")
+        }
+        # Foe id -> essence-realm order (for endless-depth gating, D.5). Mooks
+        # without an essence realm resolve to 1: wildlife haunts every depth.
+        self._foe_essence_orders: Dict[str, int] = {}
+        for template in list(self._enemy_templates.values()) + list(self._character_enemy_templates.values()):
+            foe_id = str(template.get("id", ""))
+            if not foe_id:
+                continue
+            realm_id = str(template.get("essence_realm_id") or "")
+            self._foe_essence_orders[foe_id] = int(self._essence_realm_orders.get(realm_id, 1))
+        # Living-world session state (E.1-E.5); filled in after the seed report.
+        self._npc_factions: Dict[str, str] = {}
+        self._world_state: Dict[str, Any] = {}
+        self._last_world_report: Dict[str, Any] = {}
 
         # Gameplay systems (pure logic).
         self.cultivation = CultivationSystem(body_realms, essence_realms, cultivation_config, rng, martial_talents, body_talents, skills)
@@ -161,19 +191,63 @@ class GameEngine(
         self.dao = DaoSystem(daos or [], body_realms, essence_realms)
         self.narrative = NarrativeSystem(narrative_templates, narrative_rng or RNG(), seed)
         self.origins = OriginSystem(origins)
+        self.legacy = LegacySystem(legacy_tree)
         self.meta = meta or MetaService()
         self.gathering = GatherSystem(gathering)
         self.refine = RefineSystem(refining_recipes, body_realms, essence_realms)
         self.secret_realm = SecretRealmSystem(secret_realm, rng)
-        self.combat = CombatSystem(rng, self.stats, self.dao)
+        # B.7/B.8: the debate system (dao matchups) and the foe mind that
+        # drives dao-carrying enemies' stance chains. Each gets its own RNG
+        # stream so debates/AI rolls never disturb the main sequence.
+        self.foe_ai = FoeAI(dao=self.dao, skills=skills, rng=RNG(int(seed or 0) ^ 0xF0EA1))
+        self.combat = CombatSystem(rng, self.stats, self.dao, skills, foe_ai=self.foe_ai)
+        self.debate = DebateSystem(dao=self.dao, rng=RNG(int(seed or 0) ^ 0xDEBA7E))
         self.effects = EffectSystem()
         self.inventory = InventorySystem(items, self.effects)
         self.sell = SellSystem(items)
         self.equipment = EquipmentSystem(equipment or [], body_realms, essence_realms)
-        self.shops = ShopSystem(shops or [], items)
+        # World seed (C.6): derive this run's deterministic world variation from
+        # the seed -- dominant sects and the economy price band. Same seed ->
+        # identical world; different seeds differ measurably.
+        self._world = self.legacy.world_seed_report(
+            int(seed or 0), self._rng, [sect.get("id", "") for sect in (sects or [])]
+        )
+        self.shops = ShopSystem(shops or [], items, economy_multiplier=float(self._world["economy_multiplier"]))
+        # Living world (E.1-E.5): a seeded roster of every named NPC, evolved on
+        # the same calendar the player lives on.
+        faction_map: Dict[str, str] = {}
+        for sect in (sects or []):
+            display = str(sect.get("display_name", sect.get("id", "")))
+            if display:
+                faction_map[display] = str(sect.get("id", ""))
+        npc_roster: List[str] = []
+        for character in characters or []:
+            character_id = str(character.get("id", ""))
+            if not character_id:
+                continue
+            npc_roster.append(character_id)
+            faction = str(character.get("faction", ""))
+            if faction in faction_map:
+                self._npc_factions[character_id] = faction_map[faction]
+            elif faction:
+                self._npc_factions[character_id] = faction
+        self.world = WorldSimulationSystem(
+            sect_names={str(sect.get("id", "")): str(sect.get("display_name", sect.get("id", ""))) for sect in (sects or []) if sect.get("id")},
+            npc_factions=self._npc_factions,
+            locations=[{"id": loc["id"]} for loc in (locations or []) if loc.get("id")],
+            sect_ids=[str(sect.get("id", "")) for sect in (sects or []) if sect.get("id")],
+        )
+        # The world evolves on a dedicated RNG stream so ticks never disturb
+        # the main sequence's determinism (same seed -> identical world AND
+        # identical player-facing rolls).
+        self._world_rng = RNG(int(seed or 0) ^ 0x57A7E5)
+        self._world_state = default_world_state(self._world_rng, npc_roster)
         self.techniques = SkillSystem(skills)
         self.trainers = TrainerSystem(trainers or [], skills, self.techniques)
-        self.sects = SectSystem(sects or [], body_realms)
+        self.sects = SectSystem(
+            sects or [], body_realms, dominant_sects=list(self._world["dominant_sects"]),
+            skills=skills, skill_system=self.techniques,
+        )
         self.loot = LootSystem(self.inventory, rng)
         # Rarity-weighted exploration finds over the whole item/equipment catalog
         # (technique manuals are excluded; skills are learned, not stumbled upon).
@@ -211,10 +285,21 @@ class GameEngine(
 
         # Mutable session state.
         self._mode = MODE_EXPLORE
+        # B.7: active debate state (transient; never persisted).
+        self._debate: Optional[Dict[str, Any]] = None
+        self._debate_foe: Optional[Enemy] = None
+        self._debate_character: str = ""
+        self._oath_stakes: Optional[Dict[str, Any]] = None
         self._current_enemy: Optional[Enemy] = None
         self._cooldowns: Dict[str, int] = {}
         self._combat_is_spar = False
         self._running = True
+        # C.7: set on a retired (won) run carried forward into endless mode.
+        self._endless = False
+        # D.3/D.5 campaign + post-game state.
+        self._campaign_complete = False
+        self._campaign_ending_id = ""
+        self._endless_depth = 0
         self._fate_accepted = bool(player.martial_talent_id and player.body_talent_id)
         self._pending_fate: Optional[Dict[str, Any]] = None
         # Active secret-realm run (rooms + index), ``None`` outside a realm.
@@ -306,10 +391,14 @@ class GameEngine(
             gathering=registry.gathering,
             refining_recipes=registry.refining_recipes,
             secret_realm=registry.secret_realm,
+            legacy_tree=registry.legacy_tree,
             ironman=ironman,
             ng_plus=ng_plus,
         )
         engine._assign_new_game_fate()
+        # Legacy unlocks (C.5): purchased techniques return with the character.
+        engine._apply_legacy_unlocks()
+        engine._note_arrival(engine.player.current_location)
         # New Game Plus carries a modest legacy forward into the next run.
         if ng_plus > 0:
             engine.player.comprehension += int(ng_plus)
@@ -343,6 +432,18 @@ class GameEngine(
             inventory=dict(cfg["inventory"]),
             skills=list(cfg["skills"]),
         )
+
+    def _note_arrival(self, location_id: str) -> int:
+        """Raise the player's story-tier progress to include ``location_id``.
+
+        Called on every arrival (new game, travel, load) so the highest story
+        tier reached -- the yardstick sect tiers and encounters scale against --
+        advances the moment new ground is first seen. Returns the new maximum.
+        """
+        tier = self.locations.story_tier(location_id)
+        if tier > self.player.max_story_tier:
+            self.player.max_story_tier = tier
+        return self.player.max_story_tier
 
     @staticmethod
     def _equipment_as_item(entry: Dict[str, Any]) -> Dict[str, Any]:

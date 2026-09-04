@@ -147,6 +147,13 @@ class CombatMixin:
 
         if outcome == "VICTORY":
             result["loot"] = self.loot.roll_loot(self.player, result.get("loot_table", []))
+            # Battle experience sharpens comprehension (which in turn speeds
+            # cultivation). Drain any banked exp -- combat, quests, and training
+            # all feed the same bank -- into comprehension and surface the gain.
+            comprehension_gained = self.cultivation.convert_exp_to_comprehension(self.player)
+            if comprehension_gained:
+                result["comprehension_gained"] = comprehension_gained
+                result["comprehension"] = self.player.comprehension
             updates = self.quests.notify("defeat", self.player, self.inventory, target=enemy_id)
             if updates:
                 result["quest_updates"] = updates
@@ -154,6 +161,15 @@ class CombatMixin:
                     act = self.quests.act_end(update.get("id", ""))
                     if act:
                         result["act_complete"] = act
+                self._maybe_complete_campaign(result)
+            # D.5: defeat counts and gentle spars feed the faction campaigns.
+            self.quests.notify("spar", self.player, self.inventory, target=enemy_id)
+            # D.4 polish: a quest unlocked by this victory may already be
+            # state-satisfied (e.g. Act 2's sect bond after an Act 1 join).
+            state_updates = self.quests.state_completions(self.player, self.inventory)
+            if state_updates:
+                result["quest_updates"] = list(result.get("quest_updates", [])) + state_updates
+                self._maybe_complete_campaign_graceful(state_updates)
             if self._tournament_active:
                 self._tournament_active = False
                 result["tournament_won"] = True
@@ -163,6 +179,7 @@ class CombatMixin:
             if self._realm is not None:
                 # A realm room is cleared: advance and surface the continue prompt.
                 cleared = self._realm["realm"]["rooms"][self._realm["index"]]
+                self._scale_endless_room(cleared)
                 self._realm["index"] += 1
                 result["realm"] = {
                     "display_name": self._realm["realm"]["display_name"],

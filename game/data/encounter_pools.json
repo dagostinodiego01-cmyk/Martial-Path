@@ -1058,5 +1058,537 @@
         "weight": 1
       }
     ]
+  },
+  "stream_fisher_wharf": {
+    "combat": [
+      {
+        "enemy_id": "field_bandit",
+        "weight": 5
+      },
+      {
+        "enemy_id": "thornwood_cutpurse",
+        "weight": 4
+      },
+      {
+        "enemy_id": "stream_captain_no.2",
+        "weight": 2
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "healing_pill",
+        "weight": 3
+      },
+      {
+        "item_id": "spirit_grass",
+        "weight": 3
+      },
+      {
+        "item_id": "windless_fist_manual",
+        "weight": 1
+      }
+    ]
+  },
+  "thornwood_hollow": {
+    "combat": [
+      {
+        "enemy_id": "thornwood_bull",
+        "weight": 5
+      },
+      {
+        "enemy_id": "thornwood_warder",
+        "weight": 4
+      },
+      {
+        "enemy_id": "green_hollow_mantis",
+        "weight": 3
+      },
+      {
+        "enemy_id": "azure_ape",
+        "weight": 2
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "beast_core",
+        "weight": 3
+      },
+      {
+        "item_id": "spirit_grass",
+        "weight": 2
+      },
+      {
+        "item_id": "flowing_step_manual",
+        "weight": 1
+      }
+    ]
+  },
+  "sky_fortune_outskirts": {
+    "combat": [
+      {
+        "enemy_id": "field_cutpurse",
+        "weight": 5
+      },
+      {
+        "enemy_id": "field_scorpion",
+        "weight": 4
+      },
+      {
+        "enemy_id": "shade_lizard",
+        "weight": 2
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "healing_pill",
+        "weight": 3
+      },
+      {
+        "item_id": "qi_pill",
+        "weight": 2
+      },
+      {
+        "item_id": "iron_guard_manual",
+        "weight": 1
+      }
+    ]
+  },
+  "deepwood_drift_outpost": {
+    "combat": [
+      {
+        "enemy_id": "deepwood_wraith",
+        "weight": 5
+      },
+      {
+        "enemy_id": "deepwood_assassin",
+        "weight": 4
+      },
+      {
+        "enemy_id": "deepwood_golem",
+        "weight": 3
+      },
+      {
+        "enemy_id": "hollow_shaman",
+        "weight": 2
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "marrow_cleansing_pill",
+        "weight": 3
+      },
+      {
+        "item_id": "bone_forging_petal",
+        "weight": 2
+      },
+      {
+        "item_id": "mountain_crushing_fist_manual",
+        "weight": 1
+      }
+    ]
+  },
+  "seven_profound_low_peaks": {
+    "combat": [
+      {
+        "enemy_id": "cloud_temple_sprite",
+        "weight": 5
+      },
+      {
+        "enemy_id": "zen_rogue_cultivator_no.2",
+        "weight": 4
+      },
+      {
+        "enemy_id": "iron_bell_warder",
+        "weight": 3
+      },
+      {
+        "enemy_id": "stone_revenant",
+        "weight": 2
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "spirit_stone",
+        "weight": 3
+      },
+      {
+        "item_id": "qi_pill",
+        "weight": 2
+      },
+      {
+        "item_id": "earth_vein_guard_manual",
+        "weight": 1
+      }
+    ]
+  },
+  "valleys_hidden_market": {
+    "combat": [
+      {
+        "enemy_id": "capital_cutpurse",
+        "weight": 5
+      },
+      {
+        "enemy_id": "capital_warlock",
+        "weight": 3
+      },
+      {
+        "enemy_id": "vermillion_puppet",
+        "weight": 2
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "mystic_pill",
+        "weight": 3
+      },
+      {
+        "item_id": "spirit_stone",
+        "weight": 3
+      },
+      {
+        "item_id": "shadowless_footwork_manual",
+        "weight": 1
+      }
+    ]
+  },
+  "cloud_terrace_village": {
+    "combat": [
+      {
+        "enemy_id": "meadow_revenant",
+        "weight": 4
+      },
+      {
+        "enemy_id": "green_hollow_toad",
+        "weight": 4
+      },
+      {
+        "enemy_id": "misty_boar",
+        "weight": 2
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "healing_pill",
+        "weight": 3
+      },
+      {
+        "item_id": "spirit_grass",
+        "weight": 2
+      },
+      {
+        "item_id": "windless_chant_manual",
+        "weight": 1
+      }
+    ]
+  },
+  "pearl_pavilion": {
+    "combat": [
+      {
+        "enemy_id": "tidal_leopard",
+        "weight": 4
+      },
+      {
+        "enemy_id": "sea_mantis",
+        "weight": 3
+      },
+      {
+        "enemy_id": "coral_serpent",
+        "weight": 3
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "star_gathering_pill",
+        "weight": 3
+      },
+      {
+        "item_id": "celestial_nectar",
+        "weight": 2
+      },
+      {
+        "item_id": "phoenix_footwork_manual",
+        "weight": 1
+      }
+    ]
+  },
+  "tidecrook_cove": {
+    "combat": [
+      {
+        "enemy_id": "sea_zealot",
+        "weight": 5
+      },
+      {
+        "enemy_id": "sea_vulture",
+        "weight": 4
+      },
+      {
+        "enemy_id": "tidal_duelist",
+        "weight": 3
+      },
+      {
+        "enemy_id": "south_horizon_assassin",
+        "weight": 2
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "great_return_pill",
+        "weight": 3
+      },
+      {
+        "item_id": "beast_core",
+        "weight": 2
+      },
+      {
+        "item_id": "soul_severing_kick_manual",
+        "weight": 1
+      }
+    ]
+  },
+  "coral_prison_atoll": {
+    "combat": [
+      {
+        "enemy_id": "coral_golem",
+        "weight": 5
+      },
+      {
+        "enemy_id": "coral_tiger",
+        "weight": 4
+      },
+      {
+        "enemy_id": "coral_warlock",
+        "weight": 3
+      },
+      {
+        "enemy_id": "abyssal_scorpion",
+        "weight": 2
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "void_spirit_pill",
+        "weight": 3
+      },
+      {
+        "item_id": "abyssal_bone_flower",
+        "weight": 2
+      },
+      {
+        "item_id": "roaring_tide_sword_intent_manual",
+        "weight": 1
+      }
+    ]
+  },
+  "sea_of_mist_expanse": {
+    "combat": [
+      {
+        "enemy_id": "tidal_ape",
+        "weight": 5
+      },
+      {
+        "enemy_id": "sea_mantis",
+        "weight": 4
+      },
+      {
+        "enemy_id": "tidal_serpent",
+        "weight": 3
+      },
+      {
+        "enemy_id": "misty_wyrm",
+        "weight": 2
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "frost_herb",
+        "weight": 3
+      },
+      {
+        "item_id": "great_return_pill",
+        "weight": 2
+      },
+      {
+        "item_id": "white_tiger_breathing_method_manual",
+        "weight": 1
+      }
+    ]
+  },
+  "furnace_pillar_city": {
+    "combat": [
+      {
+        "enemy_id": "flame_warfiend",
+        "weight": 5
+      },
+      {
+        "enemy_id": "elemental_leopard",
+        "weight": 3
+      },
+      {
+        "enemy_id": "temple_hound",
+        "weight": 3
+      },
+      {
+        "enemy_id": "nine_furnace_fire_golem",
+        "weight": 1
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "phoenix_marrow_pill",
+        "weight": 3
+      },
+      {
+        "item_id": "dragon_blood_ore",
+        "weight": 2
+      },
+      {
+        "item_id": "inferno_palm_manual",
+        "weight": 1
+      }
+    ]
+  },
+  "emberfall_citadel": {
+    "combat": [
+      {
+        "enemy_id": "blood_bandit",
+        "weight": 5
+      },
+      {
+        "enemy_id": "slaughter_rogue_cultivator",
+        "weight": 4
+      },
+      {
+        "enemy_id": "blood_golem",
+        "weight": 3
+      },
+      {
+        "enemy_id": "asura_blood_guard",
+        "weight": 2
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "blood_quenching_elixir",
+        "weight": 3
+      },
+      {
+        "item_id": "earth_bone",
+        "weight": 2
+      },
+      {
+        "item_id": "blood_sea_aura_manual",
+        "weight": 1
+      }
+    ]
+  },
+  "zen_wilds_shrine": {
+    "combat": [
+      {
+        "enemy_id": "zen_wolf",
+        "weight": 5
+      },
+      {
+        "enemy_id": "zen_lizard",
+        "weight": 4
+      },
+      {
+        "enemy_id": "zenlight_ape",
+        "weight": 3
+      },
+      {
+        "enemy_id": "zenlight_revenant",
+        "weight": 2
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "soul_nurturing_pill",
+        "weight": 3
+      },
+      {
+        "item_id": "zen_heart_herb",
+        "weight": 2
+      },
+      {
+        "item_id": "windless_roar_manual",
+        "weight": 1
+      }
+    ]
+  },
+  "rune_temple_undercroft": {
+    "combat": [
+      {
+        "enemy_id": "rune_qilin",
+        "weight": 5
+      },
+      {
+        "enemy_id": "rune_tiger",
+        "weight": 4
+      },
+      {
+        "enemy_id": "five_element_crane",
+        "weight": 3
+      },
+      {
+        "enemy_id": "elemental_warfiend",
+        "weight": 3
+      },
+      {
+        "enemy_id": "five_element_warder",
+        "weight": 2
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "nine_revolutions_elixir",
+        "weight": 3
+      },
+      {
+        "item_id": "dao_palace_star_core",
+        "weight": 2
+      },
+      {
+        "item_id": "great_sun_domain_no2_manual",
+        "weight": 1
+      }
+    ]
+  },
+  "gate_array_approach": {
+    "combat": [
+      {
+        "enemy_id": "gate_warder",
+        "weight": 5
+      },
+      {
+        "enemy_id": "gate_wolf",
+        "weight": 4
+      },
+      {
+        "enemy_id": "gate_duelist",
+        "weight": 3
+      },
+      {
+        "enemy_id": "planetary_leopard",
+        "weight": 3
+      },
+      {
+        "enemy_id": "primal_roc",
+        "weight": 2
+      }
+    ],
+    "loot": [
+      {
+        "item_id": "celestial_elixir",
+        "weight": 3
+      },
+      {
+        "item_id": "celestial_gate_essence",
+        "weight": 2
+      },
+      {
+        "item_id": "primordial_chaos_seal_manual",
+        "weight": 1
+      }
+    ]
   }
 }

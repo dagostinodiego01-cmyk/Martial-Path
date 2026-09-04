@@ -160,7 +160,10 @@
         "count": 1
       }
     ],
-    "dao_id": "sword_dao"
+    "dao_id": "sword_dao",
+    "skills": [
+      "white_tiger_seal"
+    ]
   },
   {
     "id": "jiang_lanjian_duel",
@@ -329,7 +332,10 @@
         "count": 1
       }
     ],
-    "dao_id": "astral_dao"
+    "dao_id": "astral_dao",
+    "skills": [
+      "glacial_claw"
+    ]
   },
   {
     "id": "situ_bonan_duel",
@@ -486,7 +492,12 @@
         "magnitude": 1
       }
     ],
-    "dao_id": "void_dao"
+    "dao_id": "void_dao",
+    "skills": [
+      "true_dragon_palm",
+      "true_dragon_seal",
+      "true_dragon_sword_intent"
+    ]
   },
   {
     "id": "situ_haotian_boss",
@@ -522,7 +533,12 @@
         "magnitude": 6
       }
     ],
-    "dao_id": "astral_dao"
+    "dao_id": "astral_dao",
+    "skills": [
+      "white_tiger_palm",
+      "white_tiger_fist_intent",
+      "white_tiger_seal"
+    ]
   },
   {
     "id": "yang_yun_boss",
@@ -551,7 +567,12 @@
         "count": 1
       }
     ],
-    "dao_id": "flame_dao"
+    "dao_id": "flame_dao",
+    "skills": [
+      "glacial_sword_art",
+      "glacial_saber_art",
+      "glacial_claw"
+    ]
   },
   {
     "id": "ancient_devil_manifestation",
@@ -580,7 +601,12 @@
         "count": 1
       }
     ],
-    "dao_id": "blood_dao"
+    "dao_id": "blood_dao",
+    "skills": [
+      "true_dragon_palm",
+      "true_dragon_seal",
+      "true_dragon_sword_intent"
+    ]
   },
   {
     "id": "demon_emperor_avatar",
@@ -610,5 +636,380 @@
       }
     ],
     "dao_id": "nether_dao"
+  },
+  {
+    "id": "wharf_captain_bao_spar",
+    "character_id": "wharf_captain_bao",
+    "name": "Wharf Captain Bao",
+    "body_realm_id": "flesh_training",
+    "essence_realm_id": null,
+    "hp": 75,
+    "attack": 14,
+    "defense": 7,
+    "exp_reward": 30,
+    "dao_id": "tide_dao",
+    "abilities": [],
+    "loot_table": [
+      {
+        "item_id": "healing_pill",
+        "chance": 0.5,
+        "count": 1
+      },
+      {
+        "item_id": "thunderclap_chant_manual",
+        "chance": 0.05,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "mistwood_ranger_elder_spar",
+    "character_id": "mistwood_ranger_elder",
+    "name": "Elder Shan of the Mistwood",
+    "body_realm_id": "flesh_training",
+    "essence_realm_id": null,
+    "hp": 95,
+    "attack": 15,
+    "defense": 9,
+    "exp_reward": 40,
+    "dao_id": "verdant_dao",
+    "abilities": [],
+    "loot_table": [
+      {
+        "item_id": "marrow_cleansing_pill",
+        "chance": 0.4,
+        "count": 1
+      },
+      {
+        "item_id": "flowing_step_manual",
+        "chance": 0.05,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "gambler_king_tan_duel",
+    "character_id": "gambler_king_tan",
+    "name": "Gambler King Tan",
+    "body_realm_id": "altering_muscle",
+    "essence_realm_id": null,
+    "hp": 150,
+    "attack": 24,
+    "defense": 10,
+    "exp_reward": 65,
+    "dao_id": "astral_dao",
+    "abilities": [
+      {
+        "type": "heavy",
+        "chance": 0.2,
+        "magnitude": 1.5
+      }
+    ],
+    "loot_table": [
+      {
+        "item_id": "mystic_pill",
+        "chance": 0.4,
+        "count": 1
+      },
+      {
+        "item_id": "shadowless_footwork_manual",
+        "chance": 0.05,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "tide_king_hei_duel",
+    "character_id": "tide_king_hei",
+    "name": "Tide King Hei",
+    "body_realm_id": "tempering_marrow",
+    "essence_realm_id": null,
+    "hp": 310,
+    "attack": 40,
+    "defense": 15,
+    "exp_reward": 150,
+    "dao_id": "tide_dao",
+    "abilities": [
+      {
+        "type": "heavy",
+        "chance": 0.25,
+        "magnitude": 1.5
+      }
+    ],
+    "loot_table": [
+      {
+        "item_id": "great_return_pill",
+        "chance": 0.4,
+        "count": 1
+      },
+      {
+        "item_id": "soul_severing_kick_manual",
+        "chance": 0.05,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "war_pavilion_envoy_ru_duel",
+    "character_id": "war_pavilion_envoy_ru",
+    "name": "War Pavilion Envoy Ru",
+    "body_realm_id": "eight_gates_hidden_celestial_stems",
+    "essence_realm_id": null,
+    "hp": 370,
+    "attack": 45,
+    "defense": 18,
+    "exp_reward": 185,
+    "dao_id": "blood_dao",
+    "abilities": [
+      {
+        "type": "poison",
+        "chance": 0.25,
+        "magnitude": 4
+      }
+    ],
+    "loot_table": [
+      {
+        "item_id": "blood_quenching_elixir",
+        "chance": 0.4,
+        "count": 1
+      },
+      {
+        "item_id": "blood_sea_aura_manual",
+        "chance": 0.05,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "rune_temple_warden_trial",
+    "character_id": "rune_temple_warden",
+    "name": "Rune Temple Warden",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": null,
+    "hp": 600,
+    "attack": 62,
+    "defense": 25,
+    "exp_reward": 320,
+    "dao_id": "mountain_dao",
+    "abilities": [
+      {
+        "type": "stun",
+        "chance": 0.2,
+        "magnitude": 1
+      }
+    ],
+    "loot_table": [
+      {
+        "item_id": "dao_palace_star_core",
+        "chance": 0.4,
+        "count": 1
+      },
+      {
+        "item_id": "primordial_chaos_seal_manual",
+        "chance": 0.05,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "reef_warden_nimbus_spar",
+    "character_id": "reef_warden_nimbus",
+    "name": "Reef Warden Nimbus",
+    "body_realm_id": "tempering_marrow",
+    "essence_realm_id": null,
+    "hp": 300,
+    "attack": 38,
+    "defense": 16,
+    "exp_reward": 140,
+    "dao_id": "tide_dao",
+    "abilities": [],
+    "loot_table": [
+      {
+        "item_id": "celestial_nectar",
+        "chance": 0.4,
+        "count": 1
+      },
+      {
+        "item_id": "roaring_tide_sword_intent_manual",
+        "chance": 0.05,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "atoll_turnkey_owl_duel",
+    "character_id": "atoll_turnkey_owl",
+    "name": "Turnkey Owl",
+    "body_realm_id": "tempering_marrow",
+    "essence_realm_id": null,
+    "hp": 290,
+    "attack": 36,
+    "defense": 15,
+    "exp_reward": 135,
+    "dao_id": "void_dao",
+    "abilities": [
+      {
+        "type": "stun",
+        "chance": 0.2,
+        "magnitude": 1
+      }
+    ],
+    "loot_table": [
+      {
+        "item_id": "void_spirit_pill",
+        "chance": 0.4,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "forge_apprentice_cinder_spar",
+    "character_id": "forge_apprentice_cinder",
+    "name": "Apprentice Cinder",
+    "body_realm_id": "eight_gates_hidden_celestial_stems",
+    "essence_realm_id": null,
+    "hp": 340,
+    "attack": 42,
+    "defense": 16,
+    "exp_reward": 160,
+    "dao_id": "flame_dao",
+    "abilities": [
+      {
+        "type": "heavy",
+        "chance": 0.2,
+        "magnitude": 1.5
+      }
+    ],
+    "loot_table": [
+      {
+        "item_id": "phoenix_marrow_pill",
+        "chance": 0.4,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "stair_ascendant_lo_duel",
+    "character_id": "stair_ascendant_lo",
+    "name": "Ascendant Lo",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": null,
+    "hp": 520,
+    "attack": 58,
+    "defense": 23,
+    "exp_reward": 280,
+    "dao_id": "astral_dao",
+    "abilities": [
+      {
+        "type": "heavy",
+        "chance": 0.25,
+        "magnitude": 1.5
+      }
+    ],
+    "loot_table": [
+      {
+        "item_id": "celestial_gate_essence",
+        "chance": 0.4,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "undercroft_convict_nine_duel",
+    "character_id": "undercroft_convict_nine",
+    "name": "Convict Nine of the Circuit",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": null,
+    "hp": 560,
+    "attack": 60,
+    "defense": 24,
+    "exp_reward": 300,
+    "dao_id": "nether_dao",
+    "abilities": [
+      {
+        "type": "poison",
+        "chance": 0.25,
+        "magnitude": 5
+      }
+    ],
+    "loot_table": [
+      {
+        "item_id": "dao_palace_star_core",
+        "chance": 0.4,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "gate_warden_prime_astrid_duel",
+    "character_id": "gate_warden_prime_astrid",
+    "name": "Warden Prime Astrid",
+    "body_realm_id": "nine_stars_dao_palace",
+    "essence_realm_id": null,
+    "hp": 700,
+    "attack": 68,
+    "defense": 28,
+    "exp_reward": 380,
+    "dao_id": "mountain_dao",
+    "abilities": [
+      {
+        "type": "stun",
+        "chance": 0.25,
+        "magnitude": 1
+      }
+    ],
+    "loot_table": [
+      {
+        "item_id": "immortal_ascension_elixir",
+        "chance": 0.3,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "pearl_smuggler_gale_duel",
+    "character_id": "pearl_smuggler_gale",
+    "name": "Smuggler Gale",
+    "body_realm_id": "tempering_marrow",
+    "essence_realm_id": null,
+    "hp": 305,
+    "attack": 39,
+    "defense": 15,
+    "exp_reward": 145,
+    "dao_id": "space_dao",
+    "abilities": [],
+    "loot_table": [
+      {
+        "item_id": "great_return_pill",
+        "chance": 0.4,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "cloud_pool_hermit_bai_spar",
+    "character_id": "cloud_pool_hermit_bai",
+    "name": "Hermit Bai of the Cloud Pools",
+    "body_realm_id": "body_pulse_condensation",
+    "essence_realm_id": null,
+    "hp": 250,
+    "attack": 33,
+    "defense": 13,
+    "exp_reward": 115,
+    "dao_id": "tide_dao",
+    "abilities": [
+      {
+        "type": "heavy",
+        "chance": 0.2,
+        "magnitude": 1.5
+      }
+    ],
+    "loot_table": [
+      {
+        "item_id": "qi_pill",
+        "chance": 0.4,
+        "count": 1
+      }
+    ]
   }
 ]

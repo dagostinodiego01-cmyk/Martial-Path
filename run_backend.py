@@ -1,6 +1,6 @@
 """Standalone entry point for the packaged Martial Path backend.
 
-Serves the FastAPI engine API on ``http://127.0.0.1:8000`` so the exported Godot
+Serves the FastAPI engine API on ``http://127.0.0.1:8001`` so the exported Godot
 game can drive the Python engine with no separate Python install. This is the
 script PyInstaller freezes into ``MartialPathBackend.exe`` (see ``backend.spec``);
 the game auto-launches that executable on start-up.
@@ -10,7 +10,7 @@ the single source of truth (``game/api/server.py``).
 
 For local development you normally run uvicorn directly instead:
 
-    .venv\\Scripts\\python.exe -m uvicorn game.api.server:app --host 127.0.0.1 --port 8000
+    .venv\\Scripts\\python.exe -m uvicorn game.api.server:app --host 127.0.0.1 --port 8001
 """
 from __future__ import annotations
 
@@ -19,7 +19,7 @@ import os
 import sys
 
 HOST = "127.0.0.1"
-PORT = 8000
+PORT = 8001
 
 
 def _ensure_std_streams() -> None:

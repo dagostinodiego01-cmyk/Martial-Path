@@ -54,6 +54,15 @@ class InventorySystem:
         if player.inventory.get(item_id, 0) <= 0:
             return {"event": EventType.ERROR, "reason": "ITEM_NOT_OWNED", "item_id": item_id}
         item = self._items[item_id]
+        if not item.effect or item.effect == "none":
+            # Materials (e.g. talent_refining_elixir) are spent by the systems that
+            # consume them (talent upgrades, refining recipes), not by USE_ITEM.
+            return {
+                "event": EventType.ERROR,
+                "reason": "ITEM_NOT_USABLE",
+                "item_id": item_id,
+                "detail": "This material is not consumed directly; it is spent by another action.",
+            }
         applied = self._effects.apply_to_player(player, item.effect, item.magnitude)
         if item.is_consumable():
             self.remove_item(player, item_id, 1)

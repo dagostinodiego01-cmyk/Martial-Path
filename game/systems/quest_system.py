@@ -83,7 +83,68 @@ class QuestSystem:
         location = requires.get("location")
         if location and getattr(player, "current_location", "") != location:
             return False
+        # D.4 faction campaigns: ``path`` lists the sect ids (or display paths)
+        # whose storyline the quest belongs to; ``path_any`` accepts any of them.
+        # ``path`` as a bare string is shorthand for a one-element list.
+        faction_paths = requires.get("path_any") or requires.get("path")
+        if faction_paths:
+            if isinstance(faction_paths, str):
+                faction_paths = [faction_paths]
+            current_path = str(getattr(player, "path", ""))
+            if current_path not in {str(entry) for entry in faction_paths}:
+                return False
+        # Morality branching: a campaign branch may demand a saint (>= min) or
+        # a devil (<= max). Player morality starts at 0.
+        min_morality = requires.get("min_morality")
+        if min_morality is not None and int(getattr(player, "morality", 0)) < int(min_morality):
+            return False
+        max_morality = requires.get("max_morality")
+        if max_morality is not None and int(getattr(player, "morality", 0)) > int(max_morality):
+            return False
         return True
+
+    def _sync_state_objectives(self, player: Player) -> None:
+        """Advance state-evaluated objectives of active quests (D.4 polish).
+
+        Some objectives are facts about the player rather than events: e.g. a
+        campaign act that opens with a sect bond is satisfied by an *existing*
+        membership (``player.path`` is set), not only by a fresh join. Called
+        alongside ``check_unlocks`` so a quest activated after the fact still
+        sees the current state. Returns nothing; completions surface through
+        the normal notify path on the next matching event, or immediately via
+        :meth:`state_completions`.
+        """
+        for quest_id, state in self._state.items():
+            if state["status"] != self.STATUS_ACTIVE:
+                continue
+            definition = self._defs[quest_id]
+            for index, objective in enumerate(definition.get("objectives", [])):
+                if objective.get("type") != "join_sect":
+                    continue
+                required = int(objective.get("count", 1))
+                if state["progress"][index] < required and str(getattr(player, "path", "")) not in ("", "Unassigned"):
+                    state["progress"][index] = required
+
+    def state_completions(self, player: Player, inventory: InventorySystem) -> List[Dict[str, Any]]:
+        """Complete state-satisfied quests and return their completion records."""
+        self._sync_state_objectives(player)
+        completed: List[Dict[str, Any]] = []
+        for quest_id, state in self._state.items():
+            if state["status"] != self.STATUS_ACTIVE:
+                continue
+            if self._all_objectives_met(quest_id):
+                rewards = self._grant_rewards(quest_id, player, inventory)
+                state["status"] = self.STATUS_COMPLETED
+                completed.append(
+                    {
+                        "id": quest_id,
+                        "title": self._defs[quest_id].get("title", quest_id),
+                        "rewards": rewards,
+                    }
+                )
+        if completed:
+            self.check_unlocks(player)
+        return completed
 
     def notify(
         self,
@@ -152,6 +213,7 @@ class QuestSystem:
                     "status": status,
                     "objectives": objectives,
                     "requires": dict(definition.get("requires", {})),
+                    "chain": str(definition.get("chain", "")),
                 }
             )
         return entries
@@ -198,9 +260,12 @@ class QuestSystem:
         exp = int(rewards.get("exp", 0))
         gold = int(rewards.get("gold", 0))
         reputation = int(rewards.get("reputation", 0))
+        morality = int(rewards.get("morality", 0))
         player.exp += exp
         player.gold += gold
         player.reputation += reputation
+        # D.4: branch quests shape the player's morality (saint/devil axis).
+        player.morality += morality
 
         granted_items: Dict[str, int] = {}
         for item_id, count in rewards.get("items", {}).items():
@@ -218,6 +283,8 @@ class QuestSystem:
                     learned_skills.append(skill_id)
 
         result: Dict[str, Any] = {"exp": exp, "gold": gold, "reputation": reputation, "items": granted_items}
+        if morality:
+            result["morality"] = morality
         if learned_skills:
             result["skills"] = learned_skills
         return result

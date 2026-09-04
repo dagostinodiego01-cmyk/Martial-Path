@@ -2,7 +2,7 @@
 """PyInstaller build spec for the Martial Path backend.
 
 Produces a single-file ``MartialPathBackend.exe`` that serves the FastAPI engine
-API on http://127.0.0.1:8000. The exported Godot game launches this executable,
+API on http://127.0.0.1:8001. The exported Godot game launches this executable,
 so the packaged build needs no Python install.
 
 Build (from the repository root, using the project venv):

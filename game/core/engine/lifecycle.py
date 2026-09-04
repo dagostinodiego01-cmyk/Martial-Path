@@ -4,17 +4,23 @@ from __future__ import annotations
 import json
 from typing import Any, Dict, Optional
 
-from game.core.constants import DEFAULT_ORIGIN_ID, EventType, MODE_EXPLORE
+from game.core.constants import ASCENSION_ESSENCE_ORDER, DEFAULT_ORIGIN_ID, EventType, MODE_EXPLORE
 from game.core.results import (
     PlayerDiedResult,
+    RetiredResult,
     SaveExportedResult,
     SaveImportedResult,
     StartingFateAcceptedResult,
     StartingFateRolledResult,
+    UnlockPurchasedResult,
 )
 from game.models.player import Player
 from game.services.cultivation_service import CultivationService
-from game.services.meta_service import DEATH_REALM_BONUS, DEATH_REWARD
+from game.services.meta_service import (
+    ASCENSION_REWARD_MULTIPLIER,
+    DEATH_REALM_BONUS,
+    DEATH_REWARD,
+)
 from game.services.save_service import SAVE_VERSION, SaveError
 
 
@@ -89,7 +95,120 @@ class LifecycleMixin:
             "peak_body_realm": self._body_realm_names.get(body_id, body_id),
             "peak_essence_realm": self._essence_realm_names.get(essence_id, "") if essence_id else "",
             "path": self.player.path,
+            "title": self._legacy_title(),
+            # D.3: which campaign ending this run earned (None if unfinished).
+            "campaign_ending": self._campaign_chronicle_field(),
         }
+
+    def _legacy_title(self) -> Optional[str]:
+        """The cosmetic legacy title this run's character carries (C.5)."""
+        for unlock_id in self.meta.unlocks():
+            node = self.legacy.node(unlock_id)
+            if node is not None and node.get("kind") == "title":
+                return str(node.get("target_id", ""))
+        return None
+
+    def _purchase_unlock(self, unlock_id: str) -> Dict[str, Any]:
+        """Buy a legacy-tree unlock with Ancestral Memory (C.5).
+
+        Cross-run: the purchase persists in the meta-save, applies immediately
+        to the current run (techniques are learned on the spot), and again on
+        every future run's character creation.
+        """
+        node = self.legacy.node(unlock_id)
+        if node is None:
+            return {"event": EventType.ERROR, "reason": "UNKNOWN_UNLOCK", "unlock_id": unlock_id}
+        gate = self.legacy.can_unlock(unlock_id, self.meta.unlocks())
+        if not gate.get("ok"):
+            return {"event": EventType.ERROR, "reason": gate.get("reason"), "unlock_id": unlock_id}
+        cost = int(node.get("cost", 0))
+        if not self.meta.spend_memory(cost):
+            return {
+                "event": EventType.ERROR,
+                "reason": "INSUFFICIENT_MEMORY",
+                "unlock_id": unlock_id,
+                "cost": cost,
+                "ancestral_memory": self.meta.memory(),
+            }
+        self.meta.add_unlock(unlock_id)
+        learned = None
+        if node.get("kind") == "technique":
+            target = str(node.get("target_id", ""))
+            result = self.techniques.learn_skill(self.player, target, source="legacy")
+            if result.get("event") == EventType.SKILL_LEARNED:
+                learned = target
+        return UnlockPurchasedResult(
+            unlock_id=str(node["id"]),
+            kind=str(node.get("kind", "")),
+            target_id=str(node.get("target_id", "")),
+            cost=cost,
+            ancestral_memory=self.meta.memory(),
+            player_message=f"Legacy awakened: {node.get('id', unlock_id)} is now part of your inheritance.",
+        ).to_dict() | ({"learned_skill": learned} if learned else {})
+
+    def _apply_legacy_unlocks(self) -> None:
+        """Apply purchased legacy unlocks to a fresh character (C.5).
+
+        Runs after origin application: technique unlocks teach their skill
+        (learning applies growth passives properly); sect unlocks are data the
+        sect system already accepts (join gates stay); title unlocks surface in
+        views/summaries.
+        """
+        for unlock_id in self.meta.unlocks():
+            node = self.legacy.node(unlock_id)
+            if node is None:
+                continue
+            kind = node.get("kind")
+            target = str(node.get("target_id", ""))
+            if kind == "technique" and target:
+                self.techniques.learn_skill(self.player, target, source="legacy")
+
+    # -- retirement / ascension (C.7) -------------------------------------
+    def _can_retire(self) -> bool:
+        """True when the player has crossed the ascension threshold."""
+        essence = self.player.cultivation_state.essence
+        essence_order = self._essence_realm_orders.get(essence.realm_id, 0)
+        return essence_order >= ASCENSION_ESSENCE_ORDER
+
+    def _retire(self) -> Dict[str, Any]:
+        """Ascend: end the run as a *win* and bank the large legacy reward.
+
+        Retirement is the campaign's ending beat (C.7): reaching the ascension
+        point lets the player retire deliberately. The reward is the death
+        reward scaled by ``ASCENSION_REWARD_MULTIPLIER`` -- winning beats dying
+        -- and the chronicle records the run as ``ascended``.
+        """
+        if not self._can_retire():
+            return {
+                "event": EventType.ERROR,
+                "reason": "ASCENSION_NOT_REACHED",
+                "required_essence_order": ASCENSION_ESSENCE_ORDER,
+            }
+        self._running = False
+        self._mode = MODE_EXPLORE
+        self._current_enemy = None
+        summary = self._run_summary("ascended")
+        reward = (DEATH_REWARD + DEATH_REALM_BONUS * int(summary["realm_rank"])) * ASCENSION_REWARD_MULTIPLIER
+        self.meta.add_memory(reward)
+        self.meta.mark_retired()
+        self.meta.record_run(self._chronicle_entry("ascended"))
+        result = RetiredResult(
+            cause="ascended",
+            age_years=round(float(self.player.age_years), 1),
+            player_message=(
+                "You step beyond the sky of this world. The run is won -- your "
+                "legacy banks and the endless road opens for those who follow."
+            ),
+            reward=reward,
+            ancestral_memory=self.meta.memory(),
+            summary=summary,
+        ).to_dict()
+        result["narrative"] = self.narrative.describe_death(
+            "your aura departs the world and you rise past the vault of heaven",
+            result["age_years"],
+            self.lifespan.season(self.player),
+        )
+        return result
 
     # -- starting fate ----------------------------------------------------
     def _roll_starting_fate(self) -> Dict[str, Any]:
@@ -162,6 +281,11 @@ class LifecycleMixin:
             "ng_plus": self._ng_plus,
             "ironman": self._ironman,
             "hardcore": self._hardcore,
+            "endless": self._endless,
+            "world_state": self._world_state,
+            "campaign_complete": self._campaign_complete,
+            "campaign_ending_id": self._campaign_ending_id,
+            "endless_depth": self._endless_depth,
         }
 
     def save_game(self, slot: str = "default") -> Dict[str, Any]:
@@ -213,11 +337,27 @@ class LifecycleMixin:
             return {"event": EventType.LOAD_RESULT, "success": False, "reason": exc.code, "slot": slot}
         self.player = Player.from_save_dict(data.get("player", {}))
         self._bind_equipment_modifiers()
+        self._note_arrival(self.player.current_location)
         self.cultivation_service = CultivationService({"player": self.player}, self.cultivation)
         self.quests.import_state(data.get("quests", {}))
         self._ng_plus = max(0, int(data.get("ng_plus", 0)))
         self._ironman = bool(data.get("ironman", False))
         self._hardcore = bool(data.get("hardcore", True))
+        self._endless = bool(data.get("endless", False))
+        # D.3/D.5: restore campaign + endless-road progress.
+        self._campaign_complete = bool(data.get("campaign_complete", False))
+        self._campaign_ending_id = str(data.get("campaign_ending_id", "") or "")
+        self._endless_depth = max(0, int(data.get("endless_depth", 0)))
+        # Living world (E.1-E.5): restore the evolved world state so a loaded
+        # save continues the same living world (rumors, sect power, market).
+        world_state = data.get("world_state")
+        if isinstance(world_state, dict) and world_state:
+            self._world_state = world_state
+            market = world_state.get("market", {})
+            try:
+                self.shops.set_market_multiplier(float(market.get("price_multiplier", 1.0)))
+            except (TypeError, ValueError):
+                pass
         self._origin_id = str(self.player.origin_id or DEFAULT_ORIGIN_ID)
         self._mode = MODE_EXPLORE
         self._current_enemy = None

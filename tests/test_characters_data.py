@@ -18,9 +18,9 @@ HOOK_KEYS = {
 }
 
 
-def test_characters_json_has_50_entries():
+def test_characters_json_has_all_roster_entries():
     characters = load_collection("characters")
-    assert len(characters) == 50
+    assert len(characters) >= 90  # 50 original + 12 wave-1 + 28 wave-2 Phase F NPCs
 
 
 def test_character_ids_are_unique():

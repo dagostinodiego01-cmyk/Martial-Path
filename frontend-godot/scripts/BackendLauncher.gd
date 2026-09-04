@@ -14,7 +14,7 @@ class_name BackendLauncher
 signal backend_ready
 signal backend_failed(message: String)
 
-const HEALTH_URL := "http://127.0.0.1:8000/health"
+const HEALTH_URL := "http://127.0.0.1:8001/health"
 const POLL_INTERVAL_SECONDS := 0.5
 const STARTUP_TIMEOUT_SECONDS := 45.0
 const BACKEND_RELATIVE_PATH := "MartialPathBackend/MartialPathBackend.exe"

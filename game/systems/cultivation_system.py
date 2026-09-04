@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from typing import Any, Dict, Iterable, List, Optional, Tuple, cast
 
-from game.core.constants import EventType
+from game.core.constants import EXP_PER_COMPREHENSION, EventType
 from game.core.results import StabiliseResult
 from game.models.cultivation import BreakthroughResult as CultivationBreakthroughResult
 from game.models.player import Player
@@ -935,14 +935,36 @@ class CultivationSystem:
         trait = self._physiques_by_id.get(player.body_talent_id) or self._physiques_by_id.get("iron_skin_grade") or {}
         return float(trait.get(key, default))
 
+    def convert_exp_to_comprehension(self, player: Player) -> int:
+        """Convert banked exp into comprehension at ``EXP_PER_COMPREHENSION`` each.
+
+        Combat (and any other exp source) feeds ``Player.exp``; this drains that
+        bank into permanent comprehension, which in turn speeds cultivation and
+        aids breakthroughs. Returns the number of comprehension points granted.
+        """
+        gained = 0
+        while player.exp >= EXP_PER_COMPREHENSION:
+            player.exp -= EXP_PER_COMPREHENSION
+            player.comprehension += 1
+            gained += 1
+        return gained
+
     def _cultivation_speed_multiplier(self, player: Player) -> float:
-        """Product of learned ``cultivation_speed`` passive scalings (1.0 if none)."""
+        """Product of learned ``cultivation_speed`` passives and a comprehension
+        speed bonus (sharper insight cultivates faster)."""
         multiplier = 1.0
         for skill_id in getattr(player, "skills", []):
             skill = self._skills.get(skill_id)
             if skill is not None and not skill.is_active() and skill.effect == "cultivation_speed":
                 multiplier *= skill.scaling
+        multiplier *= self._comprehension_cultivation_multiplier(player)
         return multiplier
+
+    def _comprehension_cultivation_multiplier(self, player: Player) -> float:
+        """Each point of comprehension above the starting 10 grants +0.5% base
+        cultivation-gain speed (mirrors the breakthrough-odds comprehension
+        scale, so +100 comprehension means +50% speed)."""
+        return 1.0 + max(0.0, (player.comprehension - 10) * 0.005)
 
     def _scaled_body_gain(self, value: Any, multiplier: float, divisor: int) -> int:
         return max(0, int(round(float(value) * multiplier)) // divisor)

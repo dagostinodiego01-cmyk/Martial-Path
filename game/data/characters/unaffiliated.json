@@ -236,6 +236,7 @@
     "alignment": "chaotic_ally",
     "importance": "major_support",
     "faction": "Unaffiliated",
+    "min_story_tier": 6,
     "encounter_type": "ally",
     "unlock": {
       "realm": "Body Tempering",
@@ -301,6 +302,7 @@
     "alignment": "good",
     "importance": "support",
     "faction": "Unaffiliated",
+    "min_story_tier": 6,
     "encounter_type": "ally",
     "unlock": {
       "realm": "Body Tempering",
@@ -431,6 +433,7 @@
     "alignment": "neutral",
     "importance": "special",
     "faction": "Unaffiliated",
+    "min_story_tier": 5,
     "encounter_type": "mentor",
     "unlock": {
       "realm": "Body Tempering",

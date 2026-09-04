@@ -439,6 +439,41 @@ def test_cultivation_speed_passive_multiplies_training_gain(monkeypatch: pytest.
     assert boosted_result["progress_gained"] > normal_result["progress_gained"]
 
 
+def test_comprehension_speeds_cultivation_gain(monkeypatch: pytest.MonkeyPatch):
+    system = _make_system()
+    monkeypatch.setattr(system._rng, "randint", lambda _low, _high: 0)
+    normal = Player(name="Normal")
+    sharp = Player(name="Sharp", comprehension=110)  # +100 -> +50% speed
+
+    normal_result = system.train_body(normal)
+    sharp_result = system.train_body(sharp)
+
+    assert sharp_result["progress_gained"] > normal_result["progress_gained"]
+    # Each point above the starting 10 grants +0.5% base-gain speed.
+    assert system._comprehension_cultivation_multiplier(normal) == 1.0
+    assert system._comprehension_cultivation_multiplier(sharp) == 1.5
+
+
+def test_convert_exp_to_comprehension_drains_the_bank():
+    system = _make_system()
+    player = Player(name="Tester", exp=130)
+
+    gained = system.convert_exp_to_comprehension(player)
+
+    assert gained == 2
+    assert player.comprehension == 12  # 10 + 2
+    assert player.exp == 30  # 130 - 2 * 50
+
+
+def test_convert_exp_to_comprehension_is_noop_under_threshold():
+    system = _make_system()
+    player = Player(name="Tester", exp=49)
+
+    assert system.convert_exp_to_comprehension(player) == 0
+    assert player.comprehension == 10
+    assert player.exp == 49
+
+
 def test_physique_multiplies_successful_body_breakthrough_stats(monkeypatch: pytest.MonkeyPatch):
     player = Player(name="Tester", body_talent_id="life_gate_grade")
     player.cultivation_state.body.progress = 100.0

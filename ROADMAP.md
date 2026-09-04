@@ -1,7 +1,8 @@
 # Martial Path — Roadmap to the Best Text-Based Cultivation Game Ever
 
-**Status:** vision + phased plan. Supersedes the closed `Tasks.md` (the 17-priority
-GROK-review backlog, now DONE). This document is the forward plan.
+**Status:** vision + phased plan. This document is the single source of task
+tracking; the closed 17-priority GROK-review backlog it superseded has been
+removed.
 
 **Last updated:** 2026-09-02.
 
@@ -63,7 +64,7 @@ dimensions as critical:
 
 ---
 
-## 2. Current state (baseline — all DONE, see `Tasks.md`)
+## 2. Current state (baseline — all DONE)
 
 - **Engine:** dual cultivation (Body + Essence) with strain/stability, 26 skill
   effect types, stats/passives, talent ladders + upgrades, lifespan/seasons/
@@ -206,7 +207,7 @@ sect storylines; the world moves without the player (NPCs/sects/economy); meta
 unlocks meaningfully change successive runs; procedural prose covers every action.
 
 #### A — Narrative engine full coverage
-- [ ] **A.5** Prose for 100% of actions/events (zero fallback "debug" strings in
+- [x] **A.5** Prose for 100% of actions/events (zero fallback "debug" strings in
   Godot). (Instrumentation test: every `EventType` has a template.)
 - [x] **A.6** Voice consistency: tone guide + lore glossary enforced by validator
   (terminology whitelist, no Mad-Libs artifacts). (0 template errors; a "sameness"
@@ -215,7 +216,7 @@ unlocks meaningfully change successive runs; procedural prose covers every actio
   display names/ids) + 4 linter checks in `narrative_lint.py` (gamey terms,
   brace artifacts, ≥2 variants/verb, glossary conformance); sameness property
   test drives a 100-event mixed-action run (`tests/test_narrative_voice.py`).
-- [ ] **A.7** Authoring ergonomics: `tools/` linter for templates (unused vars,
+- [x] **A.7** Authoring ergonomics: `tools/` linter for templates (unused vars,
   missing vars, unbalanced branches). (CI-checks on template data.)
 
 #### B — Dao combat full
@@ -228,48 +229,132 @@ unlocks meaningfully change successive runs; procedural prose covers every actio
   `combo_stage`/`expected_combo_role`. Chain state is transient (reset each
   fight); validator enforces role vocab/one-role-per-skill.
   (`tests/test_combo_combat.py`, 17 tests.)
-- [ ] **B.7** Dao debates (non-lethal philosophical duels won by insight) and
+- [x] **B.7** Dao debates (non-lethal philosophical duels won by insight) and
   spirit-oath duels with asymmetric stakes. (Distinct from spar/duel/death duel.)
-- [ ] **B.8** Enemy/foe AI uses dao + pressure + stances, not just abilities.
-  (Boss fights exploit the counter graph.)
+  *Done 2026-09-04:* pure `DebateSystem` (stance triangle assert > probe >
+  transcend > assert with a one-round probe-exposure pin, insight-based sway,
+  dao-matchup scaling, yield resistance); `MODE_DEBATE` with
+  `DEBATE_CHARACTER`/`OATH_DUEL_CHARACTER`/`DEBATE_STANCE`/`YIELD_DEBATE`/
+  `WALK_AWAY` actions; offered wherever a character can spar. Spirit-oath
+  stakes: win banks 1.5x the sworn gold/exp, loss costs half exp + full wager,
+  walking away is a **breach** forfeiting the larger of the wager or half
+  current gold, stalemate releases both. Debate conviction is insight-shaped
+  and restored after (combat pool untouched). Narrative verbs + validator-clean
+  templates; Godot renders conviction bars, oath notices, and stake outcomes.
+  (`tests/test_dao_debate.py`, 13 tests.)
+- [x] **B.8** Enemy/foe AI uses dao + pressure + stances, not just abilities.
+  (Boss fights exploit the counter graph.) *Done 2026-09-04:* pure `FoeAI`
+  consulted every enemy phase -- dao-carrying foes fight stance chains
+  (opening -> response -> finisher, feeding the same combo bank as the player,
+  with +25%/stage into their technique), counter-graph aggression (x1.5 when
+  their dao counters yours, x0.6 when countered), wounded desperation, and a
+  **guard** that shelters behind +50% defense and banks the respected flow into
+  their next press. Mooks (no dao) keep the plain ability/attack pipeline.
+  Bosses/elite duelists in `named_foes.json` now carry real chain techniques.
+  (`tests/test_foe_ai.py`, 14 tests.)
 
 #### C — Meta depth
-- [ ] **C.5** Legacy/unlock tree: meta currency unlocks sects, origins, techniques,
-  story variants, titles. (A browsable unlock tree in Godot.)
-- [ ] **C.6** World seed: seeded procedural variation (which sects dominate, market
-  prices, encounter pools, event order). (Two seeds → measurably different world
-  state at year 10.)
-- [ ] **C.7** Retirement/ascension as a *win*: reaching the campaign ending banks a
-  large meta reward and continues into endless mode. (Win ≠ death; both are valid
-  run-ends.)
+- [x] **C.5** Legacy/unlock tree: meta currency unlocks sects, origins, techniques,
+story variants, titles. (A browsable unlock tree in Godot.)
+  *Done 2026-09-02:* `data/legacy_tree.json` (3 tiers: sects/techniques/titles) +
+  pure `LegacySystem`; `UNLOCK_TREE`/`UNLOCK` actions; purchases persist in the
+  meta-save, apply on every new character (techniques) and surface as
+  `player.title`; validator covers ids/kinds/targets/tier reachability; Godot
+  legacy popups in-game and on the main menu. (`tests/test_meta_depth.py`.)
+- [x] **C.6** World seed: seeded procedural variation (which sects dominate, market
+prices, encounter pools, event order). (Two seeds → measurably different world
+state at year 10.)
+  *Done 2026-09-02:* the run seed derives a deterministic seed report -- two
+  dominant sects (listed first, `-5` reputation subsidy on their join gate), an
+  economy band (cheap 0.9 / fair 1.0 / pricey 1.15) scaling all shop prices, and
+  an encounter bias consumed by `EventSystem`. Same seed → identical world;
+  12 seeds → ≥ 2 distinct bands (pinned by test).
+- [x] **C.7** Retirement/ascension as a *win*: reaching the campaign ending banks a
+large meta reward and continues into endless mode. (Win ≠ death; both are valid
+run-ends.)
+  *Done 2026-09-02:* `RETIRE_ASSENT` (≥ Divine Transformation essence) ends the
+  run as a win: banks `(death reward) x 3`, records an `ascended` chronicle
+  entry (rendered as "ascended beyond the world" in Godot), sets a persisted
+  `retired` meta flag, and carries an `endless` flag through saves for the
+  post-game. `POST /retire` exposes it to the API.
 
 #### D — Full campaign + post-game
-- [ ] **D.3** Acts 2–3 (faction conflict → dao awakening → realm war → final
+- [x] **D.3** Acts 2–3 (faction conflict → dao awakening → realm war → final
   ascension choice) with ≥ 3 endings. (Campaign completable; endings recorded in the
   chronicle.)
-- [ ] **D.4** Sect storylines: ≥ 2 full faction campaigns with branching outcomes.
+  *Done 2026-09-04:* Act 2/3 chains in `quests.json` (join-sect → Schism War duels →
+  Act-2 dao rekindling with a reopened one-change window → realm war against the
+  ancient devil → threshold sentinel → final breakthrough beat). Completing the
+  final act wins the campaign: `CampaignMixin._maybe_complete_campaign` banks a
+  150-memory bonus and picks one of three morality-driven endings (realm_martyr /
+  demon_sovereign / ascended_sword), recorded as `campaign_ending` in the
+  chronicle. Godot renders the ending and act banners. (`tests/test_campaign.py`,
+  D.3 block.)
+- [x] **D.4** Sect storylines: ≥ 2 full faction campaigns with branching outcomes.
   (Faction quest chains, not one-off quests.)
-- [ ] **D.5** Endless post-game opens on ascension: procedural secret realms,
+  *Done 2026-09-04:* `phoenix` and `valleys` chains (3 quests each), gated by the
+  player's sect path (`requires.path_any`) and split into ruthless/honorable
+  branches by morality (`min_morality` / `max_morality` gates, morality rewards).
+  New objective types wired into real actions: `spar` (gentle branch), `debate`
+  (B.7 verdicts), `realm_completed` (secret-realm survival). QuestSystem gates
+  and rewards extended; validator enforces quest refs. (`tests/test_campaign.py`,
+  D.4 block.)
+- [x] **D.5** Endless post-game opens on ascension: procedural secret realms,
   scaling challenges, no realm cap. (Endless mode playable indefinitely without
   content exhaustion for ≥ 50h.)
+  *Done 2026-09-04:* `ENDLESS_REALM` action opens `SecretRealmSystem.generate_endless`
+  realms at ever-deeper levels — procedural layouts, mixed mook/named foes,
+  depth-scaled stats (x1.15/depth) and rewards (x1.25/depth), deterministic per
+  (seed, depth). The first descent lifts the essence track's final cap
+  (`theoretical_endpoint`), so Beyond Divinity becomes reachable in endless play;
+  depth rewards accrue per completed realm. Endless runs also start via the API
+  (`endless` new-game flag); flags round-trip through saves. Endless road gated
+  behind campaign completion or a retired run. (`tests/test_campaign.py`, D.5 block.)
 
 #### E — Living world simulation
-- [ ] **E.1** NPC agency: NPCs train/compete/join sects/form rivalries/die on a
+- [x] **E.1** NPC agency: NPCs train/compete/join sects/form rivalries/die on a
   world-tick that advances with player time. (World state changes without player
-  input; observable via relationship/status changes.)
-- [ ] **E.2** Sect/faction simulation: power/wealth/influence shift; wars, alliances,
-  sect rise/fall. (Sect standing changes over a 100-year sim.)
-- [ ] **E.3** Economy simulation: dynamic prices, supply/demand, market shocks.
-  (Prices move with events, not fixed JSON.)
-- [ ] **E.4** Seasons/weather as real modifiers (travel, gathering, encounter odds)
+  input; observable via relationship/status changes.) — `WorldSimulationSystem.tick`
+  runs on a dedicated seeded RNG stream from every calendar-consuming action
+  (train/rest/meditate/travel/closed-door); roster of all 50 named NPCs cultivates
+  with realm-slowed odds, the strongest clash, elders die on the road. Tests:
+  `tests/test_world_simulation.py` (E.1 block).
+- [x] **E.2** Sect/faction simulation: power/wealth/influence shift; wars, alliances,
+  sect rise/fall. (Sect standing changes over a 100-year sim.) — sect power is
+  recomputed from living members' ranks and smoothed; empty sects decay to the
+  base. Century sim: sects reorder (>1.0 spread), world thins but never empties.
+- [x] **E.3** Economy simulation: dynamic prices, supply/demand, market shocks.
+  (Prices move with events, not fixed JSON.) — wealth-per-cultivator supply and
+  death-scarcity demand nudge a bounded (0.7-1.4) price multiplier; it layers on
+  the C.6 seed band in `ShopSystem` so displayed == charged prices.
+- [x] **E.4** Seasons/weather as real modifiers (travel, gathering, encounter odds)
   — P12 made seasons display; make them *act*. (Season changes gameplay, tested.)
-- [ ] **E.5** Rumor/intel system: overheard rumors reveal events/people/opportunities
-  (feeds quests + narrative). (Rumors are state-backed, not static flavor.)
+  — `SEASON_MODIFIERS`: Autumn doubles gather yield, Winter halves it and slows
+  travel 1.5x, Summer/Autumn raise combat odds (EventSystem `set_combat_bias`),
+  Winter slows NPC progress 0.7x. Travel now consumes seasonal years.
+- [x] **E.5** Rumor/intel system: overheard rumors reveal events/people/opportunities
+  (feeds quests + narrative). (Rumors are state-backed, not static flavor.) —
+  deaths/market moves/sect shifts mint bounded-lifetime rumors; LEARN_RUMOR
+  returns a concrete reveal (sect/location/npc with display name); talking to any
+  character may surface an unlearned rumor. Save round-trips the world state.
 
 #### F — Breadth
-- [ ] **F.2** Expand regions/sects/techniques/NPCs/events per the content targets in
+- [x] **F.2** Expand regions/sects/techniques/NPCs/events per the content targets in
   §6 (no dead content — every new entry reachable, validator-enforced).
-- [ ] **F.3** Faction + character quest arcs (not just location quests).
+  *Done 2026-09-04:* locations 29 → 45 (16 new across story tiers 2–6, all
+  bidirectionally wired, pooled, and positioned on the map); sects 4 → 12
+  (tier 1–6 halls referencing existing skills); 12 new NPCs anchored with
+  `min_story_tier` tags and named-foe combat entries; 16 new encounter pools
+  wired to previously-unused enemies (dead-content pass: 205 unused → far
+  fewer); 2 shops + 2 trainers. `tests/test_content_breadth.py` guards counts,
+  connectivity, pools, and reachability.
+- [x] **F.3** Faction + character quest arcs (not just location quests).
+  *Done 2026-09-04:* three 3-quest faction arcs (Seven Profound Valleys,
+  Divine Phoenix, Asura War Pavilion) chained via `requires`, gated on
+  `act1_conclusion`, giving skill rewards (`glacial_sword_art`, `phoenix_fist`,
+  `blood_sea_roar`); each arc's first quest is offered by an expansion NPC at
+  the faction's frontier (broker, pearl mistress, war envoy). Arcs unlock
+  alongside the parallel Act 2/3 campaign work.
 
 ---
 
@@ -341,12 +426,12 @@ release docs and onboarding.
 
 | Content | Today | 1.0 target |
 |---|---|---|
-| Regions / locations | 29 | 45+ |
-| Sects | 4 | 12+ (with faction storylines) |
-| Skills / techniques | 208 | 300+ (all dao-tagged, all reachable) |
-| Daos | 12 | 12+ (with counter graph) |
-| NPCs | 50 | 120+ (with agency + arcs) |
-| Quests | 9 | 60+ (acts + factions + characters) |
+| Regions / locations | 45 | 45+ ✅ |
+| Sects | 12 | 12+ ✅ (faction storylines in via F.3) |
+| Skills / techniques | 215 | 300+ (all dao-tagged, all reachable) |
+| Daos | 12 | 12+ (with counter graph) ✅ |
+| NPCs | 90 | 120+ (with agency + arcs) |
+| Quests | 62 | 60+ (acts + factions + characters) ✅ |
 | Secret realms / dungeons | 6 | 1 procedural generator, 10+ hand-placed |
 | Origins | 4 | 6+ |
 | Endings | 0 | 3+ |
@@ -373,4 +458,4 @@ A task is **done** when all hold:
 2. At least one test under `tests/` exercises it (unit or engine-level).
 3. `validate_all_game_data()` returns 0 errors (new data collections validated).
 4. Godot script parses clean (`--headless --check-only`).
-5. `Tasks.md`/`handover.md` note the change; `ROADMAP.md` checkbox flipped to `[x]`.
+5. `handover.md` notes the change; the `ROADMAP.md` checkbox is flipped to `[x]`.

@@ -52,6 +52,7 @@ def validate_all_game_data(registry: Optional[GameDataRegistry] = None) -> Valid
     _validate_narrative_templates(registry, result)
     _validate_lore_glossary(registry, result)
     _validate_origins(registry, result)
+    _validate_legacy_tree(registry, result)
     _validate_gathering(registry, result)
     _validate_refining_recipes(registry, result)
     _validate_secret_realm(registry, result)
@@ -207,6 +208,9 @@ def _validate_character_hooks(registry: GameDataRegistry, result: ValidationResu
 
     for character in registry.characters:
         character_id = character.get("id")
+        min_story_tier = character.get("min_story_tier")
+        if min_story_tier is not None and (not isinstance(min_story_tier, int) or isinstance(min_story_tier, bool) or not 1 <= min_story_tier <= 6):
+            result.add("bad_character", f"character '{character_id}' min_story_tier must be an integer between 1 and 6")
         hooks = character.get("gameplay_hooks", {})
         for hook_key in ("spar_min_tier", "duel_min_tier"):
             tier = hooks.get(hook_key)
@@ -252,6 +256,9 @@ def _validate_locations(registry: GameDataRegistry, result: ValidationResult) ->
 
         _check_level(location_id, "danger_level", location.get("danger_level"), result)
         _check_level(location_id, "qi_density", location.get("qi_density"), result)
+        story_tier = location.get("story_tier")
+        if story_tier is not None and (not isinstance(story_tier, int) or isinstance(story_tier, bool) or not 1 <= story_tier <= 6):
+            result.add("bad_location", f"location '{location_id}' story_tier must be an integer between 1 and 6")
         _check_map_position(location_id, location.get("map_position"), result)
 
         for system in location.get("available_systems", []):
@@ -792,6 +799,52 @@ def _validate_sects(registry: GameDataRegistry, result: ValidationResult) -> Non
         ranks = sect.get("contribution_ranks")
         if not isinstance(ranks, list) or not ranks or not all(isinstance(rank, str) and rank for rank in ranks):
             result.add("bad_sect", f"sect '{sect_id}' contribution_ranks must be a non-empty list of names")
+        tier = sect.get("tier")
+        if tier is not None and (not isinstance(tier, int) or isinstance(tier, bool) or not 1 <= tier <= 6):
+            result.add("bad_sect", f"sect '{sect_id}' tier must be an integer between 1 and 6")
+        min_story_tier = (sect.get("join_requirements", {}) or {}).get("min_story_tier")
+        if min_story_tier is not None and (not isinstance(min_story_tier, int) or isinstance(min_story_tier, bool) or not 1 <= min_story_tier <= 6):
+            result.add("bad_sect", f"sect '{sect_id}' min_story_tier must be an integer between 1 and 6")
+        techniques = sect.get("techniques", [])
+        if techniques and not isinstance(techniques, list):
+            result.add("bad_sect", f"sect '{sect_id}' techniques must be a list")
+
+    # Technique halls are validated in a second pass so path locks may point at
+    # any sect's path (a sect can teach another lineage's art it has seized).
+    skill_ids = {skill.get("id") for skill in registry.skills}
+    supported_currencies = {"gold", "spirit_stone"}
+    for sect in registry.sects:
+        sect_id = sect.get("id")
+        techniques = sect.get("techniques", [])
+        if not isinstance(techniques, list):
+            continue
+        seen_skill_ids: Set[str] = set()
+        for entry in techniques:
+            if not isinstance(entry, dict):
+                result.add("bad_sect", f"sect '{sect_id}' technique entries must be objects")
+                continue
+            skill_id = entry.get("skill_id")
+            if skill_id not in skill_ids:
+                result.add("bad_sect", f"sect '{sect_id}' offers missing skill '{skill_id}'")
+            if skill_id in seen_skill_ids:
+                result.add("bad_sect", f"sect '{sect_id}' lists skill '{skill_id}' more than once")
+            if isinstance(skill_id, str):
+                seen_skill_ids.add(skill_id)
+            price = entry.get("price")
+            if not isinstance(price, dict) or not price:
+                result.add("bad_sect", f"sect '{sect_id}' skill '{skill_id}' price must be a non-empty object")
+            else:
+                for currency_name, amount in price.items():
+                    if currency_name not in supported_currencies:
+                        result.add("bad_sect", f"sect '{sect_id}' skill '{skill_id}' has unsupported currency '{currency_name}'")
+                    if not isinstance(amount, int) or isinstance(amount, bool) or amount <= 0:
+                        result.add("bad_sect", f"sect '{sect_id}' skill '{skill_id}' price.{currency_name} must be a positive integer")
+            required_path = entry.get("required_path")
+            if required_path and required_path not in seen_paths:
+                result.add("bad_sect", f"sect '{sect_id}' skill '{skill_id}' required_path '{required_path}' is not a known sect path")
+            min_tier = entry.get("min_tier")
+            if min_tier is not None and (not isinstance(min_tier, int) or isinstance(min_tier, bool) or min_tier < 1):
+                result.add("bad_sect", f"sect '{sect_id}' skill '{skill_id}' min_tier must be a positive integer")
 
 
 def _validate_daos(registry: GameDataRegistry, result: ValidationResult) -> None:
@@ -1102,6 +1155,70 @@ def _validate_find_config(registry: GameDataRegistry, result: ValidationResult) 
     for danger, index in config.get("danger_max_rarity_index", {}).items():
         if not isinstance(index, int) or isinstance(index, bool) or not 0 <= index <= max_index:
             result.add("bad_find_config", f"find_config.danger_max_rarity_index['{danger}'] must be between 0 and {max_index}")
+
+
+def _validate_legacy_tree(registry: GameDataRegistry, result: ValidationResult) -> None:
+    """Validate the legacy unlock tree (ROADMAP C.5).
+
+    Checks tier/node structure, snake_case ids, positive costs, ``kind`` values,
+    per-kind target resolution (sects/skills; titles are free-form snake_case),
+    and tier reachability (a tier's requirement cannot exceed its position).
+    """
+    tree = registry.legacy_tree
+    if not tree:
+        return
+    sect_ids = _id_set(registry.sects)
+    skill_ids = _id_set(registry.skills)
+    kinds = ("sect", "technique", "title")
+    seen_nodes: Set[str] = set()
+    tiers = tree.get("tiers")
+    if not isinstance(tiers, list) or not tiers:
+        result.add("bad_legacy_tree", "legacy_tree.tiers must be a non-empty list")
+        return
+    for position, tier in enumerate(tiers):
+        if not isinstance(tier, dict):
+            result.add("bad_legacy_tree", "legacy tier entry must be an object")
+            continue
+        tier_id = tier.get("id")
+        if not isinstance(tier_id, str) or not re.fullmatch(r"[a-z][a-z0-9_]*", tier_id):
+            result.add("bad_legacy_tree", f"legacy tier id '{tier_id}' must be stable snake_case")
+            continue
+        if not isinstance(tier.get("display_name"), str) or not tier.get("display_name"):
+            result.add("bad_legacy_tree", f"legacy tier '{tier_id}' display_name is required")
+        required = tier.get("required_meta_tier", 0)
+        if isinstance(required, bool) or not isinstance(required, int) or required < 0:
+            result.add("bad_legacy_tree", f"legacy tier '{tier_id}' required_meta_tier must be a non-negative integer")
+        elif required > position:
+            result.add("bad_legacy_tree", f"legacy tier '{tier_id}' requires {required} earlier tiers but only {position} exist before it")
+        unlocks = tier.get("unlocks")
+        if not isinstance(unlocks, list) or not unlocks:
+            result.add("bad_legacy_tree", f"legacy tier '{tier_id}' unlocks must be a non-empty list")
+            continue
+        for node in unlocks:
+            if not isinstance(node, dict):
+                result.add("bad_legacy_tree", f"legacy tier '{tier_id}' unlock entry must be an object")
+                continue
+            node_id = node.get("id")
+            if not isinstance(node_id, str) or not re.fullmatch(r"[a-z][a-z0-9_]*", node_id):
+                result.add("bad_legacy_tree", f"legacy unlock id '{node_id}' must be stable snake_case")
+                continue
+            if node_id in seen_nodes:
+                result.add("duplicate_id", f"legacy unlock: duplicate id '{node_id}'")
+            seen_nodes.add(node_id)
+            kind = node.get("kind")
+            if kind not in kinds:
+                result.add("bad_legacy_tree", f"legacy unlock '{node_id}' has unknown kind '{kind}'")
+                continue
+            target = node.get("target_id")
+            if kind == "sect" and target not in sect_ids:
+                result.add("bad_legacy_tree", f"legacy unlock '{node_id}' references missing sect '{target}'")
+            if kind == "technique" and target not in skill_ids:
+                result.add("bad_legacy_tree", f"legacy unlock '{node_id}' references missing skill '{target}'")
+            if kind == "title" and (not isinstance(target, str) or not re.fullmatch(r"[a-z][a-z0-9_]*", target or "")):
+                result.add("bad_legacy_tree", f"legacy unlock '{node_id}' title target must be stable snake_case")
+            cost = node.get("cost", 0)
+            if isinstance(cost, bool) or not isinstance(cost, int) or cost <= 0:
+                result.add("bad_legacy_tree", f"legacy unlock '{node_id}' cost must be a positive integer")
 
 
 def _validate_modifier_group(item_id: str, group_name: str, modifiers: Any, valid_keys: Set[str], result: ValidationResult) -> None:

@@ -67,6 +67,10 @@ class Player:
     comprehension: int = 10
     reputation: int = 0
     morality: int = 0
+    # Highest story tier (1-6) the player has reached: sect tiers and who the
+    # world sends to meet the player scale with it. Written by the engine on
+    # arrival; the model only holds the data.
+    max_story_tier: int = 1
     # Flat years added to the realm-derived maximum lifespan by ``lifespan``
     # passive techniques. Applied on learn, honoured by LifespanSystem.
     lifespan_bonus_years: float = 0.0
@@ -161,6 +165,7 @@ class Player:
             "comprehension": self.comprehension,
             "reputation": self.reputation,
             "morality": self.morality,
+            "max_story_tier": self.max_story_tier,
             "lifespan_bonus_years": self.lifespan_bonus_years,
             "current_location": self.current_location,
             "current_day": self.current_day,
@@ -203,6 +208,7 @@ class Player:
             "comprehension": self.comprehension,
             "reputation": self.reputation,
             "morality": self.morality,
+            "max_story_tier": self.max_story_tier,
             "lifespan_bonus_years": self.lifespan_bonus_years,
             "current_location": self.current_location,
             "current_day": self.current_day,
@@ -245,6 +251,7 @@ class Player:
             comprehension=int(data.get("comprehension", 10)),
             reputation=int(data.get("reputation", 0)),
             morality=int(data.get("morality", 0)),
+            max_story_tier=int(data.get("max_story_tier", 1)),
             lifespan_bonus_years=float(data.get("lifespan_bonus_years", 0.0)),
             current_location=str(data.get("current_location", "outer_forest")),
             current_day=int(data.get("current_day", 1)),

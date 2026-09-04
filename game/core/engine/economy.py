@@ -73,12 +73,19 @@ class EconomyMixin:
         return self.inventory.use_item(self.player, item_id)
 
     def _learn_skill(self, action: Dict[str, Any]) -> Dict[str, Any]:
-        """Learn a technique from a location trainer, paying its currency cost."""
-        result = self.trainers.learn(
-            self.player,
-            action.get("skill_id", ""),
-            action.get("trainer_id", ""),
-        )
+        """Learn a technique from a location trainer or joined sect hall."""
+        if action.get("sect_id", ""):
+            result = self.sects.learn(
+                self.player,
+                action.get("skill_id", ""),
+                action.get("sect_id", ""),
+            )
+        else:
+            result = self.trainers.learn(
+                self.player,
+                action.get("skill_id", ""),
+                action.get("trainer_id", ""),
+            )
         if result.get("event") == EventType.SKILL_LEARNED:
             result["known_skills"] = self.get_known_skills()
         return result
@@ -87,8 +94,14 @@ class EconomyMixin:
         """Join a sect, assigning the player's martial path."""
         result = self.sects.join(self.player, sect_id)
         if result.get("event") == EventType.SECT_JOINED:
+            result["sect"] = self.sects.sect_view(self.player, sect_id).get("sect", {})
+            result["techniques"] = result["sect"].get("techniques", [])
+        if result.get("event") == EventType.SECT_JOINED:
             result["player"] = self._player_view()
             updates = self.quests.notify("join_sect", self.player, self.inventory, target=sect_id)
+            # D.4 polish: state-satisfied act objectives (e.g. Act 2's opener for
+            # a player who joined back in Act 1) complete as soon as they unlock.
+            updates += self.quests.state_completions(self.player, self.inventory)
             if updates:
                 result["quest_updates"] = updates
         return result

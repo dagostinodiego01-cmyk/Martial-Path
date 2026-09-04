@@ -12,11 +12,21 @@ unchanged) while adding membership validation and autocomplete.
 from __future__ import annotations
 
 from enum import StrEnum
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 # Game "modes" gate which actions are valid (exploration vs a single combat).
 MODE_EXPLORE = "explore"
 MODE_COMBAT = "combat"
+# A dao debate (B.7): a non-lethal contest of conviction with its own stances.
+MODE_DEBATE = "debate"
+
+# Spirit-oath duel stakes (B.7). Winning banks the wager at this multiple;
+# losing costs the exp/gold fractions; breaching (walking away) forfeits the
+# larger of the wagered or a fraction of current gold.
+OATH_WIN_MULTIPLIER = 1.5
+OATH_LOSS_EXP_PENALTY = 0.5
+OATH_LOSS_GOLD_PENALTY = 1.0
+OATH_BREACH_GOLD_FRACTION = 0.5
 
 
 class Action(StrEnum):
@@ -39,6 +49,11 @@ class Action(StrEnum):
     DIALOGUE_CHOOSE = "DIALOGUE_CHOOSE"
     SPAR_CHARACTER = "SPAR_CHARACTER"
     DUEL_CHARACTER = "DUEL_CHARACTER"
+    DEBATE_CHARACTER = "DEBATE_CHARACTER"
+    OATH_DUEL_CHARACTER = "OATH_DUEL_CHARACTER"
+    DEBATE_STANCE = "DEBATE_STANCE"
+    YIELD_DEBATE = "YIELD_DEBATE"
+    WALK_AWAY = "WALK_AWAY"
     RECEIVE_BOON = "RECEIVE_BOON"
     JOIN_SECT = "JOIN_SECT"
     SECTS = "SECTS"
@@ -69,11 +84,19 @@ class Action(StrEnum):
     GATHER = "GATHER"
     REFINE = "REFINE"
     ENTER_REALM = "ENTER_REALM"
+    ENDLESS_REALM = "ENDLESS_REALM"
     REALM_ADVANCE = "REALM_ADVANCE"
     REALM_LEAVE = "REALM_LEAVE"
     TOURNAMENT = "TOURNAMENT"
     DAO_VIEW = "DAO_VIEW"
     DAO_AWAKEN = "DAO_AWAKEN"
+    UNLOCK_TREE = "UNLOCK_TREE"
+    UNLOCK = "UNLOCK"
+    RETIRE_ASSENT = "RETIRE_ASSENT"
+    WORLD_INFO = "WORLD_INFO"
+    CODEX = "CODEX"
+    WORLD_RUMORS = "WORLD_RUMORS"
+    LEARN_RUMOR = "LEARN_RUMOR"
     EXPORT_SAVE = "EXPORT_SAVE"
     IMPORT_SAVE = "IMPORT_SAVE"
     SAVE = "SAVE"
@@ -98,6 +121,10 @@ class EventType(StrEnum):
     STARTING_FATE_ACCEPTED = "STARTING_FATE_ACCEPTED"
     CHARACTER_ENCOUNTER = "CHARACTER_ENCOUNTER"
     CHARACTER_INTERACTION = "CHARACTER_INTERACTION"
+    DEBATE_STARTED = "DEBATE_STARTED"
+    DEBATE_ROUND = "DEBATE_ROUND"
+    DEBATE_END = "DEBATE_END"
+    OATH_DUEL_STARTED = "OATH_DUEL_STARTED"
     DIALOGUE_CHOICE = "DIALOGUE_CHOICE"
     BOON = "BOON"
     SECTS = "SECTS"
@@ -138,6 +165,13 @@ class EventType(StrEnum):
     REALM_COMPLETED = "REALM_COMPLETED"
     DAO_VIEW = "DAO_VIEW"
     DAO_AWAKENED = "DAO_AWAKENED"
+    UNLOCK_TREE = "UNLOCK_TREE"
+    UNLOCK_PURCHASED = "UNLOCK_PURCHASED"
+    RETIRED = "RETIRED"
+    WORLD_INFO = "WORLD_INFO"
+    CODEX = "CODEX"
+    WORLD_RUMORS = "WORLD_RUMORS"
+    RUMOR_LEARNED = "RUMOR_LEARNED"
     SAVE_EXPORTED = "SAVE_EXPORTED"
     SAVE_IMPORTED = "SAVE_IMPORTED"
     HELP = "HELP"
@@ -171,6 +205,11 @@ AVAILABLE_SYSTEMS: frozenset[str] = frozenset({
 })
 
 
+# Experience needed to convert into one point of Comprehension. Combat, quest,
+# and training rewards all feed the same ``Player.exp`` bank; the engine converts
+# banked exp into comprehension at this rate (which in turn speeds cultivation).
+EXP_PER_COMPREHENSION = 50
+
 # The Dao a brand-new cultivator begins with before any Dao awakening. Must be a
 # valid id in ``data/daos.json`` (pinned by a test).
 DEFAULT_DAO_ID = "sword_dao"
@@ -178,6 +217,28 @@ DEFAULT_DAO_ID = "sword_dao"
 # The free starting origin every new run falls back to when none (or an
 # unaffordable one) is chosen. Must be a valid id in ``data/origins.json``.
 DEFAULT_ORIGIN_ID = "orphan"
+
+# The essence-realm order a run must reach before the player may retire and
+# ascend (C.7). Divine Transformation (order 6) -- past Divine Sea, before the
+# late-game stub realms. Retirement banks the ascension reward and opens endless
+# mode; death and retirement are both valid run-ends.
+ASCENSION_ESSENCE_ORDER = 6
+
+# The act id whose quest completion marks the campaign beaten (D.3).
+CAMPAIGN_FINAL_ACT = "act_three"
+
+# Ancestral Memory banked the moment the campaign's final act completes (D.3):
+# winning the story pays even if the character never retires or dies.
+CAMPAIGN_COMPLETE_BONUS = 150
+
+# Endless-realm treasure pool (D.5): weighted draws fund each depth's hoards.
+# Data lives in constants (not JSON) because it only exists for the post-game.
+ENDLESS_TREASURE_POOL: List[Dict[str, Any]] = [
+    {"item_id": "spirit_stone", "weight": 4},
+    {"item_id": "qi_pill", "weight": 3},
+    {"item_id": "healing_pill", "weight": 3},
+    {"item_id": "talent_refining_elixir", "weight": 1},
+]
 
 # Initial player template. Kept here (rather than hard-coded in the engine) so a
 # future save/character-creation system can supply a different starting sheet.

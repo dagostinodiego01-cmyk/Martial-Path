@@ -39,6 +39,45 @@ def test_action_buy_accepts_quantity_field():
     assert request.model_dump(exclude_none=True) == {"action": "BUY_ITEM", "item_id": "qi_pill", "quantity": 2}
 
 
+def test_action_request_carries_every_dispatch_argument():
+    """Every argument key the engine's dispatch table reads must survive the model.
+
+    A field missing from ActionRequest is silently dropped by pydantic, so the
+    engine receives an empty argument (the "talent elixir upgrade always errors"
+    bug: UPGRADE_TALENT lost ``track``/``target_id`` in transit).
+    """
+    args = {
+        "item_id": "x", "shop_id": "s", "quantity": 1, "skill_id": "k",
+        "method_id": "m", "location_id": "l", "slot": "a", "character_id": "c",
+        "dialogue_choice": "d", "choice_id": "ch", "track": "martial",
+        "target_id": "t", "sect_id": "sec", "trainer_id": "tr", "years": 3,
+        "recipe_id": "r", "dao_id": "dao", "unlock_id": "u", "rumor_id": "ru",
+        "payload": "p", "raw": "raw text",
+    }
+    dumped = ActionRequest(action="STATUS", **args).model_dump(exclude_none=True)
+    for key, value in args.items():
+        assert dumped.get(key) == value, f"ActionRequest dropped field {key!r}"
+
+
+def test_action_upgrade_talent_reaches_engine_end_to_end():
+    """UPGRADE_TALENT through the API layer must carry track/target_id intact."""
+    server.new_game(NewGameRequest(seed=1))
+    server.engine.player.inventory["talent_refining_elixir"] = 3
+    current = server.engine.player.martial_talent_id
+
+    view = server.process_action(ActionRequest(action="TALENTS"))
+    options = view.get("martial_upgrades", [])
+    assert options, "martial talent must have an upgrade path"
+
+    result = server.process_action(
+        ActionRequest(action="UPGRADE_TALENT", track="martial", target_id=options[0]["target_id"])
+    )
+    assert result["event"] != EventType.ERROR, f"upgrade failed: {result.get('reason')}"
+    assert result["event"] == EventType.TALENT_UPGRADED
+    assert server.engine.player.martial_talent_id == options[0]["target_id"]
+    assert server.engine.player.inventory.get("talent_refining_elixir", 0) == 2
+
+
 def test_new_game_resets_state():
     server.process_action(ActionRequest(action="TRAIN"))
     state = server.new_game(NewGameRequest(player_name="Tester", seed=1))

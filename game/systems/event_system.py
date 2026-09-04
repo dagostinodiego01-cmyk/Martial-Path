@@ -48,6 +48,13 @@ class EventSystem:
         self._rng = rng
         self._pools = encounter_pools or {}
         self._find_system = find_system
+        # E.4: seasonal combat bias, refreshed by the engine from the world
+        # simulation (Summer/Autumn draw hostile attention, Winter hides it).
+        self._combat_bias = 1.0
+
+    def set_combat_bias(self, value: float) -> None:
+        """Set the seasonal multiplier applied to the COMBAT encounter weight."""
+        self._combat_bias = max(0.0, float(value))
 
     def generate(self, player: Player, find_rarity_index: Optional[int] = None) -> Dict[str, Any]:
         """Pick and return the next exploration encounter descriptor.
@@ -57,7 +64,9 @@ class EventSystem:
         """
         location_id = getattr(player, "current_location", "") or ""
         pool = self._pools.get(location_id)
-        weights = self._data.get("encounter_weights") or DEFAULT_WEIGHTS
+        weights = dict(self._data.get("encounter_weights") or DEFAULT_WEIGHTS)
+        if self._combat_bias != 1.0 and "COMBAT" in weights:
+            weights["COMBAT"] = float(weights["COMBAT"]) * self._combat_bias
         kind = self._rng.weighted_choice(list(weights.keys()), list(weights.values()))
         if kind == "COMBAT":
             return self._combat_event(pool)

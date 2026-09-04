@@ -34,8 +34,11 @@ class ActionRequest(BaseModel):
 
     ``action`` is required (an ``Action`` name such as ``"TRAIN"``); the rest are
     optional and only sent when relevant (e.g. ``item_id`` for ``USE_ITEM``,
-    ``skill_id`` for ``USE_SKILL``). ``character_id`` / ``dialogue_choice`` are
-    reserved for future systems and are ignored by the engine today.
+    ``track``/``target_id`` for ``UPGRADE_TALENT``). The field list must mirror
+    every key the engine's dispatch table reads (``game/core/engine/dispatch.py``
+    and its mixins) — a missing field here is silently dropped by pydantic and the
+    engine then sees an empty argument (the "talent elixir won't use" bug).
+    ``character_id`` / ``dialogue_choice`` are reserved for future systems.
     """
 
     action: str
@@ -48,6 +51,17 @@ class ActionRequest(BaseModel):
     slot: Optional[str] = None
     character_id: Optional[str] = None
     dialogue_choice: Optional[str] = None
+    choice_id: Optional[str] = None
+    track: Optional[str] = None
+    target_id: Optional[str] = None
+    sect_id: Optional[str] = None
+    trainer_id: Optional[str] = None
+    years: Optional[int] = None
+    recipe_id: Optional[str] = None
+    dao_id: Optional[str] = None
+    unlock_id: Optional[str] = None
+    rumor_id: Optional[str] = None
+    payload: Optional[str] = None
     raw: Optional[str] = None
 
 
@@ -58,6 +72,8 @@ class NewGameRequest(BaseModel):
     seed: Optional[int] = None
     origin_id: Optional[str] = None
     hardcore: bool = True
+    ng_plus: int = 0
+    endless: bool = False
 
 
 class SaveRequest(BaseModel):
@@ -80,8 +96,14 @@ def get_state() -> Dict[str, Any]:
 
 @app.get("/meta")
 def get_meta() -> Dict[str, Any]:
-    """Return the cross-run meta view (Ancestral Memory, chronicle, origins)."""
+    """Return the cross-run meta view (memory, chronicle, origins, unlock tree)."""
     return engine.get_meta_state()
+
+
+@app.post("/unlock")
+def purchase_unlock(request: ActionRequest) -> Dict[str, Any]:
+    """Buy a legacy-tree unlock with Ancestral Memory (C.5)."""
+    return engine.process_action({"action": "UNLOCK", "unlock_id": request.item_id or request.raw or ""})
 
 
 @app.post("/action")
@@ -100,8 +122,18 @@ def new_game(request: NewGameRequest) -> Dict[str, Any]:
         seed=request.seed,
         origin_id=request.origin_id,
         hardcore=request.hardcore,
+        ng_plus=request.ng_plus,
     )
+    # D.5: an endless run resumes the post-game without a fresh campaign.
+    if request.endless:
+        engine._endless = True
     return engine.get_game_state()
+
+
+@app.post("/retire")
+def retire() -> Dict[str, Any]:
+    """Retire an ascension-threshold run and bank the legacy reward (C.7)."""
+    return engine.process_action({"action": "RETIRE_ASSENT"})
 
 
 @app.post("/save")
@@ -125,4 +157,4 @@ def list_saves() -> Dict[str, Any]:
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    uvicorn.run(app, host="127.0.0.1", port=8001)

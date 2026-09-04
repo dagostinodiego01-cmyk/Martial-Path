@@ -109,6 +109,9 @@ class ExplorationMixin:
             spar = self.character_service.can_spar(character_id, self.player)
             if spar.get("allowed") and spar.get("enemy_id"):
                 options.append({"action": Action.SPAR_CHARACTER, "character_id": character_id, "label": "Spar"})
+                # B.7: contests of dao against anyone who would cross blades.
+                options.append({"action": Action.DEBATE_CHARACTER, "character_id": character_id, "label": "Debate"})
+                options.append({"action": Action.OATH_DUEL_CHARACTER, "character_id": character_id, "label": "Oath Duel"})
             duel = self.character_service.can_duel(character_id, self.player)
             if duel.get("allowed") and duel.get("enemy_id"):
                 options.append({"action": Action.DUEL_CHARACTER, "character_id": character_id, "label": "Duel"})
@@ -238,6 +241,7 @@ class ExplorationMixin:
         result = self.travel.travel_to(self.player, location_id)
         if result.get("event") != EventType.TRAVEL_RESULT:
             return result
+        result["max_story_tier"] = self._note_arrival(location_id)
         updates = self.quests.notify("visit_location", self.player, self.inventory, target=location_id)
         if updates:
             result["quest_updates"] = updates

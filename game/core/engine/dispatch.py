@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import Any, Dict
 
-from game.core.constants import Action, EventType, MODE_COMBAT
+from game.core.constants import Action, EventType, MODE_COMBAT, MODE_DEBATE
 from game.core.results import HelpResult, QuitResult
 
 
@@ -40,6 +40,8 @@ class DispatchMixin:
 
         if self._mode == MODE_COMBAT:
             return self._process_combat_action(name, action)
+        if self._mode == MODE_DEBATE:
+            return self._process_debate_action(name, action)
         return self._process_explore_action(name, action)
 
     # -- narrative decoration (A.5) --------------------------------------
@@ -95,6 +97,8 @@ class DispatchMixin:
             Action.TECHNIQUES: lambda action: self._techniques(),
             Action.TALENTS: lambda action: self._talents(),
             Action.DAO_VIEW: lambda action: self._dao_view(),
+            Action.UNLOCK_TREE: lambda action: self._meta_unlock_tree(),
+            Action.CODEX: lambda action: self._codex(),
             Action.HELP: lambda action: HelpResult().to_dict(),
             Action.QUIT: lambda action: self._quit(),
         }
@@ -113,6 +117,9 @@ class DispatchMixin:
             Action.DIALOGUE_CHOOSE: lambda action: self._dialogue_choose(action),
             Action.SPAR_CHARACTER: lambda action: self._start_character_combat(action.get("character_id", ""), "spar"),
             Action.DUEL_CHARACTER: lambda action: self._start_character_combat(action.get("character_id", ""), "duel"),
+            Action.DEBATE_CHARACTER: lambda action: self._start_debate(action.get("character_id", "")),
+            Action.OATH_DUEL_CHARACTER: lambda action: self._start_debate(action.get("character_id", ""), oath=True),
+            Action.WALK_AWAY: lambda action: self._abandon_debate(),
             Action.RECEIVE_BOON: lambda action: self._receive_boon(action.get("character_id", "")),
             Action.BREAKTHROUGH: lambda action: self._advance_time_after(self._after_breakthrough(self.cultivation_service.attempt_body_breakthrough("player")), "body_breakthrough"),
             Action.BODY_BREAKTHROUGH: lambda action: self._advance_time_after(self._after_breakthrough(self.cultivation_service.attempt_body_breakthrough("player")), "body_breakthrough"),
@@ -120,9 +127,9 @@ class DispatchMixin:
             Action.STABILISE_FOUNDATION: lambda action: self._advance_time_after(self._advance_day_after(self.cultivation_service.stabilise_foundation("player")), "stabilise"),
             Action.STABILISE_ESSENCE: lambda action: self._advance_time_after(self._advance_day_after(self.cultivation_service.stabilise_essence("player")), "stabilise_essence"),
             Action.EXPLORE: lambda action: self._explore(),
-            Action.REST: lambda action: self._advance_time_after(self._advance_day_after(self._rest()), "rest"),
-            Action.MEDITATE: lambda action: self._advance_time_after(self._meditate(), "meditate"),
-            Action.TRAVEL: lambda action: self._travel(action.get("location_id", "")),
+            Action.REST: lambda action: self._advance_world_after(self._advance_time_after(self._advance_day_after(self._rest()), "rest"), "rest"),
+            Action.MEDITATE: lambda action: self._advance_world_after(self._advance_time_after(self._meditate(), "meditate"), "meditate"),
+            Action.TRAVEL: lambda action: self._advance_travel_time(self._travel(action.get("location_id", ""))),
             Action.SHOP: lambda action: self.shops.shop_view(self.player, action.get("shop_id", "")),
             Action.BUY_ITEM: lambda action: self._buy_item(action),
             Action.SELL_ITEM: lambda action: self._sell_item(action),
@@ -131,15 +138,21 @@ class DispatchMixin:
             Action.SECTS: lambda action: self.sects.sect_view(self.player, action.get("sect_id", "")),
             Action.JOIN_SECT: lambda action: self._join_sect(action.get("sect_id", "")),
             Action.UPGRADE_TALENT: lambda action: self._upgrade_talent(action.get("track", ""), action.get("target_id", "")),
-            Action.CLOSED_DOOR: lambda action: self._closed_door(action.get("years", 0)),
+            Action.CLOSED_DOOR: lambda action: self._world_after_result_years(self._closed_door(action.get("years", 0))),
             Action.REPAIR_ITEM: lambda action: self._repair_item(action.get("item_id", "")),
-            Action.GATHER: lambda action: self._advance_time_after(self._gather(), "gather"),
+            Action.GATHER: lambda action: self._advance_time_after(self._gather_with_seasons(), "gather"),
             Action.REFINE: lambda action: self._refine(action.get("recipe_id", "")),
             Action.ENTER_REALM: lambda action: self._enter_realm(),
+            Action.ENDLESS_REALM: lambda action: self._endless_realm(),
             Action.REALM_ADVANCE: lambda action: self._realm_advance(),
             Action.REALM_LEAVE: lambda action: self._realm_leave(),
             Action.TOURNAMENT: lambda action: self._tournament(),
             Action.DAO_AWAKEN: lambda action: self._dao_awaken(action.get("dao_id", "")),
+            Action.UNLOCK: lambda action: self._purchase_unlock(action.get("unlock_id", "")),
+            Action.RETIRE_ASSENT: lambda action: self._retire(),
+            Action.WORLD_INFO: lambda action: self._world_info(),
+            Action.WORLD_RUMORS: lambda action: self._world_rumors(),
+            Action.LEARN_RUMOR: lambda action: self._learn_rumor(action.get("rumor_id", "")),
             Action.EXPORT_SAVE: lambda action: self._export_save(),
             Action.IMPORT_SAVE: lambda action: self._import_save(action.get("payload", ""), action.get("slot", "default")),
             Action.SAVE: lambda action: self.save_game(action.get("slot") or "default"),

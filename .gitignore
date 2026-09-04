@@ -23,3 +23,16 @@ frontend-godot/.godot/
 # OS
 .DS_Store
 Thumbs.db
+
+# Runtime logs
+backend_*.log
+
+# Agent session artifacts (machine-local)
+.freebuff/
+.impeccable/
+
+# Ephemeral UI audit output
+tools/captures/
+
+# Freebuff capture galleries
+gallery*.html

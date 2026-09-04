@@ -39,12 +39,22 @@ class CharacterService:
         return self._by_id.get(character_id)
 
     def get_available_characters(self, location_id: str, player: Any) -> List[Dict[str, Any]]:
-        """Return UI-safe briefs for the NPCs anchored to ``location_id``."""
+        """Return UI-safe briefs for the NPCs anchored to ``location_id``.
+
+        Characters carry an optional ``min_story_tier``: they only surface once
+        the player has reached that story tier, so higher-tier world figures do
+        not appear in a fledgling's story. Untagged characters always appear.
+        """
         briefs: List[Dict[str, Any]] = []
+        story_tier = self._story_tier(player)
         for npc_id in self._locations.npc_ids(location_id):
             character = self._by_id.get(npc_id)
-            if character is not None:
-                briefs.append(self._brief(character, player))
+            if character is None:
+                continue
+            required = character.get("min_story_tier")
+            if required is not None and story_tier < int(required):
+                continue
+            briefs.append(self._brief(character, player))
         return briefs
 
     # -- read models ------------------------------------------------------
@@ -174,6 +184,13 @@ class CharacterService:
         return self.available_reward(character_id, player) is not None
 
     # -- internal ---------------------------------------------------------
+    def _story_tier(self, player: Any) -> int:
+        """Return the player's highest reached story tier (fail-open on 0)."""
+        try:
+            return max(1, int(getattr(player, "max_story_tier", 1)))
+        except (TypeError, ValueError):
+            return 1
+
     def _brief(self, character: Dict[str, Any], player: Any) -> Dict[str, Any]:
         hooks = character.get("gameplay_hooks", {})
         return {

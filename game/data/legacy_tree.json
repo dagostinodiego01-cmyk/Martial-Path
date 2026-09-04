@@ -1,0 +1,109 @@
+{
+  "tiers": [
+    {
+      "id": "tier_1_awakening",
+      "display_name": "First Awakening",
+      "required_meta_tier": 0,
+      "unlocks": [
+        {
+          "id": "sect_lin_academy",
+          "kind": "sect",
+          "target_id": "lin_academy",
+          "cost": 15,
+          "description": "The academy's gatekeepers remember your earlier lives; you may enrol from the first breath."
+        },
+        {
+          "id": "sect_seven_profound_valleys",
+          "kind": "sect",
+          "target_id": "seven_profound_valleys",
+          "cost": 25,
+          "description": "The Valleys' hidden roster bears your name, inked in a hand that died long ago."
+        },
+        {
+          "id": "technique_nine_yang_domain",
+          "kind": "technique",
+          "target_id": "nine_yang_domain",
+          "cost": 30,
+          "description": "Muscle memory outlives memory itself: the Nine Yang Domain is yours before you train it."
+        },
+        {
+          "id": "title_dawn_walker",
+          "kind": "title",
+          "target_id": "dawn_walker",
+          "cost": 10,
+          "description": "The markets know the name of one who has walked out of dawn more than once."
+        }
+      ]
+    },
+    {
+      "id": "tier_2_depths",
+      "display_name": "Depths of the Soul",
+      "required_meta_tier": 1,
+      "unlocks": [
+        {
+          "id": "sect_divine_phoenix_island",
+          "kind": "sect",
+          "target_id": "divine_phoenix_island",
+          "cost": 60,
+          "description": "The Island accepts a soul it has burned and reborn before."
+        },
+        {
+          "id": "sect_asura_divine_kingdom",
+          "kind": "sect",
+          "target_id": "asura_divine_kingdom",
+          "cost": 60,
+          "description": "The Kingdom's blood registry already lists your previous incarnation."
+        },
+        {
+          "id": "technique_phoenix_sword_art",
+          "kind": "technique",
+          "target_id": "phoenix_sword_art",
+          "cost": 90,
+          "description": "Feathers of a dead fire settle on your wrist as you wake: the Phoenix Sword Art persists."
+        },
+        {
+          "id": "technique_blood_sea_palm",
+          "kind": "technique",
+          "target_id": "blood_sea_palm",
+          "cost": 90,
+          "description": "The sea of blood remembers every hand that crossed it. Yours included."
+        },
+        {
+          "id": "title_reborn",
+          "kind": "title",
+          "target_id": "reborn",
+          "cost": 40,
+          "description": "Once, you died. It did not take."
+        }
+      ]
+    },
+    {
+      "id": "tier_3_ascendant",
+      "display_name": "Ascendant Echoes",
+      "required_meta_tier": 2,
+      "unlocks": [
+        {
+          "id": "technique_iron_sword_intent",
+          "kind": "technique",
+          "target_id": "iron_sword_intent",
+          "cost": 150,
+          "description": "Intent carved across lifetimes needs no teacher."
+        },
+        {
+          "id": "technique_nether_aura",
+          "kind": "technique",
+          "target_id": "nether_aura",
+          "cost": 150,
+          "description": "The nether aura clings to your soul like a shadow that survived death."
+        },
+        {
+          "id": "title_deathless",
+          "kind": "title",
+          "target_id": "deathless",
+          "cost": 100,
+          "description": "You have died so many times that death has stopped keeping track."
+        }
+      ]
+    }
+  ]
+}

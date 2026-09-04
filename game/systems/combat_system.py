@@ -69,6 +69,12 @@ COMBO_ROLES = ("opening", "response", "finisher")
 COMBO_BONUS_PER_STAGE = 0.25  # damage bonus per completed chain stage (1.25x, 1.5x, 1.75x)
 COMBO_RESET_ROLES = frozenset({"none"})
 
+# Foe AI (B.8): a guarding foe skips its press this round and shelters behind
+# its defense; the player's banked chain stage feeds its own momentum on the
+# foe's next real press.
+FOE_GUARD_DEFENSE_BONUS = 0.5  # +50% effective defense while guarding
+FOE_GUARD_MOMENTUM = 0.25      # the guarded flow banked into the next press
+
 
 class CombatSystem:
     """Resolves individual combat rounds between the player and an enemy."""
@@ -79,12 +85,15 @@ class CombatSystem:
         stats: Optional["StatsSystem"] = None,
         dao: Optional[DaoSystem] = None,
         skills: Optional[Dict[str, Skill]] = None,
+        foe_ai: Optional[Any] = None,
     ) -> None:
         self._rng = rng
         self._stats = stats
         self._dao = dao
         # Technique catalogue (id -> Skill) for combo sequencing (B.6).
         self._skills: Dict[str, Skill] = skills or {}
+        # B.8: the foe-mind consulted each enemy phase (dao/pressure/stances).
+        self.foe_ai = foe_ai
 
     def begin_combat(self, player: Player) -> int:
         """Reset the player's insight pool and combo chain at the start of a fight."""
@@ -264,7 +273,12 @@ class CombatSystem:
         }
 
     def _enemy_phase(self, player: Player, enemy: Enemy, events: List[TurnEvent]) -> None:
-        """Enemy acts (or skips when stunned), then its timed effects tick."""
+        """Enemy acts (or skips when stunned), then its timed effects tick.
+
+        With a foe-mind installed (B.8), dao-carrying foes act on intent --
+        stance chains, counter-graph aggression, and guards against the
+        player's banked flow -- while mooks keep the plain ability/attack roll.
+        """
         stun = enemy.statuses.get("stun")
         if stun:
             events.append({"actor": "ENEMY", "action": "STUNNED", "enemy_name": enemy.name})
@@ -273,6 +287,45 @@ class CombatSystem:
             events.append(self._enemy_act(player, enemy))
         self._tick_enemy_statuses(enemy, events)
         self._tick_player_statuses(player, events)
+
+    def _foe_execute(self, player: Player, enemy: Enemy, intent: Dict[str, Any]) -> TurnEvent:
+        """Execute a B.8 foe intent (technique/ability/attack/guard) as one event."""
+        kind = intent.get("kind")
+        if kind == "technique":
+            skill = self._skills.get(intent.get("skill_id", ""))
+            if skill is not None and skill.is_active():
+                return self._foe_technique(player, enemy, skill)
+            return self._enemy_attack(player, enemy)
+        if kind == "ability":
+            return self._enemy_ability(player, enemy, intent.get("ability", {}))
+        if kind == "guard":
+            # Shelter behind defense; the respected flow banks into the foe's
+            # next press as momentum. Two turns so the same-round status tick
+            # (which expires it once) still leaves the shell up through the
+            # player's next attack.
+            enemy.statuses["guard"] = {"turns": 2, "magnitude": FOE_GUARD_MOMENTUM}
+            return {"actor": "ENEMY", "action": "GUARD", "enemy_name": enemy.name}
+        return self._enemy_attack(player, enemy)
+
+    def _foe_technique(self, player: Player, enemy: Enemy, skill: Skill) -> TurnEvent:
+        """Resolve a foe's active technique with its chain bonus, then bank it."""
+        stage = int(getattr(enemy, "ai_stage", 0))
+        momentum = self._consume_guard_momentum(enemy)
+        multiplier = 1.0 + stage * COMBO_BONUS_PER_STAGE + momentum
+        raw = int(self._enemy_attack_value(enemy) * skill.scaling * multiplier)
+        dealt, _ = self._deal_damage(player, self._enemy_damage(player, enemy, raw))
+        event: TurnEvent = {
+            "actor": "ENEMY",
+            "action": "FOE_TECHNIQUE",
+            "skill": skill.name,
+            "damage": dealt,
+            "target_hp": player.hp,
+            "enemy_name": enemy.name,
+        }
+        if stage > 0:
+            event["combo_stage"] = stage
+        self.foe_ai.advance_ai_stage(enemy, skill.combo_role)
+        return event
 
     def player_stunned_turn(self, player: Player, enemy: Enemy, spar: bool = False) -> Dict[str, Any]:
         """Resolve a round where the player is stunned and must forfeit their turn."""
@@ -288,7 +341,10 @@ class CombatSystem:
         return self._turn(player, enemy, events)
 
     def _enemy_act(self, player: Player, enemy: Enemy) -> TurnEvent:
-        """Choose the enemy's action, preferring a data-driven ability by chance."""
+        """Choose the enemy's action: foe AI intent when installed, else raw rolls."""
+        if self.foe_ai is not None:
+            intent = self.foe_ai.choose_action(player, enemy)
+            return self._foe_execute(player, enemy, intent)
         for ability in enemy.abilities:
             if self._rng.chance(float(ability.get("chance", 0.0))):
                 return self._enemy_ability(player, enemy, ability)
@@ -313,7 +369,9 @@ class CombatSystem:
         return self._enemy_attack(player, enemy)
 
     def _enemy_attack(self, player: Player, enemy: Enemy) -> TurnEvent:
-        dealt, _ = self._deal_damage(player, self._enemy_damage(player, enemy, self._enemy_attack_value(enemy)))
+        momentum = self._consume_guard_momentum(enemy)
+        raw = int(self._enemy_attack_value(enemy) * (1.0 + momentum))
+        dealt, _ = self._deal_damage(player, self._enemy_damage(player, enemy, raw))
         event: TurnEvent = {
             "actor": "ENEMY",
             "action": "ATTACK",
@@ -465,7 +523,7 @@ class CombatSystem:
     def _player_damage(self, player: Player, enemy: Enemy, raw: int, ignore_defense: bool = False) -> int:
         """Player's attack value scaled by realm pressure and Dao matchup."""
         attack = int(raw * self._offense_scale(player, enemy, True))
-        defense = 0 if ignore_defense else int(self._enemy_defense_value(enemy) * self._defense_scale(player, enemy, False))
+        defense = 0 if ignore_defense else int(self._enemy_defense_with_guard(enemy) * self._defense_scale(player, enemy, False))
         return self._damage(attack, defense)
 
     def _enemy_damage(self, player: Player, enemy: Enemy, raw: int) -> int:
@@ -528,6 +586,19 @@ class CombatSystem:
         if debuff:
             return int(enemy.attack / debuff["magnitude"])
         return enemy.attack
+
+    def _enemy_defense_with_guard(self, enemy: Enemy) -> int:
+        """Enemy defense with the B.8 guard bonus applied (a guarding foe is hard to move)."""
+        guard = enemy.statuses.get("guard")
+        bonus = float(guard["magnitude"]) if guard else 0.0
+        return int(self._enemy_defense_value(enemy) * (1.0 + max(0.0, bonus) / FOE_GUARD_MOMENTUM * FOE_GUARD_DEFENSE_BONUS))
+
+    def _consume_guard_momentum(self, enemy: Enemy) -> float:
+        """Consume a banked guard's momentum (the respected flow) into a press."""
+        guard = enemy.statuses.pop("guard", None)
+        if guard:
+            return float(guard.get("magnitude", 0.0))
+        return 0.0
 
     def _enemy_defense_value(self, enemy: Enemy) -> int:
         """Enemy defense after any ``debuff_defense`` status."""
