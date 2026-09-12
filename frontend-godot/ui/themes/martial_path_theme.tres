@@ -1,27 +1,19 @@
-[gd_resource type="Theme" load_steps=19 format=3 uid="uid://cledi3l318h2l"]
+[gd_resource type="Theme" format=3 uid="uid://cledi3l318h2l"]
 
-[ext_resource type="FontFile" path="res://ui/fonts/Cinzel.ttf" id="1"]
-[ext_resource type="FontFile" path="res://ui/fonts/AlegreyaSans-Regular.ttf" id="2"]
-[ext_resource type="FontFile" path="res://ui/fonts/AlegreyaSans-Medium.ttf" id="3"]
-[ext_resource type="FontFile" path="res://ui/fonts/AlegreyaSans-Bold.ttf" id="4"]
+[ext_resource type="FontFile" uid="uid://bmqcd240kueqa" path="res://ui/fonts/AlegreyaSans-Regular.ttf" id="2"]
+[ext_resource type="FontFile" uid="uid://bom20kwpv3762" path="res://ui/fonts/AlegreyaSans-Bold.ttf" id="4"]
 
-[sub_resource type="FontVariation" id="display_font"]
-base_font = ExtResource("1")
-
-[sub_resource type="SystemFont" id="mono_font"]
-font_names = PackedStringArray("Consolas", "DejaVu Sans Mono", "monospace")
-
-[sub_resource type="StyleBoxFlat" id="button_normal"]
+[sub_resource type="StyleBoxFlat" id="button_disabled"]
 content_margin_left = 14.0
 content_margin_top = 8.0
 content_margin_right = 14.0
 content_margin_bottom = 8.0
-bg_color = Color(0.129, 0.114, 0.086, 1)
+bg_color = Color(0.098, 0.09, 0.071, 1)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
-border_color = Color(0.36, 0.292, 0.161, 1)
+border_color = Color(0.204, 0.18, 0.133, 1)
 corner_radius_top_left = 2
 corner_radius_top_right = 2
 corner_radius_bottom_right = 2
@@ -43,6 +35,22 @@ corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 
+[sub_resource type="StyleBoxFlat" id="button_normal"]
+content_margin_left = 14.0
+content_margin_top = 8.0
+content_margin_right = 14.0
+content_margin_bottom = 8.0
+bg_color = Color(0.129, 0.114, 0.086, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.36, 0.292, 0.161, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
 [sub_resource type="StyleBoxFlat" id="button_pressed"]
 content_margin_left = 14.0
 content_margin_top = 8.0
@@ -59,22 +67,6 @@ corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 
-[sub_resource type="StyleBoxFlat" id="button_disabled"]
-content_margin_left = 14.0
-content_margin_top = 8.0
-content_margin_right = 14.0
-content_margin_bottom = 8.0
-bg_color = Color(0.098, 0.09, 0.071, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.204, 0.18, 0.133, 1)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
-
 [sub_resource type="StyleBoxFlat" id="panel"]
 content_margin_left = 16.0
 content_margin_top = 14.0
@@ -86,29 +78,13 @@ border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
 border_color = Color(0.294, 0.239, 0.137, 1)
-corner_radius_top_left = 0
-corner_radius_top_right = 0
-corner_radius_bottom_right = 0
-corner_radius_bottom_left = 0
 
-[sub_resource type="StyleBoxFlat" id="popup_panel"]
-content_margin_left = 18.0
-content_margin_top = 16.0
-content_margin_right = 18.0
-content_margin_bottom = 16.0
-bg_color = Color(0.122, 0.102, 0.078, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.788, 0.635, 0.302, 1)
-corner_radius_top_left = 0
-corner_radius_top_right = 0
-corner_radius_bottom_right = 0
-corner_radius_bottom_left = 0
-shadow_color = Color(0, 0, 0, 0.55)
-shadow_size = 28
-shadow_offset = Vector2(0, 8)
+[sub_resource type="StyleBoxFlat" id="menu_hover"]
+content_margin_left = 10.0
+content_margin_top = 4.0
+content_margin_right = 10.0
+content_margin_bottom = 4.0
+bg_color = Color(0.216, 0.18, 0.122, 1)
 
 [sub_resource type="StyleBoxFlat" id="menu_panel"]
 content_margin_left = 6.0
@@ -121,24 +97,24 @@ border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
 border_color = Color(0.788, 0.635, 0.302, 1)
-corner_radius_top_left = 0
-corner_radius_top_right = 0
-corner_radius_bottom_right = 0
-corner_radius_bottom_left = 0
 shadow_color = Color(0, 0, 0, 0.55)
 shadow_size = 18
 shadow_offset = Vector2(0, 6)
 
-[sub_resource type="StyleBoxFlat" id="menu_hover"]
-content_margin_left = 10.0
-content_margin_top = 4.0
-content_margin_right = 10.0
-content_margin_bottom = 4.0
-bg_color = Color(0.216, 0.18, 0.122, 1)
-border_width_left = 0
-border_width_top = 0
-border_width_right = 0
-border_width_bottom = 0
+[sub_resource type="StyleBoxFlat" id="popup_panel"]
+content_margin_left = 18.0
+content_margin_top = 16.0
+content_margin_right = 18.0
+content_margin_bottom = 16.0
+bg_color = Color(0.122, 0.102, 0.078, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.788, 0.635, 0.302, 1)
+shadow_color = Color(0, 0, 0, 0.55)
+shadow_size = 28
+shadow_offset = Vector2(0, 8)
 
 [sub_resource type="StyleBoxFlat" id="bar_background"]
 bg_color = Color(0.067, 0.055, 0.039, 1)
@@ -147,27 +123,18 @@ border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
 border_color = Color(0.294, 0.239, 0.137, 1)
-corner_radius_top_left = 0
-corner_radius_top_right = 0
-corner_radius_bottom_right = 0
-corner_radius_bottom_left = 0
 
 [sub_resource type="StyleBoxFlat" id="bar_fill"]
 bg_color = Color(0.788, 0.635, 0.302, 1)
-corner_radius_top_left = 0
-corner_radius_top_right = 0
-corner_radius_bottom_right = 0
-corner_radius_bottom_left = 0
 
-[sub_resource type="StyleBoxFlat" id="scroll_grabber"]
-bg_color = Color(0.36, 0.292, 0.161, 1)
-corner_radius_top_left = 0
-corner_radius_top_right = 0
-corner_radius_bottom_right = 0
-corner_radius_bottom_left = 0
+[sub_resource type="SystemFont" id="mono_font"]
+font_names = PackedStringArray("Consolas", "DejaVu Sans Mono", "monospace")
 
 [sub_resource type="StyleBoxFlat" id="scroll_track"]
 bg_color = Color(0.067, 0.055, 0.039, 1)
+
+[sub_resource type="StyleBoxFlat" id="scroll_grabber"]
+bg_color = Color(0.36, 0.292, 0.161, 1)
 
 [resource]
 default_font = ExtResource("2")
@@ -199,13 +166,13 @@ PopupPanel/styles/panel = SubResource("popup_panel")
 ProgressBar/styles/background = SubResource("bar_background")
 ProgressBar/styles/fill = SubResource("bar_fill")
 RichTextLabel/colors/default_color = Color(0.906, 0.871, 0.792, 1)
-RichTextLabel/fonts/normal_font = ExtResource("2")
 RichTextLabel/fonts/bold_font = ExtResource("4")
 RichTextLabel/fonts/italics_font = ExtResource("2")
 RichTextLabel/fonts/mono_font = SubResource("mono_font")
+RichTextLabel/fonts/normal_font = ExtResource("2")
 ScrollContainer/styles/focus = SubResource("scroll_track")
-TooltipPanel/styles/panel = SubResource("menu_panel")
 TooltipLabel/colors/font_color = Color(0.906, 0.871, 0.792, 1)
+TooltipPanel/styles/panel = SubResource("menu_panel")
 VScrollBar/styles/grabber = SubResource("scroll_grabber")
 VScrollBar/styles/grabber_highlight = SubResource("scroll_grabber")
 VScrollBar/styles/grabber_pressed = SubResource("scroll_grabber")
