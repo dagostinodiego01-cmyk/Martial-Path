@@ -22,7 +22,6 @@ config/icon="res://icon.png"
 [autoload]
 
 Backend="*res://scripts/BackendLauncher.gd"
-_mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 
 [display]
 
