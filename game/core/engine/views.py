@@ -6,6 +6,8 @@ from typing import Any, Dict, List, Optional
 from game.core.constants import EventType, MODE_COMBAT
 
 from game.systems.combat_system import COMBO_ROLES
+from game.systems.skill_system import GROWTH_PASSIVE_EFFECTS
+from game.systems.stats_system import STAT_PASSIVE_EFFECTS
 
 
 # Human-readable labels for each skill effect, used by the Techniques tab so the
@@ -39,17 +41,10 @@ EFFECT_LABELS: Dict[str, str] = {
     "cultivation_speed": "Cultivation Speed",
 }
 
-# Passive effects that always-on modify combat stats (see ``StatsSystem``).
-_STAT_PASSIVE_EFFECTS = frozenset({
-    "buff_attack", "buff_defense", "buff_max_hp", "buff_max_qi",
-    "buff_speed", "buff_evasion", "crit_chance", "crit_damage",
-    "hp_regen", "qi_regen", "qi_cost_reduction",
-})
-
-# Passive effects resolved once at learn time (``SkillSystem`` / cultivation).
-_GROWTH_PASSIVE_EFFECTS = frozenset({
-    "comprehension_gain", "lifespan", "cultivation_speed",
-})
+# Passive effect vocabularies live in the systems that honour them (single
+# source of truth, shared with the dead-content sweep).
+_STAT_PASSIVE_EFFECTS = STAT_PASSIVE_EFFECTS
+_GROWTH_PASSIVE_EFFECTS = GROWTH_PASSIVE_EFFECTS
 
 
 class ViewsMixin:

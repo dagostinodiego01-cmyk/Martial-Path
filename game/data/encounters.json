@@ -1,0 +1,200 @@
+{
+  "options": {
+    "fight": {"label": "Fight", "hint": "Meet them blade to blade."},
+    "talk": {"label": "Talk", "hint": "Try words before blows."},
+    "sneak": {"label": "Sneak", "hint": "Slip past unseen, if the ground allows it."},
+    "pay": {"label": "Pay Toll", "hint": "Buy passage with coin."},
+    "observe": {"label": "Observe", "hint": "Study the scene first. Reward is information; the cost may be surprise."},
+    "withdraw": {"label": "Withdraw", "hint": "Back away and let them keep the road."},
+    "take": {"label": "Take It", "hint": "Reach for the find."},
+    "examine": {"label": "Examine", "hint": "Study the find for wards and craft before you touch it."},
+    "leave": {"label": "Leave It", "hint": "Walk on. Some gifts are bait."},
+    "accept": {"label": "Accept", "hint": "Open yourself to what waits here."},
+    "study": {"label": "Study", "hint": "Learn what you can before you commit."},
+    "decline": {"label": "Decline", "hint": "Refuse the offer and move on."},
+    "push": {"label": "Push Through", "hint": "Endure it and keep walking."},
+    "defuse": {"label": "Find a Way", "hint": "Spend the time to read a safe path."},
+    "move_on": {"label": "Move On", "hint": "Continue your journey."}
+  },
+  "parley": {
+    "base_chance": 0.65,
+    "power_penalty": 0.35,
+    "comprehension_bonus": 0.01,
+    "reputation_bonus": 0.012,
+    "min_chance": 0.05,
+    "max_chance": 0.95,
+    "success_exp_ratio": 0.5,
+    "success_reputation": 1,
+    "offend_ambush_chance": 0.35
+  },
+  "sneak": {
+    "base_chance": 0.6,
+    "power_penalty": 0.4,
+    "comprehension_bonus": 0.015,
+    "min_chance": 0.05,
+    "max_chance": 0.95,
+    "cache_chance": 0.35,
+    "escape_exp": 3
+  },
+  "bribe": {
+    "currency": "gold",
+    "base_chance": 0.75,
+    "power_penalty": 0.25,
+    "min_chance": 0.05,
+    "max_chance": 0.95,
+    "power_per_coin": 5,
+    "min_cost": 8,
+    "max_cost": 400,
+    "refuse_tags": ["mindless"]
+  },
+  "observe": {
+    "insight_base": 1,
+    "insight_per_comprehension": 6,
+    "insight_cap": 6,
+    "provoke_chance": 0.22
+  },
+  "ambush": {
+    "chance_by_danger": [0.0, 0.06, 0.12, 0.18, 0.24, 0.3, 0.34, 0.38, 0.42, 0.46, 0.5],
+    "strike_multiplier": 1.0
+  },
+  "formation": {
+    "chance_by_danger": [0.0, 0.1, 0.18, 0.24, 0.3, 0.34, 0.38, 0.42, 0.46, 0.5, 0.54],
+    "max_extra_foes": 2,
+    "pack_stat_scale": 0.6,
+    "pack_exp_ratio": 0.5,
+    "pack_loot_ratio": 0.35,
+    "pack_press_multiplier": 0.5,
+    "max_pack_presses": 2
+  },
+  "encounter": {
+    "hazard_chance_by_danger": [0.0, 0.08, 0.12, 0.16, 0.2, 0.24, 0.28, 0.32, 0.36, 0.4, 0.44],
+    "trapped_loot_chance": 0.3
+  },
+  "mindless": {
+    "ids": [
+      "iron_wolf",
+      "forest_horned_boar",
+      "corpse_demon",
+      "shrine_bone_thrall",
+      "grave_mist_wraith",
+      "black_pine_serpent",
+      "mist_jaw_leopard",
+      "venom_asp",
+      "cave_bat_swarm",
+      "blood_mad_ape"
+    ],
+    "note": "Foes that cannot be talked down or bribed; parley and toll options are withheld for them."
+  },
+  "hazards": [
+    {
+      "id": "unstable_ground",
+      "name": "Unstable Ground",
+      "text": "The path is a thin crust over a hollow, and something below is breathing.",
+      "min_danger": 1,
+      "effect": {"type": "damage", "magnitude": 12, "per_danger": 0.18},
+      "push_base_chance": 0.55,
+      "defuse_base_chance": 0.5,
+      "comprehension_bonus": 0.015,
+      "reward": {"exp": 6, "per_danger": 1.5},
+      "defuse_reward": {"exp": 14, "insight": 2}
+    },
+    {
+      "id": "qi_miasma",
+      "name": "Stagnant Qi Miasma",
+      "text": "The air hangs grey and sweet; the qi here has curdled, and your meridians want to close.",
+      "min_danger": 2,
+      "effect": {"type": "damage", "magnitude": 16, "per_danger": 0.2},
+      "push_base_chance": 0.5,
+      "defuse_base_chance": 0.45,
+      "comprehension_bonus": 0.015,
+      "reward": {"exp": 8, "per_danger": 1.5},
+      "defuse_reward": {"exp": 18, "insight": 2}
+    },
+    {
+      "id": "spirit_vortex",
+      "name": "Rogue Spirit Vortex",
+      "text": "Loose spirit energy has knotted into a slow whirl that pulls at your qi with every breath.",
+      "min_danger": 3,
+      "effect": {"type": "damage", "magnitude": 20, "per_danger": 0.22},
+      "push_base_chance": 0.45,
+      "defuse_base_chance": 0.4,
+      "comprehension_bonus": 0.02,
+      "reward": {"exp": 10, "per_danger": 2},
+      "defuse_reward": {"exp": 22, "insight": 3, "progress": 4}
+    },
+    {
+      "id": "frozen_ford",
+      "name": "Frozen Ford",
+      "text": "Black water runs fast under a skin of ice that has not decided whether to hold.",
+      "min_danger": 2,
+      "effect": {"type": "damage", "magnitude": 14, "per_danger": 0.2},
+      "push_base_chance": 0.55,
+      "defuse_base_chance": 0.5,
+      "comprehension_bonus": 0.015,
+      "reward": {"exp": 7, "per_danger": 1.5},
+      "defuse_reward": {"exp": 16, "insight": 2}
+    },
+    {
+      "id": "grave_mist",
+      "name": "Grave Mist",
+      "text": "Corpse-mist rolls low across the ground, and shapes you would rather not name move inside it.",
+      "min_danger": 4,
+      "effect": {"type": "damage", "magnitude": 24, "per_danger": 0.24},
+      "push_base_chance": 0.45,
+      "defuse_base_chance": 0.4,
+      "comprehension_bonus": 0.02,
+      "reward": {"exp": 12, "per_danger": 2},
+      "defuse_reward": {"exp": 24, "insight": 3}
+    },
+    {
+      "id": "sword_qi_scar",
+      "name": "Ancestral Sword Qi",
+      "text": "A scar of old sword qi crosses the ground here, still cutting at anything that comes too close.",
+      "min_danger": 5,
+      "effect": {"type": "damage", "magnitude": 28, "per_danger": 0.26},
+      "push_base_chance": 0.4,
+      "defuse_base_chance": 0.38,
+      "comprehension_bonus": 0.02,
+      "reward": {"exp": 14, "per_danger": 2},
+      "defuse_reward": {"exp": 30, "insight": 4}
+    },
+    {
+      "id": "leyline_flare",
+      "name": "Leyline Flare",
+      "text": "A vein of the world's own current surfaces here in slow pulses of white fire.",
+      "min_danger": 6,
+      "effect": {"type": "damage", "magnitude": 34, "per_danger": 0.3},
+      "push_base_chance": 0.38,
+      "defuse_base_chance": 0.35,
+      "comprehension_bonus": 0.02,
+      "reward": {"exp": 16, "per_danger": 2.5},
+      "defuse_reward": {"exp": 36, "insight": 4, "progress": 6}
+    }
+  ],
+  "traps": [
+    {
+      "id": "needle_ward",
+      "name": "Needle Ward",
+      "text": "Hair-fine needles slicked with something dark ring the find.",
+      "effect": {"type": "damage", "magnitude": 10, "per_danger": 0.16}
+    },
+    {
+      "id": "bait_beast",
+      "name": "Placed Bait",
+      "text": "The bait is laid too neatly for a dead man's luck. Something set this here.",
+      "effect": {"type": "damage", "magnitude": 14, "per_danger": 0.2}
+    },
+    {
+      "id": "sealed_qi",
+      "name": "Sealed Qi",
+      "text": "A sealed packet of qi sits under the prize, waiting on a hand to break the seal.",
+      "effect": {"type": "damage", "magnitude": 18, "per_danger": 0.22}
+    },
+    {
+      "id": "soul_snare",
+      "name": "Soul Snare",
+      "text": "Fine grey script circles the find -- a snare meant for the greedy.",
+      "effect": {"type": "damage", "magnitude": 22, "per_danger": 0.24}
+    }
+  ]
+}

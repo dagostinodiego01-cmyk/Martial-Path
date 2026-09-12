@@ -18,6 +18,14 @@ from game.core.results import SkillLearnedResult
 from game.models.player import Player
 from game.models.skill import Skill
 
+# The canonical vocabulary of passive effects resolved once, at learn time
+# (see :meth:`SkillSystem._apply_passive_on_learn`). ``cultivation_speed`` is
+# read continuously by CultivationSystem but declared here because it needs no
+# always-on stat recomputation. The dead-content sweep (ROADMAP G.2) fails the
+# build on a passive whose effect is in neither this set nor
+# ``stats_system.STAT_PASSIVE_EFFECTS``.
+GROWTH_PASSIVE_EFFECTS = frozenset({"comprehension_gain", "lifespan", "cultivation_speed"})
+
 
 class SkillSystem:
     """Validates and records the techniques a player has learned."""

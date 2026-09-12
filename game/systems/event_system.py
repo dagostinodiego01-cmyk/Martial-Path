@@ -15,6 +15,8 @@ Returned descriptors:
 * ``COMBAT``         — ``{"enemy_id", "text"}``
 * ``LOOT``           — ``{"item_id", "count"}``
 * ``SPECIAL``        — ``{"special_id", "text", "effect"}``
+* ``HAZARD``         — ``{"hazard_id"}`` (the land itself; ``""`` lets the
+  encounter layer draw from the global hazard catalogue)
 * ``EXPLORE_RESULT`` — a quiet "nothing happened" outcome
 """
 from __future__ import annotations
@@ -28,7 +30,7 @@ from game.utils.rng import RNG
 if TYPE_CHECKING:
     from game.systems.find_system import FindSystem
 
-DEFAULT_WEIGHTS = {"COMBAT": 0.5, "LOOT": 0.25, "SPECIAL": 0.15, "NOTHING": 0.10}
+DEFAULT_WEIGHTS = {"COMBAT": 0.5, "LOOT": 0.25, "SPECIAL": 0.15, "HAZARD": 0.0, "NOTHING": 0.10}
 
 
 class EventSystem:
@@ -74,6 +76,8 @@ class EventSystem:
             return self._loot_event(pool, find_rarity_index)
         if kind == "SPECIAL":
             return self._special_event(pool)
+        if kind == "HAZARD":
+            return self._hazard_event(pool)
         return self._nothing("You roam the misty wilds but encounter nothing of note.")
 
     # -- internal helpers -------------------------------------------------
@@ -145,6 +149,22 @@ class EventSystem:
             "text": special.get("text", ""),
             "effect": special.get("effect", {}),
         }
+
+    def _hazard_event(self, pool: Optional[Dict[str, Any]]) -> Dict[str, Any]:
+        """Surface hazardous ground, preferring the location's own hazard list.
+
+        An empty ``hazard_id`` is a deliberate hand-off: the encounter layer owns
+        the hazard catalogue (magnitudes, checks, rewards), so it draws the
+        actual hazard, while selection stays with the event system.
+        """
+        entries = (pool or {}).get("hazards")
+        if entries:
+            hazard_id = self._rng.weighted_choice(
+                [entry["hazard_id"] for entry in entries],
+                [entry.get("weight", 1) for entry in entries],
+            )
+            return {"event": EventType.HAZARD, "hazard_id": str(hazard_id)}
+        return {"event": EventType.HAZARD, "hazard_id": ""}
 
     def _nothing(self, text: str) -> Dict[str, Any]:
         return {"event": EventType.EXPLORE_RESULT, "kind": "NOTHING", "text": text}

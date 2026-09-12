@@ -1,8 +1,9 @@
 {
   "encounter_weights": {
-    "COMBAT": 0.5,
-    "LOOT": 0.25,
-    "SPECIAL": 0.15,
+    "COMBAT": 0.45,
+    "LOOT": 0.2,
+    "SPECIAL": 0.13,
+    "HAZARD": 0.12,
     "NOTHING": 0.1
   },
   "character_encounter_chance": 0.35,

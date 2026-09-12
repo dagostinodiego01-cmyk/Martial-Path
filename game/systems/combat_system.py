@@ -41,6 +41,28 @@ if TYPE_CHECKING:
 
 TurnEvent = Dict[str, Any]
 
+# The canonical vocabulary of *implemented* active-technique effects. Each name
+# has a branch in :meth:`CombatSystem._apply_active_skill`; anything else falls
+# through to a ``no_combat_effect`` note, which would make the technique a trap
+# option. The dead-content sweep (ROADMAP G.2) fails the build on such skills,
+# and ``tests/test_dead_content.py`` proves every member here really resolves.
+SUPPORTED_ACTIVE_EFFECTS = frozenset(
+    {
+        "damage",
+        "true_damage",
+        "aoe_damage",
+        "execute",
+        "life_steal",
+        "heal_self",
+        "stun",
+        "dot_damage",
+        "shield",
+        "counter",
+        "debuff_attack",
+        "debuff_defense",
+    }
+)
+
 # Timed-effect durations (turns). No duration lives in skill data, so these are
 # fixed. Re-tune or move into data if the effect ladder needs per-skill control.
 DOT_TURNS = 3
@@ -202,6 +224,9 @@ class CombatSystem:
         if effect in ("debuff_attack", "debuff_defense"):
             self._apply_status(enemy, effect, DEBUFF_TURNS, skill.scaling)
             return [{"actor": "PLAYER", "action": "SKILL", "skill": skill.name, "debuff": effect, "turns": DEBUFF_TURNS}]
+        # Effect named in data but not implemented: the technique is inert. Kept
+        # as a note (not an error) so combat never crashes on stale content, but
+        # the dead-content sweep treats reaching this line as a data failure.
         return [{"actor": "PLAYER", "action": "SKILL", "skill": skill.name, "note": "no_combat_effect"}]
 
     def _hit(

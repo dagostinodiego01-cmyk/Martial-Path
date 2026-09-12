@@ -19,6 +19,10 @@ MODE_EXPLORE = "explore"
 MODE_COMBAT = "combat"
 # A dao debate (B.7): a non-lethal contest of conviction with its own stances.
 MODE_DEBATE = "debate"
+# A rolled-but-unresolved exploration encounter awaiting the player's choice
+# (fight / talk / sneak / pay / observe / withdraw). Exploration is a decision
+# prompt, not an instant outcome, while this mode is active.
+MODE_ENCOUNTER = "encounter"
 
 # Spirit-oath duel stakes (B.7). Winning banks the wager at this multiple;
 # losing costs the exp/gold fractions; breaching (walking away) forfeits the
@@ -40,6 +44,11 @@ class Action(StrEnum):
     TRAIN_BODY = "TRAIN_BODY"
     TRAIN_ESSENCE = "TRAIN_ESSENCE"
     EXPLORE = "EXPLORE"
+    # Resolve the pending exploration encounter with one of its offered choices
+    # (``choice_id``). The only turn-consuming action valid in MODE_ENCOUNTER.
+    ENCOUNTER_CHOICE = "ENCOUNTER_CHOICE"
+    # B.9 formations: focus the current fight on one foe of a multi-enemy group.
+    TARGET_FOE = "TARGET_FOE"
     STATUS = "STATUS"
     INVENTORY = "INVENTORY"
     SHOP = "SHOP"
@@ -130,6 +139,10 @@ class EventType(StrEnum):
     SECTS = "SECTS"
     SECT_JOINED = "SECT_JOINED"
     EXPLORE_RESULT = "EXPLORE_RESULT"
+    # A pending exploration encounter, carrying the choices the player may take.
+    ENCOUNTER = "ENCOUNTER"
+    # The outcome of one encounter choice that did not start combat.
+    ENCOUNTER_RESULT = "ENCOUNTER_RESULT"
     COMBAT = "COMBAT"
     COMBAT_TURN = "COMBAT_TURN"
     COMBAT_END = "COMBAT_END"

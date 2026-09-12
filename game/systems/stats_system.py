@@ -27,6 +27,25 @@ from game.models.skill import Skill
 
 DEFAULT_CRIT_MULTIPLIER = 2.0
 
+# The canonical vocabulary of passive effects that modify combat stats here.
+# ``views.py`` labels them for the Techniques tab and the dead-content sweep
+# (ROADMAP G.2) fails the build on a passive outside the stat/growth sets.
+STAT_PASSIVE_EFFECTS = frozenset(
+    {
+        "buff_attack",
+        "buff_defense",
+        "buff_max_hp",
+        "buff_max_qi",
+        "buff_speed",
+        "buff_evasion",
+        "crit_chance",
+        "crit_damage",
+        "hp_regen",
+        "qi_regen",
+        "qi_cost_reduction",
+    }
+)
+
 
 class StatsSystem:
     """Derives effective stats from base stats and passive skills."""
