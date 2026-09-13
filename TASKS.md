@@ -194,17 +194,34 @@ test coverage, which is how a crash-on-startup shipped.
   re-run. `done:` validator 0 errors; `pytest -q` 0 failures; report exits 0.
 - **T.2** Commit the Godot refresh-crash fix plus
   `tests/test_godot_state_contract.py`. `done:` both in HEAD.
-- **T.3** `tools/refresh_docs.py` writes test/validator/content counts into
-  `handover.md`; a test fails when they drift. `done:` no hand-typed count in docs.
-- **T.4** Promote the ad-hoc auto-player to `tools/playthrough_report.py`: N
-  deterministic fresh runs reporting survival, actions/time-to-realm, income vs
-  sinks, dao win-rate spread, dead-action rate. `done:` one command, CI-runnable,
-  stable across repeats.
-- **T.5** A Godot smoke suite (`frontend-godot/tests/`) covering: state refresh
-  with `enemy: null` and `encounter: null`, every tab open/close, and every
-  `EventType` render branch. `done:` suite runs via the MCP `test_run` tool.
-- **T.6** Determinism replay test: a seed + recorded action log reproduces
-  identical state. `done:` passes for 20 recorded logs.
+- **T.3 — ✅ DONE** `tools/refresh_docs.py` writes test/validator/content counts into
+  `handover.md` between `refresh_docs` markers; `tests/test_docs_freshness.py`
+  fails when the block drifts *and* when a hand-typed count reappears in the live
+  part of the document (dated history sections are exempt). `done:` no hand-typed
+  count in docs -- the three that remained were rewritten and the block carries
+  all thirteen.
+- **T.4 — ✅ DONE** `tools/playthrough_report.py` plays N seeded runs with a
+  deterministic policy and reports survival, actions to the first realm and to
+  story tier 2, gold/stone income vs sinks, the per-dao win-rate spread, and the
+  dead-action rate with its top refusal reasons. `--json` for CI,
+  `--max-dead-rate` to fail a build, `--dao a,b` for the balance spread,
+  `--record <dir>` to write replay logs. `done:` one command, CI-runnable, and
+  byte-identical across repeats (`tests/test_playthrough_report.py` pins it).
+- **T.5 — ✅ DONE** `frontend-godot/tests/SmokeRunner.tscn` + `SmokeRunner.gd`
+  cover a refresh with `enemy: null` and `encounter: null`, a repeat refresh, a
+  combat and an encounter refresh, every tab opened and closed, and one render of
+  every result payload a real run produced (written by
+  `tests/test_godot_smoke.py` from a seeded playthrough). It runs as a *scene*
+  rather than a `-s` script, because `-s` has no autoload context and
+  `MainController.gd` cannot even compile there. The `EventType` arm contract
+  stays with `tests/test_godot_event_coverage.py` (U.2), which reads the match
+  tables; the smoke suite proves the arms survive real payloads. `done:` executed
+  against Godot 4.7 locally -- 5 tabs, 13 event payloads, 0 failures.
+- **T.6 — ✅ DONE** `tests/test_determinism_replay.py` replays the twenty logs in
+  `tests/fixtures/replay_logs/` (recorded by the T.4 tool) on fresh engines and
+  asserts both the event sequence and the final state digest match. Includes a
+  negative control: a tampered log must fail to reproduce. `done:` 20 logs, each
+  replaying bit-for-bit.
 
 ### F — First-run experience (3 → 10)
 
@@ -466,7 +483,13 @@ rebuilt per refresh, 100-row ledger, `BOON` unrendered.
 
 ### V — Validation & content hygiene (9 → 10)
 
-- **V.1** Gate green and running in CI (validator + dead-content sweep).
+- **V.1 — ✅ DONE** `.github/workflows/ci.yml` runs the gate on every push and pull
+  request: the engine job runs the suite, `validate_all_game_data()`, the
+  dead-content sweep, `tools/refresh_docs.py --check` and the playthrough report
+  with a dead-action budget; the Godot job installs Godot 4.7, imports the
+  project and runs the panel, shell-smoke, event-coverage and state-contract
+  checks. Every `run:` block was verified locally (YAML parse, `bash -n`, and the
+  Godot selection executed against a real Godot 4.7 binary).
 - **V.2** Reachability graph test per content type (largely built — keep it honest
   as content grows).
 - **V.3** Zero trap classes; find-only is a declared tier.
@@ -548,7 +571,7 @@ rebuilt per refresh, 100-row ledger, `BOON` unrendered.
 | 1 | **L3 Funnel & encounters** | F.1, E.4, E.5, E.6, V.4 | `game/data/encounters.json`, `game/data/encounter_pools.json`, `game/data/enemies/random_enemies.json`, `game/data/events.json`, `game/systems/encounter_system.py`, `tools/seed_enemy_pools.py`, `tests/test_encounters.py` | S2 |
 | 1 | **L4 Economy & alchemy** | EC.2, EC.4, EC.5, A.1, A.3, A.4 | `game/data/{shops,items,gathering}.json`, `game/systems/{shop,sell,alchemy}_system.py`, `game/utils/economy_balance.py`, `tools/economy_*.py`, `tools/seed_world_content.py`, `tests/test_shop_system.py`, `tests/test_sell_system.py`, `tests/test_alchemy.py`, `tests/test_economy_balance.py` | S2 |
 | 1 | **L5 Narrative & prose** | N.1, N.3, N.5, E.3 | `game/data/narrative_templates.json`, `game/data/lore_glossary.json`, `game/systems/narrative_system.py`, `game/core/engine/encounters.py` (prose only), `game/validation/narrative_lint.py`, `tests/test_narrative_*.py` | S2 |
-| 1 | **L6 Harness & CI** (enabler) | T.3, T.4, T.5, T.6, V.1 | `tools/*` (new files), `frontend-godot/tests/*`, `.github/workflows/*`, `tests/test_godot_state_contract.py` | S0 for T.3/T.5, S1 for payload shape |
+| 1 | **L6 Harness & CI — ✅ DONE** | T.3, T.4, T.5, T.6, V.1 | `tools/*` (new files), `frontend-godot/tests/*`, `.github/workflows/*`, `tests/test_godot_state_contract.py` | S0 for T.3/T.5, S1 for payload shape |
 | 1 | **L7 World, social, factions** | W.1-W.6, SO.1-SO.4, DB.1-DB.5, SE.1-SE.4 | `game/systems/{world_simulation,relationship,morality,sect,debate}_system.py`, `game/core/engine/{world,social,debate}.py`, `game/data/characters/*.json`, `game/data/sects.json`, `game/data/dialogue*`, `tests/test_world_simulation.py`, `tests/test_sect_system.py`, `tests/test_dao_debate.py` | S2 |
 | 2 | **L8a…L8f Godot panels** (one lane per panel file — S2 is done, so these can start) | U.1, U.3, U.4, U.5, U.6, U.7, U.8, plus the render halves of F.2, F.4, CB.1, CB.3, CB.4, Q.1, Q.2, A.1, A.3, EQ.1-EQ.4, SV.3, SV.4, M.2, W.1-W.6 | one file each — today: `InventoryPanel.gd`, `EquipmentPanel.gd`, `JournalPanel.gd`, `StatusPanel.gd`, `TechniquesPanel.gd`, `UIKit.gd`; still to extract: the dashboard/combat/codex/world panels, plus `MainMenuController.gd` | S2 **and** the Wave-1 lane that supplies the payload |
 | 2 | **L9 Campaign & realms** | Q.1 (engine), Q.3, Q.4, Q.5, R.1-R.4 | `game/data/quests.json`, `game/data/secret_realms*.json`, `game/systems/quest_system.py`, `game/systems/secret_realm_system.py`, `game/core/engine/campaign.py`, `tests/test_campaign.py`, `tests/test_secret_realm.py` | S2 |

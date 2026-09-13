@@ -1,0 +1,98 @@
+name: gate
+
+# V.1: the gate is the same one a developer runs locally, so a red build is
+# always reproducible with three commands (pytest, the dead-content sweep, the
+# docs refresh). Every step here is a tool that already exists in the repo; the
+# workflow only wires them together and fails the build when one of them does.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: gate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gate:
+    name: engine gate (tests, validator, sweep, docs)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt -r requirements-dev.txt
+
+      - name: Test suite
+        run: python -m pytest -q
+
+      - name: Data validation
+        run: |
+          python -c "from game.validation import validate_all_game_data as validate; result = validate(); assert result.is_valid, result.format_errors(); print('validator: 0 errors')"
+
+      - name: Dead-content sweep
+        run: python tools/dead_content_report.py
+
+      - name: handover.md counts are generated, not hand-typed
+        run: python tools/refresh_docs.py --check
+
+      - name: Playthrough report (deterministic, with a dead-action budget)
+        run: python tools/playthrough_report.py --runs 8 --max-actions 150 --max-dead-rate 0.05
+
+  godot:
+    name: Godot client checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # The client checks skip when GODOT_BIN is unset, so this job is what turns
+      # them from skipped into run. Pinned to the version the project is built
+      # against (see handover.md -- Godot 4.7).
+      - name: Install Godot 4.7
+        run: |
+          set -euo pipefail
+          version="4.7-stable"
+          asset="Godot_v${version}_linux.x86_64"
+          for url in \
+            "https://github.com/godotengine/godot-builds/releases/download/${version}/${asset}.zip" \
+            "https://github.com/godotengine/godot/releases/download/${version}/${asset}.zip"
+          do
+            if curl -fsSL -o godot.zip "$url"; then
+              echo "downloaded $url"
+              break
+            fi
+          done
+          test -f godot.zip
+          unzip -q godot.zip
+          chmod +x "${asset}"
+          echo "GODOT_BIN=$PWD/${asset}" >> "$GITHUB_ENV"
+
+      # .godot/ is git-ignored, so a fresh checkout has no imported resources.
+      - name: Import project resources
+        run: |
+          "$GODOT_BIN" --headless --path frontend-godot --import
+
+      - name: Client panel, shell and event-coverage checks
+        run: |
+          python -m pytest -q \
+            tests/test_godot_panels.py \
+            tests/test_godot_smoke.py \
+            tests/test_godot_event_coverage.py \
+            tests/test_godot_state_contract.py
