@@ -7,13 +7,13 @@
       "display_name": "Mortal",
       "order": 0,
       "type": "linear_stage",
-      "max_progress": 100,
-      "required_progress": 100,
+      "max_progress": 70,
+      "required_progress": 70,
       "base_hp_bonus": 5,
       "base_physical_attack_bonus": 1,
       "base_physical_defence_bonus": 1,
       "success_stat_gains": { "body_strength": 4, "max_hp": 10, "attack": 1, "defense": 1 },
-      "breakthrough_requirements": { "progress": 100, "foundation_min": 5, "resources": [] }
+      "breakthrough_requirements": { "progress": 70, "foundation_min": 5, "resources": [] }
     },
     {
       "id": "strength_training",

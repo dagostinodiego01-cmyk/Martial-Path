@@ -2,6 +2,99 @@
   "version": 1,
   "note": "Provenance for shipped avatar art. An id absent here is a generated placeholder (tools/gen_avatar_art.py); 'art' is 'painted' when it came from a file through tools/import_avatar_art.py.",
   "avatars": {
+    "alchemist_sage": {
+      "art": "painted",
+      "source": "character_09.png",
+      "imported": "2026-09-13",
+      "source_sha256": "1d5c448c643a58fbb88989d1ce767f409d97beea2875dfe6894df9c986f80a7e",
+      "shipped_sha256": "ac875b2c68ff6bdbb6555445e44c384570ab37643d2ca9828fceb92293e351b9",
+      "crop": {
+        "anchor": "face",
+        "left": 0,
+        "side": 191,
+        "top": 0,
+        "zoom": 1.0
+      },
+      "source_size": [
+        191,
+        336
+      ],
+      "spec": {
+        "anchor": "face",
+        "zoom": 1.0,
+        "top": 0.0
+      },
+      "size": 191,
+      "size_cap": 512,
+      "face": {
+        "brow": 0.109947643979058,
+        "centre": 0.549738219895288,
+        "prominent": true,
+        "width": 0.240837696335079
+      }
+    },
+    "azure_prodigy": {
+      "art": "painted",
+      "source": "character_17.png",
+      "imported": "2026-09-13",
+      "source_sha256": "41da7f479563a64f30662511ae678bcbce6c5f9082267303eb4a8fae5de16ade",
+      "shipped_sha256": "4a5b0f609db4581e409b0c78c207e50ae160c99157d17c0772a762db9021f0ac",
+      "crop": {
+        "anchor": "face",
+        "left": 0,
+        "side": 192,
+        "top": 0,
+        "zoom": 1.0
+      },
+      "source_size": [
+        192,
+        342
+      ],
+      "spec": {
+        "anchor": "face",
+        "zoom": 1.0,
+        "top": 0.0
+      },
+      "size": 192,
+      "size_cap": 512,
+      "face": {
+        "brow": 0.432291666666667,
+        "centre": 0.481770833333333,
+        "prominent": true,
+        "width": 0.296875
+      }
+    },
+    "beast_blood_hunter": {
+      "art": "painted",
+      "source": "character_07.png",
+      "imported": "2026-09-13",
+      "source_sha256": "6bf9a2cf015683faf27bfa26a413329b17a61fa4647795829c51d7eb178751d6",
+      "shipped_sha256": "3435f02fc0274bf0ca218211f29344af848aec8b80187b7cc8f8f3b84aac9da5",
+      "crop": {
+        "anchor": "face",
+        "left": 0,
+        "side": 191,
+        "top": 0,
+        "zoom": 1.0
+      },
+      "source_size": [
+        191,
+        338
+      ],
+      "spec": {
+        "anchor": "face",
+        "zoom": 1.0,
+        "top": 0.0
+      },
+      "size": 191,
+      "size_cap": 512,
+      "face": {
+        "brow": 0.146596858638743,
+        "centre": 0.416230366492147,
+        "prominent": true,
+        "width": 0.801047120418848
+      }
+    },
     "beast_girl_tamer": {
       "art": "painted",
       "source": "lxqFa.jpg",
@@ -24,14 +117,15 @@
         "zoom": 0.765,
         "top": 0.057
       },
-      "size": 512
+      "size": 512,
+      "size_cap": 512
     },
     "demon_path_heir": {
       "art": "painted",
       "source": "O4tRZ.jpg",
       "imported": "2026-09-13",
       "source_sha256": "9ef253767c68b2565162644584287ee398fdf205ceddfe9e3490796ef0bf4315",
-      "shipped_sha256": "9595118e1f5f4cfa9d95b2c09803f69e65b285d138e5284fab4e868f7ca423e3",
+      "shipped_sha256": "49c8d1be54b00db44569fd925a4bac71e7dbe2b847b9d5568e64113d846bae21",
       "crop": {
         "anchor": "top",
         "left": 240,
@@ -48,14 +142,139 @@
         "zoom": 0.386,
         "top": 0.042
       },
-      "size": 512
+      "size": 303,
+      "size_cap": 512
+    },
+    "dharma_monk": {
+      "art": "painted",
+      "source": "character_19.png",
+      "imported": "2026-09-13",
+      "source_sha256": "5ec23189948016801a7d7229d7ca6ae8edd187ea8cfb5c8574207d8d5ae31b08",
+      "shipped_sha256": "47ef4bd4a33c61c01be624194e92eee1b74ba515b72d56c0f5c17e41e7173606",
+      "crop": {
+        "anchor": "face",
+        "left": 0,
+        "side": 192,
+        "top": 0,
+        "zoom": 1.0
+      },
+      "source_size": [
+        192,
+        342
+      ],
+      "spec": {
+        "anchor": "face",
+        "zoom": 1.0,
+        "top": 0.0
+      },
+      "size": 192,
+      "size_cap": 512,
+      "face": {
+        "brow": 0.0,
+        "centre": 0.5,
+        "prominent": true,
+        "width": 0.96875
+      }
+    },
+    "dragon_princess": {
+      "art": "painted",
+      "source": "character_12.png",
+      "imported": "2026-09-13",
+      "source_sha256": "c886b38a0d95017d2ab40027cb19aee52a6483cc98c50870d0232a45f4a9c2b5",
+      "shipped_sha256": "15122ec0db0df9c43529e53c631558ccfb15fb5c8537a85e631cc001b85eced0",
+      "crop": {
+        "anchor": "face",
+        "left": 0,
+        "side": 192,
+        "top": 0,
+        "zoom": 1.0
+      },
+      "source_size": [
+        192,
+        336
+      ],
+      "spec": {
+        "anchor": "face",
+        "zoom": 1.0,
+        "top": 0.0
+      },
+      "size": 192,
+      "size_cap": 512,
+      "face": {
+        "brow": 0.28125,
+        "centre": 0.408854166666667,
+        "prominent": true,
+        "width": 0.203125
+      }
+    },
+    "ice_phoenix_princess": {
+      "art": "painted",
+      "source": "character_08.png",
+      "imported": "2026-09-13",
+      "source_sha256": "0ef3dc3083a60b43fa30151e9d702d0fec0b01ef345ed0037ecb8953e47a7c39",
+      "shipped_sha256": "4bb2a69c76b8a9b0b57ce8a7e870dbac6ce88cc3a0c5b3ac60eb572015a7389e",
+      "crop": {
+        "anchor": "face",
+        "left": 12,
+        "side": 180,
+        "top": 26,
+        "zoom": 1.0
+      },
+      "source_size": [
+        192,
+        338
+      ],
+      "spec": {
+        "anchor": "face",
+        "zoom": 1.0,
+        "top": 0.0
+      },
+      "size": 180,
+      "size_cap": 512,
+      "face": {
+        "brow": 0.3,
+        "centre": 0.633333333333333,
+        "prominent": false,
+        "width": 0.2
+      }
+    },
+    "jade_sect_mistress": {
+      "art": "painted",
+      "source": "character_02.png",
+      "imported": "2026-09-13",
+      "source_sha256": "21e15e4f7a14070490c6bca7ab6d28230cf980dcad27fec42b3aff13c068a55a",
+      "shipped_sha256": "cd3ed9d6e33ac362c572281047c09c3575de25b10c83546ee4bc6e644e305e47",
+      "crop": {
+        "anchor": "face",
+        "left": 0,
+        "side": 192,
+        "top": 0,
+        "zoom": 1.0
+      },
+      "source_size": [
+        192,
+        338
+      ],
+      "spec": {
+        "anchor": "face",
+        "zoom": 1.0,
+        "top": 0.0
+      },
+      "size": 192,
+      "size_cap": 512,
+      "face": {
+        "brow": 0.135416666666667,
+        "centre": 0.541666666666667,
+        "prominent": true,
+        "width": 0.3125
+      }
     },
     "moon_palace_fairy": {
       "art": "painted",
       "source": "cAaQ1.jpg",
       "imported": "2026-09-13",
       "source_sha256": "fcda5b514f8b01e975e463e902b257e726f8e950eea253d66bb83a955a710f35",
-      "shipped_sha256": "855c3776d7b82a4105afdcaac2bee158e4ebfff74fdc6674fe0b3c029fee2f1c",
+      "shipped_sha256": "3e7dd2cdbcfc52fc161f285e6e3b91fa720a6c8db2842cb5ebbeb26dc8b06852",
       "crop": {
         "anchor": "top",
         "left": 172,
@@ -72,14 +291,15 @@
         "zoom": 0.561,
         "top": 0.03
       },
-      "size": 512
+      "size": 440,
+      "size_cap": 512
     },
     "mortal_disciple": {
       "art": "painted",
       "source": "zkiqU.jpg",
       "imported": "2026-09-13",
       "source_sha256": "e3c8e08140074d005de1bf4d1993be877b94f54294229af71428bebfdd74ed9e",
-      "shipped_sha256": "adf1072c988a1af2a5b7bad7082550882bd0a5dc99813a7629cb2acc75d5e77f",
+      "shipped_sha256": "a80538a379ddce09da90bd30f934468b9c0d59fbd9ae2a6b3ef89913b6b43057",
       "crop": {
         "anchor": "top",
         "left": 142,
@@ -96,14 +316,77 @@
         "zoom": 0.638,
         "top": 0.036
       },
-      "size": 512
+      "size": 500,
+      "size_cap": 512
+    },
+    "nine_tailed_fox": {
+      "art": "painted",
+      "source": "character_14.png",
+      "imported": "2026-09-13",
+      "source_sha256": "dc191230576453c8879a00316a71c0e913e44deeff2d7b18ed84bd1ce419e79f",
+      "shipped_sha256": "0f4f3d3899cd32b606a0da8cf4dc08376efd7ae7c58fac55f244d86d71aecf09",
+      "crop": {
+        "anchor": "face",
+        "left": 0,
+        "side": 192,
+        "top": 0,
+        "zoom": 1.0
+      },
+      "source_size": [
+        192,
+        336
+      ],
+      "spec": {
+        "anchor": "face",
+        "zoom": 1.0,
+        "top": 0.0
+      },
+      "size": 192,
+      "size_cap": 512,
+      "face": {
+        "brow": 0.0416666666666667,
+        "centre": 0.46875,
+        "prominent": true,
+        "width": 0.354166666666667
+      }
+    },
+    "phoenix_heiress": {
+      "art": "painted",
+      "source": "character_04.png",
+      "imported": "2026-09-13",
+      "source_sha256": "ada3a3a7c55f27788e9a1fc78ec7b64a0150040ad1cfd59e0f3ac74923deb520",
+      "shipped_sha256": "63020615d4dafcf8645228d8c7fed3457efec2fd584f8654b797e9a71e374cdc",
+      "crop": {
+        "anchor": "face",
+        "left": 0,
+        "side": 191,
+        "top": 0,
+        "zoom": 1.0
+      },
+      "source_size": [
+        191,
+        338
+      ],
+      "spec": {
+        "anchor": "face",
+        "zoom": 1.0,
+        "top": 0.0
+      },
+      "size": 191,
+      "size_cap": 512,
+      "face": {
+        "brow": 0.0,
+        "centre": 0.518324607329843,
+        "prominent": true,
+        "width": 0.931937172774869
+      }
     },
     "poison_valley_disciple": {
       "art": "painted",
       "source": "QDkWC.jpg",
       "imported": "2026-09-13",
       "source_sha256": "8f615465899fcbcf50fda497087ceeb9c164ca87688a81ce2d24391429643d99",
-      "shipped_sha256": "1104ce184c5ea6b90282ec2fb5a3955d54246e9285a47ed0ad897e723e42064d",
+      "shipped_sha256": "bc2ae355abe3254ea9dfd52004fe733e43531681fbfa1a7094daf47c28d43def",
       "crop": {
         "anchor": "top",
         "left": 187,
@@ -120,14 +403,46 @@
         "zoom": 0.523,
         "top": 0.086
       },
-      "size": 512
+      "size": 410,
+      "size_cap": 512
+    },
+    "rogue_swordswoman": {
+      "art": "painted",
+      "source": "character_16.png",
+      "imported": "2026-09-13",
+      "source_sha256": "d09786510ac9882f3905fda0134b41e746780f554f72e4f31046b53e2df25893",
+      "shipped_sha256": "ee3515d11ef1025aa3fea672afaf26381a2adc63aa0b165a99e99b51ea4f6a8a",
+      "crop": {
+        "anchor": "face",
+        "left": 0,
+        "side": 192,
+        "top": 0,
+        "zoom": 1.0
+      },
+      "source_size": [
+        192,
+        336
+      ],
+      "spec": {
+        "anchor": "face",
+        "zoom": 1.0,
+        "top": 0.0
+      },
+      "size": 192,
+      "size_cap": 512,
+      "face": {
+        "brow": 0.328125,
+        "centre": 0.5625,
+        "prominent": true,
+        "width": 0.354166666666667
+      }
     },
     "sect_patriarch": {
       "art": "painted",
       "source": "Ec1o5.jpg",
       "imported": "2026-09-13",
       "source_sha256": "9e52e58ad8b27141af66ef77b1c4df4e9387952a817894ebf2a828192e7cbe9f",
-      "shipped_sha256": "3d4c0dab5d5a83a623e40a6bb2d675364f7040f4191d666a160c4401aed8e512",
+      "shipped_sha256": "1bec7ecb094b4a86b91a970d0aca35a107d8374990cd17c645614918a7513f5d",
       "crop": {
         "anchor": "top",
         "left": 170,
@@ -144,14 +459,15 @@
         "zoom": 0.565,
         "top": 0.037
       },
-      "size": 512
+      "size": 443,
+      "size_cap": 512
     },
     "sword_immortal": {
       "art": "painted",
       "source": "BMwmO.jpg",
       "imported": "2026-09-13",
       "source_sha256": "0e8af0af99e980d8ae56e4d208abb8759bf81c4d33c049da59eab0c5a0ec268d",
-      "shipped_sha256": "1ee5001a6e90fb8c78004dfb10de5721c490fe732165c9a727cc25e5ddd7825f",
+      "shipped_sha256": "f95ef77ae4962f0686ed17e64302afa04bb907ef22fcd2913f20444744cf7c72",
       "crop": {
         "anchor": "top",
         "left": 242,
@@ -168,14 +484,15 @@
         "zoom": 0.383,
         "top": 0.072
       },
-      "size": 512
+      "size": 300,
+      "size_cap": 512
     },
     "sword_maiden": {
       "art": "painted",
       "source": "wi5UL.jpg",
       "imported": "2026-09-13",
       "source_sha256": "077a9a767d68c226ce73ddf0d8eec5b88398ce9cab45096c0d530c5c1bed76a7",
-      "shipped_sha256": "3fc46dddccf4b509c89a8bea18b22eaa48f9238c5291ebc106dc34032dbed04b",
+      "shipped_sha256": "edf9d6256698d1c287a4a9d6643747e020a3c3a0ab0648dc282a89fa574adf7d",
       "crop": {
         "anchor": "top",
         "left": 210,
@@ -192,7 +509,95 @@
         "zoom": 0.463,
         "top": 0.081
       },
-      "size": 512
+      "size": 363,
+      "size_cap": 512
+    },
+    "thunder_sovereign": {
+      "art": "painted",
+      "source": "character_05.png",
+      "imported": "2026-09-13",
+      "source_sha256": "3f4ffcb78adec0d406797adaa80e093617a4d7add75bf5455a908a1ff9f7d60f",
+      "shipped_sha256": "28ceac4caa7d681ebb786b75f24b7378df30cd79e8cc04a4f35d91f6482c4f23",
+      "crop": {
+        "anchor": "face",
+        "left": 0,
+        "side": 192,
+        "top": 0,
+        "zoom": 1.0
+      },
+      "source_size": [
+        192,
+        338
+      ],
+      "spec": {
+        "anchor": "face",
+        "zoom": 1.0,
+        "top": 0.0
+      },
+      "size": 192,
+      "size_cap": 512,
+      "face": {
+        "brow": 0.40625,
+        "centre": 0.5546875,
+        "prominent": true,
+        "width": 0.276041666666667
+      }
+    },
+    "wandering_swordsman": {
+      "art": "painted",
+      "source": "character_21.png",
+      "imported": "2026-09-13",
+      "source_sha256": "7d72747824b15c99cbc98b95b2a8108d0c675152cc6f9af1634d93b22c1dd19d",
+      "shipped_sha256": "e9d47614d6f472add1df613b51c328d315e4fafbd118117c3b90ec646b75cbe4",
+      "crop": {
+        "anchor": "face",
+        "left": 0,
+        "side": 192,
+        "top": 0,
+        "zoom": 1.0
+      },
+      "source_size": [
+        192,
+        342
+      ],
+      "spec": {
+        "anchor": "face",
+        "zoom": 1.0,
+        "top": 0.0
+      },
+      "size": 192,
+      "size_cap": 512,
+      "face": {
+        "brow": 0.151041666666667,
+        "centre": 0.557291666666667,
+        "prominent": true,
+        "width": 0.395833333333333
+      }
+    },
+    "young_master": {
+      "art": "painted",
+      "source": "character_11.png",
+      "imported": "2026-09-13",
+      "source_sha256": "3bf3c3ecd7d18a724e6bc65c632ddec90a7716d4eef28dfec44b3510e7517b82",
+      "shipped_sha256": "d98a2d20dcc76ca3f101d2ebe2cb0eb005c73dad95f16d811f2dcf22aace9f9d",
+      "crop": {
+        "anchor": "top",
+        "left": 0,
+        "side": 192,
+        "top": 0,
+        "zoom": 1.0
+      },
+      "source_size": [
+        192,
+        336
+      ],
+      "spec": {
+        "anchor": "top",
+        "zoom": 1.0,
+        "top": 0.0
+      },
+      "size": 192,
+      "size_cap": 512
     }
   }
 }

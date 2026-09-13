@@ -78,11 +78,12 @@ license file beside it.
   1px `#4b3d24` border and saturated fill; text sits to the right, never
   over the fill.
 - **Portraits:** the cultivator's chosen face sits in a `#0E0C08` well with a
-  1px `#4b3d24` frame; art is cover-cropped, never letterboxed. Painted
-  portraits ship at 512px and generated placeholders at 256px — the well is
-  76px, so both read the same, and every portrait is framed as a
-  head-and-shoulders bust (`tools/import_avatar_art.py --anchor face`) because
-  a full-length figure is a smudge at that size. Selected state (the picker grid) promotes the frame to 2px
+  1px `#4b3d24` frame; art is cover-cropped, never letterboxed. Every roster
+  slot is painted today, shipped between 180px and 512px — the importer caps at
+  512 and never upscales, since the largest place the client draws a portrait
+  is 76px (dossier, picker, menu) and 52px in the top rail. Portraits are
+  framed as head-and-shoulders busts (`tools/import_avatar_art.py`), because a
+  full-length figure is a smudge at that size. Selected state (the picker grid) promotes the frame to 2px
   `#E4C87F` on a `#2A241B` ground. When no portrait art loads, the well
   falls back to a gold monogram of the name's first letter — the identity
   reads with or without art.

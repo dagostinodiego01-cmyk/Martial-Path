@@ -13,7 +13,12 @@ Each item is ``<avatar_id>=<source image>[:zoom[:top]]`` where ``zoom`` is the
 fraction of the source's short side kept (1.0 keeps the full width) and ``top``
 nudges the crop window down as a fraction of the source height. Sources may be
 any format the Godot runtime reads (JPEG, PNG, WebP); the shipped asset is
-always a square, sRGB PNG at ``--size`` (default 512).
+always a square, sRGB PNG, at most ``--size`` (default 512) on a side.
+
+That size is a cap, not a target. The client's largest portrait is 76px, so a
+crop smaller than the cap ships at its own resolution rather than upscaled -- a
+small source stays sharp instead of being stretched into a soft 512. The
+manifest records the size each portrait actually shipped at.
 
 The default ``--anchor face`` frames a head-and-shoulders bust: the importer
 measures the subject's skin tones, sizes the window so the face fills a set
@@ -34,6 +39,10 @@ pinning a painting, and ``tools/gen_avatar_art.py`` refuse to overwrite art.
 Each entry keeps both halves of the crop: ``spec`` is what was asked for
 (anchor/zoom/top, the replayable recipe) and ``crop``/``face`` are what the
 engine actually did, so a re-import can be diffed instead of trusted.
+
+Finally the tool refreshes Godot's texture cache (``--import``), because the
+running game draws the *imported* ctex rather than the PNG on disk and would
+otherwise keep showing the previous portrait until the editor re-imported it.
 """
 from __future__ import annotations
 
@@ -152,7 +161,8 @@ def _is_float(text: str) -> bool:
 
 
 def import_avatars(items: list, size: int = 512, anchor: str = "top", godot: Path = None,
-                   force: bool = False, dry_run: bool = False) -> dict:
+                   force: bool = False, dry_run: bool = False,
+                   skip_reimport: bool = False) -> dict:
     manifest = read_manifest()
     already = painted_ids(manifest)
     job_items = []
@@ -215,6 +225,10 @@ def import_avatars(items: list, size: int = 512, anchor: str = "top", godot: Pat
                      "zoom": asked.get("zoom", 1.0),
                      "top": asked.get("top", 0.0)},
             "size": int(entry.get("size", size)),
+            # The cap the import was run with, beside the size it produced: the
+            # two differ whenever the crop was smaller than the cap, which is
+            # the whole point (a small source is never stretched).
+            "size_cap": int(entry.get("requested_size", size)),
         }
         # Only recorded when the detector chose the crop: on an explicit
         # zoom/top crop it would report a face that scenery put there.
@@ -224,7 +238,30 @@ def import_avatars(items: list, size: int = 512, anchor: str = "top", godot: Pat
 
     write_manifest(manifest)
     print(f"manifest: {MANIFEST_PATH.relative_to(ROOT)}")
+    if not skip_reimport:
+        refresh_import_cache(binary)
     return {"imported": payload.get("imported", []), "failed": payload.get("failed", []), "skipped": skipped}
+
+
+def refresh_import_cache(godot: Path) -> bool:
+    """Make the new art visible to the running game.
+
+    A shipped PNG is drawn from Godot's imported texture cache
+    (``.godot/imported/*.ctex``), and the runtime loads that cache as-is: writing
+    a PNG and its ``.import`` sidecar is not enough, because the editor is what
+    re-imports, and the game will happily draw the *previous* portrait from a
+    stale ctex until it does. So the importer runs the same import pass the
+    editor would -- cheap, and it turns a baffling "my new art did not show up"
+    into a non-event.
+    """
+    command = [str(godot), "--headless", "--path", str(ROOT / "frontend-godot"), "--import"]
+    completed = subprocess.run(command, capture_output=True, text=True, encoding="utf-8", errors="replace")
+    if completed.returncode != 0:
+        print(f"WARNING: the texture cache refresh failed (exit {completed.returncode}); "
+              "reopen the project in the Godot editor before running the game")
+        return False
+    print("texture cache refreshed (--skip-reimport to skip)")
+    return True
 
 
 def _sha256(path: Path) -> str:
@@ -238,13 +275,16 @@ def _sha256(path: Path) -> str:
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description="Import painted portraits as avatar assets.")
     parser.add_argument("items", nargs="*", metavar="id=image[:zoom[:top]]")
-    parser.add_argument("--size", type=int, default=512, help="shipped square size (default 512)")
+    parser.add_argument("--size", type=int, default=512,
+                        help="shipped square size cap in px (default 512; never upscales a crop)")
     parser.add_argument("--anchor", choices=("face", "top", "center"), default="face",
                         help="crop anchor: 'face' frames a bust around the subject's face (default), "
                              "'top'/'center' take a plain square")
     parser.add_argument("--godot", default="", help="path to the Godot binary")
     parser.add_argument("--force", action="store_true", help="replace art that was already imported")
     parser.add_argument("--dry-run", action="store_true", help="validate the job and print it, then stop")
+    parser.add_argument("--skip-reimport", action="store_true",
+                        help="do not refresh Godot's texture cache (the game would draw the old art)")
     args = parser.parse_args(argv)
 
     if not args.items:
@@ -252,7 +292,8 @@ def main(argv=None) -> int:
     items = [parse_item(spec) for spec in args.items]
     outcome = import_avatars(items, size=args.size, anchor=args.anchor,
                              godot=Path(args.godot) if args.godot else None,
-                             force=args.force, dry_run=args.dry_run)
+                             force=args.force, dry_run=args.dry_run,
+                             skip_reimport=args.skip_reimport)
     for entry in outcome.get("imported", []):
         crop = entry.get("crop", {})
         face = entry.get("face", {})

@@ -21,6 +21,15 @@ def _make_system(seed=1):
     )
 
 
+def _body_progression() -> dict:
+    """Body tuning as configured, so a retune cannot silently invalidate a test (C.3)."""
+    return load_json("cultivation/cultivation_config.json")["body_progression"]
+
+
+def _essence_progression() -> dict:
+    return load_json("cultivation/cultivation_config.json")["essence_progression"]
+
+
 def test_training_caps_progress_at_100():
     player = Player(name="Tester", progress=95.0)
     system = _make_system()
@@ -164,21 +173,30 @@ def test_successful_body_breakthrough_grants_configured_stats_once(monkeypatch: 
 
 def test_failed_body_breakthrough_does_not_grant_stats_and_applies_penalties(monkeypatch: pytest.MonkeyPatch):
     player = Player(name="Tester")
-    player.cultivation_state.body.progress = 100.0
-    player.cultivation_state.body.foundation = 20.0
     system = _make_system()
+    required = system.get_body_required_progress(player)
+    player.cultivation_state.body.progress = required
+    player.cultivation_state.body.foundation = 20.0
     monkeypatch.setattr(system._rng, "chance", lambda _probability: False)
     before_stats = (player.max_hp, player.attack, player.defense, player.body_strength)
 
     result = system.attempt_body_breakthrough(player)
 
+    tuning = _body_progression()
     assert result["success"] is False
     assert result["reason"] == "FAILED_ATTEMPT"
     assert player.cultivation_state.body.realm_id == "mortal"
     assert (player.max_hp, player.attack, player.defense, player.body_strength) == before_stats
-    assert player.cultivation_state.body.progress == 85.0
-    assert player.cultivation_state.body.cultivation_strain == 20.0
-    assert player.cultivation_state.body.foundation_stability == 90.0
+    # A failed attempt keeps momentum but loses the configured share of it.
+    assert player.cultivation_state.body.progress == pytest.approx(
+        required * tuning["failed_breakthrough_progress_ratio"], abs=0.05
+    )
+    assert player.cultivation_state.body.cultivation_strain == pytest.approx(
+        tuning["failed_breakthrough_strain_gain"]
+    )
+    assert player.cultivation_state.body.foundation_stability == pytest.approx(
+        100.0 - tuning["failed_breakthrough_foundation_loss"]
+    )
 
 
 def _unlock_essence(player: Player) -> None:
@@ -193,10 +211,11 @@ def test_essence_training_accumulates_strain():
 
     result = system.train_essence(player)
 
+    gain = _essence_progression()["training_strain_gain"]
     assert result["track_id"] == "essence_gathering"
-    assert result["strain_gained"] == 10.0
-    assert result["current_strain"] == 10.0
-    assert player.cultivation_state.essence.cultivation_strain == 10.0
+    assert result["strain_gained"] == pytest.approx(gain)
+    assert result["current_strain"] == pytest.approx(gain)
+    assert player.cultivation_state.essence.cultivation_strain == pytest.approx(gain)
 
 
 def test_essence_breakthrough_blocked_by_high_strain():
@@ -243,10 +262,15 @@ def test_failed_essence_breakthrough_applies_strain_and_stability_penalties(monk
 
     result = system.attempt_essence_breakthrough(player)
 
+    tuning = _essence_progression()
     assert result["success"] is False
     assert result["reason"] == "FAILED_ATTEMPT"
-    assert player.cultivation_state.essence.cultivation_strain == 28.0
-    assert player.cultivation_state.essence.foundation_stability == 90.0
+    assert player.cultivation_state.essence.cultivation_strain == pytest.approx(
+        10.0 + tuning["failed_breakthrough_strain_gain"]
+    )
+    assert player.cultivation_state.essence.foundation_stability == pytest.approx(
+        100.0 - tuning["failed_breakthrough_foundation_loss"]
+    )
 
 
 def test_successful_essence_breakthrough_reduces_strain(monkeypatch: pytest.MonkeyPatch):
@@ -274,11 +298,16 @@ def test_stabilise_essence_reduces_strain_and_restores_stability():
 
     result = system.stabilise_essence(player)
 
+    tuning = _essence_progression()["stabilise"]
     assert result["event"] == EventType.STABILISE_RESULT
-    assert result["strain_reduced"] == 18.0
-    assert result["foundation_gained"] == 4.0
-    assert player.cultivation_state.essence.cultivation_strain == 22.0
-    assert player.cultivation_state.essence.foundation_stability == 54.0
+    assert result["strain_reduced"] == pytest.approx(tuning["strain_reduction"])
+    assert result["foundation_gained"] == pytest.approx(tuning["foundation_stability_gain"])
+    assert player.cultivation_state.essence.cultivation_strain == pytest.approx(
+        40.0 - tuning["strain_reduction"]
+    )
+    assert player.cultivation_state.essence.foundation_stability == pytest.approx(
+        50.0 + tuning["foundation_stability_gain"]
+    )
 
 
 def test_essence_breakthrough_does_not_advance_body():
@@ -512,9 +541,10 @@ def test_physique_multiplies_successful_body_breakthrough_stats(monkeypatch: pyt
 
 def test_traits_do_not_bypass_body_hard_requirements():
     player = Player(name="Tester", martial_talent_id="hallowed_lord_grade", body_talent_id="dao_palace_grade")
-    player.cultivation_state.body.progress = 99.0
-    player.cultivation_state.body.foundation = 20.0
     system = _make_system()
+    # One point short of this realm's threshold, with the best traits in the game.
+    player.cultivation_state.body.progress = system.get_body_required_progress(player) - 1.0
+    player.cultivation_state.body.foundation = 20.0
 
     result = system.attempt_body_breakthrough(player)
 

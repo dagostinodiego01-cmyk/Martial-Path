@@ -27,16 +27,20 @@ and the world advance by the listed cost.
 
 | Action | Cost key | Years |
 |---|---|---|
-| Train Body | `train_body` | 0.125 |
-| Train Essence | `train_essence` | 0.125 |
-| Breakthrough (Body) | `body_breakthrough` | 0.25 |
-| Breakthrough (Essence) | `essence_breakthrough` | 0.25 |
-| Stabilise Foundation | `stabilise` | 0.1 |
-| Stabilise Essence | `stabilise_essence` | 0.1 |
+| Train Body | `train_body` | 0.05 |
+| Train Essence | `train_essence` | 0.05 |
+| Breakthrough (Body) | `body_breakthrough` | 0.1 |
+| Breakthrough (Essence) | `essence_breakthrough` | 0.1 |
+| Stabilise Foundation | `stabilise` | 0.04 |
+| Stabilise Essence | `stabilise_essence` | 0.04 |
 | Rest | `rest` | 0.05 |
 | Meditate | `meditate` | 0.1 |
 | Travel | `(derived)` | 0.05 × the season's `travel_years` modifier |
 | Closed-door cultivation | `(derived)` | the chosen 1, 3 or 10 years |
+
+The costs were cut in C.3 (a training session is now ~0.6 months, not ~1.5) so
+that the F.6 opening budget holds: a focused run reaches its first realm inside
+one in-game year. Reaching the first realm took a median of 2.5 years before.
 
 Two multipliers sit on top of a cost, and neither is a second clock:
 

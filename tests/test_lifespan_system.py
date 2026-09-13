@@ -155,8 +155,12 @@ def test_training_advances_age():
 
 
 def test_reaching_lifespan_cap_ends_the_run():
+    lifespan = load_json("cultivation/cultivation_config.json")["lifespan"]
+    # Derive the edge from the configured cost, so retuning the cost cannot make
+    # this test pass for the wrong reason (C.3).
+    cost = lifespan["time_costs"]["train_body"]
     engine = GameEngine.new_game(seed=1)
-    engine.player.age_years = 99.9
+    engine.player.age_years = lifespan["mortal_base_lifespan_years"] - cost / 2.0
 
     result = engine.process_action({"action": Action.TRAIN_BODY})
 

@@ -79,25 +79,34 @@ portraits. The **name is the engine's** (`RENAME`, turn-free, `NAME_CHANGED`,
 `scripts/PlayerProfile.gd` (autoload `Profile`) owns the roster, the
 `user://profile.cfg` persistence, and the texture cache; `scripts/IdentityEditor.gd`
 is the one picker widget, hosted as a dialog band in `Main.tscn` and as a popup
-in `MainMenu.tscn`. The client loads a portrait through `ResourceLoader` when
-the editor has imported it and falls back to reading the raw PNG otherwise, so
-F5 works before you re-open the project in the editor.
+in `MainMenu.tscn`. The client loads a portrait through `ResourceLoader`, falling
+back to reading the raw PNG only when no `.import` sidecar exists at all — so a
+PNG that changed without an import pass draws the old art, which is why the
+import tool refreshes the cache itself (below).
 
-Portraits come in two kinds, and `assets/avatars/art_manifest.json` says which:
-**painted** (eight so far, imported from artists' files at 512px) and
-**generated placeholders** (`python tools/gen_avatar_art.py`, 256px, pure stdlib)
-for the remaining slots. Never drop a painting in by hand:
-`python tools/import_avatar_art.py <id>=<file>[:zoom[:top]]` converts and crops it
-through Godot's own codecs, writes the `.import` sidecar, and records source and
-shipped hashes plus both halves of the crop (`spec` = what was asked, `crop` =
-what shipped) in the manifest. The default `--anchor face` frames a
+**Every slot is painted today** (21 of 21). Portraits ship between 180px and
+512px — the importer's `--size` is a *cap*, not a target, so art is never
+upscaled into a soft 512 when the client's largest portrait is 76px. Never drop
+a painting in by hand: `python tools/import_avatar_art.py <id>=<file>[:zoom[:top]]`
+converts and crops through Godot's own codecs, writes the `.import` sidecar,
+records source and shipped hashes plus both halves of the crop (`spec` = what
+was asked, `crop` = what shipped) in `assets/avatars/art_manifest.json`, and
+refreshes Godot's texture cache as its last step.
+
+That refresh matters: the running game draws the **imported** ctex, not the PNG
+on disk, so a new PNG without an import pass shows the *previous* portrait until
+the editor re-imports (the tool now runs the pass itself; set `--skip-reimport`
+to hand it back to the editor). The default `--anchor face` frames a
 head-and-shoulders bust by measuring the subject — necessary because the picker's
-cells are 76px, and painted backgrounds sometimes read as skin, so check the
-result and re-run with explicit `zoom`/`top` when it misframes. The generator
-never overwrites painted slots; `--brief` rewrites `game/docs/AVATAR_BRIEF.md`
-with the live painted/placeholder split. `tests/test_player_identity.py` pins the
-roster/recipe/GDScript parity, placeholders pixel-for-pixel, and painted art by
-provenance (size, hashes, and a crop that is a bust rather than a full torso).
+cells are 76px and a full-length figure is a smudge — but painted backgrounds
+sometimes read as skin, so check the result and re-run with explicit `zoom`/`top`
+when it misframes; the anchor is a hint, never a promise. `python tools/gen_avatar_art.py`
+writes nothing while every slot is painted and never overwrites imported art;
+`--brief` rewrites `game/docs/AVATAR_BRIEF.md` with the live painted/placeholder
+split. `tests/test_player_identity.py` pins the roster/recipe/GDScript parity,
+any un-imported slot's bytes against the generator, and imported art by
+provenance (shipped size vs cap, hashes, crop inside the source and replayable
+from its recipe); framing quality itself is reviewed by eye, not asserted.
 
 ---
 
@@ -552,7 +561,8 @@ Docs: `game/docs/ARCHITECTURE.md`, `CULTIVATION_SYSTEM.md`, `DATA_SCHEMA.md`,
 
 ## 5. Testing & validation
 
-- `pytest -q` — **780 passed, 3 skipped**. Newer files: `test_dead_content.py`
+- `pytest -q` — the whole suite; the live count is in the table at the top.
+  Newer files: `test_dead_content.py`
   (G.2 sweep + effect-vocabulary sync), `test_medium_priority.py`
   (the P10–P17 close-out), `test_sell_system.py`, `test_sect_system.py`,
   `test_relationship_rewards.py`, plus combat/trainer/find/lifespan/talent/shop,

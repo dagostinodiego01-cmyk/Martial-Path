@@ -119,3 +119,47 @@ def test_the_client_shows_the_engines_explanation_first():
         "the engine's explanation must be returned before the client's own table, "
         "or the two thirds of codes that table lacks stay unexplained"
     )
+
+
+#: Actions that must fail, one per dispatch region, with a payload that reaches the
+#: refusal rather than the malformed-action guard.
+_REFUSALS = (
+    ({"action": Action.ATTACK}, None),
+    ({"action": Action.USE_SKILL, "skill_id": "iron_fist"}, None),
+    ({"action": Action.USE_ITEM, "item_id": "nine_nether_boots"}, None),
+    ({"action": Action.BREAKTHROUGH}, None),
+    ({"action": Action.JOIN_SECT}, None),
+    ({"action": Action.UNLOCK, "unlock_id": "no_such_unlock"}, None),
+    ({"action": Action.UPGRADE_TALENT, "track": "nonsense", "target_id": "x"}, None),
+    # The debate start used to spell its refusal key "error", so the result carried no
+    # ``reason`` at all and the player read the random error template instead.
+    ({"action": Action.DEBATE_CHARACTER, "character_id": "nobody_at_all"}, None),
+)
+
+
+def test_no_refusal_reaches_the_player_without_a_reason():
+    """Every refused action explains itself -- checked by running them, not scanning.
+
+    The code-scan above cannot catch a refusal spelled with the wrong key (the
+    debate start's ``"error"``), because the code inside it is still defined
+    somewhere else. This drives the real dispatch and reads what the player gets.
+    """
+    unresolved = []
+    for action, mutate in _REFUSALS:
+        engine = GameEngine.new_game(seed=1)
+        if mutate:
+            mutate(engine)
+        result = engine.process_action(action)
+
+        # A refusal is anything that reports a reason. Some outcomes carry their own
+        # and a bespoke narrative too (a failed breakthrough is one), which is fine --
+        # what is not fine is a reason the player never gets told.
+        reason = result.get("reason")
+        assert reason, f"{action['action']} was expected to be refused, got {result['event']}"
+        if not result.get("message"):
+            unresolved.append(f"{action['action']}: reasoned {reason} but explained nothing")
+        # A bare ERROR must never narrate the random season template.
+        if result["event"] == EventType.ERROR and "falters against" in str(result.get("narrative", "")):
+            unresolved.append(f"{action['action']}: random flavour instead of {reason}")
+
+    assert unresolved == [], "refusals with no explanation: " + "; ".join(unresolved)

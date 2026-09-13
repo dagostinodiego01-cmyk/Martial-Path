@@ -3,12 +3,12 @@
     "starting_age_years": 12,
     "mortal_base_lifespan_years": 100,
     "time_costs": {
-      "train_body": 0.125,
-      "train_essence": 0.125,
-      "body_breakthrough": 0.25,
-      "essence_breakthrough": 0.25,
-      "stabilise": 0.1,
-      "stabilise_essence": 0.1,
+      "train_body": 0.05,
+      "train_essence": 0.05,
+      "body_breakthrough": 0.1,
+      "essence_breakthrough": 0.1,
+      "stabilise": 0.04,
+      "stabilise_essence": 0.04,
       "rest": 0.05,
       "meditate": 0.1
     },
@@ -188,15 +188,15 @@
     "prepare_dual_breakthrough": "Prepare Dual Breakthrough"
   },
   "body_progression": {
-    "training_strain_gain": 12.0,
+    "training_strain_gain": 8.0,
     "max_strain_for_breakthrough": 45.0,
     "required_foundation_stability": 70.0,
     "successful_breakthrough_strain_reduction": 8.0,
-    "failed_breakthrough_strain_gain": 20.0,
+    "failed_breakthrough_strain_gain": 12.0,
     "failed_breakthrough_foundation_loss": 10.0,
-    "failed_breakthrough_progress_ratio": 0.85,
+    "failed_breakthrough_progress_ratio": 0.9,
     "stabilise": {
-      "strain_reduction": 18.0,
+      "strain_reduction": 25.0,
       "foundation_stability_gain": 4.0,
       "comprehension_gain": 1,
       "progress_gain": 0.0,
@@ -204,14 +204,14 @@
     }
   },
   "essence_progression": {
-    "training_strain_gain": 10.0,
+    "training_strain_gain": 7.0,
     "max_strain_for_breakthrough": 45.0,
     "required_foundation_stability": 70.0,
     "successful_breakthrough_strain_reduction": 8.0,
-    "failed_breakthrough_strain_gain": 18.0,
+    "failed_breakthrough_strain_gain": 11.0,
     "failed_breakthrough_foundation_loss": 10.0,
     "stabilise": {
-      "strain_reduction": 18.0,
+      "strain_reduction": 25.0,
       "foundation_stability_gain": 4.0,
       "comprehension_gain": 1,
       "progress_gain": 0.0,

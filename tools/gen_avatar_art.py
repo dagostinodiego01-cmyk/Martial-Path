@@ -970,6 +970,25 @@ def prompt_for(recipe: dict) -> str:
 def art_brief() -> str:
     """The full markdown brief: direction, contract, roster, and prompts."""
     painted = painted_ids()
+    # The status paragraph has to read well in both worlds: a roster part-drawn,
+    # and one where every slot carries a painting.
+    if len(painted) >= len(RECIPES):
+        status = [
+            f"Every one of the {len(RECIPES)} portraits in `frontend-godot/assets/avatars/` is",
+            "**painted** -- there are no generated placeholders left. `art_manifest.json` records",
+            "where each painting came from and what it was cut from; a slot's row below still",
+            "describes the recipe it was authored from, which is what a replacement would be",
+            "matched against; the shipped file is the art.",
+        ]
+    else:
+        status = [
+            f"{len(painted)} of {len(RECIPES)} portraits in `frontend-godot/assets/avatars/` are",
+            f"**painted**; the other {len(RECIPES) - len(painted)} are **generated placeholders** --",
+            "flat paper-cut geometry, no rendering -- kept so the identity picker is playable end to",
+            "end. `art_manifest.json` records which is which and what each painting was cut from,",
+            "and a slot's row below describes the recipe it was authored from: what a replacement",
+            "would be matched against, and what the generator would draw if that art were removed.",
+        ]
     lines = [
         "# Avatar art brief (player portraits)",
         "",
@@ -980,13 +999,7 @@ def art_brief() -> str:
         "",
         "## Status",
         "",
-        f"{len(painted)} of {len(RECIPES)} portraits in `frontend-godot/assets/avatars/` are "
-        "**painted**; the rest are **generated placeholders** -- flat paper-cut geometry, no "
-        "rendering -- kept so the identity picker is playable end to end. A painting replaces a",
-        "placeholder file-for-file: same id, same directory, same filename, and",
-        "`art_manifest.json` records which is which and what each painting was cut from. A",
-        "painted slot's row below still describes the recipe it was authored from, which is what",
-        "a replacement would be matched against; the shipped file is the art.",
+        *status,
         "",
         "## Target style",
         "",
@@ -999,8 +1012,10 @@ def art_brief() -> str:
         "",
         "- **Framing:** 1:1 square, head and shoulders, eye line about a third from the top,",
         "  shoulders cropped by the frame edge, character centred, no text or watermark.",
-        "- **Size:** author at 1024x1024, ship at 512x512 (the client draws it as small as",
-        "  52px in the top rail and 76px in the picker).",
+        "- **Size:** author no smaller than the client ever draws it -- 76px in the picker, the",
+        "  dossier and the menu, 52px in the top rail. `tools/import_avatar_art.py` ships at",
+        "  most `--size` (default 512) and never upscales, so a 192px source ships at 192 and",
+        "  stays sharp instead of being stretched into a soft 512.",
         "- **Format:** PNG, sRGB, 8-bit. Opaque ground is fine: the client cover-crops, so a",
         "  square file is always used whole.",
         "- **Naming:** `frontend-godot/assets/avatars/<id>.png`, ids exactly as tabled below.",

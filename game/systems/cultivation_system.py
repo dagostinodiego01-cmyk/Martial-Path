@@ -27,7 +27,20 @@ class CultivationSystem:
 
     BODY_TRACK_ID = "body_transformation"
     ESSENCE_TRACK_ID = "essence_gathering"
-    BREAKTHROUGH_SUCCESS_CHANCE = 0.75
+    #: Baseline odds before foundation, support and traits are added (C.3).
+    #:
+    #: Raised from 0.75 with :data:`FOUNDATION_ODDS_ANCHOR`: the two together used
+    #: to make the *first* breakthrough in every run the least likely one, because a
+    #: fresh character has foundation 10 while the odds were centred on 50 -- 43% of
+    #: runs failed it, and a failure cost enough actions to blow the F.6 budget.
+    BREAKTHROUGH_SUCCESS_CHANCE = 0.85
+    #: Foundation value that neither helps nor hurts. Set to the value every
+    #: character starts with (``BodyCultivationState.foundation``), so foundation is
+    #: a reward for training rather than a fee charged for being new.
+    FOUNDATION_ODDS_ANCHOR = 10.0
+    #: Foundation swing across the full 0-100 range, split above and below the
+    #: anchor. Full foundation is worth +0.45 at this divisor.
+    FOUNDATION_ODDS_DIVISOR = 200.0
 
     def __init__(
         self,
@@ -927,7 +940,11 @@ class CultivationSystem:
             support = self.calculate_body_support_for_essence(player) * 10.0
             trait_modifier = self._spiritual_root_float(player, "essence_breakthrough_modifier", 0.0)
             equipment_modifier = float(self._equipment_modifiers(player).get("cultivation_modifiers", {}).get("essence_breakthrough_modifier", 0.0))
-        chance = self.BREAKTHROUGH_SUCCESS_CHANCE + ((foundation - 50.0) / 200.0) + (support / 200.0)
+        chance = (
+            self.BREAKTHROUGH_SUCCESS_CHANCE
+            + ((foundation - self.FOUNDATION_ODDS_ANCHOR) / self.FOUNDATION_ODDS_DIVISOR)
+            + (support / self.FOUNDATION_ODDS_DIVISOR)
+        )
         chance += trait_modifier
         chance += equipment_modifier
         chance += float(self._equipment_modifiers(player).get("cultivation_modifiers", {}).get("breakthrough_chance_modifier", 0.0))

@@ -94,8 +94,16 @@ func _import_one(item: Dictionary, size: int) -> Dictionary:
 	var skin := _skin_box(image, 0.0, 1.0)
 	var cropped := image.get_region(Rect2i(left, top, side, side))
 
-	if cropped.get_width() != size or cropped.get_height() != size:
-		cropped.resize(size, size, Image.INTERPOLATE_LANCZOS)
+	# ``size`` is a cap, not a target: the client's largest portrait is 76px, so
+	# upscaling a small crop would add bytes and soften the face for nothing.
+	var shipped := mini(size, side)
+	# Avatars are drawn opaque and cover-cropped (a transparent pixel would
+	# punch a hole in the picker), so a source with an alpha channel is
+	# flattened to RGB rather than shipped with one nobody reads.
+	if cropped.get_format() != Image.FORMAT_RGB8:
+		cropped.convert(Image.FORMAT_RGB8)
+	if cropped.get_width() != shipped or cropped.get_height() != shipped:
+		cropped.resize(shipped, shipped, Image.INTERPOLATE_LANCZOS)
 	var save_err := cropped.save_png(dest)
 	if save_err != OK:
 		printerr("could not write %s (error %d)" % [dest, save_err])
@@ -126,7 +134,8 @@ func _import_one(item: Dictionary, size: int) -> Dictionary:
 		"source_height": height,
 		"crop": {"left": left, "top": top, "side": side,
 			"zoom": window.get("zoom", 1.0), "anchor": window.get("anchor", "top")},
-		"size": size,
+		"size": shipped,
+		"requested_size": size,
 		"face": face,
 		# Informational: where the subject's skin tones sit in the source (a
 		# heuristic, reported so a crop can be judged without opening the file).

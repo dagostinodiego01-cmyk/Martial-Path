@@ -30,23 +30,28 @@ class DebateMixin:
 
     # -- eligibility ----------------------------------------------------------
     def _debate_candidates(self, character_id: str) -> Dict[str, Any]:
-        """Resolve a character into its debate/oath foe spawn, or an error reason.
+        """Resolve a character into its debate/oath foe spawn, or a ``reason``.
 
         A character may debate (and optionally stake an oath duel) when it can
         spar: both are consensual contests against the character's foe template.
+
+        Every failure carries the standard ``reason`` key -- it used to be spelled
+        ``error``, which made the resulting :data:`EventType.ERROR` unrecognisable to
+        :func:`game.utils.reasons.explain` and left the player reading the random
+        ``error`` narrative template instead of the cause.
         """
         character = self.character_service.get_character(character_id)
         if character is None:
-            return {"error": "UNKNOWN_CHARACTER", "character_id": character_id}
+            return {"reason": "UNKNOWN_CHARACTER", "character_id": character_id}
         gate = self.character_service.can_spar(character_id, self.player)
         if not gate.get("allowed"):
-            return {"error": gate.get("reason", "NOT_AVAILABLE"), "character_id": character_id}
+            return {"reason": gate.get("reason", "NOT_AVAILABLE"), "character_id": character_id}
         enemy_id = gate.get("enemy_id", "")
         if not enemy_id:
-            return {"error": "NO_CHARACTER_ENEMY", "character_id": character_id}
+            return {"reason": "NO_CHARACTER_ENEMY", "character_id": character_id}
         enemy = self._spawn_character_enemy(enemy_id)
         if enemy is None:
-            return {"error": "UNKNOWN_ENEMY", "character_id": character_id, "enemy_id": enemy_id}
+            return {"reason": "UNKNOWN_ENEMY", "character_id": character_id, "enemy_id": enemy_id}
         return {"enemy": enemy, "character_id": character_id, "name": str(character.get("name", character_id))}
 
     # -- starting a debate ------------------------------------------------------
@@ -55,7 +60,7 @@ class DebateMixin:
         if self._mode == MODE_DEBATE:
             return {"event": EventType.ERROR, "reason": "ALREADY_IN_DEBATE"}
         resolved = self._debate_candidates(character_id)
-        if "error" in resolved:
+        if "reason" in resolved:
             return {"event": EventType.ERROR, **resolved}
         foe: Enemy = resolved["enemy"]
         # Conviction is insight-shaped: for the debate's duration the player's

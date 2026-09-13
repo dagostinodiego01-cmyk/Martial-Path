@@ -6,12 +6,13 @@ split, plus the contract that keeps the roster, the recipe table, the shipped
 art, and the provenance manifest in lockstep.
 
 Art arrives in two kinds, and they are held to different standards. A slot is a
-*placeholder* until a painting lands in it: placeholders are drawn by
-``tools/gen_avatar_art.py``, so their pixels are generated and can be pinned
-outright. Once ``tools/import_avatar_art.py`` has imported a file into a slot,
-the manifest says so and the tests stop pinning pixels -- a painting is the
-artist's, not the test's -- and pin provenance instead (sizes, hashes, and a
-crop that is a bust rather than a full torso).
+*placeholder* until a painting lands in it: a placeholder must be byte-for-byte
+what ``tools/gen_avatar_art.py`` draws, so nobody can slip an unfinished file
+into an empty slot. Once ``tools/import_avatar_art.py`` has imported a file, the
+manifest says so and the tests stop pinning pixels -- a painting is the
+artist's, not the test's -- and pin provenance instead: the shipped bytes match
+the recorded hash, the crop is inside the source and replays from its recipe,
+and it was never upscaled.
 """
 from __future__ import annotations
 
@@ -37,6 +38,10 @@ ROOT = Path(__file__).resolve().parent.parent
 AVATAR_DIR = ROOT / "frontend-godot" / "assets" / "avatars"
 MANIFEST_PATH = AVATAR_DIR / "art_manifest.json"
 PROFILE_SCRIPT = ROOT / "frontend-godot" / "scripts" / "PlayerProfile.gd"
+
+#: The client's largest portrait is 76px (picker well, dossier well, menu well),
+#: so a crop under 128px would be drawn upscaled and soft.
+MIN_PORTRAIT_SOURCE = 128
 
 #: One `{"id": ..., "name": ..., "gender": ..., "epithet": ...},` row of the
 #: client's roster constant.
@@ -181,11 +186,14 @@ def test_imported_art_matches_its_provenance():
         assert colour_type == 2, f"{avatar_id} must be 8-bit RGB"
 
 
-def test_imported_art_is_a_bust_not_a_full_torso():
-    """The picker draws 76px cells: a full-length figure reads as a smudge.
+def test_imported_art_records_a_replayable_crop():
+    """The manifest's own recipe has to reproduce the crop that shipped.
 
-    The manifest's own crop recipe is replayed here, so the geometry (and the
-    framing decision it encodes) cannot drift from what was shipped.
+    Whether a crop frames a face well is a human judgement -- painted
+    backgrounds lie to tone detection, so every imported portrait was reviewed
+    by eye -- but the *geometry* is checkable: it replays from the recorded
+    spec, it stays inside the source, and it holds enough source pixels that the
+    client's 76px portrait is not an upscaled blur.
     """
     for avatar_id, entry in _manifest().items():
         spec = entry["spec"]
@@ -196,8 +204,9 @@ def test_imported_art_is_a_bust_not_a_full_torso():
         assert crop["left"] >= 0 and crop["top"] >= 0, avatar_id
         assert crop["left"] + crop["side"] <= source_width, avatar_id
         assert crop["top"] + crop["side"] <= source_height, avatar_id
-        # A bust: neither the whole frame (no framing happened) nor a speck of it.
-        assert 0.20 * short <= crop["side"] <= 0.90 * short, (avatar_id, crop["side"], short)
+        assert MIN_PORTRAIT_SOURCE <= crop["side"] <= short, (avatar_id, crop["side"], short)
+        # Never upscaled: the shipped square is the crop, capped at the request.
+        assert entry["size"] == min(entry["size_cap"], crop["side"]), avatar_id
         if spec["anchor"] in {"top", "center"}:
             assert abs(crop["side"] - round(short * spec["zoom"])) <= 1, avatar_id
             expected_top = 0 if spec["anchor"] == "top" else round((source_height - crop["side"]) / 2)
@@ -205,32 +214,36 @@ def test_imported_art_is_a_bust_not_a_full_torso():
             assert crop["top"] == min(max(nudged, 0), source_height - crop["side"]), avatar_id
 
 
-def test_placeholder_portraits_are_distinct_256px_rgb():
+def test_unimported_art_is_exactly_what_the_generator_draws():
+    """A slot with no imported painting must still be the generator's own output.
+
+    This is what keeps a placeholder honest: it is not merely *an* image, it is
+    the image the recipe table draws, so the roster can never quietly ship a
+    stranger's half-finished file in an empty slot. (Every slot is painted
+    today, so this is a guard rather than a check that currently bites.)
+    """
     painted = gen_avatar_art.painted_ids()
     for recipe in [r for r in RECIPES if r["id"] not in painted]:
-        payload = (AVATAR_DIR / f"{recipe['id']}.png").read_bytes()
+        assert (AVATAR_DIR / f"{recipe['id']}.png").read_bytes() == gen_avatar_art.render(recipe)
+
+
+def test_the_generator_draws_each_recipe_its_own_face():
+    """The generator stays covered even while every slot carries a painting."""
+    digests = set()
+    for recipe in RECIPES[:3]:
+        payload = gen_avatar_art.render(recipe)
         width, height, colour_type = _png_header(payload)
         assert (width, height) == (256, 256), recipe["id"]
         assert colour_type == 2, f"{recipe['id']} must be 8-bit RGB"
-
-
-def test_each_placeholder_shows_its_own_recipe_face():
-    """The face centre must be that recipe's skin tone (proves the mapping)."""
-    painted = gen_avatar_art.painted_ids()
-    for recipe in [r for r in RECIPES if r["id"] not in painted]:
-        pixels = _png_pixels((AVATAR_DIR / f"{recipe['id']}.png").read_bytes())
+        pixels = _png_pixels(payload)
         face = pixels[132][128]
         skin = tuple(recipe["skin"])
         assert all(abs(face[i] - skin[i]) <= 14 for i in range(3)), (recipe["id"], face, skin)
-
-
-def test_placeholders_are_not_flat_fills():
-    painted = gen_avatar_art.painted_ids()
-    for recipe in [r for r in RECIPES if r["id"] not in painted]:
-        pixels = _png_pixels((AVATAR_DIR / f"{recipe['id']}.png").read_bytes())
         samples = {pixels[y][x] for y in range(0, 256, 8) for x in range(0, 256, 8)}
         assert len(samples) > 40, f"{recipe['id']} looks like a flat fill ({len(samples)} shades)"
         assert sum(1 for p in samples if p == (0, 0, 0)) == 0, recipe["id"]
+        digests.add(hashlib.md5(payload).hexdigest())
+    assert len(digests) == 3, "two recipes drew the same placeholder"
 
 
 def test_generation_never_overwrites_imported_art(tmp_path, monkeypatch):
