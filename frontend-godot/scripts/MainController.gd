@@ -2767,7 +2767,13 @@ func _rebuild_combat_actions() -> void:
 	_combat_actions.add_child(_make_button("Flee", func(): _send("FLEE"), "Attempt to escape."))
 	# B.9 formations: when more than one foe stands, let the player pick which
 	# one to face instead of locking the fight to whoever arrived first.
-	var facing := str(_last_state.get("enemy", {}).get("id", ""))
+	# The engine always sends the "enemy" key, but sets it to null outside combat,
+	# and Dictionary.get() returns that null rather than the {} fallback -- so the
+	# value's type must be tested before it is read.
+	var current_enemy = _last_state.get("enemy")
+	var facing := ""
+	if typeof(current_enemy) == TYPE_DICTIONARY:
+		facing = str(current_enemy.get("id", ""))
 	for foe in _last_state.get("enemies", []):
 		if typeof(foe) != TYPE_DICTIONARY:
 			continue
@@ -3024,7 +3030,9 @@ func _render_event(result: Dictionary) -> void:
 			_render_encounter_result(result)
 		"COMBAT":
 			_set_combat_mode(true)
-			_update_enemy(result.get("enemy", {}))
+			var combat_enemy = result.get("enemy")
+			if typeof(combat_enemy) == TYPE_DICTIONARY:
+				_update_enemy(combat_enemy)
 			_set_situation("Combat Encounter", str(result.get("text", "A battle begins!")))
 			_append("[color=#D27A2C]%s[/color]" % str(result.get("text", "A battle begins!")))
 		"COMBAT_TURN":
