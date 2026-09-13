@@ -24,6 +24,8 @@ class CLIInterface:
             EventType.TRAIN_RESULT: self._fmt_train,
             EventType.BREAKTHROUGH_RESULT: self._fmt_breakthrough,
             EventType.EXPLORE_RESULT: self._fmt_explore,
+            EventType.ENCOUNTER: self._fmt_encounter,
+            EventType.ENCOUNTER_RESULT: self._fmt_encounter_result,
             EventType.COMBAT: self._fmt_combat_start,
             EventType.COMBAT_TURN: self._fmt_combat_turn,
             EventType.COMBAT_END: self._fmt_combat_end,
@@ -116,12 +118,82 @@ class CLIInterface:
     def _fmt_explore(self, result: Dict[str, Any]) -> None:
         self._p(result.get("text", "You explore, but nothing happens."))
 
+    def _fmt_encounter(self, result: Dict[str, Any]) -> None:
+        """Render a pending encounter as a numbered menu the player chooses from."""
+        self._hr()
+        head = result.get("title", "Encounter")
+        if result.get("ambush"):
+            head += " (ambushed!)"
+        self._p(head.upper())
+        self._p(result.get("narrative", "") or result.get("text", ""))
+        if result.get("text") and result.get("text") != result.get("narrative"):
+            self._p(result["text"])
+        foes = result.get("foes") or []
+        if foes:
+            names = ", ".join(f"{foe['name']} ({foe.get('realm', '?')})" for foe in foes)
+            self._p(f"Facing: {names}")
+            if result.get("threat"):
+                self._p(f"Threat: {result['threat']}")
+        reveal = result.get("reveal") or {}
+        if reveal.get("hazard"):
+            hazard = reveal["hazard"]
+            self._p(f"Hazard: {hazard.get('name')} - {hazard.get('damage')} damage if it catches you.")
+        if reveal.get("trap", {}).get("trapped"):
+            self._p(f"Trap: {reveal['trap'].get('name')} - {reveal['trap'].get('damage')} damage. You can take it safely now.")
+        # Every option keeps its real position, withheld ones included, so the
+        # number the player types always maps to the option it was shown against.
+        for index, option in enumerate(result.get("options", []), start=1):
+            if option.get("available"):
+                self._p(f"  [{index}] {option['label']} - {option.get('hint', '')}")
+                odds = self._describe_choice_odds(option)
+                if odds:
+                    self._p(f"      {odds}")
+            else:
+                self._p(f"  [{index}] {option['label']} - unavailable: {option.get('reason', 'not possible here')}")
+        self._p("Choose with: choose <number> or choose <choice>")
+        self._hr()
+
+    def _describe_choice_odds(self, option: Dict[str, Any]) -> str:
+        """Summarise a choice's known odds, cost, and risk for the menu."""
+        bits = []
+        if option.get("chance") is not None:
+            bits.append(f"chance {int(round(float(option['chance']) * 100))}%")
+        cost = option.get("cost") or {}
+        if cost:
+            bits.append("cost " + ", ".join(f"{amount} {currency.replace('_', ' ')}" for currency, amount in cost.items()))
+        return " | ".join(bits)
+
+    def _fmt_encounter_result(self, result: Dict[str, Any]) -> None:
+        """Render the outcome of an encounter choice that did not start a fight."""
+        self._hr()
+        self._p(result.get("player_message") or result.get("narrative", ""))
+        if result.get("cost"):
+            self._p("  Paid: " + ", ".join(f"{amount} {currency}" for currency, amount in result["cost"].items()))
+        if result.get("damage"):
+            self._p(f"  You are hurt for {result['damage']} (HP {result.get('hp')}).")
+        if result.get("shrugged_off"):
+            self._p("  You keep your feet, barely.")
+        if result.get("exp_gained"):
+            self._p(f"  Insight from the road: EXP +{result['exp_gained']}.")
+        if result.get("reputation_gained"):
+            self._p(f"  Word of it spreads: reputation +{result['reputation_gained']}.")
+        if result.get("insight_gained"):
+            self._p(f"  Insight +{result['insight_gained']}.")
+        loot = result.get("loot") or {}
+        if loot:
+            self._p(f"  Obtained: {loot.get('name', loot.get('item_id'))} x{loot.get('count', 1)}.")
+        self._hr()
+
     def _fmt_combat_start(self, result: Dict[str, Any]) -> None:
         enemy = result["enemy"]
         self._hr()
         self._p(result.get("text", "A battle begins!"))
         self._p(f"  {enemy['name']} ({enemy.get('realm', 'Unknown Realm')}) - HP {enemy['hp']}/{enemy['max_hp']}, "
                 f"ATK {enemy['attack']}, DEF {enemy['defense']}")
+        for foe in (result.get("enemies") or [])[1:]:
+            self._p(f"  Also present: {foe['name']} - HP {foe['hp']}/{foe['max_hp']}")
+        if (result.get("enemies") or [])[1:]:
+            self._p("  Face one with: target <foe_id>")
         self._p("  Commands: attack | skill <id> | use <id> | flee")
         self._hr()
 
@@ -384,7 +456,9 @@ class CLIInterface:
         self._hr()
 
     def _fmt_error(self, result: Dict[str, Any]) -> None:
-        self._p("! " + self._describe_error(result))
+        # A refusal that explains itself in-world reads better than a code, so
+        # the engine's own wording wins whenever it supplied one.
+        self._p("! " + (result.get("player_message") or self._describe_error(result)))
 
     def _fmt_quit(self, _result: Dict[str, Any]) -> None:
         self._p("You sever your ties to the world of cultivation. Until next time.")
@@ -417,6 +491,21 @@ class CLIInterface:
             return "You try to flee but fail to break away!"
         if action == "FLEE_SUCCESS":
             return "You slip away into the wilderness."
+        if action == "INSIGHT":
+            return f"You read the flow of it (+{event.get('gain')} insight)."
+        if action == "PACK_PRESS":
+            return f"The {event.get('enemy_name', 'other foe')} presses in for {event.get('damage')} damage."
+        if action == "FOE_DOWN":
+            return f"The {event.get('enemy_name', 'foe')} goes down -- and the rest close in."
+        if action == "FOE_STEPS_UP":
+            return f"The {event.get('enemy_name', 'next foe')} steps up to take its place."
+        if action == "RETARGET":
+            return f"You turn your guard to the {event.get('enemy_name', 'foe')}."
+        if action == "HAZARD":
+            target = event.get("enemy_name")
+            if target:
+                return f"The {event.get('hazard', 'ground')} takes the {target} for {event.get('damage')} damage."
+            return f"The {event.get('hazard', 'ground')} takes you for {event.get('damage')} damage."
         return str(event)
 
     def _describe_error(self, result: Dict[str, Any]) -> str:
@@ -462,6 +551,10 @@ class CLIInterface:
             "NOTHING_TO_REPAIR": lambda: "That item is already in perfect condition.",
             "ITEM_NOT_EQUIPPED": lambda: "That item is not currently equipped.",
             "IRONMAN_MODE": lambda: "Ironman mode forbids reloading a save.",
+            "INVALID_IN_ENCOUNTER": lambda: "A situation is waiting on your decision. Choose one of its options first.",
+            "NOT_IN_ENCOUNTER": lambda: "There is no encounter waiting on you.",
+            "UNKNOWN_CHOICE": lambda: f"That is not one of the offered options: {result.get('available', [])}.",
+            "CHOICE_OUT_OF_RANGE": lambda: f"Pick a number between 1 and {len(result.get('available', []))}.",
             "IMPORT_EMPTY": lambda: "Provide a save record to import.",
             "IMPORT_INVALID": lambda: "That save record could not be read.",
         }
@@ -476,8 +569,13 @@ class CLIInterface:
             return "\n[Starting Fate pending - type 'roll fate' or 'accept fate']\n> "
         if state["in_combat"] and state["enemy"]:
             enemy = state["enemy"]
+            others = [foe for foe in (state.get("enemies") or []) if foe["name"] != enemy["name"]]
+            backup = f" | also: {','.join(foe['name'] for foe in others)}" if others else ""
             return (f"\n[COMBAT] You {player['hp']}/{player['max_hp']} HP | "
-                    f"{enemy['name']} {enemy['hp']}/{enemy['max_hp']} HP\n> ")
+                    f"{enemy['name']} {enemy['hp']}/{enemy['max_hp']} HP{backup}\n> ")
+        if state.get("in_encounter") and state.get("encounter"):
+            encounter = state["encounter"]
+            return f"\n[{encounter.get('title', 'Encounter')}] choose <number> or choose <choice>\n> "
         cultivation = player.get("cultivation_state", {})
         body = cultivation.get("body_transformation", {})
         essence = cultivation.get("essence_gathering", {})

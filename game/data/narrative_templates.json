@@ -1244,5 +1244,414 @@
         "template": "The argument wears itself out, and you and {enemy} bow apart without conceding."
       }
     ]
+  },
+  "encounter": {
+    "variables": [],
+    "variants": [
+      {
+        "weight": 3,
+        "template": "The road offers you a choice, and no clear right answer."
+      },
+      {
+        "weight": 2,
+        "template": "Something waits on the path ahead, patient as a held breath."
+      },
+      {
+        "weight": 2,
+        "template": "The world narrows to this moment and the decision inside it."
+      }
+    ]
+  },
+  "encounter_result": {
+    "variables": [],
+    "variants": [
+      {
+        "weight": 3,
+        "template": "The moment resolves, and the road goes on."
+      },
+      {
+        "weight": 2,
+        "template": "You take what the meeting offered and walk on."
+      },
+      {
+        "weight": 2,
+        "template": "The scene closes like a door, and the journey continues."
+      }
+    ]
+  },
+  "encounter_ambush": {
+    "variables": [
+      "enemy"
+    ],
+    "variants": [
+      {
+        "weight": 3,
+        "template": "There is no warning at all; the {enemy} is already moving by the time you hear it."
+      },
+      {
+        "weight": 2,
+        "template": "They were waiting, and the waiting is over: the {enemy} comes out of the quiet."
+      },
+      {
+        "weight": 2,
+        "template": "The ambush springs shut before your feet find their stance."
+      }
+    ]
+  },
+  "encounter_combat": {
+    "variables": [
+      "enemy"
+    ],
+    "variants": [
+      {
+        "weight": 3,
+        "template": "The {enemy} bars the way, hackles up and unwilling to yield the ground."
+      },
+      {
+        "weight": 2,
+        "template": "You and the {enemy} take each other's measure across a few paces of open ground."
+      },
+      {
+        "weight": 2,
+        "template": "A {enemy} stands where your road runs, and it has already decided about you."
+      }
+    ]
+  },
+  "encounter_loot": {
+    "variables": [],
+    "variants": [
+      {
+        "weight": 3,
+        "template": "Something lies half-buried where the path bends, wrapped against the weather."
+      },
+      {
+        "weight": 2,
+        "template": "A cache sits in the lee of a rock, placed there rather than dropped."
+      },
+      {
+        "weight": 2,
+        "template": "Your eye catches on a shape that does not belong: a find, waiting to be claimed."
+      }
+    ]
+  },
+  "encounter_special": {
+    "variables": [],
+    "variants": [
+      {
+        "weight": 3,
+        "template": "The air changes here, thin and bright, as though the land were holding its breath around something old."
+      },
+      {
+        "weight": 2,
+        "template": "Spirit energy pools in this place until the stones themselves seem to listen."
+      },
+      {
+        "weight": 2,
+        "template": "You feel the pull of a site the world has not forgotten."
+      }
+    ]
+  },
+  "encounter_hazard": {
+    "variables": [],
+    "variants": [
+      {
+        "weight": 3,
+        "template": "The ground ahead is wrong: it waits, and it is hungry."
+      },
+      {
+        "weight": 2,
+        "template": "Qi lies stagnant across the path in a way that makes your meridians flinch."
+      },
+      {
+        "weight": 2,
+        "template": "Nothing living crosses here, and after a moment you understand why."
+      }
+    ]
+  },
+  "encounter_fight": {
+    "variables": [
+      "enemy"
+    ],
+    "variants": [
+      {
+        "weight": 3,
+        "template": "You settle your weight and go at the {enemy} before it can set its feet."
+      },
+      {
+        "weight": 2,
+        "template": "Enough of talking. You close the distance and let your hands answer."
+      },
+      {
+        "weight": 2,
+        "template": "You choose the blow, and the {enemy} learns what you chose."
+      }
+    ]
+  },
+  "encounter_observed": {
+    "variables": [],
+    "variants": [
+      {
+        "weight": 3,
+        "template": "You hold still and read the scene the way you would read a page."
+      },
+      {
+        "weight": 2,
+        "template": "You take the measure of the ground, and of whatever stands on it."
+      },
+      {
+        "weight": 2,
+        "template": "Patience buys you the detail everyone else walks past."
+      }
+    ]
+  },
+  "encounter_parley": {
+    "variables": [
+      "enemy"
+    ],
+    "variants": [
+      {
+        "weight": 3,
+        "template": "You speak first, and the {enemy} answers with grudging respect."
+      },
+      {
+        "weight": 2,
+        "template": "Words do what steel would have cost: the {enemy} steps aside."
+      },
+      {
+        "weight": 2,
+        "template": "You name the truth between you, and the {enemy} lets it stand."
+      }
+    ]
+  },
+  "encounter_parley_fail": {
+    "variables": [
+      "enemy"
+    ],
+    "variants": [
+      {
+        "weight": 3,
+        "template": "The {enemy} hears you out and decides you are worth killing anyway."
+      },
+      {
+        "weight": 2,
+        "template": "Your words fall flat; the {enemy} answers with a hand on its weapon."
+      },
+      {
+        "weight": 2,
+        "template": "Whatever passed for patience in the {enemy} has just run out."
+      }
+    ]
+  },
+  "encounter_sneak": {
+    "variables": [],
+    "variants": [
+      {
+        "weight": 3,
+        "template": "You keep low and let the ground cover you, one careful step at a time."
+      },
+      {
+        "weight": 2,
+        "template": "You breathe slow, pick your line, and become part of the scenery."
+      },
+      {
+        "weight": 2,
+        "template": "They never look your way, and you are past them before they think to."
+      }
+    ]
+  },
+  "encounter_sneak_fail": {
+    "variables": [
+      "enemy"
+    ],
+    "variants": [
+      {
+        "weight": 3,
+        "template": "A dry twig betrays you, and the {enemy} turns at the sound."
+      },
+      {
+        "weight": 2,
+        "template": "You are halfway past when the {enemy} lifts its head, and the moment is gone."
+      },
+      {
+        "weight": 2,
+        "template": "The {enemy} was listening better than you knew."
+      }
+    ]
+  },
+  "encounter_bribe": {
+    "variables": [
+      "enemy"
+    ],
+    "variants": [
+      {
+        "weight": 3,
+        "template": "You show your purse, and the {enemy} decides the road is worth less than the coin."
+      },
+      {
+        "weight": 2,
+        "template": "Coin changes hands; the {enemy} counts it in silence and stands aside."
+      },
+      {
+        "weight": 2,
+        "template": "There is no honour in it, but the toll is paid and the {enemy} lets you by."
+      }
+    ]
+  },
+  "encounter_bribe_refused": {
+    "variables": [
+      "enemy"
+    ],
+    "variants": [
+      {
+        "weight": 3,
+        "template": "The {enemy} looks at what you offer and finds it an insult."
+      },
+      {
+        "weight": 2,
+        "template": "Your coin rings on the ground, and the {enemy} never looks at it."
+      },
+      {
+        "weight": 2,
+        "template": "Whatever the {enemy} wants, it cannot be bought."
+      }
+    ]
+  },
+  "encounter_withdraw": {
+    "variables": [],
+    "variants": [
+      {
+        "weight": 3,
+        "template": "You give the road up and take the long way, unhurried and unashamed."
+      },
+      {
+        "weight": 2,
+        "template": "You step back, keeping your hands where they can be seen, and go."
+      },
+      {
+        "weight": 2,
+        "template": "There is no shame in leaving a fight you did not choose."
+      }
+    ]
+  },
+  "encounter_withdraw_fail": {
+    "variables": [
+      "enemy"
+    ],
+    "variants": [
+      {
+        "weight": 3,
+        "template": "You turn to go, and the {enemy} is already between you and the way out."
+      },
+      {
+        "weight": 2,
+        "template": "Retreat is a decision the {enemy} refuses to allow."
+      },
+      {
+        "weight": 2,
+        "template": "Your first backward step is your last free one."
+      }
+    ]
+  },
+  "encounter_taken": {
+    "variables": [],
+    "variants": [
+      {
+        "weight": 3,
+        "template": "You lift it clear of the ground and tuck it away."
+      },
+      {
+        "weight": 2,
+        "template": "It comes away clean in your hand, and it is yours now."
+      },
+      {
+        "weight": 2,
+        "template": "You take it, and the road keeps no record of the taking."
+      }
+    ]
+  },
+  "encounter_trap": {
+    "variables": [],
+    "variants": [
+      {
+        "weight": 3,
+        "template": "The find bites; whoever laid it was patient, and you were not."
+      },
+      {
+        "weight": 2,
+        "template": "Your fingers find the ward a heartbeat too late."
+      },
+      {
+        "weight": 2,
+        "template": "It was bait, and the price of the lesson is written in your blood."
+      }
+    ]
+  },
+  "encounter_decline": {
+    "variables": [],
+    "variants": [
+      {
+        "weight": 3,
+        "template": "You leave it where it lies and put the place behind you."
+      },
+      {
+        "weight": 2,
+        "template": "Not every gift is meant for your hand; you walk on."
+      },
+      {
+        "weight": 2,
+        "template": "You decline, and the land keeps what it was holding."
+      }
+    ]
+  },
+  "encounter_accept": {
+    "variables": [],
+    "variants": [
+      {
+        "weight": 3,
+        "template": "You open your stance to the place and let it work."
+      },
+      {
+        "weight": 2,
+        "template": "You accept what is offered, and the qi moves through you in answer."
+      },
+      {
+        "weight": 2,
+        "template": "You take the site's gift the way it was meant to be taken: without greed."
+      }
+    ]
+  },
+  "encounter_hazard_push": {
+    "variables": [],
+    "variants": [
+      {
+        "weight": 3,
+        "template": "You fix your eyes on the far side and go, one breath at a time."
+      },
+      {
+        "weight": 2,
+        "template": "You wrap qi about yourself like a cloak and step into it."
+      },
+      {
+        "weight": 2,
+        "template": "There is nothing for it but through, so you press on."
+      }
+    ]
+  },
+  "encounter_hazard_defuse": {
+    "variables": [],
+    "variants": [
+      {
+        "weight": 3,
+        "template": "You read the current, find the seam in it, and walk the seam."
+      },
+      {
+        "weight": 2,
+        "template": "There is a way through for anyone patient enough to find it, and you find it."
+      },
+      {
+        "weight": 2,
+        "template": "You spend the time it takes to learn the pattern, then follow it out."
+      }
+    ]
   }
 }

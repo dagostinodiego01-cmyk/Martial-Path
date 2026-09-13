@@ -660,6 +660,198 @@
         "price": {
           "gold": 60
         }
+      },
+      {
+        "item_id": "blazing_yang_cuirass",
+        "price": {
+          "gold": 28
+        }
+      },
+      {
+        "item_id": "blood_quenching_pellet_mortal",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "celestial_decoction_mortal",
+        "price": {
+          "gold": 2398
+        }
+      },
+      {
+        "item_id": "cloudpiercing_mirror",
+        "price": {
+          "gold": 29
+        }
+      },
+      {
+        "item_id": "coiling_dragon_whip",
+        "price": {
+          "gold": 32
+        }
+      },
+      {
+        "item_id": "demon_sealing_amulet",
+        "price": {
+          "gold": 33
+        }
+      },
+      {
+        "item_id": "earth_vein_talisman",
+        "price": {
+          "gold": 31
+        }
+      },
+      {
+        "item_id": "frost_jade_elixir_mortal",
+        "price": {
+          "gold": 100
+        }
+      },
+      {
+        "item_id": "frost_jade_elixir_no3",
+        "price": {
+          "gold": 100
+        }
+      },
+      {
+        "item_id": "ghost_flame_shroud",
+        "price": {
+          "gold": 36
+        }
+      },
+      {
+        "item_id": "glacial_bell",
+        "price": {
+          "gold": 32
+        }
+      },
+      {
+        "item_id": "golden_body_mantle",
+        "price": {
+          "gold": 34
+        }
+      },
+      {
+        "item_id": "heaven_splitting_whip",
+        "price": {
+          "gold": 37
+        }
+      },
+      {
+        "item_id": "immortal_ascension_elixir_mortal",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "inferno_band",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "inferno_signet",
+        "price": {
+          "gold": 35
+        }
+      },
+      {
+        "item_id": "life_extending_elixir_mortal",
+        "price": {
+          "gold": 2354
+        }
+      },
+      {
+        "item_id": "marrow_cleansing_dan_mortal",
+        "price": {
+          "gold": 28
+        }
+      },
+      {
+        "item_id": "mystic_dan_mortal",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "mystic_pill_mortal",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "nether_river_cape",
+        "price": {
+          "gold": 27
+        }
+      },
+      {
+        "item_id": "nether_river_sabatons",
+        "price": {
+          "gold": 35
+        }
+      },
+      {
+        "item_id": "nine_revolutions_nectar_mortal",
+        "price": {
+          "gold": 84
+        }
+      },
+      {
+        "item_id": "plain_cultivator_robe",
+        "price": {
+          "gold": 45
+        }
+      },
+      {
+        "item_id": "profound_dan",
+        "price": {
+          "gold": 15
+        }
+      },
+      {
+        "item_id": "purple_cloud_battle_armor",
+        "price": {
+          "gold": 37
+        }
+      },
+      {
+        "item_id": "storm_origin_talisman",
+        "price": {
+          "gold": 32
+        }
+      },
+      {
+        "item_id": "thunder_essence_pill_mortal",
+        "price": {
+          "gold": 413
+        }
+      },
+      {
+        "item_id": "true_dragon_striders",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "vermilion_bird_medallion",
+        "price": {
+          "gold": 26
+        }
+      },
+      {
+        "item_id": "vermilion_dan",
+        "price": {
+          "gold": 13
+        }
+      },
+      {
+        "item_id": "white_tiger_ring",
+        "price": {
+          "gold": 31
+        }
       }
     ]
   },
@@ -1513,6 +1705,96 @@
         "price": {
           "gold": 25
         }
+      },
+      {
+        "item_id": "azure_seal",
+        "price": {
+          "gold": 145
+        }
+      },
+      {
+        "item_id": "blazing_yang_trident",
+        "price": {
+          "gold": 180
+        }
+      },
+      {
+        "item_id": "cloud_sea_cape",
+        "price": {
+          "gold": 161
+        }
+      },
+      {
+        "item_id": "crimson_lotus_vestments",
+        "price": {
+          "gold": 143
+        }
+      },
+      {
+        "item_id": "earth_pill",
+        "price": {
+          "gold": 52
+        }
+      },
+      {
+        "item_id": "eternal_night_compass",
+        "price": {
+          "gold": 142
+        }
+      },
+      {
+        "item_id": "ghost_flame_charm",
+        "price": {
+          "gold": 134
+        }
+      },
+      {
+        "item_id": "golden_body_ring",
+        "price": {
+          "gold": 134
+        }
+      },
+      {
+        "item_id": "mist_ward_talisman",
+        "price": {
+          "gold": 150
+        }
+      },
+      {
+        "item_id": "nirvana_ring",
+        "price": {
+          "gold": 137
+        }
+      },
+      {
+        "item_id": "profound_yin_cuirass",
+        "price": {
+          "gold": 145
+        }
+      },
+      {
+        "item_id": "thunder_spear",
+        "price": {
+          "gold": 168
+        }
+      },
+      {
+        "item_id": "verdant_emperor_boots",
+        "price": {
+          "gold": 37
+        }
+      },
+      {
+        "item_id": "vermilion_pellet",
+        "price": {
+          "gold": 28
+        }
+      },
+      {
+        "item_id": "void_bow",
+        "price": {
+          "gold": 155
+        }
       }
     ]
   },
@@ -1576,6 +1858,90 @@
         "price": {
           "gold": 15
         }
+      },
+      {
+        "item_id": "blazing_yang_sabatons_mk_2",
+        "price": {
+          "gold": 184
+        }
+      },
+      {
+        "item_id": "blood_quenching_tonic",
+        "price": {
+          "gold": 60
+        }
+      },
+      {
+        "item_id": "coiling_dragon_seal",
+        "price": {
+          "gold": 151
+        }
+      },
+      {
+        "item_id": "earth_dan",
+        "price": {
+          "gold": 100
+        }
+      },
+      {
+        "item_id": "eternal_night_battle_armor",
+        "price": {
+          "gold": 163
+        }
+      },
+      {
+        "item_id": "falling_star_striders",
+        "price": {
+          "gold": 178
+        }
+      },
+      {
+        "item_id": "glacial_amulet",
+        "price": {
+          "gold": 134
+        }
+      },
+      {
+        "item_id": "golden_body_trident",
+        "price": {
+          "gold": 145
+        }
+      },
+      {
+        "item_id": "mystic_pill_no6",
+        "price": {
+          "gold": 54
+        }
+      },
+      {
+        "item_id": "primordial_mantle",
+        "price": {
+          "gold": 172
+        }
+      },
+      {
+        "item_id": "silver_moon_battle_armor",
+        "price": {
+          "gold": 150
+        }
+      },
+      {
+        "item_id": "true_dragon_medallion",
+        "price": {
+          "gold": 166
+        }
+      },
+      {
+        "item_id": "verdant_emperor_sigil",
+        "price": {
+          "gold": 157
+        }
+      },
+      {
+        "item_id": "vermilion_pill_mortal",
+        "price": {
+          "gold": 100
+        }
       }
     ]
   },
@@ -1633,6 +1999,84 @@
         "price": {
           "gold": 25
         }
+      },
+      {
+        "item_id": "dragon_blood_decoction",
+        "price": {
+          "gold": 167
+        }
+      },
+      {
+        "item_id": "eternal_night_signet",
+        "price": {
+          "gold": 616
+        }
+      },
+      {
+        "item_id": "frost_immortal_sword",
+        "price": {
+          "gold": 27
+        }
+      },
+      {
+        "item_id": "ghost_flame_ring",
+        "price": {
+          "gold": 814
+        }
+      },
+      {
+        "item_id": "golden_body_scale_mail",
+        "price": {
+          "gold": 806
+        }
+      },
+      {
+        "item_id": "heaven_nectar",
+        "price": {
+          "gold": 158
+        }
+      },
+      {
+        "item_id": "jade_serpent_flying_sword",
+        "price": {
+          "gold": 34
+        }
+      },
+      {
+        "item_id": "phoenix_signet",
+        "price": {
+          "gold": 797
+        }
+      },
+      {
+        "item_id": "radiant_dawn_gourd",
+        "price": {
+          "gold": 364
+        }
+      },
+      {
+        "item_id": "soul_nurturing_decoction_mortal",
+        "price": {
+          "gold": 80
+        }
+      },
+      {
+        "item_id": "thunder_essence_pill",
+        "price": {
+          "gold": 101
+        }
+      },
+      {
+        "item_id": "vermilion_pill_no5",
+        "price": {
+          "gold": 100
+        }
+      },
+      {
+        "item_id": "void_seal",
+        "price": {
+          "gold": 690
+        }
       }
     ]
   },
@@ -1681,6 +2125,84 @@
         "item_id": "earth_tonic",
         "price": {
           "gold": 50
+        }
+      },
+      {
+        "item_id": "abyssal_veil",
+        "price": {
+          "gold": 1499
+        }
+      },
+      {
+        "item_id": "celestial_decoction_no4",
+        "price": {
+          "gold": 100
+        }
+      },
+      {
+        "item_id": "dao_enlightenment_elixir",
+        "price": {
+          "gold": 84
+        }
+      },
+      {
+        "item_id": "earth_vein_mantle",
+        "price": {
+          "gold": 1660
+        }
+      },
+      {
+        "item_id": "golden_body_amulet",
+        "price": {
+          "gold": 1251
+        }
+      },
+      {
+        "item_id": "golden_body_tonic",
+        "price": {
+          "gold": 30
+        }
+      },
+      {
+        "item_id": "great_return_elixir_mortal",
+        "price": {
+          "gold": 870
+        }
+      },
+      {
+        "item_id": "immortal_ascension_nectar_mortal",
+        "price": {
+          "gold": 150
+        }
+      },
+      {
+        "item_id": "myriad_star_treads",
+        "price": {
+          "gold": 4253
+        }
+      },
+      {
+        "item_id": "nirvana_rebirth_dan",
+        "price": {
+          "gold": 1985
+        }
+      },
+      {
+        "item_id": "scarlet_sun_sky_sword",
+        "price": {
+          "gold": 399
+        }
+      },
+      {
+        "item_id": "void_saber",
+        "price": {
+          "gold": 1231
+        }
+      },
+      {
+        "item_id": "white_tiger_whip",
+        "price": {
+          "gold": 1279
         }
       }
     ]
@@ -1752,6 +2274,48 @@
           "spirit_stone": 40
         },
         "stock": 1
+      },
+      {
+        "item_id": "bone_forging_pellet",
+        "price": {
+          "spirit_stone": 1
+        }
+      },
+      {
+        "item_id": "coiling_dragon_band",
+        "price": {
+          "spirit_stone": 28
+        }
+      },
+      {
+        "item_id": "coiling_dragon_sword_slip",
+        "price": {
+          "spirit_stone": 2
+        }
+      },
+      {
+        "item_id": "earth_vein_amulet",
+        "price": {
+          "spirit_stone": 10
+        }
+      },
+      {
+        "item_id": "nine_revolutions_pellet_no3",
+        "price": {
+          "spirit_stone": 8
+        }
+      },
+      {
+        "item_id": "spirit_devouring_circlet",
+        "price": {
+          "spirit_stone": 6
+        }
+      },
+      {
+        "item_id": "white_tiger_greaves",
+        "price": {
+          "spirit_stone": 22
+        }
       }
     ]
   },
@@ -1829,6 +2393,60 @@
           "spirit_stone": 40
         },
         "stock": 1
+      },
+      {
+        "item_id": "glacial_amulet_mk_2",
+        "price": {
+          "spirit_stone": 29
+        }
+      },
+      {
+        "item_id": "golden_body_striders",
+        "price": {
+          "spirit_stone": 60
+        }
+      },
+      {
+        "item_id": "great_return_elixir",
+        "price": {
+          "spirit_stone": 1
+        }
+      },
+      {
+        "item_id": "immortal_ascension_dan",
+        "price": {
+          "spirit_stone": 5
+        }
+      },
+      {
+        "item_id": "jade_serpent_sigil",
+        "price": {
+          "spirit_stone": 63
+        }
+      },
+      {
+        "item_id": "nine_nether_signet",
+        "price": {
+          "spirit_stone": 60
+        }
+      },
+      {
+        "item_id": "phoenix_striders",
+        "price": {
+          "spirit_stone": 66
+        }
+      },
+      {
+        "item_id": "thunder_mantle",
+        "price": {
+          "spirit_stone": 25
+        }
+      },
+      {
+        "item_id": "void_spirit_pellet_mortal",
+        "price": {
+          "spirit_stone": 35
+        }
       }
     ]
   },
@@ -1893,6 +2511,72 @@
           "spirit_stone": 40
         },
         "stock": 1
+      },
+      {
+        "item_id": "cloud_sea_gourd",
+        "price": {
+          "spirit_stone": 23
+        }
+      },
+      {
+        "item_id": "dao_enlightenment_pill_mortal",
+        "price": {
+          "spirit_stone": 5
+        }
+      },
+      {
+        "item_id": "ghost_flame_compass",
+        "price": {
+          "spirit_stone": 28
+        }
+      },
+      {
+        "item_id": "golden_body_pill",
+        "price": {
+          "spirit_stone": 33
+        }
+      },
+      {
+        "item_id": "great_return_decoction",
+        "price": {
+          "spirit_stone": 6
+        }
+      },
+      {
+        "item_id": "great_return_tonic_mortal",
+        "price": {
+          "spirit_stone": 2
+        }
+      },
+      {
+        "item_id": "immortal_ascension_pellet",
+        "price": {
+          "spirit_stone": 6
+        }
+      },
+      {
+        "item_id": "nether_river_medallion",
+        "price": {
+          "spirit_stone": 26
+        }
+      },
+      {
+        "item_id": "nirvana_rebirth_pellet",
+        "price": {
+          "spirit_stone": 30
+        }
+      },
+      {
+        "item_id": "thunder_essence_tonic",
+        "price": {
+          "spirit_stone": 17
+        }
+      },
+      {
+        "item_id": "void_spirit_pellet",
+        "price": {
+          "spirit_stone": 2
+        }
       }
     ]
   },
@@ -1964,6 +2648,138 @@
           "spirit_stone": 40
         },
         "stock": 1
+      },
+      {
+        "item_id": "ancestral_war_vestments",
+        "price": {
+          "spirit_stone": 62
+        }
+      },
+      {
+        "item_id": "blazing_yang_robe",
+        "price": {
+          "spirit_stone": 150
+        }
+      },
+      {
+        "item_id": "blazing_yang_sword_slip",
+        "price": {
+          "spirit_stone": 13
+        }
+      },
+      {
+        "item_id": "celestial_decoction_no5",
+        "price": {
+          "spirit_stone": 2
+        }
+      },
+      {
+        "item_id": "coiling_dragon_sigil",
+        "price": {
+          "spirit_stone": 157
+        }
+      },
+      {
+        "item_id": "demon_sealing_sky_sword",
+        "price": {
+          "spirit_stone": 14
+        }
+      },
+      {
+        "item_id": "earth_vein_sword_slip",
+        "price": {
+          "spirit_stone": 59
+        }
+      },
+      {
+        "item_id": "falling_star_gourd",
+        "price": {
+          "spirit_stone": 52
+        }
+      },
+      {
+        "item_id": "frost_sky_sword",
+        "price": {
+          "spirit_stone": 22
+        }
+      },
+      {
+        "item_id": "immortal_flying_sword",
+        "price": {
+          "spirit_stone": 70
+        }
+      },
+      {
+        "item_id": "iron_bone_battle_armor",
+        "price": {
+          "spirit_stone": 144
+        }
+      },
+      {
+        "item_id": "jade_serpent_sword",
+        "price": {
+          "spirit_stone": 61
+        }
+      },
+      {
+        "item_id": "nirvana_battle_armor",
+        "price": {
+          "spirit_stone": 60
+        }
+      },
+      {
+        "item_id": "primordial_tonic",
+        "price": {
+          "spirit_stone": 37
+        }
+      },
+      {
+        "item_id": "radiant_dawn_medallion",
+        "price": {
+          "spirit_stone": 147
+        }
+      },
+      {
+        "item_id": "scarlet_sun_pendant",
+        "price": {
+          "spirit_stone": 143
+        }
+      },
+      {
+        "item_id": "silver_moon_mirror",
+        "price": {
+          "spirit_stone": 142
+        }
+      },
+      {
+        "item_id": "silver_moon_talisman",
+        "price": {
+          "spirit_stone": 144
+        }
+      },
+      {
+        "item_id": "spirit_devouring_pendant",
+        "price": {
+          "spirit_stone": 53
+        }
+      },
+      {
+        "item_id": "spirit_devouring_sword_slip",
+        "price": {
+          "spirit_stone": 144
+        }
+      },
+      {
+        "item_id": "thunder_mirror",
+        "price": {
+          "spirit_stone": 171
+        }
+      },
+      {
+        "item_id": "white_tiger_mantle",
+        "price": {
+          "spirit_stone": 51
+        }
       }
     ]
   },
@@ -2020,6 +2836,156 @@
           "spirit_stone": 40
         },
         "stock": 1
+      },
+      {
+        "item_id": "abyssal_cloak",
+        "price": {
+          "spirit_stone": 181
+        }
+      },
+      {
+        "item_id": "abyssal_cuirass",
+        "price": {
+          "spirit_stone": 187
+        }
+      },
+      {
+        "item_id": "ancestral_band",
+        "price": {
+          "spirit_stone": 151
+        }
+      },
+      {
+        "item_id": "blazing_yang_dagger",
+        "price": {
+          "spirit_stone": 53
+        }
+      },
+      {
+        "item_id": "blazing_yang_staff",
+        "price": {
+          "spirit_stone": 159
+        }
+      },
+      {
+        "item_id": "blood_moon_cloak",
+        "price": {
+          "spirit_stone": 70
+        }
+      },
+      {
+        "item_id": "cloud_sea_flying_sword",
+        "price": {
+          "spirit_stone": 10
+        }
+      },
+      {
+        "item_id": "coiling_dragon_striders",
+        "price": {
+          "spirit_stone": 158
+        }
+      },
+      {
+        "item_id": "earth_vein_seal",
+        "price": {
+          "spirit_stone": 141
+        }
+      },
+      {
+        "item_id": "eternal_night_staff_mk_2",
+        "price": {
+          "spirit_stone": 142
+        }
+      },
+      {
+        "item_id": "frost_band",
+        "price": {
+          "spirit_stone": 185
+        }
+      },
+      {
+        "item_id": "heaven_splitting_mirror",
+        "price": {
+          "spirit_stone": 51
+        }
+      },
+      {
+        "item_id": "immortal_mantle",
+        "price": {
+          "spirit_stone": 175
+        }
+      },
+      {
+        "item_id": "jade_serpent_charm",
+        "price": {
+          "spirit_stone": 164
+        }
+      },
+      {
+        "item_id": "nine_nether_boots",
+        "price": {
+          "spirit_stone": 135
+        }
+      },
+      {
+        "item_id": "primordial_robe",
+        "price": {
+          "spirit_stone": 70
+        }
+      },
+      {
+        "item_id": "profound_yin_mantle",
+        "price": {
+          "spirit_stone": 55
+        }
+      },
+      {
+        "item_id": "scarlet_sun_bow",
+        "price": {
+          "spirit_stone": 55
+        }
+      },
+      {
+        "item_id": "scarlet_sun_sword_slip",
+        "price": {
+          "spirit_stone": 179
+        }
+      },
+      {
+        "item_id": "silver_moon_striders",
+        "price": {
+          "spirit_stone": 185
+        }
+      },
+      {
+        "item_id": "spirit_devouring_charm",
+        "price": {
+          "spirit_stone": 60
+        }
+      },
+      {
+        "item_id": "spirit_devouring_robe",
+        "price": {
+          "spirit_stone": 157
+        }
+      },
+      {
+        "item_id": "star_origin_immortal_sword",
+        "price": {
+          "spirit_stone": 141
+        }
+      },
+      {
+        "item_id": "verdant_emperor_seal",
+        "price": {
+          "spirit_stone": 57
+        }
+      },
+      {
+        "item_id": "white_tiger_medallion",
+        "price": {
+          "spirit_stone": 67
+        }
       }
     ]
   },
@@ -2080,6 +3046,90 @@
           "gold": 20
         },
         "stock": 10
+      },
+      {
+        "item_id": "abyssal_medallion",
+        "price": {
+          "gold": 331
+        }
+      },
+      {
+        "item_id": "earth_vein_greaves",
+        "price": {
+          "gold": 335
+        }
+      },
+      {
+        "item_id": "falling_star_charm_paper_mk_2",
+        "price": {
+          "gold": 781
+        }
+      },
+      {
+        "item_id": "frost_sword_slip",
+        "price": {
+          "gold": 26
+        }
+      },
+      {
+        "item_id": "golden_body_charm_paper",
+        "price": {
+          "gold": 762
+        }
+      },
+      {
+        "item_id": "great_return_pellet",
+        "price": {
+          "gold": 139
+        }
+      },
+      {
+        "item_id": "immortal_robe",
+        "price": {
+          "gold": 356
+        }
+      },
+      {
+        "item_id": "jade_serpent_seal",
+        "price": {
+          "gold": 347
+        }
+      },
+      {
+        "item_id": "purple_cloud_sword",
+        "price": {
+          "gold": 836
+        }
+      },
+      {
+        "item_id": "radiant_dawn_war_vestments",
+        "price": {
+          "gold": 377
+        }
+      },
+      {
+        "item_id": "spirit_devouring_seal",
+        "price": {
+          "gold": 307
+        }
+      },
+      {
+        "item_id": "true_dragon_greaves",
+        "price": {
+          "gold": 641
+        }
+      },
+      {
+        "item_id": "void_boots",
+        "price": {
+          "gold": 319
+        }
+      },
+      {
+        "item_id": "white_tiger_boots",
+        "price": {
+          "gold": 388
+        }
       }
     ]
   },
@@ -2133,6 +3183,66 @@
           "gold": 95
         },
         "stock": 4
+      },
+      {
+        "item_id": "ancestral_sabatons",
+        "price": {
+          "gold": 1509
+        }
+      },
+      {
+        "item_id": "black_tortoise_bell",
+        "price": {
+          "gold": 738
+        }
+      },
+      {
+        "item_id": "black_tortoise_fan",
+        "price": {
+          "gold": 845
+        }
+      },
+      {
+        "item_id": "bone_forging_elixir",
+        "price": {
+          "gold": 110
+        }
+      },
+      {
+        "item_id": "bone_forging_pellet_mortal",
+        "price": {
+          "gold": 180
+        }
+      },
+      {
+        "item_id": "coiling_dragon_mantle",
+        "price": {
+          "gold": 748
+        }
+      },
+      {
+        "item_id": "divine_splendor_treads",
+        "price": {
+          "gold": 1331
+        }
+      },
+      {
+        "item_id": "earth_vein_band",
+        "price": {
+          "gold": 411
+        }
+      },
+      {
+        "item_id": "purple_cloud_sky_sword",
+        "price": {
+          "gold": 155
+        }
+      },
+      {
+        "item_id": "true_dragon_talisman",
+        "price": {
+          "gold": 1297
+        }
       }
     ]
   }

@@ -35,6 +35,7 @@ def validate_all_game_data(registry: Optional[GameDataRegistry] = None) -> Valid
     _validate_character_hooks(registry, result)
     _validate_locations(registry, result)
     _validate_encounter_pools(registry, result)
+    _validate_encounters(registry, result)
     _validate_map_positions(registry, result)
     _validate_enemy_abilities(registry, result)
     _validate_cultivation_schema(registry, result)
@@ -59,6 +60,7 @@ def validate_all_game_data(registry: Optional[GameDataRegistry] = None) -> Valid
     _validate_technique_manuals(registry, result)
     _validate_find_config(registry, result)
     _validate_quests(registry, result)
+    _validate_dead_content(registry, result)
 
     return result
 
@@ -339,6 +341,8 @@ def _validate_encounter_pools(registry: GameDataRegistry, result: ValidationResu
     enemy_ids = _id_set(registry.enemies)
     item_ids = _id_set(registry.items) | _id_set(registry.equipment) | registry.manual_item_ids()
     special_ids = {special.get("id") for special in registry.events.get("special_events", [])}
+    # Location-scoped hazards name a hazard from the choice-driven encounter data.
+    hazard_ids = {hazard.get("id") for hazard in (registry.encounters.get("hazards") or [])}
 
     for location_id, pool in registry.encounter_pools.items():
         if location_id not in location_ids:
@@ -361,6 +365,97 @@ def _validate_encounter_pools(registry: GameDataRegistry, result: ValidationResu
                     "bad_special_ref",
                     f"encounter pool '{location_id}' special references missing special '{entry.get('special_id')}'",
                 )
+        for entry in pool.get("hazards", []):
+            if entry.get("hazard_id") not in hazard_ids:
+                result.add(
+                    "bad_hazard_ref",
+                    f"encounter pool '{location_id}' hazard references missing hazard '{entry.get('hazard_id')}'",
+                )
+
+
+def _validate_encounters(registry: GameDataRegistry, result: ValidationResult) -> None:
+    """Validate ``data/encounters.json`` (the choice-driven encounter layer).
+
+    The expensive mistakes here are silent: a hazard whose "people" list names
+    an enemy that no longer exists simply never applies, and a chance outside
+    0-1 makes a choice always-or-never. Both are caught here.
+    """
+    data = registry.encounters
+    if not data:
+        return
+
+    for choice_id, option in (data.get("options") or {}).items():
+        if not isinstance(option, dict) or not option.get("label") or not option.get("hint"):
+            result.add("bad_encounter_option", f"encounter option '{choice_id}' needs a label and a hint")
+
+    for section, limits in (
+        ("parley", ("base_chance", "min_chance", "max_chance", "offend_ambush_chance")),
+        ("sneak", ("base_chance", "min_chance", "max_chance", "cache_chance")),
+        ("bribe", ("base_chance", "min_chance", "max_chance")),
+        ("observe", ("provoke_chance",)),
+    ):
+        for key in limits:
+            value = (data.get(section) or {}).get(key)
+            if value is None:
+                continue
+            if not _is_probability(value):
+                result.add("bad_encounter_chance", f"encounters.{section}.{key} must be between 0 and 1 (got {value!r})")
+
+    for key in ("chance_by_danger", "hazard_chance_by_danger"):
+        table = (data.get("formation") or {}).get(key) or (data.get("encounter") or {}).get(key)
+        if table is not None and (not isinstance(table, list) or any(not _is_probability(v) for v in table)):
+            result.add("bad_encounter_chance", f"encounters.{key} must be a list of probabilities between 0 and 1")
+    for key in ("strike_multiplier",):
+        value = (data.get("ambush") or {}).get(key)
+        if value is not None and (not isinstance(value, (int, float)) or isinstance(value, bool) or value < 0):
+            result.add("bad_encounter_tuning", f"encounters.ambush.{key} must be a non-negative number")
+    for key in ("max_extra_foes", "max_pack_presses", "pack_stat_scale", "pack_exp_ratio", "pack_loot_ratio"):
+        value = (data.get("formation") or {}).get(key)
+        if value is not None and (not isinstance(value, (int, float)) or isinstance(value, bool) or value < 0):
+            result.add("bad_encounter_tuning", f"encounters.formation.{key} must be a non-negative number")
+
+    seen: Set[str] = set()
+    for entry in data.get("hazards") or []:
+        hazard_id = str(entry.get("id", ""))
+        if not hazard_id or hazard_id in seen:
+            result.add("bad_hazard", f"hazard '{hazard_id}' is missing an id or duplicates another hazard")
+            continue
+        seen.add(hazard_id)
+        if not entry.get("name") or not entry.get("text"):
+            result.add("bad_hazard", f"hazard '{hazard_id}' needs a name and flavour text")
+        effect = entry.get("effect") or {}
+        if effect.get("type") != "damage" or int(effect.get("magnitude", 0)) <= 0:
+            result.add("bad_hazard", f"hazard '{hazard_id}' must deal damage with a positive magnitude")
+        for key in ("push_base_chance", "defuse_base_chance", "comprehension_bonus"):
+            if not _is_probability(entry.get(key)):
+                result.add("bad_hazard", f"hazard '{hazard_id}' {key} must be between 0 and 1")
+
+    seen_traps: Set[str] = set()
+    for entry in data.get("traps") or []:
+        trap_id = str(entry.get("id", ""))
+        if not trap_id or trap_id in seen_traps:
+            result.add("bad_trap", f"trap '{trap_id}' is missing an id or duplicates another trap")
+            continue
+        seen_traps.add(trap_id)
+        effect = entry.get("effect") or {}
+        if int(effect.get("magnitude", 0)) <= 0:
+            result.add("bad_trap", f"trap '{trap_id}' needs a positive damage magnitude")
+
+    # Parley/toll eligibility is derived from the enemy catalogue; a name that
+    # matches nothing would silently never apply.
+    known_enemies = _id_set(registry.enemies) | _id_set(registry.character_enemies)
+    mindless = data.get("mindless") or {}
+    for enemy_id in (mindless.get("people") or []):
+        if enemy_id not in known_enemies:
+            result.add("bad_mindless_ref", f"encounters.mindless.people names unknown enemy '{enemy_id}'")
+    for enemy_id in (mindless.get("overrides") or {}):
+        if enemy_id not in known_enemies:
+            result.add("bad_mindless_ref", f"encounters.mindless.overrides names unknown enemy '{enemy_id}'")
+
+
+def _is_probability(value: Any) -> bool:
+    """Return ``True`` when ``value`` is a number inside the 0-1 range."""
+    return isinstance(value, (int, float)) and not isinstance(value, bool) and 0.0 <= float(value) <= 1.0
 
 
 # -- cultivation --------------------------------------------------------
@@ -1219,6 +1314,19 @@ def _validate_legacy_tree(registry: GameDataRegistry, result: ValidationResult) 
             cost = node.get("cost", 0)
             if isinstance(cost, bool) or not isinstance(cost, int) or cost <= 0:
                 result.add("bad_legacy_tree", f"legacy unlock '{node_id}' cost must be a positive integer")
+
+
+def _validate_dead_content(registry: GameDataRegistry, result: ValidationResult) -> None:
+    """ROADMAP G.2: nothing shipped may be unreachable or a trap option.
+
+    The checks above prove the content graph is internally consistent; this one
+    proves every entry is actually obtainable in play and does something once
+    obtained. See :mod:`game.validation.dead_content` for the criteria.
+    """
+    from game.validation.dead_content import build_report, collect_issues
+
+    for category, message in collect_issues(build_report(registry)):
+        result.add(category, message)
 
 
 def _validate_modifier_group(item_id: str, group_name: str, modifiers: Any, valid_keys: Set[str], result: ValidationResult) -> None:

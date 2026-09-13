@@ -110,7 +110,7 @@ def test_engine_receive_boon_grants_gold_and_claims_once():
 
 def test_engine_receive_boon_grants_item():
     engine = GameEngine.new_game(seed=1)
-    engine.player.stage = 4  # duanmu_qun unlocks at stage 4
+    engine.player.max_story_tier = 4  # duanmu_qun's unlock gate is story tier 4
     engine.player.relationships = {"duanmu_qun": {"relationship_score": 60}}
 
     result = engine.process_action({"action": Action.RECEIVE_BOON, "character_id": "duanmu_qun"})

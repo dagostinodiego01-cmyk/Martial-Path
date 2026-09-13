@@ -172,6 +172,34 @@ class CombatSystem:
             return self._defeat(enemy, events)
         return self._turn(player, enemy, events)
 
+    def ambush_strike(self, player: Player, enemy: Enemy) -> TurnEvent:
+        """Resolve the opening blow of a foe that took the player unawares.
+
+        Used when an encounter's ambush flag is set (a literal ambush, a botched
+        parley, or a failed sneak): the foe acts once before the player's first
+        turn. It is one ordinary enemy action, not a whole round -- no status
+        ticks, no player phase -- so surprise stings without doubling the fight.
+        """
+        return self._enemy_act(player, enemy)
+
+    def pack_press(self, player: Player, enemy: Enemy, multiplier: float = 0.5) -> TurnEvent:
+        """Resolve a lighter press from a formation foe the player is not facing.
+
+        Extra foes in a group still act each round, but at ``multiplier`` of
+        their true weight, so a pack is a genuine escalation rather than the
+        same fight repeated three times. Status ticks are the focused foe's job;
+        a press is a single swing.
+        """
+        raw = int(self._enemy_attack_value(enemy) * (1.0 + self._consume_guard_momentum(enemy)) * max(0.0, float(multiplier)))
+        dealt, _ = self._deal_damage(player, self._enemy_damage(player, enemy, raw))
+        return {
+            "actor": "ENEMY",
+            "action": "PACK_PRESS",
+            "damage": dealt,
+            "target_hp": player.hp,
+            "enemy_name": enemy.name,
+        }
+
     def flee(self, player: Player, enemy: Enemy, spar: bool = False) -> Dict[str, Any]:
         """Attempt to escape; a failed attempt gives the enemy a free strike."""
         if self._rng.chance(0.5):

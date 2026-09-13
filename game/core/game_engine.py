@@ -23,6 +23,7 @@ from game.core.constants import (
     DEFAULT_ORIGIN_ID,
     MODE_COMBAT,
     MODE_DEBATE,
+    MODE_ENCOUNTER,
     MODE_EXPLORE,
     STARTING_PLAYER,
 )
@@ -31,6 +32,7 @@ from game.core.engine.combat import CombatMixin
 from game.core.engine.debate import DebateMixin
 from game.core.engine.dispatch import DispatchMixin
 from game.core.engine.economy import EconomyMixin
+from game.core.engine.encounters import EncountersMixin
 from game.core.engine.exploration import ExplorationMixin
 from game.core.engine.lifecycle import LifecycleMixin
 from game.core.engine.progression import ProgressionMixin
@@ -55,6 +57,7 @@ from game.systems.debate_system import DebateSystem
 from game.systems.foe_ai import FoeAI
 from game.systems.dao_system import DaoSystem
 from game.systems.effect_system import EffectSystem
+from game.systems.encounter_system import EncounterSystem
 from game.systems.equipment_system import EquipmentSystem
 from game.systems.event_system import EventSystem
 from game.systems.find_system import FindSystem
@@ -93,6 +96,7 @@ class GameEngine(
     SystemsMixin,
     CombatMixin,
     DebateMixin,
+    EncountersMixin,
     LifecycleMixin,
     WorldMixin,
 ):
@@ -140,6 +144,7 @@ class GameEngine(
         refining_recipes: Optional[List[Dict[str, Any]]] = None,
         secret_realm: Optional[List[Dict[str, Any]]] = None,
         legacy_tree: Optional[Dict[str, Any]] = None,
+        encounters: Optional[Dict[str, Any]] = None,
         ironman: bool = False,
         ng_plus: int = 0,
     ) -> None:
@@ -258,6 +263,7 @@ class GameEngine(
         ]
         self.find_system = FindSystem(find_catalog, (events_data or {}).get("find_config", {}), rng)
         self._location_danger = {loc["id"]: loc.get("danger_level", 0) for loc in (locations or []) if loc.get("id")}
+        self._encounter_pools = encounter_pools or {}
         self.event_system = EventSystem(
             events_data,
             list(self._enemy_templates.values()),
@@ -265,6 +271,9 @@ class GameEngine(
             encounter_pools,
             self.find_system,
         )
+        # Choice-driven encounters: turns the exploration roll above into a
+        # scene with options (fight/talk/sneak/pay/observe/withdraw).
+        self.encounters = EncounterSystem(encounters, list(self._enemy_templates.values()), rng)
         # Chance (0.0-1.0) that exploring a location with named characters
         # surfaces them instead of rolling a normal random event. Data-driven so
         # characters never crowd out every other exploration outcome.
@@ -291,6 +300,15 @@ class GameEngine(
         self._debate_character: str = ""
         self._oath_stakes: Optional[Dict[str, Any]] = None
         self._current_enemy: Optional[Enemy] = None
+        # Formation combat (B.9): every foe in the current bout, the ones already
+        # put down, and which of them was the leader (for reward scaling).
+        self._current_foes: List[Enemy] = []
+        self._defeated_foes: List[Enemy] = []
+        self._leader_foe: Optional[Enemy] = None
+        self._combat_ambush = False
+        # The exploration encounter awaiting a choice (MODE_ENCOUNTER).
+        self._pending_encounter: Optional[Dict[str, Any]] = None
+        self._encounter_seq = 0
         self._cooldowns: Dict[str, int] = {}
         self._combat_is_spar = False
         self._running = True
@@ -392,6 +410,7 @@ class GameEngine(
             refining_recipes=registry.refining_recipes,
             secret_realm=registry.secret_realm,
             legacy_tree=registry.legacy_tree,
+            encounters=registry.encounters,
             ironman=ironman,
             ng_plus=ng_plus,
         )

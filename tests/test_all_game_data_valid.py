@@ -160,3 +160,24 @@ def test_detects_invalid_shop_item_reference():
 
     assert not result.is_valid
     assert any(error.category == "bad_shop" for error in result.errors)
+def test_detects_dangling_mindless_reference_in_encounters():
+    """A parley rule naming an enemy that no longer exists silently never applies."""
+    base = GameDataRegistry.load()
+    encounters = dict(base.encounters)
+    mindless = dict(encounters.get("mindless") or {})
+    mindless["people"] = ["no_such_enemy_at_all"]
+    encounters["mindless"] = mindless
+    result = validate_all_game_data(dataclasses.replace(base, encounters=encounters))
+    assert not result.is_valid
+    assert any(error.category == "bad_mindless_ref" for error in result.errors)
+
+
+def test_detects_out_of_range_encounter_chance():
+    base = GameDataRegistry.load()
+    encounters = dict(base.encounters)
+    parley = dict(encounters["parley"])
+    parley["base_chance"] = 1.5
+    encounters["parley"] = parley
+    result = validate_all_game_data(dataclasses.replace(base, encounters=encounters))
+    assert not result.is_valid
+    assert any(error.category == "bad_encounter_chance" for error in result.errors)

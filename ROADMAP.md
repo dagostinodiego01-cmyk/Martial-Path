@@ -4,7 +4,7 @@
 tracking; the closed 17-priority GROK-review backlog it superseded has been
 removed.
 
-**Last updated:** 2026-09-02.
+**Last updated:** 2026-09-12.
 
 ---
 
@@ -252,6 +252,32 @@ unlocks meaningfully change successive runs; procedural prose covers every actio
   their next press. Mooks (no dao) keep the plain ability/attack pipeline.
   Bosses/elite duelists in `named_foes.json` now carry real chain techniques.
   (`tests/test_foe_ai.py`, 14 tests.)
+- [x] **B.9** Exploration is a decision, not a roll: every descriptor that
+  carries a choice (a hostile scene, a find, a place of power, hazardous ground)
+  becomes a pending encounter answered with **fight / talk / sneak / pay /
+  observe / withdraw**, with ambushes, environmental hazards, and multi-foe
+  formations. (Exploration stopped being a slot machine.)
+  *Done 2026-09-12:* pure `EncounterSystem` over a new `data/encounters.json`
+  (option labels/hints, parley/sneak/bribe/observe tuning, danger-keyed ambush +
+  formation tables, 7 hazards, 4 traps, a derived mindless rule). `MODE_ENCOUNTER`
+  + `ENCOUNTER_CHOICE`, `ENCOUNTER`/`ENCOUNTER_RESULT` events, and
+  `Action.TARGET_FOE`. **Every withheld option carries a plain-language
+  `reason`** (`MINDLESS_FOE`, `CANNOT_AFFORD`, `AMBUSHED`, `ALREADY_OBSERVED`, ...)
+  so refusals explain themselves. Odds and the threat preview share one power
+  scale (parley/sneak/bribe all read from it); `observe` reveals foe abilities, a
+  hidden hazard, or a ward on a find and banks opening insight, but can provoke
+  the fight it was studying -- and a hazard you read bites the *foe* instead of
+  you. Ambushes (a literal one, a botched parley, a failed sneak) hand the foe
+  the first press. Hazards and traps cannot kill: they leave you at 1 HP and feed
+  the consequence into the next fight. Formations field a leader plus scaled pack
+  (`pack_stat_scale`, capped pack presses, `pack_loot_ratio` on drops) and only
+  end when the whole group is down; `contextual` `enemies` lists drive target
+  buttons. 22 new narrative verbs, validator coverage for the new data, Godot
+  choice cards rebuilt from state (so a refresh cannot wipe the menu), CLI
+  numbered menu with `choose <n>`, and `foe_id` added to `ActionRequest` (the
+  silent-drop bug class the API tests guard). Exploration weights move to
+  COMBAT .45 / LOOT .20 / SPECIAL .13 / **HAZARD .12** / NOTHING .10.
+  (`tests/test_encounters.py`, 32 tests; API shape in `tests/test_api_server.py`.)
 
 #### C — Meta depth
 - [x] **C.5** Legacy/unlock tree: meta currency unlocks sects, origins, techniques,
@@ -369,8 +395,30 @@ codex/journal/glossary/accessibility; a complete campaign + endless integration;
 release docs and onboarding.
 
 #### G — Balance & polish
-- [ ] **G.2** Dead-content sweep: every skill/item/technique/dao/enemy is reachable
+- [x] **G.2** Dead-content sweep: every skill/item/technique/dao/enemy is reachable
   and meaningful (0 unreachable, 0 trap options). (Validator + reachability tests.)
+  *Done 2026-09-12:* new `game/validation/dead_content.py` derives the
+  acquisition path of every skill/item/equipment/enemy/NPC/quest/dao/recipe and
+  the *trap* classes (unimplemented consumable/technique effects, modifier-less
+  equipment, purposeless materials, dead recipes, permanently locked quests,
+  unsatisfiable NPC gates, dominated shop offers). Wired into
+  `validate_all_game_data()` and `tools/dead_content_report.py`; held by
+  `tests/test_dead_content.py` (17 tests). The sweep's first run found real
+  dead content, all fixed: **148 of 236 random enemies sat in no encounter pool**
+  (all 45 locations carry curated pools, so `EventSystem`'s global fallback
+  never fired -- those foes could not be fought at all) -> `tools/seed_enemy_pools.py`
+  gives every stranded enemy a realm-appropriate home (pools now 4-8 entries,
+  0 stranded); **9 materials** had no effect, no recipe/upgrade role and no
+  source -> given their siblings' absorb-for-progress treatment; **~30
+  consumables advertised effects the engine never implemented**
+  (`lifespan_extension`, `comprehension_boost`, `restore_hp_qi`,
+  `cleanse_poison`, `body_temper`, `breakthrough_aid`) -> implemented in
+  `EffectSystem`; **60+ NPCs were gated by the dead `unlock.min_stage` ladder**
+  (`player.stage` is pinned at 1) so they could never be met, sparred, dueled,
+  or give boons -> `CharacterService.required_story_tier` folds that gate onto
+  the live story ladder. Economy: widening the endgame pools diluted
+  spirit-stone income, so `tools/economy_tune.py` now gives every foe in a
+  tier 5-6 zone its zone's going rate (income back to ~1178 vs the 930 hall).
 - [ ] **G.3** Simulation-based balance: automated headless runs/duels to measure
   win-rates, progression curve, time-to-realm, and economy sinks. (CI balance report;
   no build with >X% win-rate spread across daos.)
@@ -430,7 +478,7 @@ release docs and onboarding.
 | Sects | 12 | 12+ ✅ (faction storylines in via F.3) |
 | Skills / techniques | 215 | 300+ (all dao-tagged, all reachable) |
 | Daos | 12 | 12+ (with counter graph) ✅ |
-| NPCs | 90 | 120+ (with agency + arcs) |
+| NPCs | 90 | 120+ (with agency + arcs; all meetable since G.2) |
 | Quests | 62 | 60+ (acts + factions + characters) ✅ |
 | Secret realms / dungeons | 6 | 1 procedural generator, 10+ hand-placed |
 | Origins | 4 | 6+ |

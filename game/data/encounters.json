@@ -71,19 +71,17 @@
     "trapped_loot_chance": 0.3
   },
   "mindless": {
-    "ids": [
-      "iron_wolf",
-      "forest_horned_boar",
-      "corpse_demon",
-      "shrine_bone_thrall",
-      "grave_mist_wraith",
-      "black_pine_serpent",
-      "mist_jaw_leopard",
-      "venom_asp",
-      "cave_bat_swarm",
-      "blood_mad_ape"
+    "people": [
+      "azure_stream_bandit",
+      "road_cutpurse",
+      "field_bandit",
+      "verdant_zealot",
+      "verdant_zealot_no.2",
+      "stream_duelist",
+      "frost_warfiend"
     ],
-    "note": "Foes that cannot be talked down or bribed; parley and toll options are withheld for them."
+    "overrides": {},
+    "note": "A foe can be reasoned with (parley, toll) when it carries a Dao or an essence realm, or when it is named in 'people'. Anything else is wildlife: no speech, no interest in coin. Derived rather than hand-listed so new enemies inherit the right behaviour; 'overrides' pins an individual foe either way."
   },
   "hazards": [
     {
@@ -92,9 +90,9 @@
       "text": "The path is a thin crust over a hollow, and something below is breathing.",
       "min_danger": 1,
       "effect": {"type": "damage", "magnitude": 12, "per_danger": 0.18},
-      "push_base_chance": 0.55,
+      "push_base_chance": 0.68,
       "defuse_base_chance": 0.5,
-      "comprehension_bonus": 0.015,
+      "comprehension_bonus": 0.02,
       "reward": {"exp": 6, "per_danger": 1.5},
       "defuse_reward": {"exp": 14, "insight": 2}
     },
@@ -104,9 +102,9 @@
       "text": "The air hangs grey and sweet; the qi here has curdled, and your meridians want to close.",
       "min_danger": 2,
       "effect": {"type": "damage", "magnitude": 16, "per_danger": 0.2},
-      "push_base_chance": 0.5,
-      "defuse_base_chance": 0.45,
-      "comprehension_bonus": 0.015,
+      "push_base_chance": 0.65,
+      "defuse_base_chance": 0.47,
+      "comprehension_bonus": 0.02,
       "reward": {"exp": 8, "per_danger": 1.5},
       "defuse_reward": {"exp": 18, "insight": 2}
     },
@@ -116,8 +114,8 @@
       "text": "Loose spirit energy has knotted into a slow whirl that pulls at your qi with every breath.",
       "min_danger": 3,
       "effect": {"type": "damage", "magnitude": 20, "per_danger": 0.22},
-      "push_base_chance": 0.45,
-      "defuse_base_chance": 0.4,
+      "push_base_chance": 0.62,
+      "defuse_base_chance": 0.44,
       "comprehension_bonus": 0.02,
       "reward": {"exp": 10, "per_danger": 2},
       "defuse_reward": {"exp": 22, "insight": 3, "progress": 4}
@@ -128,9 +126,9 @@
       "text": "Black water runs fast under a skin of ice that has not decided whether to hold.",
       "min_danger": 2,
       "effect": {"type": "damage", "magnitude": 14, "per_danger": 0.2},
-      "push_base_chance": 0.55,
+      "push_base_chance": 0.68,
       "defuse_base_chance": 0.5,
-      "comprehension_bonus": 0.015,
+      "comprehension_bonus": 0.02,
       "reward": {"exp": 7, "per_danger": 1.5},
       "defuse_reward": {"exp": 16, "insight": 2}
     },
@@ -140,8 +138,8 @@
       "text": "Corpse-mist rolls low across the ground, and shapes you would rather not name move inside it.",
       "min_danger": 4,
       "effect": {"type": "damage", "magnitude": 24, "per_danger": 0.24},
-      "push_base_chance": 0.45,
-      "defuse_base_chance": 0.4,
+      "push_base_chance": 0.62,
+      "defuse_base_chance": 0.44,
       "comprehension_bonus": 0.02,
       "reward": {"exp": 12, "per_danger": 2},
       "defuse_reward": {"exp": 24, "insight": 3}
@@ -152,8 +150,8 @@
       "text": "A scar of old sword qi crosses the ground here, still cutting at anything that comes too close.",
       "min_danger": 5,
       "effect": {"type": "damage", "magnitude": 28, "per_danger": 0.26},
-      "push_base_chance": 0.4,
-      "defuse_base_chance": 0.38,
+      "push_base_chance": 0.58,
+      "defuse_base_chance": 0.4,
       "comprehension_bonus": 0.02,
       "reward": {"exp": 14, "per_danger": 2},
       "defuse_reward": {"exp": 30, "insight": 4}
@@ -164,8 +162,8 @@
       "text": "A vein of the world's own current surfaces here in slow pulses of white fire.",
       "min_danger": 6,
       "effect": {"type": "damage", "magnitude": 34, "per_danger": 0.3},
-      "push_base_chance": 0.38,
-      "defuse_base_chance": 0.35,
+      "push_base_chance": 0.55,
+      "defuse_base_chance": 0.37,
       "comprehension_bonus": 0.02,
       "reward": {"exp": 16, "per_danger": 2.5},
       "defuse_reward": {"exp": 36, "insight": 4, "progress": 6}

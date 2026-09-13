@@ -144,9 +144,10 @@
     "id": "common_crystal",
     "name": "Common Crystal",
     "type": "material",
-    "effect": "none",
-    "magnitude": 0,
-    "description": "A Houtian-grade crystal prized by alchemists and refiners. Valuable to the right buyer."
+    "effect": "cultivation_boost",
+    "magnitude": 20,
+    "consumed_on_use": true,
+    "description": "A Houtian-grade crystal dense with spiritual energy. Absorb it to gain 20% cultivation progress."
   },
   {
     "id": "mystic_decoction",
@@ -249,9 +250,10 @@
     "id": "profound_star_core",
     "name": "Profound Star Core",
     "type": "material",
-    "effect": "none",
-    "magnitude": 0,
-    "description": "A Mortal-grade star core prized by alchemists and refiners. Valuable to the right buyer."
+    "effect": "cultivation_boost",
+    "magnitude": 25,
+    "consumed_on_use": true,
+    "description": "A Mortal-grade star core dense with spiritual energy. Absorb it to gain 25% cultivation progress."
   },
   {
     "id": "blood_quenching_fang",
@@ -283,9 +285,10 @@
     "id": "phoenix_marrow_blood_essence",
     "name": "Phoenix Marrow Blood Essence",
     "type": "material",
-    "effect": "none",
-    "magnitude": 0,
-    "description": "A Divine Sea-grade blood essence prized by alchemists and refiners. Valuable to the right buyer."
+    "effect": "cultivation_boost",
+    "magnitude": 10,
+    "consumed_on_use": true,
+    "description": "A Divine Sea-grade blood essence dense with spiritual energy. Absorb it to gain 10% cultivation progress."
   },
   {
     "id": "dao_enlightenment_spirit_stone",
@@ -509,9 +512,10 @@
     "id": "dao_enlightenment_fruit",
     "name": "Dao Enlightenment Fruit",
     "type": "material",
-    "effect": "none",
-    "magnitude": 0,
-    "description": "A Divine Sea-grade fruit prized by alchemists and refiners. Valuable to the right buyer."
+    "effect": "cultivation_boost",
+    "magnitude": 10,
+    "consumed_on_use": true,
+    "description": "A Divine Sea-grade fruit dense with spiritual energy. Absorb it to gain 10% cultivation progress."
   },
   {
     "id": "thunder_essence_fruit",
@@ -1069,9 +1073,10 @@
     "id": "bone_forging_feather",
     "name": "Bone Forging Feather",
     "type": "material",
-    "effect": "none",
-    "magnitude": 0,
-    "description": "A Foundation-grade feather prized by alchemists and refiners. Valuable to the right buyer."
+    "effect": "cultivation_boost",
+    "magnitude": 12,
+    "consumed_on_use": true,
+    "description": "A Foundation-grade feather dense with spiritual energy. Absorb it to gain 12% cultivation progress."
   },
   {
     "id": "phoenix_marrow_pill",
@@ -1085,9 +1090,10 @@
     "id": "immortal_ascension_scale",
     "name": "Immortal Ascension Scale",
     "type": "material",
-    "effect": "none",
-    "magnitude": 0,
-    "description": "A Life Destruction-grade scale prized by alchemists and refiners. Valuable to the right buyer."
+    "effect": "cultivation_boost",
+    "magnitude": 8,
+    "consumed_on_use": true,
+    "description": "A Life Destruction-grade scale dense with spiritual energy. Absorb it to gain 8% cultivation progress."
   },
   {
     "id": "void_spirit_root",
@@ -1425,9 +1431,10 @@
     "id": "phoenix_marrow_bone",
     "name": "Phoenix Marrow Bone",
     "type": "material",
-    "effect": "none",
-    "magnitude": 0,
-    "description": "A Life Destruction-grade bone prized by alchemists and refiners. Valuable to the right buyer."
+    "effect": "cultivation_boost",
+    "magnitude": 8,
+    "consumed_on_use": true,
+    "description": "A Life Destruction-grade bone dense with spiritual energy. Absorb it to gain 8% cultivation progress."
   },
   {
     "id": "dao_enlightenment_pill_mortal",
@@ -1610,9 +1617,10 @@
     "id": "earth_scale",
     "name": "Earth Scale",
     "type": "material",
-    "effect": "none",
-    "magnitude": 0,
-    "description": "A Mortal-grade scale prized by alchemists and refiners. Valuable to the right buyer."
+    "effect": "cultivation_boost",
+    "magnitude": 25,
+    "consumed_on_use": true,
+    "description": "A Mortal-grade scale dense with spiritual energy. Absorb it to gain 25% cultivation progress."
   },
   {
     "id": "vermilion_dan_mortal",
@@ -1723,9 +1731,10 @@
     "id": "mystic_essence_mortal",
     "name": "Mystic Essence (Mortal)",
     "type": "material",
-    "effect": "none",
-    "magnitude": 0,
-    "description": "A Mortal-grade essence prized by alchemists and refiners. Valuable to the right buyer."
+    "effect": "cultivation_boost",
+    "magnitude": 25,
+    "consumed_on_use": true,
+    "description": "A Mortal-grade essence dense with spiritual energy. Absorb it to gain 25% cultivation progress."
   },
   {
     "id": "bone_forging_petal",

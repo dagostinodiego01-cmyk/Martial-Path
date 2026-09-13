@@ -4,6 +4,7 @@ from __future__ import annotations
 from typing import Any, Dict, List, Optional
 
 from game.core.constants import EventType, MODE_COMBAT, MODE_EXPLORE
+from game.utils.text import with_article
 
 
 class SystemsMixin:
@@ -153,7 +154,7 @@ class SystemsMixin:
                 "realm": {"display_name": realm["display_name"], "room": index + 1, "total": len(rooms)},
                 "is_boss": kind == "boss",
                 "enemy": self._enemy_view(enemy),
-                "text": f"A {enemy.name} bars your way deeper into {realm['display_name']}.",
+                "text": f"{with_article(enemy.name)} bars your way deeper into {realm['display_name']}.",
             }
         if kind == "treasure":
             self._realm["index"] = index + 1

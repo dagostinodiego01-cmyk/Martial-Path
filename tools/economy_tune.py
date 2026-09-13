@@ -12,6 +12,9 @@ are reachable within a committed run, per the ledger in
    the new dungeons feed the same economy they sit at the bottom of.
 4. The tier-6 rune hall is re-priced onto one ascending ladder (130-180)
    that keeps it the costliest hall while leaving run-income headroom.
+5. Every foe a tier 5-6 zone can throw at you pays that zone's stone rate, so
+   widening a zone's bestiary (see ``tools/seed_enemy_pools.py``) can never
+   dilute the spirit-stone income the endgame shops depend on.
 
 Run once from the project root::
 
@@ -22,6 +25,7 @@ Idempotent: entries already carrying the tuned values are skipped.
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
 
 DATA = Path("game/data")
@@ -82,6 +86,26 @@ REALM_STONES = {
     "undercroft_circuit_prime": 25,
     "starfield_stair_sanctum": 30,
 }
+
+# Fallback for a tier 5-6 zone where *no* foe drops stones yet: danger -> the
+# drop its foes receive. Zones that already have a dropper copy that drop
+# instead, so a zone's stone rate stays the one the author gave it.
+STONE_DROP_BY_DANGER = {
+    3: {"item_id": "spirit_stone", "chance": 0.5, "count": 1},
+    4: {"item_id": "spirit_stone", "chance": 0.6, "count": 1},
+    5: {"item_id": "spirit_stone", "chance": 0.65, "count": 2},
+    6: {"item_id": "spirit_stone", "chance": 0.7, "count": 2},
+    7: {"item_id": "spirit_stone", "chance": 0.8, "count": 2},
+    8: {"item_id": "spirit_stone", "chance": 0.85, "count": 3},
+    9: {"item_id": "spirit_stone", "chance": 0.9, "count": 4},
+    10: {"item_id": "spirit_stone", "chance": 0.9, "count": 5},
+}
+
+# Story tiers whose zones pay spirit stones (mirrors economy_balance).
+STONE_ZONE_STORY_TIERS = (5, 6)
+
+# Chance used when restating a zone's average rate as a concrete drop entry.
+SEEDED_DROP_CHANCE = 0.85
 
 # rune_temple_order techniques -> one ascending tier-6 ladder (130-180) that
 # keeps the hall the game's costliest while leaving the run income headroom
@@ -162,6 +186,67 @@ def tune_realms() -> int:
     return applied
 
 
+def _stone_drop_of(enemy: dict):
+    for item in enemy.get("loot_table", []) or []:
+        if item.get("item_id") == "spirit_stone":
+            return {"item_id": "spirit_stone", "chance": item.get("chance", 0), "count": item.get("count", 1)}
+    return None
+
+
+def tune_zone_anchor_drops() -> int:
+    """Give every foe in a tier 5-6 zone the zone's own stone drop.
+
+    A zone's rate is taken from its best existing dropper, so the drops this
+    adds are the author's curve rather than an invented one; zones with no
+    dropper at all fall back to the danger table.
+    """
+    locations = {entry.get("id"): entry for entry in load("locations.json")}
+    pools = load("encounter_pools.json")
+    path = "enemies/random_enemies.json"
+    raw = load(path)
+    enemies = raw["enemies"] if isinstance(raw, dict) and "enemies" in raw else raw
+    by_id = {enemy.get("id"): enemy for enemy in enemies}
+
+    applied = 0
+    for location_id, pool in pools.items():
+        location = locations.get(location_id)
+        if location is None:
+            continue
+        if int(location.get("story_tier", 1)) not in STONE_ZONE_STORY_TIERS:
+            continue
+        combat = pool.get("combat", []) or []
+        # The zone's own going rate: the weighted average payout among the foes
+        # that already drop stones (weighted by how often the pool picks them).
+        weighted_rate = 0.0
+        weight_total = 0
+        for entry in combat:
+            drop = _stone_drop_of(by_id.get(entry.get("enemy_id", ""), {}))
+            if drop is None:
+                continue
+            weight = max(1, int(entry.get("weight", 1)))
+            weighted_rate += weight * float(drop["chance"]) * int(drop["count"])
+            weight_total += weight
+        if weight_total:
+            # Round up: the widened foes are no weaker than the zone's existing
+            # wildlife, so they should not pay less than the zone's average.
+            count = max(1, math.ceil((weighted_rate / weight_total) / SEEDED_DROP_CHANCE))
+            drop = {"item_id": "spirit_stone", "chance": SEEDED_DROP_CHANCE, "count": count}
+        else:
+            danger = min(10, max(3, int(location.get("danger_level", 0))))
+            drop = STONE_DROP_BY_DANGER.get(danger)
+        if drop is None:
+            continue
+        for entry in combat:
+            enemy = by_id.get(entry.get("enemy_id", ""))
+            if enemy is None or _stone_drop_of(enemy) is not None:
+                continue
+            enemy.setdefault("loot_table", []).append(dict(drop))
+            applied += 1
+    if applied:
+        save(path, raw)
+    return applied
+
+
 def tune_rune_hall() -> int:
     path = "sects.json"
     raw = load(path)
@@ -186,6 +271,7 @@ def tune_rune_hall() -> int:
 def main() -> None:
     counts = {
         "enemy_drops_added": tune_enemies(),
+        "zone_anchor_drops_added": tune_zone_anchor_drops(),
         "quest_rewards_added": tune_quests(),
         "realm_rewards_added": tune_realms(),
         "rune_hall_prices_set": tune_rune_hall(),

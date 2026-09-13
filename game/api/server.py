@@ -51,7 +51,10 @@ class ActionRequest(BaseModel):
     slot: Optional[str] = None
     character_id: Optional[str] = None
     dialogue_choice: Optional[str] = None
+    # ENCOUNTER_CHOICE: which pending choice to take (id or 1-based number).
     choice_id: Optional[str] = None
+    # TARGET_FOE: which foe of a group to face.
+    foe_id: Optional[str] = None
     track: Optional[str] = None
     target_id: Optional[str] = None
     sect_id: Optional[str] = None

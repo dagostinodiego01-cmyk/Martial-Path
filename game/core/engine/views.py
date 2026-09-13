@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import Any, Dict, List, Optional
 
-from game.core.constants import EventType, MODE_COMBAT
+from game.core.constants import EventType, MODE_COMBAT, MODE_ENCOUNTER
 
 from game.systems.combat_system import COMBO_ROLES
 from game.systems.skill_system import GROWTH_PASSIVE_EFFECTS
@@ -65,6 +65,11 @@ class ViewsMixin:
             "mode": self._mode,
             "in_combat": self._mode == MODE_COMBAT,
             "enemy": self._enemy_view(self._current_enemy) if self._current_enemy else None,
+            # Formation combat (B.9): every foe still standing, so a frontend can
+            # show the group and let the player pick who to face.
+            "enemies": self._formation_view(),
+            "in_encounter": self._mode == MODE_ENCOUNTER,
+            "encounter": self._encounter_view(self._pending_encounter) if self._pending_encounter else None,
             "cooldowns": dict(self._cooldowns),
             "inventory_items": inventory_items,
             "shops": self.shops.shops_for_location(self.player.current_location),

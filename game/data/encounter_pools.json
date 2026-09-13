@@ -12,6 +12,18 @@
       {
         "enemy_id": "black_pine_serpent",
         "weight": 1
+      },
+      {
+        "enemy_id": "verdant_scorpion",
+        "weight": 2
+      },
+      {
+        "enemy_id": "village_shaman",
+        "weight": 2
+      },
+      {
+        "enemy_id": "grave_mist_bull",
+        "weight": 2
       }
     ],
     "loot": [
@@ -40,6 +52,26 @@
       {
         "enemy_id": "azure_stream_bandit",
         "weight": 1
+      },
+      {
+        "enemy_id": "field_tiger",
+        "weight": 2
+      },
+      {
+        "enemy_id": "golden_leopard",
+        "weight": 2
+      },
+      {
+        "enemy_id": "meadow_ape_no.2",
+        "weight": 2
+      },
+      {
+        "enemy_id": "green_hollow_wolf",
+        "weight": 2
+      },
+      {
+        "enemy_id": "stone_serpent",
+        "weight": 2
       }
     ],
     "loot": [
@@ -80,6 +112,18 @@
       {
         "enemy_id": "corpse_demon",
         "weight": 1
+      },
+      {
+        "enemy_id": "crownguard_qilin",
+        "weight": 2
+      },
+      {
+        "enemy_id": "dune_warder",
+        "weight": 2
+      },
+      {
+        "enemy_id": "vermillion_hound",
+        "weight": 2
       }
     ],
     "loot": [
@@ -120,6 +164,10 @@
       {
         "enemy_id": "corpse_demon",
         "weight": 3
+      },
+      {
+        "enemy_id": "slaughter_zealot",
+        "weight": 2
       }
     ],
     "loot": [
@@ -164,6 +212,14 @@
       {
         "enemy_id": "rogue_cultivator",
         "weight": 1
+      },
+      {
+        "enemy_id": "field_captain",
+        "weight": 2
+      },
+      {
+        "enemy_id": "green_hollow_qilin",
+        "weight": 2
       }
     ],
     "loot": [
@@ -192,6 +248,22 @@
       {
         "enemy_id": "azure_stream_bandit",
         "weight": 1
+      },
+      {
+        "enemy_id": "flame_roc",
+        "weight": 2
+      },
+      {
+        "enemy_id": "meadow_ape",
+        "weight": 2
+      },
+      {
+        "enemy_id": "field_wyrm",
+        "weight": 2
+      },
+      {
+        "enemy_id": "green_hollow_wraith",
+        "weight": 2
       }
     ],
     "loot": [
@@ -228,6 +300,18 @@
       {
         "enemy_id": "rogue_cultivator",
         "weight": 1
+      },
+      {
+        "enemy_id": "nether_warder",
+        "weight": 2
+      },
+      {
+        "enemy_id": "stream_captain",
+        "weight": 2
+      },
+      {
+        "enemy_id": "star_elder",
+        "weight": 2
       }
     ],
     "loot": [
@@ -264,6 +348,22 @@
       {
         "enemy_id": "rogue_cultivator",
         "weight": 1
+      },
+      {
+        "enemy_id": "green_hollow_thrall",
+        "weight": 2
+      },
+      {
+        "enemy_id": "stream_duelist",
+        "weight": 2
+      },
+      {
+        "enemy_id": "village_boar",
+        "weight": 2
+      },
+      {
+        "enemy_id": "fog_veiled_lizard",
+        "weight": 2
       }
     ],
     "loot": [
@@ -300,6 +400,18 @@
       {
         "enemy_id": "rogue_cultivator",
         "weight": 1
+      },
+      {
+        "enemy_id": "verdant_zealot_no.2",
+        "weight": 2
+      },
+      {
+        "enemy_id": "deepwood_qilin",
+        "weight": 2
+      },
+      {
+        "enemy_id": "misty_elder",
+        "weight": 2
       }
     ],
     "loot": [
@@ -336,6 +448,18 @@
       {
         "enemy_id": "capital_shadow_agent",
         "weight": 1
+      },
+      {
+        "enemy_id": "verdant_zealot",
+        "weight": 2
+      },
+      {
+        "enemy_id": "azure_qilin",
+        "weight": 2
+      },
+      {
+        "enemy_id": "stone_executioner",
+        "weight": 2
       }
     ],
     "loot": [
@@ -372,6 +496,18 @@
       {
         "enemy_id": "forbidden_herb_guardian",
         "weight": 1
+      },
+      {
+        "enemy_id": "flame_ape",
+        "weight": 2
+      },
+      {
+        "enemy_id": "fog_veiled_ape",
+        "weight": 2
+      },
+      {
+        "enemy_id": "thornwood_mantis",
+        "weight": 2
       }
     ],
     "loot": [
@@ -407,6 +543,26 @@
       },
       {
         "enemy_id": "valley_sword_puppet",
+        "weight": 2
+      },
+      {
+        "enemy_id": "slaughter_sprite",
+        "weight": 2
+      },
+      {
+        "enemy_id": "five_element_qilin",
+        "weight": 2
+      },
+      {
+        "enemy_id": "wilderness_thrall",
+        "weight": 2
+      },
+      {
+        "enemy_id": "ruin_tiger",
+        "weight": 2
+      },
+      {
+        "enemy_id": "planetary_sprite",
         "weight": 2
       }
     ],
@@ -452,6 +608,18 @@
       {
         "enemy_id": "valley_outer_challenger",
         "weight": 1
+      },
+      {
+        "enemy_id": "capital_toad",
+        "weight": 2
+      },
+      {
+        "enemy_id": "blood_duelist",
+        "weight": 2
+      },
+      {
+        "enemy_id": "sand_golem",
+        "weight": 2
       }
     ],
     "loot": [
@@ -488,6 +656,22 @@
       {
         "enemy_id": "south_sea_pirate_cultivator",
         "weight": 1
+      },
+      {
+        "enemy_id": "deepwood_qilin_no.2",
+        "weight": 2
+      },
+      {
+        "enemy_id": "flame_disciple",
+        "weight": 2
+      },
+      {
+        "enemy_id": "fog_veiled_assassin",
+        "weight": 2
+      },
+      {
+        "enemy_id": "imperial_bear",
+        "weight": 2
       }
     ],
     "loot": [
@@ -524,6 +708,22 @@
       {
         "enemy_id": "mystic_realm_firebird",
         "weight": 1
+      },
+      {
+        "enemy_id": "blood_leopard",
+        "weight": 2
+      },
+      {
+        "enemy_id": "fog_veiled_qilin",
+        "weight": 2
+      },
+      {
+        "enemy_id": "hollow_wyrm",
+        "weight": 2
+      },
+      {
+        "enemy_id": "sun_scorched_warfiend",
+        "weight": 2
       }
     ],
     "loot": [
@@ -555,6 +755,30 @@
       },
       {
         "enemy_id": "phoenix_flame_sprite",
+        "weight": 2
+      },
+      {
+        "enemy_id": "blood_panther_no.2",
+        "weight": 2
+      },
+      {
+        "enemy_id": "slaughter_revenant",
+        "weight": 2
+      },
+      {
+        "enemy_id": "zen_rogue_cultivator",
+        "weight": 2
+      },
+      {
+        "enemy_id": "temple_thrall",
+        "weight": 2
+      },
+      {
+        "enemy_id": "ruin_hound",
+        "weight": 2
+      },
+      {
+        "enemy_id": "star_severing_rogue_cultivator",
         "weight": 2
       }
     ],
@@ -591,6 +815,18 @@
       },
       {
         "enemy_id": "horizon_sea_lizard",
+        "weight": 2
+      },
+      {
+        "enemy_id": "blood_boar",
+        "weight": 2
+      },
+      {
+        "enemy_id": "star_panther",
+        "weight": 2
+      },
+      {
+        "enemy_id": "frost_leopard",
         "weight": 2
       }
     ],
@@ -632,6 +868,18 @@
       {
         "enemy_id": "vermillion_guard_captain",
         "weight": 1
+      },
+      {
+        "enemy_id": "sand_mantis",
+        "weight": 2
+      },
+      {
+        "enemy_id": "sun_scorched_ape",
+        "weight": 2
+      },
+      {
+        "enemy_id": "sun_scorched_thrall",
+        "weight": 2
       }
     ],
     "loot": [
@@ -667,6 +915,14 @@
       },
       {
         "enemy_id": "central_region_duelist",
+        "weight": 2
+      },
+      {
+        "enemy_id": "void_golem",
+        "weight": 2
+      },
+      {
+        "enemy_id": "thunder_demon",
         "weight": 2
       }
     ],
@@ -704,6 +960,18 @@
       {
         "enemy_id": "vermillion_guard_captain",
         "weight": 2
+      },
+      {
+        "enemy_id": "abyssal_golem",
+        "weight": 2
+      },
+      {
+        "enemy_id": "zen_boar",
+        "weight": 2
+      },
+      {
+        "enemy_id": "five_element_warder_no.2",
+        "weight": 2
       }
     ],
     "loot": [
@@ -739,6 +1007,30 @@
       },
       {
         "enemy_id": "central_region_duelist",
+        "weight": 2
+      },
+      {
+        "enemy_id": "cloud_temple_bear",
+        "weight": 2
+      },
+      {
+        "enemy_id": "iron_bell_bull",
+        "weight": 2
+      },
+      {
+        "enemy_id": "thunder_demon_no.2",
+        "weight": 2
+      },
+      {
+        "enemy_id": "primal_qilin",
+        "weight": 2
+      },
+      {
+        "enemy_id": "nether_elder",
+        "weight": 2
+      },
+      {
+        "enemy_id": "planetary_warlock",
         "weight": 2
       }
     ],
@@ -780,6 +1072,10 @@
       {
         "enemy_id": "asura_blood_guard",
         "weight": 1
+      },
+      {
+        "enemy_id": "zenlight_panther",
+        "weight": 2
       }
     ],
     "loot": [
@@ -816,6 +1112,18 @@
       {
         "enemy_id": "five_element_warder",
         "weight": 1
+      },
+      {
+        "enemy_id": "blood_demon",
+        "weight": 2
+      },
+      {
+        "enemy_id": "flame_thrall",
+        "weight": 2
+      },
+      {
+        "enemy_id": "grave_mist_leopard",
+        "weight": 2
       }
     ],
     "loot": [
@@ -848,6 +1156,26 @@
       {
         "enemy_id": "asura_blood_guard",
         "weight": 1
+      },
+      {
+        "enemy_id": "cloud_temple_reaver",
+        "weight": 2
+      },
+      {
+        "enemy_id": "steppe_hound",
+        "weight": 2
+      },
+      {
+        "enemy_id": "thunder_tiger",
+        "weight": 2
+      },
+      {
+        "enemy_id": "ancient_duelist",
+        "weight": 2
+      },
+      {
+        "enemy_id": "totem_warder",
+        "weight": 2
       }
     ],
     "loot": [
@@ -883,6 +1211,30 @@
       },
       {
         "enemy_id": "southern_wilderness_shaman",
+        "weight": 2
+      },
+      {
+        "enemy_id": "crimson_thrall",
+        "weight": 2
+      },
+      {
+        "enemy_id": "steppe_elder",
+        "weight": 2
+      },
+      {
+        "enemy_id": "steppe_revenant",
+        "weight": 2
+      },
+      {
+        "enemy_id": "stone_warder",
+        "weight": 2
+      },
+      {
+        "enemy_id": "ruin_captain",
+        "weight": 2
+      },
+      {
+        "enemy_id": "ruin_wyrm",
         "weight": 2
       }
     ],
@@ -920,6 +1272,30 @@
       {
         "enemy_id": "zenlight_iron_monk",
         "weight": 2
+      },
+      {
+        "enemy_id": "slaughter_crane",
+        "weight": 2
+      },
+      {
+        "enemy_id": "steppe_executioner",
+        "weight": 2
+      },
+      {
+        "enemy_id": "five_element_ape",
+        "weight": 2
+      },
+      {
+        "enemy_id": "totem_lizard",
+        "weight": 2
+      },
+      {
+        "enemy_id": "ruin_shaman",
+        "weight": 2
+      },
+      {
+        "enemy_id": "nether_duelist",
+        "weight": 2
       }
     ],
     "loot": [
@@ -955,6 +1331,30 @@
       },
       {
         "enemy_id": "five_element_warder",
+        "weight": 2
+      },
+      {
+        "enemy_id": "blood_qilin",
+        "weight": 2
+      },
+      {
+        "enemy_id": "slaughter_serpent",
+        "weight": 2
+      },
+      {
+        "enemy_id": "steppe_golem",
+        "weight": 2
+      },
+      {
+        "enemy_id": "primal_guard",
+        "weight": 2
+      },
+      {
+        "enemy_id": "astral_wraith",
+        "weight": 2
+      },
+      {
+        "enemy_id": "planetary_sprite_no.2",
         "weight": 2
       }
     ],
@@ -996,6 +1396,26 @@
       {
         "enemy_id": "holy_demon_warfiend",
         "weight": 1
+      },
+      {
+        "enemy_id": "golden_tiger",
+        "weight": 2
+      },
+      {
+        "enemy_id": "blood_captain",
+        "weight": 2
+      },
+      {
+        "enemy_id": "ancient_warlock",
+        "weight": 2
+      },
+      {
+        "enemy_id": "astral_bear",
+        "weight": 2
+      },
+      {
+        "enemy_id": "astral_rogue_cultivator",
+        "weight": 2
       }
     ],
     "loot": [
@@ -1031,6 +1451,26 @@
       },
       {
         "enemy_id": "ancient_ruin_sentinel",
+        "weight": 2
+      },
+      {
+        "enemy_id": "elemental_cutpurse",
+        "weight": 2
+      },
+      {
+        "enemy_id": "five_element_qilin_no.2",
+        "weight": 2
+      },
+      {
+        "enemy_id": "temple_bandit",
+        "weight": 2
+      },
+      {
+        "enemy_id": "wilderness_wolf",
+        "weight": 2
+      },
+      {
+        "enemy_id": "totem_demon",
         "weight": 2
       }
     ],
@@ -1072,6 +1512,14 @@
       {
         "enemy_id": "stream_captain_no.2",
         "weight": 2
+      },
+      {
+        "enemy_id": "green_hollow_leopard",
+        "weight": 2
+      },
+      {
+        "enemy_id": "blood_panther",
+        "weight": 2
       }
     ],
     "loot": [
@@ -1106,6 +1554,14 @@
       {
         "enemy_id": "azure_ape",
         "weight": 2
+      },
+      {
+        "enemy_id": "flame_bull",
+        "weight": 2
+      },
+      {
+        "enemy_id": "sand_panther",
+        "weight": 2
       }
     ],
     "loot": [
@@ -1135,6 +1591,18 @@
       },
       {
         "enemy_id": "shade_lizard",
+        "weight": 2
+      },
+      {
+        "enemy_id": "blood_monk",
+        "weight": 2
+      },
+      {
+        "enemy_id": "frost_warfiend",
+        "weight": 2
+      },
+      {
+        "enemy_id": "nether_panther",
         "weight": 2
       }
     ],
@@ -1170,6 +1638,18 @@
       {
         "enemy_id": "hollow_shaman",
         "weight": 2
+      },
+      {
+        "enemy_id": "imperial_revenant",
+        "weight": 2
+      },
+      {
+        "enemy_id": "imperial_duelist",
+        "weight": 2
+      },
+      {
+        "enemy_id": "sun_scorched_panther",
+        "weight": 2
       }
     ],
     "loot": [
@@ -1204,6 +1684,14 @@
       {
         "enemy_id": "stone_revenant",
         "weight": 2
+      },
+      {
+        "enemy_id": "vermillion_python",
+        "weight": 2
+      },
+      {
+        "enemy_id": "vermillion_qilin",
+        "weight": 2
       }
     ],
     "loot": [
@@ -1233,6 +1721,18 @@
       },
       {
         "enemy_id": "vermillion_puppet",
+        "weight": 2
+      },
+      {
+        "enemy_id": "crownguard_warfiend",
+        "weight": 2
+      },
+      {
+        "enemy_id": "grave_mist_hound",
+        "weight": 2
+      },
+      {
+        "enemy_id": "south_horizon_mantis",
         "weight": 2
       }
     ],
@@ -1264,6 +1764,18 @@
       {
         "enemy_id": "misty_boar",
         "weight": 2
+      },
+      {
+        "enemy_id": "meadow_boar",
+        "weight": 2
+      },
+      {
+        "enemy_id": "stream_rogue_cultivator",
+        "weight": 2
+      },
+      {
+        "enemy_id": "thornwood_toad",
+        "weight": 2
       }
     ],
     "loot": [
@@ -1294,6 +1806,18 @@
       {
         "enemy_id": "coral_serpent",
         "weight": 3
+      },
+      {
+        "enemy_id": "blood_vulture",
+        "weight": 2
+      },
+      {
+        "enemy_id": "imperial_roc",
+        "weight": 2
+      },
+      {
+        "enemy_id": "vermillion_duelist",
+        "weight": 2
       }
     ],
     "loot": [
@@ -1327,6 +1851,10 @@
       },
       {
         "enemy_id": "south_horizon_assassin",
+        "weight": 2
+      },
+      {
+        "enemy_id": "golden_scorpion",
         "weight": 2
       }
     ],
@@ -1362,6 +1890,14 @@
       {
         "enemy_id": "abyssal_scorpion",
         "weight": 2
+      },
+      {
+        "enemy_id": "abyssal_tiger",
+        "weight": 2
+      },
+      {
+        "enemy_id": "tidal_python",
+        "weight": 2
       }
     ],
     "loot": [
@@ -1395,6 +1931,10 @@
       },
       {
         "enemy_id": "misty_wyrm",
+        "weight": 2
+      },
+      {
+        "enemy_id": "sun_scorched_bull",
         "weight": 2
       }
     ],
@@ -1430,6 +1970,18 @@
       {
         "enemy_id": "nine_furnace_fire_golem",
         "weight": 1
+      },
+      {
+        "enemy_id": "dune_python",
+        "weight": 2
+      },
+      {
+        "enemy_id": "tidal_vulture",
+        "weight": 2
+      },
+      {
+        "enemy_id": "savage_guard",
+        "weight": 2
       }
     ],
     "loot": [
@@ -1464,6 +2016,22 @@
       {
         "enemy_id": "asura_blood_guard",
         "weight": 2
+      },
+      {
+        "enemy_id": "zen_toad",
+        "weight": 2
+      },
+      {
+        "enemy_id": "totem_duelist",
+        "weight": 2
+      },
+      {
+        "enemy_id": "ruin_leopard",
+        "weight": 2
+      },
+      {
+        "enemy_id": "holy_demon_serpent",
+        "weight": 2
       }
     ],
     "loot": [
@@ -1497,6 +2065,10 @@
       },
       {
         "enemy_id": "zenlight_revenant",
+        "weight": 2
+      },
+      {
+        "enemy_id": "star_roc",
         "weight": 2
       }
     ],
@@ -1536,6 +2108,14 @@
       {
         "enemy_id": "five_element_warder",
         "weight": 2
+      },
+      {
+        "enemy_id": "wilderness_wyrm",
+        "weight": 2
+      },
+      {
+        "enemy_id": "totem_tiger",
+        "weight": 2
       }
     ],
     "loot": [
@@ -1573,6 +2153,18 @@
       },
       {
         "enemy_id": "primal_roc",
+        "weight": 2
+      },
+      {
+        "enemy_id": "wilderness_warfiend",
+        "weight": 2
+      },
+      {
+        "enemy_id": "totem_crane",
+        "weight": 2
+      },
+      {
+        "enemy_id": "planetary_vulture",
         "weight": 2
       }
     ],

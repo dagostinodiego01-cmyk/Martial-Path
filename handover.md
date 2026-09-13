@@ -4,8 +4,9 @@ A data-driven cultivation (xianxia) RPG. The authoritative game logic is a Pytho
 engine in `game/`; several frontends render its state and send commands. **All
 gameplay rules live in the engine — never in a UI.**
 
-Last updated: 2026-09-04. Test suite: **722 passing, 3 skipped** (`pytest -q`).
-Data validation: clean (**0 errors**).
+Last updated: 2026-09-12. Test suite: **780 passing, 3 skipped** (`pytest -q`).
+Data validation: clean (**0 errors**, and the new dead-content sweep reports
+nothing unreachable and no trap options).
 
 ---
 
@@ -69,7 +70,65 @@ ui/ (+ frontends)  ->  application/  ->  core/  ->  services/  ->  systems/  -> 
 
 ---
 
-## 2.5 Recent work (2026-09-02, ROADMAP Phase 2: A.6 + B.6)
+## 2.5 Recent work (2026-09-12, ROADMAP Phase 3 G.2: dead-content sweep)
+
+**`game/validation/dead_content.py`** answers "is every entry reachable *and*
+meaningful?" -- the supply-side question the reference validator never asked.
+It derives each content type's acquisition path (skills via trainers/manuals/
+loot/pools/sect halls/origins/legacy/boons; items + equipment via shops/loot/
+pools/gathering/quests/realms/recipes/the find roll; enemies via pools/realms/
+quests; NPCs via location anchors; quests via the `auto_start` chain fixpoint)
+and flags the trap classes: consumable or active/passive effects the engine
+cannot resolve, equipment with no modifiers, materials with no effect/role/
+source, dead recipes, permanently locked quests, unsatisfiable NPC gates, and
+shop offers strictly dominated by a no-more-expensive neighbour. It is wired
+into `validate_all_game_data()` (categories `unreachable_*` / `trap_*`), printed
+by `tools/dead_content_report.py`, and held by `tests/test_dead_content.py`
+(17 tests, including that every effect in each vocabulary really resolves in the
+system that owns it).
+
+What the first sweep found, and what was fixed:
+
+- **148 of 236 random enemies were unfightable** -- they sat in no encounter
+  pool, secret realm, or quest, and because all 45 locations carry a curated
+  pool, `EventSystem`'s global fallback never fired. `tools/seed_enemy_pools.py`
+  (deterministic, idempotent) places every stranded foe in a zone whose danger
+  matches its combined body/essence realm rank (mean error 1.0 on the 0-10
+  scale; pools 4-8 entries; 0 stranded). It also routes their loot tables -- and
+  therefore the manuals they drop -- into the world.
+- **Six item effects were advertised but never implemented:** `lifespan_extension`
+  (19 pills!), `comprehension_boost`, `restore_hp_qi`, `cleanse_poison`,
+  `body_temper`, `breakthrough_aid`. `USE_ITEM` on them burned the stack and
+  reported `no_effect`. All six now resolve in `EffectSystem`, whose
+  `SUPPORTED_EFFECTS` frozenset is the vocabulary the sweep validates against
+  (same pattern for `combat_system.SUPPORTED_ACTIVE_EFFECTS`,
+  `stats_system.STAT_PASSIVE_EFFECTS`, `skill_system.GROWTH_PASSIVE_EFFECTS` --
+  `views.py` now imports the latter two instead of keeping private copies).
+- **Nine materials** (`common_crystal`, `earth_scale`, `profound_star_core`,
+  `mystic_essence_mortal`, `bone_forging_feather`, `dao_enlightenment_fruit`,
+  `phoenix_marrow_blood_essence`, `phoenix_marrow_bone`,
+  `immortal_ascension_scale`) had `effect: none`, no recipe/upgrade role and no
+  source; they now absorb for cultivation progress like their siblings.
+- **60+ NPCs could never be met, sparred, dueled, or hand out boons:**
+  `CharacterService._is_unlocked` compared `unlock.min_stage` against
+  `player.stage`, which the cultivation system pins at 1 -- so every gate above
+  1 was permanently shut. New `CharacterService.required_story_tier(character)`
+  resolves the gate onto the live story ladder (`min_story_tier` when present,
+  else the legacy stage clamped to `constants.MAX_STORY_TIER`), and both the
+  availability listing and the interaction gate use it. **Data authors: prefer
+  `min_story_tier`; `unlock.min_stage` is now interpreted as a story tier.**
+- **Endgame economy re-anchored:** widening the tier 5-6 pools diluted the
+  spirit-stone income the ledger in `game/utils/economy_balance.py` models
+  (1175 -> 751 against the 930-stone rune hall). `tools/economy_tune.py` gained
+  a stage that gives every foe in a tier 5-6 zone that zone's going stone rate
+  (the weighted average of its existing droppers), restoring run income to
+  ~1178 with the previous headroom.
+- Test updates that encode the old behaviour: `tests/test_character_service.py`
+  (story tier instead of `stage`) and `tests/test_relationship_rewards.py`
+  (`duanmu_qun` opens at story tier 4). `tests/test_meta_depth.py`'s shop-price
+  test now layers the live market drift the way `ShopSystem` does.
+
+## Recent work (2026-09-04, ROADMAP Phase 2: full campaign, factions, endless)
 
 > 2026-09-04 fix: the HTTP `ActionRequest` model was silently dropping
 > `track`/`target_id` (and 9 more dispatch fields), so Godot's Talents upgrade
@@ -428,7 +487,11 @@ This session executed the full **17-priority roadmap** derived from a code revie
 Seed generators live in `tools/` (all deterministic + idempotent):
 `seed_techniques.py`, `seed_shops.py`, `seed_talent_upgrades.py`,
 `seed_talent_resources.py`, `seed_equipment_sets.py`, `seed_enemy_abilities.py`,
-`normalize_available_systems.py`, `gen_missing_location_art.py`.
+`seed_enemy_daos.py`, `seed_enemy_pools.py` (G.2: gives every stranded enemy a
+realm-appropriate encounter pool), `normalize_available_systems.py`,
+`gen_missing_location_art.py`. Balance/report tools: `economy_report.py`,
+`economy_tune.py`, `dead_content_report.py` (G.2 sweep; exits non-zero when
+anything is unreachable or a trap option).
 
 Docs: `game/docs/ARCHITECTURE.md`, `CULTIVATION_SYSTEM.md`, `DATA_SCHEMA.md`,
 `SAVE_SYSTEM.md`, `EQUIPMENT_SYSTEM.md`, `CHANGELOG.md`. Roadmap: `ROADMAP.md`.
@@ -437,7 +500,8 @@ Docs: `game/docs/ARCHITECTURE.md`, `CULTIVATION_SYSTEM.md`, `DATA_SCHEMA.md`,
 
 ## 5. Testing & validation
 
-- `pytest -q` — **722 passed, 3 skipped**. Newer files: `test_medium_priority.py`
+- `pytest -q` — **780 passed, 3 skipped**. Newer files: `test_dead_content.py`
+  (G.2 sweep + effect-vocabulary sync), `test_medium_priority.py`
   (the P10–P17 close-out), `test_sell_system.py`, `test_sect_system.py`,
   `test_relationship_rewards.py`, plus combat/trainer/find/lifespan/talent/shop,
   `test_codex.py` (CODEX action) and `test_economy_balance.py` (endgame
@@ -445,7 +509,8 @@ Docs: `game/docs/ARCHITECTURE.md`, `CULTIVATION_SYSTEM.md`, `DATA_SCHEMA.md`,
 - `validate_all_game_data()` — validates skills/effects, talents + upgrade chains
   + elixir costs, trainers (+ `required_path`), shops, sects, quests, equipment
   (rarity, realm, sets, durability), items, enemy abilities, encounter pools,
-  normalized `available_systems`, and map-position duplicates. **0 errors.**
+  normalized `available_systems`, map-position duplicates, and the G.2
+  dead-content sweep (reachability + trap options). **0 errors.**
 - Systems are testable without a UI (inject data + a seeded `RNG`).
 
 ---
@@ -465,6 +530,12 @@ Docs: `game/docs/ARCHITECTURE.md`, `CULTIVATION_SYSTEM.md`, `DATA_SCHEMA.md`,
   reward result isn't logged visually (it is granted by the backend).
 - **Sect contribution ranks** exist as data but there is no contribution-earning
   mechanic yet (tasks, inner/outer disciple progression, sect store).
+- **Find-only content (G.2 metric, not a failure):**
+  `tools/dead_content_report.py` reports 68 items and 137 equipment entries whose
+  only acquisition path is the rarity-weighted exploration find roll -- they have
+  no shop, loot table, pool, quest, or realm hook. Worth a seeding pass (or an
+  explicit "world find" tier) before 1.0, since the sweep measures it rather than
+  fixing it.
 - **Subjective map placement:** the early Sky Fortune cluster is a best-fit (no
   reference coordinates); the objective guard (no duplicate markers) is enforced.
 - **Backend `--reload`:** not enabled; restart uvicorn manually after engine edits.

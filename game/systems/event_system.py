@@ -23,6 +23,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
+from game.utils.text import with_article
+
 from game.core.constants import EventType
 from game.models.player import Player
 from game.utils.rng import RNG
@@ -99,7 +101,7 @@ class EventSystem:
         return {
             "event": EventType.COMBAT,
             "enemy_id": template["id"],
-            "text": f"A {template['name']} lunges from the shadows!",
+            "text": f"{with_article(template['name'])} lunges from the shadows!",
         }
 
     def _loot_event(self, pool: Optional[Dict[str, Any]], find_rarity_index: Optional[int] = None) -> Dict[str, Any]:

@@ -167,7 +167,11 @@ def test_shop_prices_follow_economy_band():
     engine.process_action({"action": "TRAVEL", "location_id": "azure_village"})
     shop = engine.process_action({"action": "SHOP"})
     sword = next(e for e in shop["stock"] if e["item_id"] == "training_sword")
-    expected = max(1, round(25 * engine._world["economy_multiplier"]))
+    # The displayed price layers the seed band with the live market drift (E.3),
+    # which travelling advances; the invariant is that display == charge.
+    band = float(engine._world["economy_multiplier"])
+    market = float(engine.shops.market_multiplier())
+    expected = max(1, round(25 * band * market))
     assert sword["price"]["gold"] == expected
 
 

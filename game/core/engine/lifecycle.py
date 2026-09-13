@@ -40,7 +40,7 @@ class LifecycleMixin:
         """
         self._running = False
         self._mode = MODE_EXPLORE
-        self._current_enemy = None
+        self._clear_encounter_state()
         summary = self._run_summary(cause)
         self.meta.add_memory(DEATH_REWARD + DEATH_REALM_BONUS * int(summary["realm_rank"]))
         self.meta.record_run(self._chronicle_entry(cause))
@@ -186,7 +186,7 @@ class LifecycleMixin:
             }
         self._running = False
         self._mode = MODE_EXPLORE
-        self._current_enemy = None
+        self._clear_encounter_state()
         summary = self._run_summary("ascended")
         reward = (DEATH_REWARD + DEATH_REALM_BONUS * int(summary["realm_rank"])) * ASCENSION_REWARD_MULTIPLIER
         self.meta.add_memory(reward)
@@ -360,7 +360,7 @@ class LifecycleMixin:
                 pass
         self._origin_id = str(self.player.origin_id or DEFAULT_ORIGIN_ID)
         self._mode = MODE_EXPLORE
-        self._current_enemy = None
+        self._clear_encounter_state()
         self._cooldowns = {}
         self._pending_fate = None
         self._fate_accepted = True

@@ -2077,6 +2077,12 @@ func _refresh_state(state: Dictionary) -> void:
 	_render_techniques(player)
 	_render_actions(player)
 	_rebuild_combat_actions()
+	# B.9: a pending encounter owns the action grid. Rebuilding the choices from
+	# state (rather than from the one-shot action result) means a state refresh
+	# can never wipe the menu out from under the player.
+	var pending_encounter = state.get("encounter", null)
+	if bool(state.get("in_encounter", false)) and typeof(pending_encounter) == TYPE_DICTIONARY and not pending_encounter.is_empty():
+		_render_encounter_choices(pending_encounter)
 
 	var in_combat := bool(state.get("in_combat", false))
 	_set_combat_mode(in_combat)
@@ -2759,6 +2765,17 @@ func _rebuild_combat_actions() -> void:
 		_combat_actions.add_child(_make_button(skill_name, api.send_action.bind({"action": "USE_SKILL", "skill_id": skill_id}), tooltip))
 	_combat_actions.add_child(_make_button("Healing Pill", func(): api.send_action({"action": "USE_ITEM", "item_id": "healing_pill"}), "Use a healing pill."))
 	_combat_actions.add_child(_make_button("Flee", func(): _send("FLEE"), "Attempt to escape."))
+	# B.9 formations: when more than one foe stands, let the player pick which
+	# one to face instead of locking the fight to whoever arrived first.
+	var facing := str(_last_state.get("enemy", {}).get("id", ""))
+	for foe in _last_state.get("enemies", []):
+		if typeof(foe) != TYPE_DICTIONARY:
+			continue
+		var foe_id := str(foe.get("id", ""))
+		if foe_id == "" or foe_id == facing:
+			continue
+		var foe_tooltip := "Face this foe: HP %s/%s, ATK %s." % [str(foe.get("hp", 0)), str(foe.get("max_hp", 0)), str(foe.get("attack", 0))]
+		_combat_actions.add_child(_make_button("Face %s" % str(foe.get("name", foe_id)), api.send_action.bind({"action": "TARGET_FOE", "foe_id": foe_id}), foe_tooltip))
 
 
 func _set_combat_mode(active: bool) -> void:
@@ -2777,6 +2794,13 @@ func _update_enemy(enemy: Dictionary) -> void:
 	lines += "Threat: [color=#D9A441]%s[/color]\n" % enemy.get("threat", "Unknown")
 	lines += "Possible EXP: %s   " % rewards.get("exp", 0)
 	lines += "Possible Items: %s" % _join_array(rewards.get("items", []))
+	var others: Array[String] = []
+	for foe in _last_state.get("enemies", []):
+		if typeof(foe) != TYPE_DICTIONARY or str(foe.get("id", "")) == str(enemy.get("id", "")):
+			continue
+		others.append("%s %s/%s" % [str(foe.get("name", "?")), str(foe.get("hp", 0)), str(foe.get("max_hp", 0))])
+	if others.size() > 0:
+		lines += "\n[color=#C9A24D]Also here:[/color] %s" % _join_array(others)
 	_set_rich_text(_enemy_details, lines)
 
 
@@ -2994,6 +3018,10 @@ func _render_event(result: Dictionary) -> void:
 		"EXPLORE_RESULT":
 			_set_situation("Exploration", str(result.get("text", "You roam the wilds.")))
 			_append(str(result.get("text", "Explored the area.")))
+		"ENCOUNTER":
+			_render_encounter(result)
+		"ENCOUNTER_RESULT":
+			_render_encounter_result(result)
 		"COMBAT":
 			_set_combat_mode(true)
 			_update_enemy(result.get("enemy", {}))
@@ -3177,6 +3205,93 @@ func _render_character_encounter(result: Dictionary) -> void:
 		text += "\n\n" + _join_array(names)
 	_set_situation("Encounter", text)
 	_append("Encountered named cultivators.")
+
+
+func _render_encounter(result: Dictionary) -> void:
+	# The choice cards are rebuilt from state each refresh (see _refresh_state),
+	# so this only narrates the scene and logs what is waiting.
+	var lines: Array[String] = []
+	var prose := str(result.get("narrative", ""))
+	if prose != "":
+		lines.append(prose)
+	var detail := str(result.get("text", ""))
+	if detail != "" and detail != prose:
+		lines.append(detail)
+	lines.append_array(_encounter_detail_lines(result))
+	var outcome: Dictionary = result.get("outcome", {})
+	if not outcome.is_empty() and str(outcome.get("player_message", "")) != "":
+		lines.append(str(outcome.get("player_message", "")))
+	_set_situation(str(result.get("title", "Encounter")), "\n".join(lines))
+	_append("A decision waits: %s" % str(result.get("title", "an encounter")))
+
+
+func _encounter_detail_lines(result: Dictionary) -> Array[String]:
+	# What the player can see: who is here, how bad it looks, and anything an
+	# observation already revealed (a hazard, a ward on a find).
+	var lines: Array[String] = []
+	var foes: Array = result.get("foes", [])
+	if foes.size() > 0:
+		var names: Array[String] = []
+		for foe in foes:
+			names.append("%s (%s)" % [str(foe.get("name", "?")), str(foe.get("realm", "?"))])
+		lines.append("[color=#C9A24D]Facing:[/color] %s" % _join_array(names))
+		lines.append("Threat: [color=#D9A441]%s[/color]" % str(result.get("threat", "Unknown")))
+	var reveal: Dictionary = result.get("reveal", {})
+	if reveal.has("hazard"):
+		var hazard: Dictionary = reveal.get("hazard", {})
+		lines.append("[color=#9B6ADB]%s[/color] - %s damage if it catches you." % [str(hazard.get("name", "Hazard")), str(hazard.get("damage", 0))])
+	if reveal.has("trap"):
+		var trap: Dictionary = reveal.get("trap", {})
+		if bool(trap.get("trapped", false)):
+			lines.append("[color=#C0393A]%s[/color] - %s damage. Read as it is, you can take it safely." % [str(trap.get("name", "Ward")), str(trap.get("damage", 0))])
+	return lines
+
+
+func _render_encounter_choices(encounter: Dictionary) -> void:
+	_clear_action_grids()
+	var options: Array = encounter.get("options", [])
+	for option in options:
+		if typeof(option) != TYPE_DICTIONARY:
+			continue
+		var choice_id := str(option.get("choice_id", ""))
+		var label := str(option.get("label", choice_id))
+		var hint := str(option.get("hint", ""))
+		var odds = option.get("chance", null)
+		if odds != null:
+			hint += "  [%d%%]" % int(round(float(odds) * 100.0))
+		var cost: Dictionary = option.get("cost", {})
+		if not cost.is_empty():
+			hint += "  [%s]" % _format_price(cost)
+		var usable := bool(option.get("available", true))
+		var reason := str(option.get("reason", "Not possible here."))
+		_body_cultivation_grid.add_child(_make_action_card(label, hint, api.send_action.bind({"action": "ENCOUNTER_CHOICE", "choice_id": choice_id}), usable, reason))
+	if options.is_empty():
+		_body_cultivation_grid.add_child(_make_action_card("Continue", "Nothing left to decide", func(): api.get_state()))
+
+
+func _render_encounter_result(result: Dictionary) -> void:
+	var lines: Array[String] = []
+	var message := str(result.get("player_message", ""))
+	if message != "":
+		lines.append(message)
+	var cost: Dictionary = result.get("cost", {})
+	if not cost.is_empty():
+		lines.append("Paid: %s" % _format_price(cost))
+	if result.has("damage"):
+		lines.append("[color=#C0393A]Hurt for %s[/color] (HP %s)." % [str(result.get("damage", 0)), str(result.get("hp", 0))])
+	if bool(result.get("shrugged_off", false)):
+		lines.append("You keep your feet - barely.")
+	if result.has("exp_gained"):
+		lines.append("EXP +%s" % str(result.get("exp_gained", 0)))
+	if result.has("reputation_gained"):
+		lines.append("Reputation +%s" % str(result.get("reputation_gained", 0)))
+	if result.has("insight_gained"):
+		lines.append("Insight +%s" % str(result.get("insight_gained", 0)))
+	var loot: Dictionary = result.get("loot", {})
+	if not loot.is_empty():
+		lines.append("Obtained: %s x%s" % [str(loot.get("name", "item")), str(loot.get("count", 1))])
+	_set_situation("Resolved", "\n".join(lines))
+	_append(message if message != "" else "The moment resolves.")
 
 
 func _render_special(result: Dictionary) -> void:

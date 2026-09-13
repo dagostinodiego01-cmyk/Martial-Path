@@ -13,9 +13,32 @@ from __future__ import annotations
 
 from typing import Any, Dict, List, Optional
 
+from game.core.constants import MAX_STORY_TIER
 from game.systems.location_system import LocationSystem
 from game.systems.morality_system import MoralitySystem
 from game.systems.relationship_system import RelationshipSystem
+
+
+def required_story_tier(character: Dict[str, Any]) -> int:
+    """Return the story tier a character becomes available at.
+
+    ``min_story_tier`` is the live progression gate. Characters authored before
+    that field existed carry a legacy ``unlock.min_stage`` instead -- written
+    against a stage ladder the cultivation model never advanced (``player.stage``
+    is pinned at 1) -- so that value is folded onto the story ladder and clamped
+    to its top, keeping those NPCs meetable instead of permanently locked.
+    """
+    explicit = character.get("min_story_tier")
+    if explicit is not None:
+        try:
+            return max(0, int(explicit))
+        except (TypeError, ValueError):
+            return 0
+    stage = (character.get("unlock", {}) or {}).get("min_stage", 0)
+    try:
+        return min(max(0, int(stage)), MAX_STORY_TIER)
+    except (TypeError, ValueError):
+        return 0
 
 
 class CharacterService:
@@ -51,8 +74,7 @@ class CharacterService:
             character = self._by_id.get(npc_id)
             if character is None:
                 continue
-            required = character.get("min_story_tier")
-            if required is not None and story_tier < int(required):
+            if story_tier < required_story_tier(character):
                 continue
             briefs.append(self._brief(character, player))
         return briefs
@@ -240,10 +262,15 @@ class CharacterService:
         return True
 
     def _is_unlocked(self, character: Dict[str, Any], player: Any) -> bool:
-        """Gate by unlock stage. Realm names use a narrative scheme distinct from
-        cultivation ids, so realm gating is fail-open; the stage gate is exact."""
-        min_stage = int(character.get("unlock", {}).get("min_stage", 0))
-        return int(getattr(player, "stage", 1)) >= min_stage
+        """Gate interaction by the player's reached story tier.
+
+        Realm names use a narrative scheme distinct from cultivation ids, so
+        realm gating is fail-open; the tier gate (see :func:`required_story_tier`)
+        is exact. The old ``unlock.min_stage`` comparison against
+        ``player.stage`` was unsatisfiable -- stage never exceeded 1 -- which
+        silently locked dozens of NPCs out of sparring, duels, and boons.
+        """
+        return self._story_tier(player) >= required_story_tier(character)
 
     def _relationship_state(self, character_id: str, player: Any) -> Dict[str, Any]:
         store = getattr(player, "relationships", {}) or {}

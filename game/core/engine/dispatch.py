@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import Any, Dict
 
-from game.core.constants import Action, EventType, MODE_COMBAT, MODE_DEBATE
+from game.core.constants import Action, EventType, MODE_COMBAT, MODE_DEBATE, MODE_ENCOUNTER
 from game.core.results import HelpResult, QuitResult
 
 
@@ -42,6 +42,10 @@ class DispatchMixin:
             return self._process_combat_action(name, action)
         if self._mode == MODE_DEBATE:
             return self._process_debate_action(name, action)
+        # An exploration encounter waits on exactly one choice; nothing else
+        # consumes the turn until the player makes it (or withdraws).
+        if self._mode == MODE_ENCOUNTER:
+            return self._process_encounter_action(name, action)
         return self._process_explore_action(name, action)
 
     # -- narrative decoration (A.5) --------------------------------------
@@ -97,6 +101,8 @@ class DispatchMixin:
             Action.TECHNIQUES: lambda action: self._techniques(),
             Action.TALENTS: lambda action: self._talents(),
             Action.DAO_VIEW: lambda action: self._dao_view(),
+            # Free action: refocusing a formation fight costs no turn.
+            Action.TARGET_FOE: lambda action: self._retarget_foe(str(action.get("foe_id", ""))),
             Action.UNLOCK_TREE: lambda action: self._meta_unlock_tree(),
             Action.CODEX: lambda action: self._codex(),
             Action.HELP: lambda action: HelpResult().to_dict(),

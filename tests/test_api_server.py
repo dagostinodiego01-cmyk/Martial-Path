@@ -49,7 +49,7 @@ def test_action_request_carries_every_dispatch_argument():
     args = {
         "item_id": "x", "shop_id": "s", "quantity": 1, "skill_id": "k",
         "method_id": "m", "location_id": "l", "slot": "a", "character_id": "c",
-        "dialogue_choice": "d", "choice_id": "ch", "track": "martial",
+        "dialogue_choice": "d", "choice_id": "ch", "foe_id": "f", "track": "martial",
         "target_id": "t", "sect_id": "sec", "trainer_id": "tr", "years": 3,
         "recipe_id": "r", "dao_id": "dao", "unlock_id": "u", "rumor_id": "ru",
         "payload": "p", "raw": "raw text",
@@ -86,6 +86,57 @@ def test_new_game_resets_state():
     assert state["awaiting_fate_acceptance"] is False
     assert state["player"]["martial_talent_id"]
     assert state["player"]["body_talent_id"]
+
+
+def _explore_until_encounter(seed: int = 5, tries: int = 40) -> dict:
+    """Explore until the land asks a question, returning the ENCOUNTER payload."""
+    server.new_game(NewGameRequest(seed=seed, hardcore=False))
+    for _ in range(tries):
+        result = server.process_action(ActionRequest(action="EXPLORE"))
+        if result["event"] == EventType.ENCOUNTER:
+            return result
+    raise AssertionError("no encounter rolled in 40 explores")
+
+
+def test_explore_returns_a_choosable_encounter_over_the_api():
+    encounter = _explore_until_encounter()
+    assert encounter["kind"] in {"combat", "loot", "special", "hazard"}
+    assert encounter["title"] and encounter["narrative"]
+    options = encounter["options"]
+    assert options, "an encounter must offer at least one choice"
+    for option in options:
+        assert option["choice_id"] and option["label"] and option["hint"]
+        assert isinstance(option["available"], bool)
+        # A withheld option must say why: the UI shows that reason verbatim.
+        assert option["available"] or option.get("reason")
+
+
+def test_other_actions_are_refused_until_the_choice_is_made():
+    _explore_until_encounter()
+    blocked = server.process_action(ActionRequest(action="REST"))
+    assert blocked["event"] == EventType.ERROR
+    assert blocked["reason"] == "INVALID_IN_ENCOUNTER"
+    state = server.get_state()
+    assert state["in_encounter"] is True and state["encounter"] is not None
+
+
+def test_a_choice_resolves_and_clears_the_pending_encounter():
+    encounter = _explore_until_encounter()
+    choice_id = next(o["choice_id"] for o in encounter["options"] if o["available"])
+    result = server.process_action(ActionRequest(action="ENCOUNTER_CHOICE", choice_id=choice_id))
+    assert result["event"] in {EventType.ENCOUNTER_RESULT, EventType.COMBAT, EventType.ENCOUNTER}
+    if result["event"] != EventType.ENCOUNTER:
+        assert server.get_state()["in_encounter"] is False
+
+
+def test_withheld_choice_reports_the_engine_reason():
+    encounter = _explore_until_encounter(seed=77, tries=60)
+    withheld = [o for o in encounter["options"] if not o["available"]]
+    if not withheld:
+        return  # this roll had no withheld option; the shape is covered above
+    refused = server.process_action(ActionRequest(action="ENCOUNTER_CHOICE", choice_id=withheld[0]["choice_id"]))
+    assert refused["event"] == EventType.ERROR
+    assert refused["reason"] == withheld[0].get("reason_code", "CHOICE_UNAVAILABLE")
 
 
 def test_meta_endpoint_returns_meta_shape():

@@ -24,9 +24,9 @@ from __future__ import annotations
 from typing import Any, Dict, List, Optional
 
 from game.core.constants import Action, EventType, MODE_COMBAT, MODE_ENCOUNTER, MODE_EXPLORE
-from game.core.results import EncounterResult
 from game.models.enemy import Enemy
 from game.systems import currency as currency_helpers
+from game.systems.encounter_system import foe_power
 
 #: A road hazard never finishes what it starts.
 HAZARD_HP_FLOOR = 1
@@ -57,16 +57,33 @@ class EncountersMixin:
         self._mode = MODE_ENCOUNTER
         return self._encounter_prompt(encounter)
 
-    def _encounter_prompt(self, encounter: Dict[str, Any], *, verb: Optional[str] = None, extra: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Build the ENCOUNTER result the frontend renders as choice cards."""
+    def _encounter_prompt(
+        self,
+        encounter: Dict[str, Any],
+        *,
+        verb: Optional[str] = None,
+        outcome: Optional[Dict[str, Any]] = None,
+    ) -> Dict[str, Any]:
+        """Build the ENCOUNTER result the frontend renders as choice cards.
+
+        ``outcome`` carries what an informational choice (observe/examine/study)
+        already produced, so the refreshed prompt can still report the insight it
+        banked or the trap it exposed.
+        """
         context = {**self._narrative_context(), **(encounter.get("context") or {})}
-        payload = dict(extra or {})
-        payload.update(self._encounter_view(encounter))
-        return {
+        result: Dict[str, Any] = {
             "event": EventType.ENCOUNTER,
             "narrative": self.narrative.render(verb or encounter.get("scene_verb", "encounter"), context),
-            **payload,
+            **self._encounter_view(encounter),
         }
+        if outcome:
+            result["outcome"] = {
+                "choice_id": outcome.get("choice_id"),
+                "outcome": outcome.get("outcome"),
+                "player_message": outcome.get("player_message", ""),
+                **{key: outcome[key] for key in ("insight_gained", "exp_gained", "reveals", "damage", "hp") if key in outcome},
+            }
+        return result
 
     def _encounter_view(self, encounter: Dict[str, Any]) -> Dict[str, Any]:
         """Return the UI-safe projection of a pending encounter."""
@@ -87,18 +104,27 @@ class EncountersMixin:
                     "id": str(foe.get("id", "")),
                     "name": str(foe.get("name", "a foe")),
                     "realm": self._body_realm_names.get(str(foe.get("body_realm_id", "")), str(foe.get("body_realm_id", ""))),
-                    "power": int(self.encounters.foe_power(foe)) if foe else 0,
+                    "power": int(foe_power(foe)) if foe else 0,
                 }
                 for foe in foes
             ]
             view["foe_count"] = len(foes)
             leader = foes[0] if foes else {}
             if leader:
-                view["threat"] = self._threat_tier(self.encounters.foe_power(leader), self._player_power())
+                view["threat"] = self._threat_tier(foe_power(leader), self._player_power())
         reveal = self.encounters.reveal_view(encounter, self.player)
         if reveal:
             view["reveal"] = reveal
         return view
+
+    def _clear_encounter_state(self) -> None:
+        """Drop transient combat/encounter state (a run ending, or a load)."""
+        self._pending_encounter = None
+        self._current_foes = []
+        self._defeated_foes = []
+        self._leader_foe = None
+        self._current_enemy = None
+        self._combat_ambush = False
 
     def _encounter_danger(self) -> int:
         """Return the danger level of the area the player is exploring."""
@@ -146,6 +172,20 @@ class EncountersMixin:
             self._mode = MODE_EXPLORE
             return {"event": EventType.ERROR, "reason": "NOT_IN_ENCOUNTER"}
         options = self.encounters.options(encounter, self.player, self._player_power())
+        # Frontends that number the options (the CLI, and any text surface) may
+        # send the 1-based index instead of the id; the engine owns the list, so
+        # the mapping lives here rather than being duplicated per UI.
+        if choice_id.isdigit():
+            index = int(choice_id)
+            if 1 <= index <= len(options):
+                choice_id = options[index - 1]["choice_id"]
+            else:
+                return {
+                    "event": EventType.ERROR,
+                    "reason": "CHOICE_OUT_OF_RANGE",
+                    "choice_id": choice_id,
+                    "available": [option["choice_id"] for option in options],
+                }
         chosen = next((option for option in options if option["choice_id"] == choice_id), None)
         if chosen is None:
             return {
@@ -193,12 +233,9 @@ class EncountersMixin:
             self._mode = MODE_EXPLORE
         else:
             # Observing/studying costs the turn but keeps the scene open: hand
-            # back a refreshed prompt so the player chose with better eyes.
+            # back a refreshed prompt so the player chooses with better eyes.
             self._mode = MODE_ENCOUNTER
-            return self._encounter_prompt(encounter, verb=str(payload.get("verb", "encounter")), extra={
-                "event": EventType.ENCOUNTER,
-                "kicked_off": result,
-            })
+            return self._encounter_prompt(encounter, verb=str(payload.get("verb", "encounter")), outcome=result)
         result["narrative"] = self.narrative.render(str(payload.get("verb", "encounter")), self._narrative_context())
         return result
 
@@ -316,6 +353,7 @@ class EncountersMixin:
         self._pending_encounter = None
         self._current_foes = foes
         self._defeated_foes = []
+        self._leader_foe = foes[0]
         self._current_enemy = foes[0]
         self._combat_ambush = bool(payload.get("ambush"))
         self._mode = MODE_COMBAT
@@ -356,6 +394,9 @@ class EncountersMixin:
             })
 
         return {
+            # Carry the resolution (outcome, insight banked, reveals) into the
+            # fight so the frontend can explain what led to it.
+            **result,
             "event": EventType.COMBAT,
             "encounter_id": encounter.get("id"),
             "ambush": self._combat_ambush,

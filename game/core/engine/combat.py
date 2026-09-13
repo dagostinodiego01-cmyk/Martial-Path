@@ -1,7 +1,7 @@
 """Combat-mode routing and end-of-combat resolution."""
 from __future__ import annotations
 
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 from game.core.constants import Action, EventType, MODE_COMBAT, MODE_EXPLORE
 from game.systems.combat_system import COMBO_ROLES
@@ -17,12 +17,12 @@ class CombatMixin:
         if self._current_enemy is None:
             self._mode = MODE_EXPLORE
             return {"event": EventType.ERROR, "reason": "NOT_IN_COMBAT"}
+        if name == Action.TARGET_FOE:
+            return self._retarget_foe(str(action.get("foe_id", "")))
         if self.player.statuses.get("stun"):
             result = self.combat.player_stunned_turn(self.player, self._current_enemy, spar=self._combat_is_spar)
             self._tick_cooldowns()
-            if result.get("event") == EventType.COMBAT_END:
-                return self._end_combat(result)
-            return result
+            return self._resolve_combat_result(result)
         if name == Action.ATTACK:
             result = self.combat.attack(self.player, self._current_enemy, spar=self._combat_is_spar)
             self._tick_cooldowns()
@@ -44,9 +44,101 @@ class CombatMixin:
         else:
             return {"event": EventType.ERROR, "reason": "INVALID_IN_COMBAT", "input": name}
 
+        return self._resolve_combat_result(result)
+
+    # -- formation rounds (B.9) -------------------------------------------
+    def _resolve_combat_result(self, result: Dict[str, Any]) -> Dict[str, Any]:
+        """Route a resolved round through formation and end-of-fight handling.
+
+        A "victory" over one member of a group is not the end of the fight: the
+        survivors close in and the bout continues until the group is down.
+        """
         if result.get("event") == EventType.COMBAT_END:
+            if result.get("outcome") == "VICTORY" and self._formation_active() and self._living_foes():
+                return self._advance_formation(result)
             return self._end_combat(result)
+        return self._after_player_round(result)
+
+    def _formation_active(self) -> bool:
+        """True while this bout fields more than one foe."""
+        return len(self._current_foes or []) > 1
+
+    def _advance_formation(self, result: Dict[str, Any]) -> Dict[str, Any]:
+        """One foe down: the next steps up and presses immediately."""
+        events: List[Dict[str, Any]] = list(result.get("turn_events") or [])
+        downed = self._current_enemy
+        if downed is not None:
+            self._defeated_foes.append(downed)
+            events.append({"actor": "ENEMY", "action": "FOE_DOWN", "enemy_name": downed.name})
+            updates = self.quests.notify("defeat", self.player, self.inventory, target=downed.id)
+            if updates:
+                result["quest_updates"] = list(result.get("quest_updates", [])) + updates
+        self._current_foes = self._living_foes()
+        living = self._living_foes()
+        if not living:
+            return self._end_combat({**result, "turn_events": events})
+        self._current_enemy = living[0]
+        events.append({"actor": "ENEMY", "action": "FOE_STEPS_UP", "enemy_name": living[0].name})
+        press = self.combat.enemy_turn_only(self.player, self._current_enemy, spar=self._combat_is_spar)
+        events.extend(press.get("turn_events") or [])
+        if press.get("event") == EventType.COMBAT_END:
+            if press.get("outcome") == "DEFEAT":
+                return self._end_combat({**press, "turn_events": events})
+            return self._resolve_combat_result({**press, "turn_events": events})
+        routed = {**press, "turn_events": events, "formation": True, "enemies": self._formation_view()}
+        return self._after_player_round(routed)
+
+    def _after_player_round(self, result: Dict[str, Any]) -> Dict[str, Any]:
+        """Let the foes the player is *not* facing take their lighter press."""
+        if not self._formation_active():
+            return result
+        formation = self.encounters.formation_config()
+        multiplier = float(formation.get("pack_press_multiplier", 0.5))
+        max_presses = int(formation.get("max_pack_presses", 2))
+        events: List[Dict[str, Any]] = list(result.get("turn_events") or [])
+        presses = 0
+        for foe in self._living_foes():
+            if foe is self._current_enemy or presses >= max_presses:
+                continue
+            events.append(self.combat.pack_press(self.player, foe, multiplier))
+            presses += 1
+            if not self.player.is_alive():
+                break
+        if presses:
+            result["turn_events"] = events
+            result["player_hp"] = self.player.hp
+        if not self.player.is_alive():
+            return self._end_combat({
+                "event": EventType.COMBAT_END,
+                "outcome": "DEFEAT",
+                "enemy_name": self._current_enemy.name if self._current_enemy else "the pack",
+                "turn_events": events,
+            })
+        result["enemies"] = self._formation_view()
+        if self._current_enemy is not None:
+            result["enemy"] = self._enemy_view(self._current_enemy)
         return result
+
+    def _formation_view(self) -> List[Dict[str, Any]]:
+        """Public views of the foes still standing, in the order they joined."""
+        return [self._enemy_view(foe) for foe in (self._current_foes or []) if foe.is_alive()]
+
+    def _aggregate_loot_tables(self, defeated: List[Any]) -> List[Dict[str, Any]]:
+        """Combine every foe put down in this bout into one loot table.
+
+        Extra formation foes drop at a fraction of their solo table so a pack is
+        worth more than one foe but not a windfall of three.
+        """
+        ratio = float(self.encounters.formation_config().get("pack_loot_ratio", 0.35))
+        tables: List[Dict[str, Any]] = []
+        for foe in defeated:
+            table = foe.loot_table
+            # Only formation extras are discounted; a solo fight (no leader
+            # recorded) keeps its table exactly as the foe declared it.
+            if self._leader_foe is not None and foe is not self._leader_foe and ratio != 1.0:
+                table = [{**drop, "chance": float(drop.get("chance", 0.0)) * ratio} for drop in table]
+            tables.extend(table)
+        return tables
 
     # -- combat helpers ---------------------------------------------------
     def _use_combat_skill(self, skill_id: str) -> Dict[str, Any]:
@@ -136,8 +228,22 @@ class CombatMixin:
         """Resolve the consequences of a finished fight and leave combat mode."""
         outcome = result.get("outcome")
         enemy_id = self._current_enemy.id if self._current_enemy else "any"
+        defeated: List[Any] = []
+        if outcome == "VICTORY":
+            defeated = list(self._defeated_foes)
+            if self._current_enemy is not None and not self._current_enemy.is_alive():
+                defeated.append(self._current_enemy)
+        formation = len(defeated) > 1
+        if formation:
+            result["formation"] = True
+            result["defeated"] = [foe.name for foe in defeated]
+            result["enemy_name"] = f"{defeated[0].name} and {len(defeated) - 1} more"
         self._mode = MODE_EXPLORE
         self._current_enemy = None
+        self._current_foes = []
+        self._defeated_foes = []
+        self._leader_foe = None
+        self._combat_ambush = False
         self._cooldowns = {}
         self.player.statuses.clear()
         self.player.shield = 0
@@ -146,6 +252,7 @@ class CombatMixin:
         self._combat_is_spar = False
 
         if outcome == "VICTORY":
+            result["loot_table"] = self._aggregate_loot_tables(defeated)
             result["loot"] = self.loot.roll_loot(self.player, result.get("loot_table", []))
             # Battle experience sharpens comprehension (which in turn speeds
             # cultivation). Drain any banked exp -- combat, quests, and training

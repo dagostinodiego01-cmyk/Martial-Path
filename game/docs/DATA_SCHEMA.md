@@ -334,8 +334,15 @@ Each entry in `data/locations.json`:
 ```
 
 `enemy_id` must exist in the random enemy pool, `item_id` in `items.json` or
-`equipment.json`, and `special_id` in `events.json` `special_events`. Locations
-without a pool fall back to the global pools in `events.json`.
+`equipment.json`, and `special_id` in `events.json` `special_events`.
+
+Every random enemy should appear in at least one location's `combat` pool (or a
+secret realm / quest) -- a foe in no pool is unfightable. A location *without* a
+pool falls back to a uniform draw over the whole random catalogue, but the
+shipped map keeps a curated pool everywhere so each zone has its own bestiary;
+`tools/seed_enemy_pools.py` places any stranded enemy in a realm-appropriate
+zone, and `tools/economy_tune.py` gives the foes of a tier 5-6 zone that zone's
+spirit-stone drop rate so widening a pool never dilutes the endgame economy.
 
 ## Enemy Schema
 
@@ -353,8 +360,42 @@ realm IDs:
 The engine resolves enemy realm display names from the cultivation realm data for
 UI output.
 
+## Character Unlock Gates
+
+NPCs become available once the player has reached a **story tier**:
+
+- `min_story_tier` (preferred): the story tier the NPC opens at, compared against
+  the player's `max_story_tier` (1-6, raised by arriving at locations).
+- `unlock.min_stage` (legacy): authored against an early 1-8 stage ladder that the
+  cultivation model never advanced (`player.stage` is pinned at 1). It is still
+  honoured, folded onto the story ladder and clamped to `MAX_STORY_TIER`, so old
+  characters stay meetable. Prefer `min_story_tier` for new content.
+
+`CharacterService.required_story_tier()` is the single resolver used by both the
+availability listing and the spar/duel/boon gates.
+
 ## Central Validation
 
 `game/validation/validate_all_game_data()` checks all of the above (unique IDs and
 every cross-reference) and is exercised by `tests/test_all_game_data_valid.py`.
-Run it after editing any data file.
+It additionally runs the **dead-content sweep**
+(`game/validation/dead_content.py`, ROADMAP G.2): every skill/item/equipment/
+enemy/NPC/quest/dao/recipe must have an acquisition path and must do something
+once obtained. Categories are reported as `unreachable_*` and `trap_*`. Run
+`tools/dead_content_report.py` for the human-readable report, and run the
+validator after editing any data file.
+
+### Effect Vocabularies
+
+"Meaningful" is measured against the vocabularies the engine actually executes,
+so they are the contract for new content:
+
+| Vocabulary | Owner | Covers |
+|---|---|---|
+| `effect_system.SUPPORTED_EFFECTS` | `EffectSystem` | item/special-event effects (`heal`, `lifespan_extension`, ...) |
+| `combat_system.SUPPORTED_ACTIVE_EFFECTS` | `CombatSystem` | active technique effects (`damage`, `execute`, ...) |
+| `stats_system.STAT_PASSIVE_EFFECTS` | `StatsSystem` | always-on passives (`buff_attack`, `crit_chance`, ...) |
+| `skill_system.GROWTH_PASSIVE_EFFECTS` | `SkillSystem` / cultivation | learn-time passives (`comprehension_gain`, `lifespan`, `cultivation_speed`) |
+
+A data entry naming an effect outside its vocabulary fails the sweep (`trap_*`),
+and `tests/test_dead_content.py` proves each member resolves for real.

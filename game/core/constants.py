@@ -14,6 +14,13 @@ from __future__ import annotations
 from enum import StrEnum
 from typing import Any, Dict, List
 
+# Top of the story ladder: locations carry a ``story_tier`` in 1..MAX, the
+# player's ``max_story_tier`` records the highest reached, and NPC/sect/content
+# gates are expressed against it. The legacy per-character ``unlock.min_stage``
+# value (an early 1..8 ladder the cultivation model never advanced) is folded
+# onto this range so those NPCs stay meetable.
+MAX_STORY_TIER = 6
+
 # Game "modes" gate which actions are valid (exploration vs a single combat).
 MODE_EXPLORE = "explore"
 MODE_COMBAT = "combat"
@@ -141,6 +148,9 @@ class EventType(StrEnum):
     EXPLORE_RESULT = "EXPLORE_RESULT"
     # A pending exploration encounter, carrying the choices the player may take.
     ENCOUNTER = "ENCOUNTER"
+    # Hazardous ground surfaced by exploration (staged into an encounter, never
+    # returned to the UI directly).
+    HAZARD = "HAZARD"
     # The outcome of one encounter choice that did not start combat.
     ENCOUNTER_RESULT = "ENCOUNTER_RESULT"
     COMBAT = "COMBAT"

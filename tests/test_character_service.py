@@ -62,15 +62,23 @@ def _service():
     )
 
 
-def _player(morality=0, stage=1, relationships=None):
+def _player(morality=0, story_tier=1, relationships=None):
     return SimpleNamespace(
-        morality=morality, stage=stage, relationships=relationships or {}, current_location="hall"
+        morality=morality,
+        max_story_tier=story_tier,
+        relationships=relationships or {},
+        current_location="hall",
     )
 
 
-def test_available_characters_are_scoped_to_the_location():
-    briefs = _service().get_available_characters("hall", _player())
+def test_available_characters_are_scoped_to_the_location_and_story_tier():
+    # "boss" carries unlock.min_stage 5 -> it opens at story tier 5, so a
+    # tier-1 wanderer never meets it (and cannot duel or claim its boons).
+    assert {b["id"] for b in _service().get_available_characters("hall", _player())} == {"mentor"}
+    briefs = _service().get_available_characters("hall", _player(story_tier=5))
     assert {b["id"] for b in briefs} == {"mentor", "boss"}
+    # Both are anchored here, so nothing else sneaks in.
+    assert all(b["id"] in {"mentor", "boss"} for b in briefs)
 
 
 def test_dialogue_context_selects_by_morality_band_and_tier():
@@ -84,12 +92,12 @@ def test_dialogue_context_selects_by_morality_band_and_tier():
 
 
 def test_can_spar_reflects_hooks_and_can_duel_respects_unlock():
-    service, player = _service(), _player(stage=1)
+    service, player = _service(), _player(story_tier=1)
     assert service.can_spar("mentor", player)["allowed"] is True
     assert service.can_duel("mentor", player) == {"allowed": False, "reason": "NOT_AVAILABLE"}
-    # The boss allows duels but is locked until stage 5.
+    # The boss allows duels but is gated behind story tier 5.
     assert service.can_duel("boss", player) == {"allowed": False, "reason": "LOCKED"}
-    assert service.can_duel("boss", _player(stage=5))["allowed"] is True
+    assert service.can_duel("boss", _player(story_tier=5))["allowed"] is True
 
 
 def test_relationship_view_defaults_neutral_without_mutating_store():

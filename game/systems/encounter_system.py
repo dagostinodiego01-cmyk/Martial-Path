@@ -41,8 +41,9 @@ LOOT = "loot"
 SPECIAL = "special"
 HAZARD = "hazard"
 
-#: Attack orders in which a choice is offered, and therefore how the UI lists
-#: them. Violent intent first, then the ways out, then patience.
+#: The canonical choice vocabulary. Encounter kinds each order their own
+#: options (see the ``_*_options`` builders); this tuple is the shared spelling
+#: of every choice id so callers and tests can assert against one list.
 CHOICE_ORDER = (
     "fight",
     "talk",
@@ -139,7 +140,14 @@ class EncounterSystem:
         self._data = data or {}
         self._enemies = {template["id"]: template for template in (enemy_templates or []) if template.get("id")}
         self._rng = rng
-        self._mindless = set(self._data.get("mindless", {}).get("ids", []))
+        mindless = self._data.get("mindless") or {}
+        # Derived, not hand-listed: a foe with a Dao or an essence realm is a
+        # person, as is anyone named in ``people`` (humanoids who never
+        # cultivated). Everything else is wildlife -- and any enemy added later
+        # inherits the right answer for free.
+        self._people = {str(enemy_id) for enemy_id in (mindless.get("people") or [])}
+        self._mindless_overrides = {str(key): bool(value) for key, value in (mindless.get("overrides") or {}).items()}
+        self._mindless_ids = {str(enemy_id) for enemy_id in (mindless.get("ids") or [])}
 
     # -- config accessors -------------------------------------------------
     def _config(self, section: str) -> Dict[str, Any]:
@@ -168,7 +176,16 @@ class EncounterSystem:
 
     def is_mindless(self, enemy_id: str) -> bool:
         """Return ``True`` when a foe cannot be reasoned with or paid off."""
-        return enemy_id in self._mindless
+        if enemy_id in self._mindless_overrides:
+            return self._mindless_overrides[enemy_id]
+        if enemy_id in self._people:
+            return False
+        template = self._enemies.get(enemy_id)
+        if template is None:
+            # An id outside the catalogue (a named character's duel entry): fall
+            # back to the legacy explicit list rather than guessing.
+            return enemy_id in self._mindless_ids
+        return not (template.get("essence_realm_id") or template.get("dao_id"))
 
     # -- encounter construction ------------------------------------------
     def build(
@@ -395,10 +412,10 @@ class EncounterSystem:
         builder = builders.get(encounter.get("kind"))
         if builder is None:
             return []
-        options = builder(encounter, player, player_power)
-        order = {choice_id: index for index, choice_id in enumerate(CHOICE_ORDER)}
-        options.sort(key=lambda option: order.get(option["choice_id"], len(order)))
-        return options
+        # Each builder returns its choices in the order that kind wants them read
+        # (the decisive action first, the ways out last); ``CHOICE_ORDER`` is the
+        # canonical vocabulary, not a display sort.
+        return builder(encounter, player, player_power)
 
     def _option(self, choice_id: str, *, available: bool = True, reason: str = "", reason_code: str = "", cost: Optional[Dict[str, int]] = None) -> Dict[str, Any]:
         meta = self.option_meta(choice_id)
@@ -454,9 +471,15 @@ class EncounterSystem:
                                cost=toll)
         options.append(pay)
 
-        observe = self._option("observe", available=not ambushed,
-                               reason_code="AMBUSHED" if ambushed else "",
-                               reason="There is no time to study a scene that is already unfolding." if ambushed else "")
+        # Reading the scene is a one-time bargain: it banks insight, so letting
+        # it repeat would let the patient farm the fight before it starts.
+        if encounter.get("observed"):
+            observe = self._option("observe", available=False, reason_code="ALREADY_OBSERVED",
+                                   reason="You have already read this scene; there is nothing left to learn from watching.")
+        else:
+            observe = self._option("observe", available=not ambushed,
+                                   reason_code="AMBUSHED" if ambushed else "",
+                                   reason="There is no time to study a scene that is already unfolding." if ambushed else "")
         options.append(observe)
 
         withdraw = self._option("withdraw")
@@ -607,6 +630,8 @@ class EncounterSystem:
                 encounter["loot"]["revealed"] = True
                 trap_revealed = True
             provoked = (not encounter.get("ambush")) and self._rng.chance(float(self._config("observe").get("provoke_chance", 0.22)))
+            # A calm read keeps the scene open for the real choice; a provoked
+            # read closes it by starting the fight the player did not pick.
             return {
                 "outcome": "PROVOKED" if provoked else "REVEALED",
                 "verb": "encounter_observed",
@@ -616,7 +641,7 @@ class EncounterSystem:
                 "ambush": provoked,
                 "hazard": hazard,
                 "hazard_to_player": False,
-                "resolve": not provoked,
+                "resolve": bool(provoked),
             }
         if choice_id == "talk":
             if self.is_mindless(foes[0] if foes else ""):

@@ -11,6 +11,7 @@ from game.core.results import (
     RestResult,
 )
 from game.models.enemy import Enemy
+from game.systems.encounter_system import foe_power
 
 
 class ExplorationMixin:
@@ -18,6 +19,12 @@ class ExplorationMixin:
 
     # -- exploration helpers ---------------------------------------------
     def _explore(self) -> Dict[str, Any]:
+        """Venture out: roll the land, then hand the result to the encounter layer.
+
+        A roll that carries a real decision (a hostile scene, a find, a place of
+        power, hazardous ground) comes back as a pending ENCOUNTER the player
+        resolves with a choice. Only a quiet wander still resolves outright.
+        """
         characters = self._location_character_options()
         if characters and self._rng.chance(self._character_encounter_chance):
             return CharacterEncounterResult(
@@ -28,6 +35,12 @@ class ExplorationMixin:
         event = self.event_system.generate(self.player, self._find_rarity_index())
         kind = event.get("event")
 
+        if kind == EventType.EXPLORE_RESULT:
+            event["narrative"] = self.narrative.render("explore_nothing", self._narrative_context())
+            return event
+
+        # A foe that yields to the player's realm pressure skips the prompt
+        # entirely: there is no decision to make against someone who surrenders.
         if kind == EventType.COMBAT:
             enemy = self._spawn_enemy(event.get("enemy_id", ""))
             if self.dao.enemy_yields(self.player, enemy):
@@ -44,6 +57,16 @@ class ExplorationMixin:
                         "turn_events": [{"actor": "ENEMY", "action": "YIELD", "enemy_name": enemy.name}],
                     }
                 )
+
+        # Stage the decision: the encounter layer describes the scene and the
+        # choices it allows, and the engine waits in MODE_ENCOUNTER for one.
+        staged = self._begin_encounter(event)
+        if staged is not None:
+            return staged
+
+        # A foe the encounter layer could not stage (an id outside the enemy
+        # catalogue) still has to be met the old way rather than swallowed.
+        if kind == EventType.COMBAT:
             self._current_enemy = enemy
             self._mode = MODE_COMBAT
             self._cooldowns = {}
@@ -59,6 +82,7 @@ class ExplorationMixin:
                     "explore_combat", {**self._narrative_context(), "enemy": enemy.name}
                 ),
             }
+
         if kind == EventType.LOOT:
             result = self.inventory.add_item(self.player, event.get("item_id", ""), event.get("count", 1))
             if result.get("event") == EventType.LOOT:
@@ -68,8 +92,10 @@ class ExplorationMixin:
             return result
         if kind == EventType.SPECIAL:
             return self._apply_special(event)
+        # HAZARD with nothing eligible at this danger level, or an unknown foe:
+        # the land offers nothing to decide on.
         event["narrative"] = self.narrative.render("explore_nothing", self._narrative_context())
-        return event  # EXPLORE_RESULT / NOTHING
+        return {"event": EventType.EXPLORE_RESULT, "kind": "NOTHING", "text": "Nothing comes of it.", "narrative": event["narrative"]}
 
     def _apply_special(self, event: Dict[str, Any]) -> Dict[str, Any]:
         effect = event.get("effect", {})
@@ -126,6 +152,9 @@ class ExplorationMixin:
     def _enemy_view(self, enemy: Enemy) -> Dict[str, Any]:
         """Return the enemy's public stats plus a UI-only threat/reward preview."""
         view = enemy.public_view()
+        # Formation foes are addressed by id when the player picks who to face
+        # (``Action.TARGET_FOE``), so the view has to carry one.
+        view["id"] = enemy.id
         view["shield"] = enemy.shield
         view["statuses"] = {k: dict(v) for k, v in enemy.statuses.items()}
         body_name = self._body_realm_names.get(enemy.body_realm_id, enemy.body_realm_id)
@@ -143,23 +172,11 @@ class ExplorationMixin:
         """Derive a UI-only threat tier and reward preview for an enemy.
 
         This is presentation metadata for the frontend; it never affects combat
-        math (which is owned by the combat system).
+        math (which is owned by the combat system). Threat uses the same power
+        scale as the encounter choices, so the tier shown here and the odds
+        shown on a choice card always agree.
         """
-        enemy_power = enemy.max_hp + enemy.attack * 5 + enemy.defense * 3
-        player_power = (
-            self.player.max_hp
-            + self.stats.effective_stats(self.player).get("attack", self.player.attack) * 5
-            + self.stats.effective_defense(self.player) * 3
-        )
-        ratio = enemy_power / player_power if player_power > 0 else 1.0
-        if ratio < 0.6:
-            threat = "Low"
-        elif ratio < 1.0:
-            threat = "Moderate"
-        elif ratio < 1.5:
-            threat = "High"
-        else:
-            threat = "Deadly"
+        threat = self._threat_tier(foe_power(enemy), self._player_power())
         reward_items = [
             self._items[drop["item_id"]].name
             for drop in enemy.loot_table

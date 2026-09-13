@@ -23,6 +23,11 @@ class CommandRouter:
         "explore": Action.EXPLORE,
         "e": Action.EXPLORE,
         "adventure": Action.EXPLORE,
+        "choose": Action.ENCOUNTER_CHOICE,
+        "choice": Action.ENCOUNTER_CHOICE,
+        "pick": Action.ENCOUNTER_CHOICE,
+        "target": Action.TARGET_FOE,
+        "focus": Action.TARGET_FOE,
         "status": Action.STATUS,
         "s": Action.STATUS,
         "stats": Action.STATUS,
@@ -104,6 +109,8 @@ class CommandRouter:
         Action.SAVE: "slot",
         Action.LOAD: "slot",
         Action.REPAIR_ITEM: "item_id",
+        Action.ENCOUNTER_CHOICE: "choice_id",
+        Action.TARGET_FOE: "foe_id",
     }
 
     def route(self, raw: str) -> Dict[str, Any]:
@@ -209,7 +216,9 @@ class CommandRouter:
             {"command": "export", "aliases": "", "desc": "Transcribe your journey to a portable save record."},
             {"command": "import <record>", "aliases": "", "desc": "Restore your journey from a portable save record."},
             {"command": "boon <character_id>", "aliases": "receive", "desc": "Accept a relationship reward from a character who trusts you."},
-            {"command": "explore", "aliases": "e", "desc": "Venture out; may trigger combat, loot, or a special encounter."},
+            {"command": "explore", "aliases": "e", "desc": "Venture out; the land answers with a situation you must decide how to meet."},
+            {"command": "choose <choice>", "aliases": "choice, pick", "desc": "[Encounter] Take an offered option, e.g. 'choose fight' or 'choose 2'."},
+            {"command": "target <foe_id>", "aliases": "focus", "desc": "[Combat] Face one foe when fighting a group."},
             {"command": "talk <character_id>", "aliases": "", "desc": "Speak with a named character at your location."},
             {"command": "spar <character_id>", "aliases": "", "desc": "Start a sparring match with an available character."},
             {"command": "duel <character_id>", "aliases": "", "desc": "Challenge an available character to a duel."},
