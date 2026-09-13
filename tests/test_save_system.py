@@ -54,44 +54,38 @@ def test_engine_save_load_roundtrip(tmp_path):
     engine.saves = SaveService(tmp_path)
     engine.player.gold = 123
     engine.player.current_location = "azure_village"
-    engine.player.current_day = 7
+    engine.player.age_years = 31.5
     engine.player.martial_talent_id = "hallowed_lord_grade"
     engine.player.body_talent_id = "dao_palace_grade"
     engine.player.equipment["ring_1"] = "minor_qi_ring"
     engine.player.cultivation_state.body.progress = 55.0
     engine.player.cultivation_state.body.cultivation_strain = 33.0
     engine.player.cultivation_state.body.foundation_stability = 77.0
-    engine.player.cultivation_state.body.daily_cultivation_count = 4
-    engine.player.cultivation_state.body.last_cultivation_day = 7
 
     assert engine.save_game("slot1")["success"] is True
 
     # Mutate live state, then load should restore the saved values.
     engine.player.gold = 0
     engine.player.current_location = "outer_forest"
-    engine.player.current_day = 1
+    engine.player.age_years = 12.0
     engine.player.martial_talent_id = "earth_grade"
     engine.player.body_talent_id = "iron_skin_grade"
     engine.player.equipment["ring_1"] = None
     engine.player.cultivation_state.body.progress = 0.0
     engine.player.cultivation_state.body.cultivation_strain = 0.0
     engine.player.cultivation_state.body.foundation_stability = 100.0
-    engine.player.cultivation_state.body.daily_cultivation_count = 0
-    engine.player.cultivation_state.body.last_cultivation_day = 1
 
     result = engine.load_game("slot1")
     assert result["success"] is True
     assert engine.player.gold == 123
     assert engine.player.current_location == "azure_village"
-    assert engine.player.current_day == 7
+    assert engine.player.age_years == 31.5
     assert engine.player.martial_talent_id == "hallowed_lord_grade"
     assert engine.player.body_talent_id == "dao_palace_grade"
     assert engine.player.equipment["ring_1"] == "minor_qi_ring"
     assert engine.player.cultivation_state.body.progress == 55.0
     assert engine.player.cultivation_state.body.cultivation_strain == 33.0
     assert engine.player.cultivation_state.body.foundation_stability == 77.0
-    assert engine.player.cultivation_state.body.daily_cultivation_count == 4
-    assert engine.player.cultivation_state.body.last_cultivation_day == 7
 
 
 def test_engine_load_missing_returns_failure(tmp_path):

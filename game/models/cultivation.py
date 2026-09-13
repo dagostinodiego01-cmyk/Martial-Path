@@ -24,8 +24,6 @@ class BodyCultivationState:
     breakthrough_failures: int = 0
     cultivation_strain: float = 0.0
     foundation_stability: float = 100.0
-    daily_cultivation_count: int = 0
-    last_cultivation_day: int = 1
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -39,8 +37,6 @@ class BodyCultivationState:
             "breakthrough_failures": self.breakthrough_failures,
             "cultivation_strain": round(self.cultivation_strain, 1),
             "foundation_stability": round(self.foundation_stability, 1),
-            "daily_cultivation_count": self.daily_cultivation_count,
-            "last_cultivation_day": self.last_cultivation_day,
         }
 
     @classmethod
@@ -56,8 +52,6 @@ class BodyCultivationState:
             breakthrough_failures=int(data.get("breakthrough_failures", 0)),
             cultivation_strain=float(data.get("cultivation_strain", 0.0)),
             foundation_stability=float(data.get("foundation_stability", 100.0)),
-            daily_cultivation_count=int(data.get("daily_cultivation_count", 0)),
-            last_cultivation_day=int(data.get("last_cultivation_day", 1)),
         )
 
 

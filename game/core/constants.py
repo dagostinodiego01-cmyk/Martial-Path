@@ -113,6 +113,8 @@ class Action(StrEnum):
     CODEX = "CODEX"
     WORLD_RUMORS = "WORLD_RUMORS"
     LEARN_RUMOR = "LEARN_RUMOR"
+    # Turn-free identity edit (name only; cosmetic, never touches gameplay).
+    RENAME = "RENAME"
     EXPORT_SAVE = "EXPORT_SAVE"
     IMPORT_SAVE = "IMPORT_SAVE"
     SAVE = "SAVE"
@@ -195,6 +197,7 @@ class EventType(StrEnum):
     CODEX = "CODEX"
     WORLD_RUMORS = "WORLD_RUMORS"
     RUMOR_LEARNED = "RUMOR_LEARNED"
+    NAME_CHANGED = "NAME_CHANGED"
     SAVE_EXPORTED = "SAVE_EXPORTED"
     SAVE_IMPORTED = "SAVE_IMPORTED"
     HELP = "HELP"

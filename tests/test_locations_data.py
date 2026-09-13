@@ -2,9 +2,12 @@
 
 These complement ``test_all_game_data_valid`` (which checks cross-references) by
 guarding map-specific invariants: the whole map is reachable from the starting
-location, the V1 core path is present, and cultivation gates actually block or
-allow travel as intended.
+location, the V1 core path is present, cultivation gates actually block or
+allow travel as intended, and no location is walled off behind a stricter gate
+than the one it advertises.
 """
+import heapq
+import math
 from collections import deque
 from types import SimpleNamespace
 
@@ -98,6 +101,126 @@ def test_whole_map_is_reachable_from_start():
     reachable = _reachable_from(START_LOCATION, locations)
     orphans = set(locations) - reachable
     assert not orphans, f"unreachable locations from '{START_LOCATION}': {sorted(orphans)}"
+
+
+def _realm_order(realms_data):
+    """Map realm ids and display names (lowercased) to their order value."""
+    order = {}
+    for realm in (realms_data or {}).get("realms", []):
+        for key in (realm.get("id"), realm.get("display_name")):
+            if key:
+                order[str(key).strip().lower()] = int(realm.get("order", 0))
+    return order
+
+
+def _gate(location, track, order):
+    """Return the unlock order a location demands on one cultivation track."""
+    minimum = (location.get("requirements", {}).get(track) or {}).get("minimum_realm")
+    if minimum is None:
+        return 0, True
+    key = str(minimum).strip().lower()
+    if key in ("", "none", "any"):
+        return 0, True
+    return order.get(key, 0), key in order
+
+
+def test_every_travel_gate_names_a_real_realm():
+    """An unresolvable gate is silently ignored, so the location is walk-in."""
+    registry = _registry()
+    tracks = (
+        ("body_transformation", _realm_order(registry.body_realms)),
+        ("essence_gathering", _realm_order(registry.essence_realms)),
+    )
+    for location in _locations(registry).values():
+        for track, order in tracks:
+            _, resolvable = _gate(location, track, order)
+            minimum = (location.get("requirements", {}).get(track) or {}).get("minimum_realm")
+            assert resolvable, (
+                f"location '{location['id']}' {track} minimum_realm {minimum!r} matches no "
+                "realm id or display name, so the gate never fires"
+            )
+
+
+def test_validator_flags_an_unresolvable_gate():
+    """Negative test: the shipped "Nine Stars Dao Palace" typo must be caught.
+
+    ``_validate_locations`` is handed a one-location stub registry so the real
+    location data stays untouched.
+    """
+    from game.validation.data_validator import _validate_locations
+    from game.validation.validation_error import ValidationResult
+
+    real = _registry()
+
+    def _stub(minimum_realm):
+        location = {
+            "id": "gate_array_approach",
+            "danger_level": 9,
+            "qi_density": 9,
+            "story_tier": 6,
+            "map_position": {"x": 0.79, "y": 0.44},
+            "connected_locations": [],
+            "npc_ids": [],
+            "available_systems": ["explore"],
+            "requirements": {
+                "body_transformation": {"minimum_realm": minimum_realm, "minimum_stage": 1},
+                "essence_gathering": {"minimum_realm": "Divine Sea", "minimum_stage": 1},
+            },
+        }
+        return SimpleNamespace(
+            locations=[location],
+            characters=[],
+            body_realms=real.body_realms,
+            essence_realms=real.essence_realms,
+        )
+
+    for accepted in ("nine_stars_dao_palace", "Nine Stars of the Dao Palace", "None"):
+        result = ValidationResult()
+        _validate_locations(_stub(accepted), result)
+        assert result.is_valid, f"'{accepted}' should resolve: {result.format_errors()}"
+
+    rejected = ValidationResult()
+    _validate_locations(_stub("Nine Stars Dao Palace"), rejected)
+    assert [error.category for error in rejected.errors] == ["dead_travel_gate"]
+
+
+def test_every_location_declares_available_systems():
+    for location in _locations(_registry()).values():
+        assert location.get("available_systems"), (
+            f"location '{location['id']}' declares no available systems"
+        )
+
+
+def test_no_location_is_walled_behind_a_stricter_gate_than_its_own():
+    """Every location must open at (not after) the realm its own gate names.
+
+    Minimax over the body track: the cheapest route to a location should never
+    demand a higher realm than that location's own gate, which would strand an
+    easy area behind a hard gateway.
+    """
+    registry = _registry()
+    locations = _locations(registry)
+    order = _realm_order(registry.body_realms)
+
+    best = {START_LOCATION: 0}
+    queue = [(0, START_LOCATION)]
+    while queue:
+        demand, current = heapq.heappop(queue)
+        if demand != best.get(current):
+            continue
+        for neighbor in locations[current].get("connected_locations", []):
+            neighbor_demand, _ = _gate(locations[neighbor], "body_transformation", order)
+            candidate = max(demand, neighbor_demand)
+            if candidate < best.get(neighbor, math.inf):
+                best[neighbor] = candidate
+                heapq.heappush(queue, (candidate, neighbor))
+
+    for location_id, location in locations.items():
+        own, _ = _gate(location, "body_transformation", order)
+        assert best.get(location_id, math.inf) <= own, (
+            f"location '{location_id}' gates at order {own} but needs order "
+            f"{best.get(location_id, math.inf)} to reach"
+        )
 
 
 def test_v1_core_path_is_present_and_reachable():

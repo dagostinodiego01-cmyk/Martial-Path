@@ -59,7 +59,8 @@ backend change in the same response.
 ## Assets (images)
 - Godot can only load assets under its **project root**: put images in `frontend-godot/assets/...` and reference them as `res://assets/...`. Files in the repo-root `Images/` folder are OUTSIDE the Godot project (staging only) and cannot be loaded via `res://`.
 - **Location art** lives at `frontend-godot/assets/locations/<location_id>.png` (ids from `game/data/locations.json`). `_render_location` loads it by id via `ResourceLoader.exists()` + `load()`, with the location name label as the fallback. The app icon is `frontend-godot/icon.png`; the world map is staged at `frontend-godot/assets/world_map.jpg`.
-- To add art for a location: copy `Images/<Name>.png` to `frontend-godot/assets/locations/<id>.png`. After adding files, the user must open the project in the Godot editor once so it imports them (generates `.import`); until then, `load()` falls back gracefully.
+- To add art for a location: copy `Images/<Name>.png` to `frontend-godot/assets/locations/<id>.png`, then rename the copy to the location's `id` (ids come from `game/data/locations.json`). After adding files, the user must open the project in the Godot editor once so it imports them (generates `.import`); until then, `load()` falls back gracefully.
+- **New locations must not ship art-less.** `python tools/gen_missing_location_art.py` writes a deterministic, zone-themed placeholder (PNG + `.import`) for every location id without one, and `tests/test_location_artwork.py` fails until coverage is 1:1 — so a fresh expansion location never renders as a bare name label. It only ever writes missing files (no switch rewrites existing art); pass `--location <id>` to redraw a specific placeholder.
 
 ## Verify
 - Godot is **not installed** in this workspace, so you cannot headless-parse or screenshot GDScript. Review manually: unique `^func `, no references to removed vars, valid Godot 4 API.

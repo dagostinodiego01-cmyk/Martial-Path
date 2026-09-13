@@ -1281,7 +1281,13 @@
       "yang_yun",
       "ruin_broker_song"
     ],
-    "available_systems": [],
+    "available_systems": [
+      "explore",
+      "travel",
+      "combat",
+      "gather",
+      "dialogue"
+    ],
     "resources": [
       "Ancient Relics"
     ],
@@ -2135,7 +2141,7 @@
     "description": "The last stair winds up through drifting star-fields to the planetary gate itself. Cultivators who pause here say the air tastes of distance, and few descend the way they came.",
     "requirements": {
       "body_transformation": {
-        "minimum_realm": "Nine Stars Dao Palace",
+        "minimum_realm": "nine_stars_dao_palace",
         "minimum_stage": 1
       },
       "essence_gathering": {

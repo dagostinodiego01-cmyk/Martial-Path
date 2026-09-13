@@ -137,19 +137,24 @@ class ProgressionMixin:
         )
         return result
 
-    def _advance_day_after(self, result: Dict[str, Any]) -> Dict[str, Any]:
-        """Advance the minimal backend day after successful recovery actions."""
-        if result.get("event") != EventType.ERROR:
-            self.player.current_day += 1
-            result["current_day"] = self.player.current_day
-        return result
-
     def _advance_time_after(self, result: Dict[str, Any], action_key: str) -> Dict[str, Any]:
-        """Age the player by an action's time cost and enforce lifespan limits."""
+        """Spend an action's time cost on the one clock, then enforce lifespan (TM.1).
+
+        Every time-consuming action funnels through here, so the character's age
+        and the world always move by the same amount for the same action: a
+        training session that ages the character a fortnight ages the world a
+        fortnight too. The player's *own* aging may be slowed by their realm
+        (``realm_aging_multipliers``); the world's clock never is.
+        """
         if result.get("event") == EventType.ERROR:
             return result
         essence_unlocked = self.cultivation.is_essence_unlocked(self.player)
         self.lifespan.advance_age(self.player, action_key, essence_unlocked)
+        years = self.lifespan.time_cost(action_key)
+        if years > 0:
+            report = self._world_tick(years)
+            if report.get("notable"):
+                result["world_tick"] = report
         result["lifespan"] = self.lifespan.lifespan_view(self.player, essence_unlocked)
         if self.lifespan.is_expired(self.player, essence_unlocked):
             return self._die_of_old_age(result)

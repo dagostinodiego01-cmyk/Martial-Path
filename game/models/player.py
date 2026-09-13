@@ -75,7 +75,9 @@ class Player:
     # passive techniques. Applied on learn, honoured by LifespanSystem.
     lifespan_bonus_years: float = 0.0
     current_location: str = "outer_forest"
-    current_day: int = 1
+    # The one clock (TM.1): every time-consuming action ages the character by
+    # its cost in years. Season and calendar date are derived from this value,
+    # never stored beside it, so the two can never disagree.
     age_years: float = 12.0
     martial_talent_id: str = "earth_grade"
     body_talent_id: str = "iron_skin_grade"
@@ -168,7 +170,6 @@ class Player:
             "max_story_tier": self.max_story_tier,
             "lifespan_bonus_years": self.lifespan_bonus_years,
             "current_location": self.current_location,
-            "current_day": self.current_day,
             "age_years": round(self.age_years, 2),
             "martial_talent_id": self.martial_talent_id,
             "body_talent_id": self.body_talent_id,
@@ -211,7 +212,6 @@ class Player:
             "max_story_tier": self.max_story_tier,
             "lifespan_bonus_years": self.lifespan_bonus_years,
             "current_location": self.current_location,
-            "current_day": self.current_day,
             "age_years": self.age_years,
             "martial_talent_id": self.martial_talent_id,
             "body_talent_id": self.body_talent_id,
@@ -254,7 +254,6 @@ class Player:
             max_story_tier=int(data.get("max_story_tier", 1)),
             lifespan_bonus_years=float(data.get("lifespan_bonus_years", 0.0)),
             current_location=str(data.get("current_location", "outer_forest")),
-            current_day=int(data.get("current_day", 1)),
             age_years=float(data.get("age_years", 12.0)),
             martial_talent_id=str(data.get("martial_talent_id", "earth_grade")),
             body_talent_id=str(data.get("body_talent_id", "iron_skin_grade")),

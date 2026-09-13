@@ -1,0 +1,198 @@
+{
+  "version": 1,
+  "note": "Provenance for shipped avatar art. An id absent here is a generated placeholder (tools/gen_avatar_art.py); 'art' is 'painted' when it came from a file through tools/import_avatar_art.py.",
+  "avatars": {
+    "beast_girl_tamer": {
+      "art": "painted",
+      "source": "lxqFa.jpg",
+      "imported": "2026-09-13",
+      "source_sha256": "ff6836d7730321f465867a26d80460de46727d139502454f510146d7ec000e1a",
+      "shipped_sha256": "bce370fb6374c670d3bc4bc0647d28976082ebfa0499503e5290e9a873cf2ad0",
+      "crop": {
+        "anchor": "top",
+        "left": 92,
+        "side": 600,
+        "top": 67,
+        "zoom": 0.765
+      },
+      "source_size": [
+        784,
+        1168
+      ],
+      "spec": {
+        "anchor": "top",
+        "zoom": 0.765,
+        "top": 0.057
+      },
+      "size": 512
+    },
+    "demon_path_heir": {
+      "art": "painted",
+      "source": "O4tRZ.jpg",
+      "imported": "2026-09-13",
+      "source_sha256": "9ef253767c68b2565162644584287ee398fdf205ceddfe9e3490796ef0bf4315",
+      "shipped_sha256": "9595118e1f5f4cfa9d95b2c09803f69e65b285d138e5284fab4e868f7ca423e3",
+      "crop": {
+        "anchor": "top",
+        "left": 240,
+        "side": 303,
+        "top": 49,
+        "zoom": 0.386
+      },
+      "source_size": [
+        784,
+        1168
+      ],
+      "spec": {
+        "anchor": "top",
+        "zoom": 0.386,
+        "top": 0.042
+      },
+      "size": 512
+    },
+    "moon_palace_fairy": {
+      "art": "painted",
+      "source": "cAaQ1.jpg",
+      "imported": "2026-09-13",
+      "source_sha256": "fcda5b514f8b01e975e463e902b257e726f8e950eea253d66bb83a955a710f35",
+      "shipped_sha256": "855c3776d7b82a4105afdcaac2bee158e4ebfff74fdc6674fe0b3c029fee2f1c",
+      "crop": {
+        "anchor": "top",
+        "left": 172,
+        "side": 440,
+        "top": 35,
+        "zoom": 0.561
+      },
+      "source_size": [
+        784,
+        1168
+      ],
+      "spec": {
+        "anchor": "top",
+        "zoom": 0.561,
+        "top": 0.03
+      },
+      "size": 512
+    },
+    "mortal_disciple": {
+      "art": "painted",
+      "source": "zkiqU.jpg",
+      "imported": "2026-09-13",
+      "source_sha256": "e3c8e08140074d005de1bf4d1993be877b94f54294229af71428bebfdd74ed9e",
+      "shipped_sha256": "adf1072c988a1af2a5b7bad7082550882bd0a5dc99813a7629cb2acc75d5e77f",
+      "crop": {
+        "anchor": "top",
+        "left": 142,
+        "side": 500,
+        "top": 42,
+        "zoom": 0.638
+      },
+      "source_size": [
+        784,
+        1168
+      ],
+      "spec": {
+        "anchor": "top",
+        "zoom": 0.638,
+        "top": 0.036
+      },
+      "size": 512
+    },
+    "poison_valley_disciple": {
+      "art": "painted",
+      "source": "QDkWC.jpg",
+      "imported": "2026-09-13",
+      "source_sha256": "8f615465899fcbcf50fda497087ceeb9c164ca87688a81ce2d24391429643d99",
+      "shipped_sha256": "1104ce184c5ea6b90282ec2fb5a3955d54246e9285a47ed0ad897e723e42064d",
+      "crop": {
+        "anchor": "top",
+        "left": 187,
+        "side": 410,
+        "top": 100,
+        "zoom": 0.523
+      },
+      "source_size": [
+        784,
+        1168
+      ],
+      "spec": {
+        "anchor": "top",
+        "zoom": 0.523,
+        "top": 0.086
+      },
+      "size": 512
+    },
+    "sect_patriarch": {
+      "art": "painted",
+      "source": "Ec1o5.jpg",
+      "imported": "2026-09-13",
+      "source_sha256": "9e52e58ad8b27141af66ef77b1c4df4e9387952a817894ebf2a828192e7cbe9f",
+      "shipped_sha256": "3d4c0dab5d5a83a623e40a6bb2d675364f7040f4191d666a160c4401aed8e512",
+      "crop": {
+        "anchor": "top",
+        "left": 170,
+        "side": 443,
+        "top": 43,
+        "zoom": 0.565
+      },
+      "source_size": [
+        784,
+        1168
+      ],
+      "spec": {
+        "anchor": "top",
+        "zoom": 0.565,
+        "top": 0.037
+      },
+      "size": 512
+    },
+    "sword_immortal": {
+      "art": "painted",
+      "source": "BMwmO.jpg",
+      "imported": "2026-09-13",
+      "source_sha256": "0e8af0af99e980d8ae56e4d208abb8759bf81c4d33c049da59eab0c5a0ec268d",
+      "shipped_sha256": "1ee5001a6e90fb8c78004dfb10de5721c490fe732165c9a727cc25e5ddd7825f",
+      "crop": {
+        "anchor": "top",
+        "left": 242,
+        "side": 300,
+        "top": 84,
+        "zoom": 0.383
+      },
+      "source_size": [
+        784,
+        1168
+      ],
+      "spec": {
+        "anchor": "top",
+        "zoom": 0.383,
+        "top": 0.072
+      },
+      "size": 512
+    },
+    "sword_maiden": {
+      "art": "painted",
+      "source": "wi5UL.jpg",
+      "imported": "2026-09-13",
+      "source_sha256": "077a9a767d68c226ce73ddf0d8eec5b88398ce9cab45096c0d530c5c1bed76a7",
+      "shipped_sha256": "3fc46dddccf4b509c89a8bea18b22eaa48f9238c5291ebc106dc34032dbed04b",
+      "crop": {
+        "anchor": "top",
+        "left": 210,
+        "side": 363,
+        "top": 95,
+        "zoom": 0.463
+      },
+      "source_size": [
+        784,
+        1168
+      ],
+      "spec": {
+        "anchor": "top",
+        "zoom": 0.463,
+        "top": 0.081
+      },
+      "size": 512
+    }
+  }
+}

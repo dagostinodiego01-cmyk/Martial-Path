@@ -154,21 +154,23 @@ def test_rest_recovers_hp_and_qi():
     engine = GameEngine.new_game(seed=1)
     engine.player.hp = 10
     engine.player.qi = 5
-    before_day = engine.player.current_day
+    before_age = engine.player.age_years
 
     result = engine.process_action({"action": Action.REST})
 
     assert result["event"] == EventType.REST_RESULT
     assert engine.player.hp > 10
     assert engine.player.qi > 5
-    assert engine.player.current_day == before_day + 1
+    # TM.1: resting ages the character by the action's time cost (0.05 years).
+    assert engine.player.age_years == round(before_age + 0.05, 4)
 
 
-def test_stabilise_foundation_action_updates_state_and_advances_day():
+def test_stabilise_foundation_action_updates_state_and_advances_the_clock():
     engine = GameEngine.new_game(seed=1)
     body = engine.player.cultivation_state.body
     body.cultivation_strain = 30.0
     body.foundation_stability = 80.0
+    before_age = engine.player.age_years
 
     result = engine.process_action({"action": Action.STABILISE_FOUNDATION})
     state = engine.get_game_state()
@@ -176,8 +178,9 @@ def test_stabilise_foundation_action_updates_state_and_advances_day():
     assert result["event"] == EventType.STABILISE_RESULT
     assert result["current_strain"] == 12.0
     assert result["foundation_stability"] == 84.0
-    assert result["current_day"] == 2
-    assert state["player"]["current_day"] == 2
+    # Stabilising costs 0.1 years and is the only clock that moves.
+    assert engine.player.age_years == round(before_age + 0.1, 4)
+    assert "current_day" not in state["player"]
     assert state["player"]["cultivation_state"]["body_transformation"]["required_progress"] == 100.0
     assert state["player"]["cultivation_state"]["essence_gathering"]["required_progress"] == 100.0
 

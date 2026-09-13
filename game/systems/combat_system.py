@@ -125,11 +125,26 @@ class CombatSystem:
 
     def attack(self, player: Player, enemy: Enemy, spar: bool = False) -> Dict[str, Any]:
         """Player performs a basic attack, then the enemy retaliates if alive."""
-        raw = int(self._player_attack(player))
-        is_crit, mult = self._roll_crit(player)
-        raw = int(raw * mult)
-        dealt, _ = self._deal_damage(enemy, self._player_damage(player, enemy, raw))
-        event: TurnEvent = {"actor": "PLAYER", "action": "ATTACK", "damage": dealt, "target_hp": enemy.hp}
+        base_attack = int(self._player_attack(player))
+        is_crit, crit_multiplier = self._roll_crit(player)
+        parts = self._player_damage_parts(player, enemy, int(base_attack * crit_multiplier))
+        dealt, absorbed = self._deal_damage(enemy, parts["dealt"])
+        event: TurnEvent = {
+            "actor": "PLAYER",
+            "action": "ATTACK",
+            "damage": dealt,
+            "target_hp": enemy.hp,
+            "breakdown": self._damage_breakdown(
+                dealt,
+                base_attack=base_attack,
+                crit_multiplier=crit_multiplier if is_crit else 0.0,
+                offense_scale=parts["offense_scale"],
+                attack=parts["attack"],
+                defense_applied=parts["defense_applied"],
+                variance=parts["variance"],
+                shield_absorbed=absorbed,
+            ),
+        }
         if is_crit:
             event["crit"] = True
         events: List[TurnEvent] = [event]
@@ -190,14 +205,28 @@ class CombatSystem:
         same fight repeated three times. Status ticks are the focused foe's job;
         a press is a single swing.
         """
-        raw = int(self._enemy_attack_value(enemy) * (1.0 + self._consume_guard_momentum(enemy)) * max(0.0, float(multiplier)))
-        dealt, _ = self._deal_damage(player, self._enemy_damage(player, enemy, raw))
+        base_attack = int(self._enemy_attack_value(enemy))
+        momentum_scale = 1.0 + self._consume_guard_momentum(enemy)
+        press_scale = max(0.0, float(multiplier))
+        parts = self._enemy_damage_parts(player, enemy, int(base_attack * momentum_scale * press_scale))
+        dealt, absorbed = self._deal_damage(player, parts["dealt"])
         return {
             "actor": "ENEMY",
             "action": "PACK_PRESS",
             "damage": dealt,
             "target_hp": player.hp,
             "enemy_name": enemy.name,
+            "breakdown": self._damage_breakdown(
+                dealt,
+                base_attack=base_attack,
+                pack_press_scale=press_scale,
+                momentum_scale=momentum_scale,
+                offense_scale=parts["offense_scale"],
+                attack=parts["attack"],
+                defense_applied=parts["defense_applied"],
+                variance=parts["variance"],
+                shield_absorbed=absorbed,
+            ),
         }
 
     def flee(self, player: Player, enemy: Enemy, spar: bool = False) -> Dict[str, Any]:
@@ -269,13 +298,36 @@ class CombatSystem:
         combo_mult: float = 1.0,
     ) -> List[TurnEvent]:
         """Resolve a damage-dealing skill hit and return its event."""
-        raw = int(self._player_attack(player) * skill.scaling * combo_mult)
-        is_crit, mult = self._roll_crit(player)
-        raw = int(raw * mult)
+        base_attack = int(self._player_attack(player))
+        raw = int(base_attack * skill.scaling * combo_mult)
+        is_crit, crit_multiplier = self._roll_crit(player)
+        raw = int(raw * crit_multiplier)
+        execute_multiplier = 1.0
         if execute and enemy.max_hp > 0 and enemy.hp < enemy.max_hp * EXECUTE_THRESHOLD:
             raw *= 2
-        dealt, absorbed = self._deal_damage(enemy, self._player_damage(player, enemy, raw, ignore_defense=ignore_defense))
-        event: TurnEvent = {"actor": "PLAYER", "action": "SKILL", "skill": skill.name, "damage": dealt, "target_hp": enemy.hp}
+            execute_multiplier = 2.0
+        parts = self._player_damage_parts(player, enemy, raw, ignore_defense=ignore_defense)
+        dealt, absorbed = self._deal_damage(enemy, parts["dealt"])
+        event: TurnEvent = {
+            "actor": "PLAYER",
+            "action": "SKILL",
+            "skill": skill.name,
+            "damage": dealt,
+            "target_hp": enemy.hp,
+            "breakdown": self._damage_breakdown(
+                dealt,
+                base_attack=base_attack,
+                skill_scaling=skill.scaling,
+                combo_multiplier=combo_mult,
+                crit_multiplier=crit_multiplier if is_crit else 0.0,
+                execute_multiplier=execute_multiplier,
+                offense_scale=parts["offense_scale"],
+                attack=parts["attack"],
+                defense_applied=parts["defense_applied"],
+                variance=parts["variance"],
+                shield_absorbed=absorbed,
+            ),
+        }
         if absorbed:
             event["shield_absorbed"] = absorbed
         if is_crit:
@@ -365,8 +417,9 @@ class CombatSystem:
         stage = int(getattr(enemy, "ai_stage", 0))
         momentum = self._consume_guard_momentum(enemy)
         multiplier = 1.0 + stage * COMBO_BONUS_PER_STAGE + momentum
-        raw = int(self._enemy_attack_value(enemy) * skill.scaling * multiplier)
-        dealt, _ = self._deal_damage(player, self._enemy_damage(player, enemy, raw))
+        base_attack = int(self._enemy_attack_value(enemy))
+        parts = self._enemy_damage_parts(player, enemy, int(base_attack * skill.scaling * multiplier))
+        dealt, absorbed = self._deal_damage(player, parts["dealt"])
         event: TurnEvent = {
             "actor": "ENEMY",
             "action": "FOE_TECHNIQUE",
@@ -374,6 +427,17 @@ class CombatSystem:
             "damage": dealt,
             "target_hp": player.hp,
             "enemy_name": enemy.name,
+            "breakdown": self._damage_breakdown(
+                dealt,
+                base_attack=base_attack,
+                skill_scaling=skill.scaling,
+                foe_chain_scale=multiplier,
+                offense_scale=parts["offense_scale"],
+                attack=parts["attack"],
+                defense_applied=parts["defense_applied"],
+                variance=parts["variance"],
+                shield_absorbed=absorbed,
+            ),
         }
         if stage > 0:
             event["combo_stage"] = stage
@@ -415,22 +479,50 @@ class CombatSystem:
             self._apply_status(player, "dot_damage", DOT_TURNS, float(tick))
             return {"actor": "ENEMY", "action": "POISON", "dot": tick, "turns": DOT_TURNS, "enemy_name": enemy.name}
         if kind == "heavy":
-            dealt, _ = self._deal_damage(
-                player, self._enemy_damage(player, enemy, int(self._enemy_attack_value(enemy) * 1.5))
-            )
-            return {"actor": "ENEMY", "action": "HEAVY_ATTACK", "damage": dealt, "target_hp": player.hp, "enemy_name": enemy.name}
+            base_attack = int(self._enemy_attack_value(enemy))
+            parts = self._enemy_damage_parts(player, enemy, int(base_attack * 1.5))
+            dealt, absorbed = self._deal_damage(player, parts["dealt"])
+            return {
+                "actor": "ENEMY",
+                "action": "HEAVY_ATTACK",
+                "damage": dealt,
+                "target_hp": player.hp,
+                "enemy_name": enemy.name,
+                "breakdown": self._damage_breakdown(
+                    dealt,
+                    base_attack=base_attack,
+                    heavy_scale=1.5,
+                    offense_scale=parts["offense_scale"],
+                    attack=parts["attack"],
+                    defense_applied=parts["defense_applied"],
+                    variance=parts["variance"],
+                    shield_absorbed=absorbed,
+                ),
+            }
         return self._enemy_attack(player, enemy)
 
     def _enemy_attack(self, player: Player, enemy: Enemy) -> TurnEvent:
         momentum = self._consume_guard_momentum(enemy)
-        raw = int(self._enemy_attack_value(enemy) * (1.0 + momentum))
-        dealt, _ = self._deal_damage(player, self._enemy_damage(player, enemy, raw))
+        momentum_scale = 1.0 + momentum
+        base_attack = int(self._enemy_attack_value(enemy))
+        parts = self._enemy_damage_parts(player, enemy, int(base_attack * momentum_scale))
+        dealt, absorbed = self._deal_damage(player, parts["dealt"])
         event: TurnEvent = {
             "actor": "ENEMY",
             "action": "ATTACK",
             "damage": dealt,
             "target_hp": player.hp,
             "enemy_name": enemy.name,
+            "breakdown": self._damage_breakdown(
+                dealt,
+                base_attack=base_attack,
+                momentum_scale=momentum_scale,
+                offense_scale=parts["offense_scale"],
+                attack=parts["attack"],
+                defense_applied=parts["defense_applied"],
+                variance=parts["variance"],
+                shield_absorbed=absorbed,
+            ),
         }
         counter = player.statuses.get("counter")
         if counter and enemy.is_alive():
@@ -573,17 +665,51 @@ class CombatSystem:
         pressure = self._dao.pressure(player, enemy)
         return pressure["player_multiplier"] if defender_is_player else pressure["enemy_multiplier"]
 
+    def _player_damage_parts(
+        self, player: Player, enemy: Enemy, raw: int, ignore_defense: bool = False
+    ) -> Dict[str, Any]:
+        """The arithmetic behind a player hit: scale, then defense (CB.1)."""
+        offense_scale = self._offense_scale(player, enemy, True)
+        attack = int(raw * offense_scale)
+        defense = (
+            0
+            if ignore_defense
+            else int(self._enemy_defense_with_guard(enemy) * self._defense_scale(player, enemy, False))
+        )
+        return {"offense_scale": round(offense_scale, 3), **self._damage_parts(attack, defense)}
+
+    def _enemy_damage_parts(self, player: Player, enemy: Enemy, raw: int) -> Dict[str, Any]:
+        """The arithmetic behind a foe's hit: scale, then defense (CB.1)."""
+        offense_scale = self._offense_scale(player, enemy, False)
+        attack = int(raw * offense_scale)
+        defense = int(self._player_defense(player) * self._defense_scale(player, enemy, True))
+        return {"offense_scale": round(offense_scale, 3), **self._damage_parts(attack, defense)}
+
     def _player_damage(self, player: Player, enemy: Enemy, raw: int, ignore_defense: bool = False) -> int:
         """Player's attack value scaled by realm pressure and Dao matchup."""
-        attack = int(raw * self._offense_scale(player, enemy, True))
-        defense = 0 if ignore_defense else int(self._enemy_defense_with_guard(enemy) * self._defense_scale(player, enemy, False))
-        return self._damage(attack, defense)
+        return self._player_damage_parts(player, enemy, raw, ignore_defense=ignore_defense)["dealt"]
 
     def _enemy_damage(self, player: Player, enemy: Enemy, raw: int) -> int:
         """Enemy's attack value scaled by realm pressure and Dao matchup."""
-        attack = int(raw * self._offense_scale(player, enemy, False))
-        defense = int(self._player_defense(player) * self._defense_scale(player, enemy, True))
-        return self._damage(attack, defense)
+        return self._enemy_damage_parts(player, enemy, raw)["dealt"]
+
+    def _damage_breakdown(self, dealt: int, **steps: Any) -> Dict[str, Any]:
+        """The component line for one landed hit (CB.1/F.2).
+
+        Every step is named after what it did to the number, and a step that did
+        not change it (a neutral ``1.0`` multiplier, a ``0`` variance, no shield)
+        is omitted, so the line stays as short as the hit was simple. The
+        identity it publishes is exact::
+
+            attack = base_attack * every multiplier step listed
+            damage = max(1, attack - defense_applied + variance)
+
+        ``damage`` is what came off the health bar after any shield absorbed its
+        share, so a client can show the whole sum instead of a bare total.
+        """
+        breakdown = {key: value for key, value in steps.items() if value not in (None, 0, 0.0, 1, 1.0)}
+        breakdown["damage"] = int(dealt)
+        return breakdown
 
     def _pressure_view(self, player: Player, enemy: Enemy) -> Dict[str, Any]:
         """UI-visible realm-pressure and Dao match-up summary for the current round."""
@@ -660,10 +786,20 @@ class CombatSystem:
             return int(enemy.defense / debuff["magnitude"])
         return enemy.defense
 
+    def _damage_parts(self, attack: int, defense: int) -> Dict[str, Any]:
+        """Damage's own arithmetic, split out so a hit can be explained (CB.1)."""
+        defense_applied = defense // 2
+        variance = self._rng.randint(-2, 3)
+        return {
+            "attack": attack,
+            "defense_applied": defense_applied,
+            "variance": variance,
+            "dealt": max(1, attack - defense_applied + variance),
+        }
+
     def _damage(self, attack: int, defense: int) -> int:
         """Compute damage with light variance; always at least 1."""
-        variance = self._rng.randint(-2, 3)
-        return max(1, attack - defense // 2 + variance)
+        return self._damage_parts(attack, defense)["dealt"]
 
     def _turn(self, player: Player, enemy: Enemy, events: List[TurnEvent]) -> Dict[str, Any]:
         return {

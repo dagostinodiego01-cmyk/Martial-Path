@@ -14,6 +14,104 @@ measurable acceptance criteria. `ROADMAP.md` stays the vision/design source;
 
 > **Parallel work:** see section 8 for lanes, waves, single-writer files, merge order, and how many agents to run at once.
 
+### Spine status (2026-09-13)
+
+| Step | Task | State |
+|---|---|---|
+| S0 | T.1, T.2 | **✅ Done** — committed as `85abce5` on `main`; tag `spine-w0` marks its parent |
+| S1 | C.2, E.1, CB.1/F.2, TM.1, U.2 | **✅ Done** — committed (payload halves; the *render* halves are the L8 lanes) |
+| S2 | U.0, V.5 | **✅ Done** — committed with S1; see below |
+
+S1 landed together with the concurrent identity/rename work, which could not be split
+away: `dispatch.py` and `MainController.gd` carry both changes, and the spine rule
+(§8.1) is that a wave lands whole. Verified 2026-09-13: `pytest -q` → 848 passed,
+3 skipped; `validate_all_game_data()` → 0 errors; `tools/dead_content_report.py` →
+exit 0, "nothing unreachable, no trap options". Spot-check per task: C.2 publishes
+`body_transformation.breakthrough` / `essence_gathering.breakthrough` (gates +
+`missing_requirements`) from `cultivation_service.get_cultivation_state()` and the
+client renders "Strain n/45 · Foundation n/70"; E.1 resolves the informational verbs
+before any mode check in `_process_action_raw`; CB.1/F.2 attach a `breakdown` to every
+hit event in `combat_system.py`; TM.1's single clock is `Player.age_years`, documented
+in `game/docs/TIME_MODEL.md` and pinned by `tests/test_time_model.py`; U.2's
+`tests/test_godot_event_coverage.py` reads the GDScript match tables.
+
+One honest gap inside S1's scope: CB.1/F.2 shipped the **payload** half ("CB.1 + F.2
+(payload components)" is the S1 column in §8.2) — the *render* half of F.2, the numbers
+on screen in the client, is owned by the L8a-L8f panel lanes.
+
+S2 landed in the same tree (831 tests passing, validator clean). **V.5** split the
+1,354-line validator by collection: `game/validation/{support,economy_checks,
+progression_checks,world_checks,character_checks}.py` behind an unchanged
+`validate_all_game_data()` facade, proven equivalent against a deliberately
+corrupted registry (identical 47 errors, same order, same 37 categories) and pinned
+by `tests/test_validator_split.py`.
+
+**U.0** split the 3,600-line `MainController.gd` down to 2,890 lines: the palette
+and every stateless widget/stylebox/formatting factory moved to
+`frontend-godot/scripts/UIKit.gd`, and the five overlay tabs to
+`InventoryPanel.gd` / `EquipmentPanel.gd` / `JournalPanel.gd` / `StatusPanel.gd` /
+`TechniquesPanel.gd`. The controller keeps its `COLOR_*` names as aliases of the
+kit and its `_render_*` entry points as one-line delegations, so no call site
+changed. Each panel owns its own widgets and asks the host to act by signal.
+Verification is `frontend-godot/tests/check_panels.gd` (run headlessly by
+`tests/test_godot_panels.py`, which skips when no Godot binary is present): it
+builds every panel from a synthetic state payload and asserts the text a player
+would read reaches the tree.
+
+Two notes for whoever commits this:
+- `MainController.gd` still carries the concurrent identity/rename work, exactly as
+  S1 does. Land S1 and S2 together, or after the identity work is committed.
+- Adding a `class_name` script requires the Godot editor to rescan before
+  `--check-only` can resolve it (`godot --headless --path frontend-godot --import`
+  refreshes `.godot/global_script_class_cache.cfg`). Otherwise the GDScript gate
+  reports `Identifier "UIKit" not declared` and cascading false errors.
+
+#### The S1 + S2 spine commit — held, and exactly how to land it
+
+Everything is written, wired and green in the working tree (840 passed / 3 skipped,
+0 failed; validator `is_valid: True`, 0 errors; panel check 6/6 OK). It is **held**
+because the concurrent identity/rename feature is finished but uncommitted, and
+S1+S2 cannot be committed without it:
+
+- committed `MainController.gd` references the `Profile` autoload **0** times; the
+  working-tree version references it **3** times
+- `project.godot`'s `Profile="*res://scripts/PlayerProfile.gd"` autoload line is
+  uncommitted, and `PlayerProfile.gd` is **untracked**
+
+So staging `MainController.gd` without those two puts three unresolvable `Profile`
+references on the spine and the client stops compiling. **Precondition — this must
+print a number greater than 0 before staging:**
+
+```bash
+git show HEAD:frontend-godot/scripts/MainController.gd | grep -c 'Profile\.'
+```
+
+Once it does, land the spine (explicit paths only — never `git add -A`, the tree
+carries a second writer):
+
+```bash
+git add game/systems/cultivation_system.py game/services/cultivation_service.py \
+  game/systems/combat_system.py game/core/engine/dispatch.py \
+  game/core/engine/progression.py game/core/engine/world.py \
+  game/models/player.py game/models/cultivation.py \
+  game/data/cultivation/cultivation_config.json game/docs/TIME_MODEL.md \
+  game/validation/data_validator.py game/validation/support.py \
+  game/validation/economy_checks.py game/validation/progression_checks.py \
+  game/validation/world_checks.py game/validation/character_checks.py \
+  frontend-godot/scripts/MainController.gd tests/test_time_model.py \
+  tests/test_godot_event_coverage.py tests/test_validator_split.py \
+  tests/test_codex.py tests/test_cultivation_system.py tests/test_game_engine.py \
+  tests/test_save_system.py TASKS.md
+git commit   # then: git tag spine-w1
+```
+
+Not in that list because they belong to the other thread: `game/core/engine/views.py`,
+`game/core/constants.py`, `handover.md`, `project.godot`, `MainMenuController.gd`,
+`game/api/server.py`, `narrative_system.py`, `locations.json`, `narrative_templates.json`,
+`DESIGN.md`, `PRODUCT.md`, the avatar/location art, and `PlayerProfile.gd` /
+`IdentityEditor.gd`. The panels and their check already landed separately in
+`ba5bd3d`, so a lane can branch off `spine-w1` with the UI split in place either way.
+
 ## 0. How to read this file
 
 - **Programme** = one feature/system, scored and reworked to 10/10.
@@ -442,9 +540,9 @@ rebuilt per refresh, 100-row ledger, `BOON` unrendered.
 
 | Wave | Lane | Tasks | Owns (writes only these) | Depends on |
 |---|---|---|---|---|
-| 0 | **S0 Green the gate** | T.1, T.2 | `data/shops.json`, `data/enemies/random_enemies.json`, `tools/seed_world_content.py`, `frontend-godot/scripts/MainController.gd` (guard only), `tests/test_godot_state_contract.py` | — |
-| 0 | **S1 Interface freeze** | C.2 (state fields), E.1 (info dispatch), CB.1 + F.2 (payload components), TM.1 (clock decision), U.2 (event-coverage test) | `game/core/engine/{dispatch,views,combat,encounters}.py`, `game/core/constants.py`, `game/docs/*` | S0 |
-| 0 | **S2 Split for parallelism** | U.0 (split `MainController.gd` into per-panel scripts), V.5 (split `data_validator.py` per collection) | `frontend-godot/scripts/*` (new panel files), `game/validation/*.py` | S1 |
+| 0 | **S0 Green the gate — ✅ DONE** | T.1, T.2 | `data/shops.json`, `data/enemies/random_enemies.json`, `tools/seed_world_content.py`, `frontend-godot/scripts/MainController.gd` (guard only), `tests/test_godot_state_contract.py` | — |
+| 0 | **S1 Interface freeze — ✅ DONE** | C.2 (state fields), E.1 (info dispatch), CB.1 + F.2 (payload components), TM.1 (clock decision), U.2 (event-coverage test) | `game/core/engine/{dispatch,views,combat,encounters}.py`, `game/core/constants.py`, `game/docs/*` | S0 |
+| 0 | **S2 Split for parallelism — ✅ DONE** | U.0 (moved the palette + five overlay tabs out of `MainController.gd`), V.5 (split `data_validator.py` per collection) | landed: `frontend-godot/scripts/{UIKit,InventoryPanel,EquipmentPanel,JournalPanel,StatusPanel,TechniquesPanel}.gd`, `game/validation/{support,economy_checks,progression_checks,world_checks,character_checks}.py` | S1 |
 | 1 | **L1 Cultivation & time** | C.1, C.3, C.5, C.6, C.7, TM.2, TM.3 | `game/systems/cultivation_system.py`, `game/models/cultivation.py`, `game/core/engine/progression.py`, `game/data/cultivation/*.json`, `tests/test_cultivation_system.py`, `tests/test_lifespan_system.py` | S2 |
 | 1 | **L2 Combat & dao feel** | CB.2, CB.5, CB.6, CB.7, D.3, D.4, D.5, D.7 | `game/systems/combat_system.py`, `game/systems/foe_ai.py`, `game/core/engine/combat.py`, `tests/test_combat_system.py`, `tests/test_combo_combat.py`, `tests/test_foe_ai.py`, `tests/test_dao_combat.py` | S2 |
 | 1 | **L3 Funnel & encounters** | F.1, E.4, E.5, E.6, V.4 | `game/data/encounters.json`, `game/data/encounter_pools.json`, `game/data/enemies/random_enemies.json`, `game/data/events.json`, `game/systems/encounter_system.py`, `tools/seed_enemy_pools.py`, `tests/test_encounters.py` | S2 |
@@ -452,7 +550,7 @@ rebuilt per refresh, 100-row ledger, `BOON` unrendered.
 | 1 | **L5 Narrative & prose** | N.1, N.3, N.5, E.3 | `game/data/narrative_templates.json`, `game/data/lore_glossary.json`, `game/systems/narrative_system.py`, `game/core/engine/encounters.py` (prose only), `game/validation/narrative_lint.py`, `tests/test_narrative_*.py` | S2 |
 | 1 | **L6 Harness & CI** (enabler) | T.3, T.4, T.5, T.6, V.1 | `tools/*` (new files), `frontend-godot/tests/*`, `.github/workflows/*`, `tests/test_godot_state_contract.py` | S0 for T.3/T.5, S1 for payload shape |
 | 1 | **L7 World, social, factions** | W.1-W.6, SO.1-SO.4, DB.1-DB.5, SE.1-SE.4 | `game/systems/{world_simulation,relationship,morality,sect,debate}_system.py`, `game/core/engine/{world,social,debate}.py`, `game/data/characters/*.json`, `game/data/sects.json`, `game/data/dialogue*`, `tests/test_world_simulation.py`, `tests/test_sect_system.py`, `tests/test_dao_debate.py` | S2 |
-| 2 | **L8a…L8f Godot panels** (one lane per panel file, possible only after S2) | U.1, U.3, U.4, U.5, U.6, U.7, U.8, plus the render halves of F.2, F.4, CB.1, CB.3, CB.4, Q.1, Q.2, A.1, A.3, EQ.1-EQ.4, SV.3, SV.4, M.2, W.1-W.6 | one panel script each: `dashboard.gd`, `inventory.gd`, `equipment.gd`, `combat.gd`, `journal.gd`, `codex.gd`, `world.gd`, plus `MainMenuController.gd` | S2 **and** the Wave-1 lane that supplies the payload |
+| 2 | **L8a…L8f Godot panels** (one lane per panel file — S2 is done, so these can start) | U.1, U.3, U.4, U.5, U.6, U.7, U.8, plus the render halves of F.2, F.4, CB.1, CB.3, CB.4, Q.1, Q.2, A.1, A.3, EQ.1-EQ.4, SV.3, SV.4, M.2, W.1-W.6 | one file each — today: `InventoryPanel.gd`, `EquipmentPanel.gd`, `JournalPanel.gd`, `StatusPanel.gd`, `TechniquesPanel.gd`, `UIKit.gd`; still to extract: the dashboard/combat/codex/world panels, plus `MainMenuController.gd` | S2 **and** the Wave-1 lane that supplies the payload |
 | 2 | **L9 Campaign & realms** | Q.1 (engine), Q.3, Q.4, Q.5, R.1-R.4 | `game/data/quests.json`, `game/data/secret_realms*.json`, `game/systems/quest_system.py`, `game/systems/secret_realm_system.py`, `game/core/engine/campaign.py`, `tests/test_campaign.py`, `tests/test_secret_realm.py` | S2 |
 | 2 | **L10 Meta & saves** | M.1, M.3, M.4, M.5, SV.1, SV.2 | `game/systems/legacy_system.py`, `game/systems/origin_system.py`, `game/services/save_service.py`, `game/core/engine/lifecycle.py`, `game/data/legacy_tree.json`, `game/data/origins.json`, `tests/test_meta_depth.py`, `tests/test_save_system.py` | S2 |
 | 3 | **S3 Balance sweep** (serial, one agent, no other lane writing) | CB.5/CB.7 tuning, D.7, EC.2 tuning, S.3, V.4 thresholds, Q.3 pacing | tuning values only, via `tools/playthrough_report.py` + `tools/economy_*.py` | L1, L2, L3, L4, L9, L10 |
@@ -467,8 +565,8 @@ rebuilt per refresh, 100-row ledger, `BOON` unrendered.
 | `game/data/{shops,items,gathering}.json` | L4 alone |
 | `game/data/{encounters,encounter_pools,events,enemies/random_enemies}.json` | L3 alone |
 | `game/data/characters/*.json`, `game/data/sects.json` | L7 alone |
-| `frontend-godot/scripts/MainController.gd` | One writer; split by S2 first, then one lane **per panel file** |
-| `game/validation/data_validator.py` | Split by S2 (V.5); before that, only S0/S1 touch it |
+| `frontend-godot/scripts/MainController.gd` | One writer: the shell (top bar, dossier, location, chronicle, actions, dialogs). The five overlay tabs are now their own files, so a panel lane never has to touch this. |
+| `game/validation/data_validator.py` | Now a thin facade. Edit the per-collection module that owns the rule (`economy_checks.py`, `world_checks.py`, `character_checks.py`, `progression_checks.py`). |
 | `tests/` | Each lane owns its own test files; never edit another lane's |
 
 ### 8.4 Lane protocol

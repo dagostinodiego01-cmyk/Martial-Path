@@ -20,24 +20,6 @@ class WorldMixin:
     """Advances the world with the calendar and applies world state to play."""
 
     # -- the world tick -----------------------------------------------------
-    def _advance_world_after(self, result: Dict[str, Any], action_key: str) -> Dict[str, Any]:
-        """Tick the living world by an action's time cost (E.1/E.2/E.3).
-
-        Errors never consume time. The tick's notable happenings (rank gains,
-        rivalries, deaths, sect shifts, price drift, fresh rumors) are folded
-        into the result as ``world_tick`` so the UI can narrate them; the last
-        report is also kept on the engine for ``WORLD_INFO``.
-        """
-        if not isinstance(result, dict) or result.get("event") == EventType.ERROR:
-            return result
-        years = self.lifespan.time_cost(action_key)
-        if years <= 0:
-            return result
-        report = self._world_tick(years)
-        if report.get("notable"):
-            result["world_tick"] = report
-        return result
-
     def _world_after_result_years(self, result: Dict[str, Any]) -> Dict[str, Any]:
         """Tick the world by the years a result reports (e.g. closed-door)."""
         if not isinstance(result, dict) or result.get("event") == EventType.ERROR:

@@ -37,6 +37,15 @@ class CultivationService:
             1,
         )
         state["essence_gathering"]["unlocked"] = self._system.is_essence_unlocked(player)
+        # C.2: publish the breakthrough gates with the state, so a frontend can
+        # show "Strain 27/45 - Foundation 100/70" instead of only surfacing the
+        # rule after a refusal.
+        state["body_transformation"]["breakthrough"] = self._system.breakthrough_gates(
+            player, self._system.BODY_TRACK_ID
+        )
+        state["essence_gathering"]["breakthrough"] = self._system.breakthrough_gates(
+            player, self._system.ESSENCE_TRACK_ID
+        )
         state["essence_gathering"]["unlock_requirement"] = self._system.get_essence_unlock_requirement(player)
         state["essence_unlocked"] = self._system.is_essence_unlocked(player)
         state["balance"] = self._system.calculate_body_essence_balance(player)

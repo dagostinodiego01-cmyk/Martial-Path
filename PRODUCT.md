@@ -39,7 +39,7 @@ Name: Martial Path. Genre voice: serious xianxia/wuxia — body cultivation, qi,
 
 ## Evidence on Hand
 
-- Location art: 29 PNGs in `frontend-godot/assets/locations/` (verified: ids match `game/data/locations.json` 1:1).
+- Location art: 45 PNGs in `frontend-godot/assets/locations/` — 29 hand-made paintings plus 16 generated scene plates for expansion locations. `python tools/gen_missing_location_art.py` composes each one from the location's type and description (deterministic, 1512x1040, mood palette per zone); it only ever writes missing files and `--location <id>` redraws one, so dropping real art over the file is permanent. Coverage is 1:1 with `game/data/locations.json` and pinned by `tests/test_location_artwork.py`; the world map is reachable end to end (`tests/test_locations_data.py`).
 - Backend `/state` payload is rich: rarities, durabilities, item modifiers, quest progress, skill cooldowns, talent ladders, shops, trainers, sects — currently flattened into text walls by the UI.
 - Live captures of the current UI exist (main menu + in-game) from the godot-ai session.
 

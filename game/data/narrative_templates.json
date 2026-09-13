@@ -1020,6 +1020,21 @@
       }
     ]
   },
+  "name_changed": {
+    "variables": [
+      "name"
+    ],
+    "variants": [
+      {
+        "weight": 3,
+        "template": "From this day the world will know you as {name}."
+      },
+      {
+        "weight": 2,
+        "template": "You set your old name aside; {name} is the one you carry onward."
+      }
+    ]
+  },
   "help": {
     "variables": [],
     "variants": [

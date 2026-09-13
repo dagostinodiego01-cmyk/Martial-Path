@@ -83,6 +83,8 @@ def test_codex_arcs_show_progress(engine):
 
 
 def test_codex_never_consumes_a_turn(engine):
-    day = engine.player.current_day
+    # TM.1: age_years is the only clock, so "no turn consumed" means the clock
+    # (and therefore the world tick) did not move.
+    age = engine.player.age_years
     engine.process_action({"action": "CODEX"})
-    assert engine.player.current_day == day
+    assert engine.player.age_years == age

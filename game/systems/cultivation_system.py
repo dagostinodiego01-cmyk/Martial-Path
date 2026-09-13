@@ -15,6 +15,12 @@ from game.models.cultivation import BreakthroughResult as CultivationBreakthroug
 from game.models.player import Player
 from game.utils.rng import RNG
 
+#: Essence breakthrough floors the referee applies. Shared with
+#: :meth:`CultivationSystem.gate_numbers` so the threshold a UI publishes and
+#: the threshold that actually refuses the attempt are the same number.
+ESSENCE_MIN_CIRCULATION_STABILITY = 1.0
+ESSENCE_MIN_BODY_FOUNDATION = 5.0
+
 
 class CultivationSystem:
     """Handles independent body and essence cultivation tracks."""
@@ -63,8 +69,6 @@ class CultivationSystem:
         method = self._training_method("body_training_methods", method_id, "train_body")
         before = state.progress
         required_progress = self._required_body_progress(realm)
-        self._record_body_training_day(player, state)
-        daily_multiplier = self._daily_cultivation_multiplier(state.daily_cultivation_count)
         foundation_modifier = state.foundation / 100.0
         essence_support_modifier = self.calculate_essence_support_for_body(player)
         variance = self._rng.randint(0, 3)
@@ -75,7 +79,7 @@ class CultivationSystem:
             * self._cultivation_speed_multiplier(player)
         )
         flat_bonus = float(equipment_modifiers.get("body_cultivation_flat_bonus", 0.0))
-        gain = (base_gain * daily_multiplier) + foundation_modifier + essence_support_modifier + variance
+        gain = base_gain + foundation_modifier + essence_support_modifier + variance
         gain += flat_bonus
         state.progress = min(required_progress, state.progress + gain)
         state.foundation = min(100.0, state.foundation + float(method.get("foundation_gain", 0.5)))
@@ -103,8 +107,6 @@ class CultivationSystem:
             "strain_gained": round(strain_gain, 1),
             "current_strain": round(state.cultivation_strain, 1),
             "foundation_stability": round(state.foundation_stability, 1),
-            "daily_cultivation_count": state.daily_cultivation_count,
-            "daily_multiplier": round(daily_multiplier, 2),
             "exp_gained": exp_gain,
             "ready_to_breakthrough": self._body_missing_requirements(player) == [],
             "cultivation": self.get_body_display_name(player),
@@ -507,14 +509,70 @@ class CultivationSystem:
         """Essence density support used by body training."""
         return player.cultivation_state.essence.true_essence_density / 10.0
 
-    def get_breakthrough_preview(self, player: Player, track_id: str) -> Dict[str, Any]:
-        """Return a non-mutating breakthrough preview for a UI or API."""
+    def breakthrough_gates(self, player: Player, track_id: str) -> Dict[str, Any]:
+        """Why a breakthrough is refused, plus the numbers behind it (C.2).
+
+        The referee's verdict and the gate numbers travel together, so a UI can
+        render "Strain 27/45 \u00b7 Foundation 100/70" *before* the player presses
+        the button instead of learning the rule from a refusal. Deliberately
+        cheaper than :meth:`get_breakthrough_preview`: no success roll, so the
+        state view can afford to publish it on every refresh.
+        """
         if track_id == self.BODY_TRACK_ID:
             missing = self._body_missing_requirements(player)
         elif track_id == self.ESSENCE_TRACK_ID:
             missing = self._essence_missing_requirements(player)
         else:
             missing = ["INVALID_REALM"]
+        return {
+            "track_id": track_id,
+            "can_attempt": not missing,
+            "missing_requirements": missing,
+            "gates": self.gate_numbers(player, track_id),
+        }
+
+    def gate_numbers(self, player: Player, track_id: str) -> Dict[str, Any]:
+        """The threshold pair a breakthrough is judged against (C.2).
+
+        Read from the same config the referee reads, so the number shown and the
+        number enforced cannot drift apart.
+        """
+        is_body = track_id == self.BODY_TRACK_ID
+        state = player.cultivation_state.body if is_body else player.cultivation_state.essence
+        realm = (self._body_by_id if is_body else self._essence_by_id).get(state.realm_id) or {}
+        progression = self._body_progression_float if is_body else self._essence_progression_float
+        required_progress = (
+            self._required_body_progress(realm) if is_body else self._required_essence_progress(realm)
+        )
+        stability_bonus = float(
+            self._equipment_modifiers(player)
+            .get("cultivation_modifiers", {})
+            .get("foundation_stability_bonus", 0.0)
+        )
+        numbers: Dict[str, Any] = {
+            "progress": round(float(state.progress), 1),
+            "required_progress": round(float(required_progress), 1),
+            "strain": round(float(state.cultivation_strain), 1),
+            "max_allowed_strain": round(progression("max_strain_for_breakthrough", 45.0), 1),
+            "foundation_stability": round(float(state.foundation_stability) + stability_bonus, 1),
+            "required_foundation_stability": round(progression("required_foundation_stability", 70.0), 1),
+        }
+        if is_body:
+            numbers["foundation"] = round(float(state.foundation), 2)
+            numbers["required_foundation"] = float(
+                realm.get("breakthrough_requirements", {}).get("foundation_min", 0.0)
+            )
+        else:
+            numbers["circulation_stability"] = round(float(state.circulation_stability), 2)
+            numbers["required_circulation_stability"] = ESSENCE_MIN_CIRCULATION_STABILITY
+            numbers["body_foundation"] = round(float(player.cultivation_state.body.foundation), 2)
+            numbers["required_body_foundation"] = ESSENCE_MIN_BODY_FOUNDATION
+        return numbers
+
+    def get_breakthrough_preview(self, player: Player, track_id: str) -> Dict[str, Any]:
+        """Return a non-mutating breakthrough preview for a UI or API."""
+        gates = self.breakthrough_gates(player, track_id)
+        missing = gates["missing_requirements"]
         chance = 0.0 if missing else round(self._success_chance(player, track_id) * 100, 1)
         risk_level = self._risk_level(chance)
         warnings: List[str] = []
@@ -522,11 +580,9 @@ class CultivationSystem:
         if balance["status"] in {"Unstable", "Severely Imbalanced"}:
             warnings.append("One cultivation path is much stronger than the other.")
         return {
-            "track_id": track_id,
-            "can_attempt": not missing,
+            **gates,
             "success_chance": chance,
             "risk_level": risk_level,
-            "missing_requirements": missing,
             "warnings": warnings,
         }
 
@@ -609,9 +665,9 @@ class CultivationSystem:
             missing.append("FOUNDATION_UNSTABLE")
         if state.foundation < 10.0:
             missing.append("INSUFFICIENT_FOUNDATION")
-        if state.circulation_stability < 1.0:
+        if state.circulation_stability < ESSENCE_MIN_CIRCULATION_STABILITY:
             missing.append("ESSENCE_UNSTABLE")
-        if player.cultivation_state.body.foundation < 5.0:
+        if player.cultivation_state.body.foundation < ESSENCE_MIN_BODY_FOUNDATION:
             missing.append("BODY_TOO_WEAK")
         return missing
 
@@ -903,20 +959,6 @@ class CultivationSystem:
                 realm.get("max_progress_per_substage", realm.get("max_progress_per_fall", 100.0)),
             )
         )
-
-    def _record_body_training_day(self, player: Player, state: Any) -> None:
-        current_day = int(getattr(player, "current_day", 1))
-        if state.last_cultivation_day != current_day:
-            state.last_cultivation_day = current_day
-            state.daily_cultivation_count = 0
-        state.daily_cultivation_count += 1
-
-    def _daily_cultivation_multiplier(self, daily_count: int) -> float:
-        multipliers = list(self._config.get("body_progression", {}).get("daily_cultivation_multipliers", [1.0]))
-        if not multipliers:
-            return 1.0
-        index = max(0, daily_count - 1)
-        return float(multipliers[min(index, len(multipliers) - 1)])
 
     def _body_progression_float(self, key: str, default: float) -> float:
         return float(self._config.get("body_progression", {}).get(key, default))

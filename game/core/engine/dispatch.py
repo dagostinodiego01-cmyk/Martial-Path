@@ -5,6 +5,7 @@ from typing import Any, Dict
 
 from game.core.constants import Action, EventType, MODE_COMBAT, MODE_DEBATE, MODE_ENCOUNTER
 from game.core.results import HelpResult, QuitResult
+from game.utils.reasons import explain
 
 
 class DispatchMixin:
@@ -50,18 +51,32 @@ class DispatchMixin:
 
     # -- narrative decoration (A.5) --------------------------------------
     def _decorate_narrative(self, result: Dict[str, Any]) -> Dict[str, Any]:
-        """Attach a fallback narrative line to any result that lacks one.
+        """Attach an explanation, and a fallback narrative line, to a result.
+
+        A refusal explains itself. When the result carries a ``reason`` the shared
+        player-facing sentence (``game.utils.reasons``) is attached as
+        ``message``, and for a refusal with no prose of its own that sentence *is*
+        the narrative. Refusals used to fall straight through to the ERROR verb,
+        which rendered random season flavour and silently dropped the cause: the
+        player was told the world would not yield, never that their Qi was short.
 
         Results that already carry bespoke prose (explore, travel, breakthrough,
-        death, attack) are left untouched; everything else gets the verb mapped
-        by :data:`~game.systems.narrative_system.EVENT_VERB`.
+        death, attack) keep it -- they still gain ``message``, so a frontend can
+        show the reason beside the story. Everything else gets the verb mapped by
+        :data:`~game.systems.narrative_system.EVENT_VERB`.
         """
         if not isinstance(result, dict):
             return result
+        reason = str(result.get("reason") or "")
+        if reason and not result.get("message"):
+            result["message"] = explain(result)
         if "narrative" in result:
             return result
         event = result.get("event")
         if not event:
+            return result
+        if reason:
+            result["narrative"] = str(result["message"])
             return result
         verb = self.narrative.verb_for_event(event)
         if event == EventType.TRAIN_RESULT:
@@ -93,7 +108,12 @@ class DispatchMixin:
 
     # -- action dispatch tables ------------------------------------------
     def _build_info_dispatch(self) -> Dict[str, Any]:
-        """Mode-agnostic actions that never consume a turn."""
+        """Read-only views and turn-free actions, identical in every mode (E.1).
+
+        Resolved before the mode branch, so a pending encounter or a live fight
+        never withholds *information* -- only actions that would consume the turn
+        the mode owns. Everything here must be side-effect free.
+        """
         return {
             Action.STATUS: lambda action: self._status(),
             Action.INVENTORY: lambda action: self.inventory.list_inventory(self.player),
@@ -101,6 +121,16 @@ class DispatchMixin:
             Action.TECHNIQUES: lambda action: self._techniques(),
             Action.TALENTS: lambda action: self._talents(),
             Action.DAO_VIEW: lambda action: self._dao_view(),
+            # Read-only views that used to be explore-only, so a player mid-fight
+            # or mid-encounter can still look things up.
+            Action.SHOP: lambda action: self.shops.shop_view(self.player, action.get("shop_id", "")),
+            Action.TRAINERS: lambda action: self.trainers.trainer_view(self.player, action.get("trainer_id", "")),
+            Action.SECTS: lambda action: self.sects.sect_view(self.player, action.get("sect_id", "")),
+            Action.WORLD_INFO: lambda action: self._world_info(),
+            Action.WORLD_RUMORS: lambda action: self._world_rumors(),
+            # Identity is cosmetic and turn-free: a player may rename themselves
+            # mid-fight or mid-encounter without spending the turn.
+            Action.RENAME: lambda action: self.rename_player(action.get("player_name", "")),
             # Free action: refocusing a formation fight costs no turn.
             Action.TARGET_FOE: lambda action: self._retarget_foe(str(action.get("foe_id", ""))),
             Action.UNLOCK_TREE: lambda action: self._meta_unlock_tree(),
@@ -130,18 +160,15 @@ class DispatchMixin:
             Action.BREAKTHROUGH: lambda action: self._advance_time_after(self._after_breakthrough(self.cultivation_service.attempt_body_breakthrough("player")), "body_breakthrough"),
             Action.BODY_BREAKTHROUGH: lambda action: self._advance_time_after(self._after_breakthrough(self.cultivation_service.attempt_body_breakthrough("player")), "body_breakthrough"),
             Action.ESSENCE_BREAKTHROUGH: lambda action: self._advance_time_after(self._after_breakthrough(self.cultivation_service.attempt_essence_breakthrough("player")), "essence_breakthrough"),
-            Action.STABILISE_FOUNDATION: lambda action: self._advance_time_after(self._advance_day_after(self.cultivation_service.stabilise_foundation("player")), "stabilise"),
-            Action.STABILISE_ESSENCE: lambda action: self._advance_time_after(self._advance_day_after(self.cultivation_service.stabilise_essence("player")), "stabilise_essence"),
+            Action.STABILISE_FOUNDATION: lambda action: self._advance_time_after(self.cultivation_service.stabilise_foundation("player"), "stabilise"),
+            Action.STABILISE_ESSENCE: lambda action: self._advance_time_after(self.cultivation_service.stabilise_essence("player"), "stabilise_essence"),
             Action.EXPLORE: lambda action: self._explore(),
-            Action.REST: lambda action: self._advance_world_after(self._advance_time_after(self._advance_day_after(self._rest()), "rest"), "rest"),
-            Action.MEDITATE: lambda action: self._advance_world_after(self._advance_time_after(self._meditate(), "meditate"), "meditate"),
+            Action.REST: lambda action: self._advance_time_after(self._rest(), "rest"),
+            Action.MEDITATE: lambda action: self._advance_time_after(self._meditate(), "meditate"),
             Action.TRAVEL: lambda action: self._advance_travel_time(self._travel(action.get("location_id", ""))),
-            Action.SHOP: lambda action: self.shops.shop_view(self.player, action.get("shop_id", "")),
             Action.BUY_ITEM: lambda action: self._buy_item(action),
             Action.SELL_ITEM: lambda action: self._sell_item(action),
-            Action.TRAINERS: lambda action: self.trainers.trainer_view(self.player, action.get("trainer_id", "")),
             Action.LEARN_SKILL: lambda action: self._learn_skill(action),
-            Action.SECTS: lambda action: self.sects.sect_view(self.player, action.get("sect_id", "")),
             Action.JOIN_SECT: lambda action: self._join_sect(action.get("sect_id", "")),
             Action.UPGRADE_TALENT: lambda action: self._upgrade_talent(action.get("track", ""), action.get("target_id", "")),
             Action.CLOSED_DOOR: lambda action: self._world_after_result_years(self._closed_door(action.get("years", 0))),
@@ -156,8 +183,6 @@ class DispatchMixin:
             Action.DAO_AWAKEN: lambda action: self._dao_awaken(action.get("dao_id", "")),
             Action.UNLOCK: lambda action: self._purchase_unlock(action.get("unlock_id", "")),
             Action.RETIRE_ASSENT: lambda action: self._retire(),
-            Action.WORLD_INFO: lambda action: self._world_info(),
-            Action.WORLD_RUMORS: lambda action: self._world_rumors(),
             Action.LEARN_RUMOR: lambda action: self._learn_rumor(action.get("rumor_id", "")),
             Action.EXPORT_SAVE: lambda action: self._export_save(),
             Action.IMPORT_SAVE: lambda action: self._import_save(action.get("payload", ""), action.get("slot", "default")),

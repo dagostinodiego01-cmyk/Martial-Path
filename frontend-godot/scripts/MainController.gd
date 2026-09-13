@@ -5,6 +5,13 @@ extends Control
 ## ApiClient, and renders returned state/result dictionaries. Presentation
 ## only: all gameplay rules remain in the Python engine.
 ##
+## FILE LAYOUT: this controller owns the shell -- top bar, character dossier,
+## location frame, chronicle, action grids and the styled dialogs -- and drives
+## the API. The overlay's five tabs and the presentation kit live in their own
+## scripts (UIKit.gd, InventoryPanel.gd, EquipmentPanel.gd, JournalPanel.gd,
+## StatusPanel.gd, TechniquesPanel.gd) so each tab has exactly one writer;
+## frontend-godot/tests/check_panels.gd smoke-checks them headlessly.
+##
 ## DESIGN CONTRACT (direction: the category standard played straight at full
 ## commitment; craft bar: Slay the Spire / Wo Long / Tale of Immortal):
 ## THESIS: a xianxia interface carved like a lacquer screen - warm ink ground,
@@ -14,7 +21,7 @@ extends Control
 ## STORY: the player always reads where they are, what they own, and how far
 ## their lifetime has run, without parsing a wall of text.
 ## FIRST VIEWPORT: top vitals rail; left character dossier with realm ladder;
-## center location frame with art, chips, exits; right chronicle; action
+## center location frame with art, chips; right chronicle; action
 ## grids as card menus with lock reasons stated plainly.
 ## FINISH: unreviewed and undocumented is unfinished; this build ends with the
 ## finish review, the verdict, DESIGN.md, and every shipping raster carrying
@@ -28,46 +35,39 @@ const WORLD_MAP_PATH := "res://assets/sky_spill_continent_map.png"
 const WORLD_MAP_SIZE := Vector2(960, 640)
 const WORLD_MAP_ASPECT := 1.5
 
-# --- Palette (the committed world: warm lacquer ink + gold) -----------------
-const COLOR_BACKGROUND := Color("12100B")
-const COLOR_SECONDARY_BACKGROUND := Color("171410")
-const COLOR_PANEL := Color("1C1813")
-const COLOR_PANEL_SOFT := Color("242019")
-const COLOR_PANEL_RAISED := Color("2A241B")
-const COLOR_BORDER := Color("4B3E22")
-const COLOR_BORDER_STRONG := Color("C9A24D")
-const COLOR_PRIMARY_TEXT := Color("E7DDC6")
-const COLOR_SECONDARY_TEXT := Color("BFB298")
-const COLOR_MUTED := Color("8E8471")
-const COLOR_TITLE_GOLD := Color("E4C87F")
-const COLOR_ANTIQUE_GOLD := Color("C9A24D")
-const COLOR_SEAL_RED := Color("B03A2E")
-const COLOR_QI := Color("4FA8D8")
-const COLOR_QI_DARK := Color("12222C")
-const COLOR_HP := Color("C4443C")
-const COLOR_HP_DARK := Color("2B1210")
-const COLOR_BODY := Color("7CA558")
-const COLOR_BODY_DARK := Color("1A2314")
-const COLOR_ESSENCE := Color("A87ED8")
-const COLOR_INVENTORY_BLUE := Color("4FA8D8")
-const COLOR_WARNING := Color("D9A441")
-const COLOR_DANGER := Color("C4443C")
-const COLOR_SUCCESS := Color("7CA558")
+# --- Palette -----------------------------------------------------------------
+# The palette and the stateless widget/stylebox factory live in UIKit, so the
+# per-panel scripts (InventoryPanel, EquipmentPanel, ...) can dress themselves
+# without inheriting this controller. The names stay local so the hundreds of
+# call sites below read unchanged -- and there is still exactly one source of
+# truth for every colour.
+const COLOR_BACKGROUND := UIKit.COLOR_BACKGROUND
+const COLOR_SECONDARY_BACKGROUND := UIKit.COLOR_SECONDARY_BACKGROUND
+const COLOR_PANEL := UIKit.COLOR_PANEL
+const COLOR_PANEL_SOFT := UIKit.COLOR_PANEL_SOFT
+const COLOR_PANEL_RAISED := UIKit.COLOR_PANEL_RAISED
+const COLOR_BORDER := UIKit.COLOR_BORDER
+const COLOR_BORDER_STRONG := UIKit.COLOR_BORDER_STRONG
+const COLOR_PRIMARY_TEXT := UIKit.COLOR_PRIMARY_TEXT
+const COLOR_SECONDARY_TEXT := UIKit.COLOR_SECONDARY_TEXT
+const COLOR_MUTED := UIKit.COLOR_MUTED
+const COLOR_TITLE_GOLD := UIKit.COLOR_TITLE_GOLD
+const COLOR_ANTIQUE_GOLD := UIKit.COLOR_ANTIQUE_GOLD
+const COLOR_SEAL_RED := UIKit.COLOR_SEAL_RED
+const COLOR_QI := UIKit.COLOR_QI
+const COLOR_QI_DARK := UIKit.COLOR_QI_DARK
+const COLOR_HP := UIKit.COLOR_HP
+const COLOR_HP_DARK := UIKit.COLOR_HP_DARK
+const COLOR_BODY := UIKit.COLOR_BODY
+const COLOR_BODY_DARK := UIKit.COLOR_BODY_DARK
+const COLOR_ESSENCE := UIKit.COLOR_ESSENCE
+const COLOR_INVENTORY_BLUE := UIKit.COLOR_INVENTORY_BLUE
+const COLOR_WARNING := UIKit.COLOR_WARNING
+const COLOR_DANGER := UIKit.COLOR_DANGER
+const COLOR_SUCCESS := UIKit.COLOR_SUCCESS
 
-const INVENTORY_CAPACITY := 50
-const EQUIPMENT_SLOT_ORDER := [
-	["weapon", "Weapon"],
-	["armor", "Armor"],
-	["boots", "Boots"],
-	["cloak", "Cloak"],
-	["ring_1", "Ring I"],
-	["ring_2", "Ring II"],
-	["amulet", "Amulet"],
-	["talisman", "Talisman"],
-	["artifact_1", "Artifact I"],
-	["artifact_2", "Artifact II"],
-	["flying_sword", "Flying Sword"],
-]
+const INVENTORY_CAPACITY := UIKit.INVENTORY_CAPACITY
+const EQUIPMENT_SLOT_ORDER := UIKit.EQUIPMENT_SLOT_ORDER
 
 # Floating tab panels opened from the top bar (index -> title).
 const TAB_TITLES := ["Inventory", "Equipment", "Journal", "Status", "Techniques"]
@@ -83,6 +83,8 @@ var _showing_event_result := false
 
 # Top bar refs.
 var _name_label: Label
+## The cultivator's portrait in the top rail (the identity cluster's face).
+var _top_avatar: TextureRect
 var _hp_bar: ProgressBar
 var _qi_bar: ProgressBar
 var _hp_text: Label
@@ -95,6 +97,7 @@ var _last_world_view: Dictionary = {}
 
 # Character panel refs (left).
 var _portrait_initial: Label
+var _portrait_texture: TextureRect
 var _char_name_label: Label
 var _char_path_label: Label
 var _char_realm_label: Label
@@ -109,7 +112,6 @@ var _artwork_texture: TextureRect
 var _location_texture_cache := {}
 var _location_text: RichTextLabel
 var _chips_row: HBoxContainer
-var _exits_row: HBoxContainer
 var _combat_panel: PanelContainer
 var _enemy_name: Label
 var _enemy_hp_bar: ProgressBar
@@ -126,18 +128,14 @@ var _tab_buttons: Array = []
 var _overlay_tab_buttons: Array = []
 var _active_tab := -1
 
-# Tab content refs (inside the floating overlay).
-var _inventory_grid: GridContainer
-var _inventory_count: Label
-var _equipment_slots: GridContainer
-var _equipment_count: Label
-var _equipment_bonus: RichTextLabel
-var _gold_label: Label
-var _stones_label: Label
-var _quest_list: VBoxContainer
-var _status_grid: GridContainer
-var _status_ladder: VBoxContainer
-var _technique_list: VBoxContainer
+# Tab panels (inside the floating overlay). Each one builds itself, owns its own
+# widgets and repaints from the state snapshot, so a UI change is a single-writer
+# change to that panel's file rather than an edit to this controller.
+var _inventory_panel: InventoryPanel
+var _equipment_panel: EquipmentPanel
+var _journal_panel: JournalPanel
+var _status_panel: StatusPanel
+var _techniques_panel: TechniquesPanel
 
 # Action refs.
 var _action_box: VBoxContainer
@@ -253,24 +251,38 @@ func _build_top_bar(root: VBoxContainer) -> void:
 	row.add_theme_constant_override("separation", 18)
 	top.add_child(row)
 
-	var emblem := TextureRect.new()
-	emblem.custom_minimum_size = Vector2(52, 52)
-	emblem.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	emblem.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	emblem.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	# The identity cluster: the cultivator's portrait and name, one click target
+	# so the player can rename themselves and choose a portrait at any moment.
+	var identity_body := HBoxContainer.new()
+	identity_body.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	identity_body.add_theme_constant_override("separation", 12)
+
+	_top_avatar = TextureRect.new()
+	_top_avatar.custom_minimum_size = Vector2(52, 52)
+	_top_avatar.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_top_avatar.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	_top_avatar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var emblem_tex := _load_texture("res://icon.png")
 	if emblem_tex != null:
-		emblem.texture = emblem_tex
-	row.add_child(emblem)
+		_top_avatar.texture = emblem_tex
+	identity_body.add_child(_top_avatar)
 
 	var title_box := VBoxContainer.new()
 	title_box.custom_minimum_size = Vector2(260, 0)
-	row.add_child(title_box)
+	title_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	identity_body.add_child(title_box)
 
 	var title := _make_label("MARTIAL PATH", 24, COLOR_TITLE_GOLD, true)
+	title.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	title_box.add_child(title)
-	_name_label = _make_label("Daoist", 14, COLOR_SECONDARY_TEXT)
+	_name_label = _make_label(Profile.player_name, 14, COLOR_SECONDARY_TEXT)
+	_name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	title_box.add_child(_name_label)
+
+	var identity_card := _make_clickable_card(identity_body, false, Color(0, 0, 0, 0), func(): _open_identity())
+	identity_card.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	identity_card.tooltip_text = "Identity: set your cultivator's name and portrait."
+	row.add_child(identity_card)
 
 	var spacer := Control.new()
 	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -381,13 +393,32 @@ func _build_character_panel(left: VBoxContainer) -> void:
 	box.add_child(header)
 
 	var portrait_panel := PanelContainer.new()
-	portrait_panel.custom_minimum_size = Vector2(64, 64)
+	portrait_panel.custom_minimum_size = Vector2(76, 76)
+	portrait_panel.clip_contents = true
 	portrait_panel.add_theme_stylebox_override("panel", _make_portrait_style())
+	portrait_panel.tooltip_text = "Set your name and portrait."
+	portrait_panel.gui_input.connect(func(event: InputEvent):
+		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+			_open_identity())
 	header.add_child(portrait_panel)
+
+	var portrait_holder := Control.new()
+	portrait_holder.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	portrait_panel.add_child(portrait_holder)
+	_portrait_texture = TextureRect.new()
+	_portrait_texture.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_portrait_texture.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_portrait_texture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	_portrait_texture.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_portrait_texture.visible = false
+	portrait_holder.add_child(_portrait_texture)
+	# Monogram fallback: shown only while no portrait art can be loaded.
 	_portrait_initial = _make_label("?", 30, COLOR_TITLE_GOLD, true)
+	_portrait_initial.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_portrait_initial.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_portrait_initial.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	portrait_panel.add_child(_portrait_initial)
+	_portrait_initial.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	portrait_holder.add_child(_portrait_initial)
 
 	var identity := VBoxContainer.new()
 	identity.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -502,11 +533,6 @@ func _build_location_panel(center: VBoxContainer) -> void:
 	_chips_row = HBoxContainer.new()
 	_chips_row.add_theme_constant_override("separation", 8)
 	box.add_child(_chips_row)
-
-	# Interactive exits (click to travel).
-	_exits_row = HBoxContainer.new()
-	_exits_row.add_theme_constant_override("separation", 8)
-	box.add_child(_exits_row)
 
 
 func _build_action_panel(center: VBoxContainer) -> void:
@@ -836,6 +862,8 @@ func _add_dialog_footer(text: String, color: Color = COLOR_SECONDARY_TEXT) -> vo
 
 func _open_settings() -> void:
 	_open_dialog("Settings")
+	_add_dialog_caption("Identity")
+	_add_dialog_row("Name & Portrait", "", "Choose what the world calls you, and the face it knows.", false, "", 4, _on_settings_pick)
 	_add_dialog_caption("Session")
 	_add_dialog_row("New Game", "", "Abandon this life and roll a new one.", false, "", 0, _on_settings_pick)
 	_add_dialog_row("Save Game", "slot: default", "Record this life.", false, "", 1, _on_settings_pick)
@@ -845,6 +873,11 @@ func _open_settings() -> void:
 
 
 func _on_settings_pick(index: int) -> void:
+	if index == 4:
+		# Replacing the dialog, not closing back to the game.
+		_close_dialog()
+		_open_identity()
+		return
 	match index:
 		0:
 			_start_new_game()
@@ -855,6 +888,59 @@ func _on_settings_pick(index: int) -> void:
 		3:
 			get_tree().quit()
 	_close_dialog()
+
+
+# --- Identity (name + portrait) ---------------------------------------------
+
+
+## The name the engine holds for the living cultivator ("" before the first
+## state snapshot arrives).
+func _live_player_name() -> String:
+	var player: Dictionary = _last_state.get("player", {})
+	if player.is_empty():
+		return ""
+	return str(player.get("name", ""))
+
+
+## The name-and-avatar picker; opened from the top-rail identity cluster, the
+## dossier portrait, and the Settings dialog rows.
+func _open_identity() -> void:
+	_open_dialog("Identity", Vector2(760, 0))
+	var editor := IdentityEditor.new()
+	# Prefer the living cultivator's name over the stored one: a loaded save may
+	# have been started under a different name.
+	editor.initial_name = _live_player_name()
+	editor.committed.connect(_on_identity_committed)
+	editor.cancelled.connect(func(): _close_dialog())
+	var content: VBoxContainer = _dialog["content"]
+	content.add_child(editor)
+
+
+func _on_identity_committed(new_name: String, _avatar_id: String) -> void:
+	_close_dialog()
+	_apply_identity_art(new_name)
+	if new_name != _live_player_name():
+		# The engine owns the name: it is written into the save and into prose.
+		api.send_action({"action": "RENAME", "player_name": new_name})
+		_set_situation("Identity", "From this day the world will know you as [color=#E4C87F]%s[/color]." % new_name)
+
+
+## Point the top-rail portrait and the dossier portrait at the chosen avatar,
+## falling back to a monogram while the art cannot be loaded.
+func _apply_identity_art(player_name: String) -> void:
+	var texture := Profile.current_texture()
+	_apply_portrait(_top_avatar, texture)
+	_apply_portrait(_portrait_texture, texture)
+	if _portrait_initial != null:
+		_portrait_initial.visible = texture == null
+		_portrait_initial.text = player_name.substr(0, 1).to_upper() if player_name.length() > 0 else "?"
+
+
+func _apply_portrait(target: TextureRect, texture: Texture2D) -> void:
+	if target == null:
+		return
+	target.texture = texture
+	target.visible = texture != null
 
 
 func _open_travel_popup() -> void:
@@ -1522,7 +1608,7 @@ func _open_codex_popup(result: Dictionary) -> void:
 
 
 func _slot_label(slot: String) -> String:
-	return slot.replace("_", " ").capitalize()
+	return UIKit.title_from_id(slot)
 
 
 func _build_overlay() -> void:
@@ -1585,11 +1671,22 @@ func _build_overlay() -> void:
 	_overlay_content.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	root.add_child(_overlay_content)
 
-	_build_inventory_page()
-	_build_equipment_page()
-	_build_journal_page()
-	_build_status_page()
-	_build_techniques_page()
+	_inventory_panel = InventoryPanel.new()
+	_inventory_panel.use_requested.connect(func(item_id: String): api.send_action({"action": "USE_ITEM", "item_id": item_id}))
+	_inventory_panel.equip_requested.connect(_equip_from_card)
+	_add_tab(_inventory_panel)
+
+	_equipment_panel = EquipmentPanel.new()
+	_add_tab(_equipment_panel)
+
+	_journal_panel = JournalPanel.new()
+	_add_tab(_journal_panel)
+
+	_status_panel = StatusPanel.new()
+	_add_tab(_status_panel)
+
+	_techniques_panel = TechniquesPanel.new()
+	_add_tab(_techniques_panel)
 
 	for page in _tab_pages:
 		page.visible = false
@@ -1646,158 +1743,13 @@ func _on_overlay_dim_input(event: InputEvent) -> void:
 		_close_overlay()
 
 
-# --- Tab page construction --------------------------------------------------
+# --- Tab pages --------------------------------------------------------------
 
-func _tab_page_base() -> VBoxContainer:
-	var page := MarginContainer.new()
-	page.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	page.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	page.add_theme_constant_override("margin_top", 4)
+## Hand a finished panel to the overlay. Each panel lays out its own margins,
+## header and scroll region, so a tab is one file with one writer.
+func _add_tab(page: Control) -> void:
 	_overlay_content.add_child(page)
 	_tab_pages.append(page)
-	var box := VBoxContainer.new()
-	box.add_theme_constant_override("separation", 10)
-	page.add_child(box)
-	return box
-
-
-func _tab_page_header(box: VBoxContainer, caption: String, trailing: Label) -> void:
-	var header := HBoxContainer.new()
-	box.add_child(header)
-	var label := _make_label(caption, 13, COLOR_MUTED)
-	header.add_child(label)
-	var spacer := Control.new()
-	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	header.add_child(spacer)
-	if trailing != null:
-		header.add_child(trailing)
-
-
-func _build_inventory_page() -> void:
-	var box := _tab_page_base()
-	_tab_page_header(box, "STORAGE RING", null)
-
-	var scroll := ScrollContainer.new()
-	scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	box.add_child(scroll)
-
-	_inventory_grid = GridContainer.new()
-	_inventory_grid.columns = 3
-	_inventory_grid.add_theme_constant_override("h_separation", 10)
-	_inventory_grid.add_theme_constant_override("v_separation", 10)
-	_inventory_grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	scroll.add_child(_inventory_grid)
-
-	var footer := HBoxContainer.new()
-	footer.add_theme_constant_override("separation", 18)
-	box.add_child(footer)
-	_gold_label = _make_label("Gold 0", 15, COLOR_ANTIQUE_GOLD)
-	footer.add_child(_gold_label)
-	_stones_label = _make_label("Spirit Stones 0", 15, COLOR_INVENTORY_BLUE)
-	footer.add_child(_stones_label)
-	var foot_spacer := Control.new()
-	foot_spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	footer.add_child(foot_spacer)
-	_inventory_count = _make_label("0 / %d" % INVENTORY_CAPACITY, 13, COLOR_MUTED)
-	footer.add_child(_inventory_count)
-
-
-func _build_equipment_page() -> void:
-	var box := _tab_page_base()
-	_equipment_count = _make_label("0 / %d worn" % EQUIPMENT_SLOT_ORDER.size(), 13, COLOR_MUTED)
-	_tab_page_header(box, "WORN ARTIFACTS", _equipment_count)
-
-	# Aggregated bonus tally: everything worn gear currently contributes.
-	_equipment_bonus = RichTextLabel.new()
-	_equipment_bonus.bbcode_enabled = true
-	_equipment_bonus.fit_content = true
-	_equipment_bonus.add_theme_color_override("default_color", COLOR_SECONDARY_TEXT)
-	box.add_child(_equipment_bonus)
-
-	# Paper-doll: a grid of slot cards, one cell per equipment slot.
-	var scroll := ScrollContainer.new()
-	scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	box.add_child(scroll)
-
-	_equipment_slots = GridContainer.new()
-	_equipment_slots.columns = 3
-	_equipment_slots.add_theme_constant_override("h_separation", 10)
-	_equipment_slots.add_theme_constant_override("v_separation", 10)
-	_equipment_slots.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	scroll.add_child(_equipment_slots)
-
-
-func _build_journal_page() -> void:
-	var box := _tab_page_base()
-	_tab_page_header(box, "ACTIVE ENDEAVORS", null)
-
-	var scroll := ScrollContainer.new()
-	scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	box.add_child(scroll)
-
-	_quest_list = VBoxContainer.new()
-	_quest_list.add_theme_constant_override("separation", 10)
-	_quest_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	scroll.add_child(_quest_list)
-
-
-func _build_status_page() -> void:
-	var box := _tab_page_base()
-
-	var columns := HBoxContainer.new()
-	columns.add_theme_constant_override("separation", 18)
-	columns.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	columns.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	box.add_child(columns)
-
-	# Left: the structured character sheet.
-	var sheet_box := VBoxContainer.new()
-	sheet_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	sheet_box.size_flags_stretch_ratio = 1.4
-	columns.add_child(sheet_box)
-	_tab_page_header(sheet_box, "CHARACTER SHEET", null)
-	var sheet_scroll := ScrollContainer.new()
-	sheet_scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	sheet_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	sheet_box.add_child(sheet_scroll)
-	_status_grid = GridContainer.new()
-	_status_grid.columns = 2
-	_status_grid.add_theme_constant_override("h_separation", 26)
-	_status_grid.add_theme_constant_override("v_separation", 8)
-	_status_grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	sheet_scroll.add_child(_status_grid)
-
-	# Right: the realm ladder - the lifetime spine.
-	var ladder_box := VBoxContainer.new()
-	ladder_box.custom_minimum_size = Vector2(280, 0)
-	columns.add_child(ladder_box)
-	_tab_page_header(ladder_box, "THE ASCENT", null)
-	var ladder_scroll := ScrollContainer.new()
-	ladder_scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	ladder_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	ladder_box.add_child(ladder_scroll)
-	_status_ladder = VBoxContainer.new()
-	_status_ladder.add_theme_constant_override("separation", 6)
-	_status_ladder.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	ladder_scroll.add_child(_status_ladder)
-
-
-func _build_techniques_page() -> void:
-	var box := _tab_page_base()
-	_tab_page_header(box, "KNOWN ARTS", null)
-
-	var scroll := ScrollContainer.new()
-	scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	box.add_child(scroll)
-
-	_technique_list = VBoxContainer.new()
-	_technique_list.add_theme_constant_override("separation", 10)
-	_technique_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	scroll.add_child(_technique_list)
 
 
 # --- Narrative panel ---------------------------------------------------------
@@ -1844,43 +1796,15 @@ func _clear_action_grids() -> void:
 
 
 func _clear_row(container: Container) -> void:
-	if container == null:
-		return
-	for child in container.get_children():
-		child.queue_free()
+	UIKit.clear(container)
 
 
 func _make_portrait_style() -> StyleBoxFlat:
-	var style := StyleBoxFlat.new()
-	style.bg_color = COLOR_PANEL_SOFT
-	style.border_color = COLOR_BORDER_STRONG
-	style.set_border_width_all(1)
-	style.set_corner_radius_all(0)
-	return style
+	return UIKit.portrait_style()
 
 
 func _make_chip(caption: String, value: String, color: Color) -> PanelContainer:
-	var chip := PanelContainer.new()
-	chip.add_theme_stylebox_override("panel", _make_chip_style())
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 6)
-	chip.add_child(row)
-	row.add_child(_make_label(caption, 11, COLOR_MUTED))
-	row.add_child(_make_label(value, 12, color))
-	return chip
-
-
-func _make_chip_style() -> StyleBoxFlat:
-	var style := StyleBoxFlat.new()
-	style.bg_color = COLOR_PANEL_RAISED
-	style.border_color = COLOR_BORDER
-	style.set_border_width_all(1)
-	style.set_corner_radius_all(0)
-	style.content_margin_left = 10
-	style.content_margin_right = 10
-	style.content_margin_top = 4
-	style.content_margin_bottom = 4
-	return style
+	return UIKit.chip(caption, value, color)
 
 
 func _render_chips(location: Dictionary) -> void:
@@ -1893,129 +1817,36 @@ func _render_chips(location: Dictionary) -> void:
 	_chips_row.add_child(_make_chip("RESOURCES", _join_array(resources) if not resources.is_empty() else "None", COLOR_ANTIQUE_GOLD))
 
 
-func _render_exits(location: Dictionary) -> void:
-	_clear_row(_exits_row)
-	var connections: Array = location.get("connections", [])
-	if connections.is_empty():
-		return
-	_exits_row.add_child(_make_label("Exits", 12, COLOR_MUTED))
-	for conn in connections:
-		if typeof(conn) != TYPE_DICTIONARY:
-			continue
-		var exit_id := str(conn.get("id", ""))
-		var exit_name := str(conn.get("name", exit_id))
-		if exit_id == "":
-			continue
-		_exits_row.add_child(_make_button(exit_name, func(): api.travel(exit_id), "Travel to %s." % exit_name))
-
-
 func _make_bar_group(caption: String, color: Color, background_color: Color) -> Dictionary:
-	var box := VBoxContainer.new()
-	box.custom_minimum_size = Vector2(150, 0)
-	var cap := _make_label(caption, 12, COLOR_MUTED)
-	box.add_child(cap)
-	var bar := ProgressBar.new()
-	bar.min_value = 0
-	bar.max_value = 100
-	bar.value = 0
-	bar.show_percentage = false
-	bar.custom_minimum_size = Vector2(150, 16)
-	_apply_bar_style(bar, color, background_color)
-	box.add_child(bar)
-	return {"box": box, "bar": bar, "cap": cap}
+	return UIKit.bar_group(caption, color, background_color)
 
 
 func _make_panel(fill: Color = COLOR_PANEL, border: Color = COLOR_BORDER, border_width: int = 1) -> PanelContainer:
-	var panel := PanelContainer.new()
-	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	panel.add_theme_stylebox_override("panel", _make_panel_style(fill, border, border_width))
-	return panel
+	return UIKit.panel(fill, border, border_width)
 
 
 func _make_panel_style(fill: Color, border: Color = COLOR_BORDER, border_width: int = 1) -> StyleBoxFlat:
-	var style := StyleBoxFlat.new()
-	style.bg_color = fill
-	style.border_color = border
-	style.set_border_width_all(border_width)
-	style.set_corner_radius_all(0)
-	style.content_margin_left = 16
-	style.content_margin_right = 16
-	style.content_margin_top = 14
-	style.content_margin_bottom = 14
-	return style
+	return UIKit.panel_style(fill, border, border_width)
 
 
 func _make_popup_style() -> StyleBoxFlat:
-	var style := StyleBoxFlat.new()
-	style.bg_color = Color("171310")
-	style.border_color = COLOR_BORDER_STRONG
-	style.set_border_width_all(1)
-	style.set_corner_radius_all(0)
-	style.content_margin_left = 18
-	style.content_margin_right = 18
-	style.content_margin_top = 16
-	style.content_margin_bottom = 16
-	style.shadow_color = Color(0, 0, 0, 0.55)
-	style.shadow_size = 28
-	style.shadow_offset = Vector2(0, 8)
-	return style
+	return UIKit.popup_style()
 
 
 func _make_label(text: String, size: int, color: Color, display: bool = false) -> Label:
-	var label := Label.new()
-	label.text = text
-	label.add_theme_font_size_override("font_size", size)
-	label.add_theme_color_override("font_color", color)
-	if display:
-		label.add_theme_font_override("font", preload("res://ui/fonts/Cinzel.ttf"))
-	# Keep single-line labels from collapsing to one-character-per-line when a
-	# sibling (e.g. an expanding spacer in a header row) squeezes their width.
-	# Long-form copy uses RichTextLabel, so plain labels never need wrapping.
-	label.autowrap_mode = TextServer.AUTOWRAP_OFF
-	return label
+	return UIKit.label(text, size, color, display)
 
 
 func _make_button(text: String, cb: Callable, tooltip: String = "") -> Button:
-	var button := Button.new()
-	button.text = text
-	button.tooltip_text = tooltip
-	button.pressed.connect(cb)
-	button.add_theme_color_override("font_color", COLOR_PRIMARY_TEXT)
-	button.add_theme_color_override("font_hover_color", COLOR_TITLE_GOLD)
-	button.add_theme_stylebox_override("normal", _make_button_style(COLOR_PANEL_SOFT, COLOR_BORDER))
-	button.add_theme_stylebox_override("hover", _make_button_style(Color("332A1A"), COLOR_ANTIQUE_GOLD))
-	button.add_theme_stylebox_override("pressed", _make_button_style(COLOR_SECONDARY_BACKGROUND, COLOR_ANTIQUE_GOLD))
-	return button
+	return UIKit.button(text, cb, tooltip)
 
 
 func _make_button_style(fill: Color, border: Color) -> StyleBoxFlat:
-	var style := StyleBoxFlat.new()
-	style.bg_color = fill
-	style.border_color = border
-	style.set_border_width_all(1)
-	style.set_corner_radius_all(0)
-	style.content_margin_left = 12
-	style.content_margin_right = 12
-	style.content_margin_top = 7
-	style.content_margin_bottom = 7
-	return style
+	return UIKit.button_style(fill, border)
 
 
 func _apply_bar_style(bar: ProgressBar, color: Color, background_color: Color) -> void:
-	bar.add_theme_stylebox_override("background", _make_bar_background_style(background_color))
-	var fill := StyleBoxFlat.new()
-	fill.bg_color = color
-	fill.set_corner_radius_all(0)
-	bar.add_theme_stylebox_override("fill", fill)
-
-
-func _make_bar_background_style(fill: Color) -> StyleBoxFlat:
-	var style := StyleBoxFlat.new()
-	style.bg_color = fill
-	style.border_color = COLOR_BORDER
-	style.set_border_width_all(1)
-	style.set_corner_radius_all(0)
-	return style
+	UIKit.apply_bar_style(bar, color, background_color)
 
 
 # --- Networking glue -------------------------------------------------------
@@ -2026,7 +1857,7 @@ func _send(action_name: String) -> void:
 
 func _start_new_game() -> void:
 	_showing_event_result = false
-	api.new_game("Daoist", null)
+	api.new_game(Profile.player_name, null)
 
 
 func _on_state_loaded(state: Dictionary) -> void:
@@ -2092,7 +1923,9 @@ func _refresh_state(state: Dictionary) -> void:
 
 
 func _render_top_bar(player: Dictionary) -> void:
-	_name_label.text = str(player.get("name", "Unknown"))
+	var player_name := str(player.get("name", "Unknown"))
+	_name_label.text = player_name
+	_apply_identity_art(player_name)
 	var hp := int(player.get("hp", 0))
 	var mhp := int(max(1, int(player.get("max_hp", 1))))
 	var qi := int(player.get("qi", 0))
@@ -2140,10 +1973,7 @@ func _render_character(player: Dictionary) -> void:
 	_char_name_label.text = player_name
 	_char_path_label.text = "Path: %s" % player.get("path", "Unassigned")
 	_char_realm_label.text = "Realm: %s" % body.get("display_name", player.get("realm", "-"))
-	if player_name.length() > 0:
-		_portrait_initial.text = player_name.substr(0, 1).to_upper()
-	else:
-		_portrait_initial.text = "?"
+	_apply_identity_art(player_name)
 	var lines := ""
 	lines += "[color=#C9A24D]CULTIVATION[/color]\n"
 	lines += "[color=#BFB298]Body[/color] [color=#7CA558][b]%s[/b][/color]  [color=#8E8471]%.0f / %.0f (%.0f%%)[/color]\n" % [body.get("display_name", player.get("realm", "-")), body_progress, body_required, body_percent]
@@ -2173,7 +2003,6 @@ func _render_location(location: Dictionary) -> void:
 		_artwork_label.text = ""
 		_set_rich_text(_location_text, "")
 		_clear_row(_chips_row)
-		_clear_row(_exits_row)
 		return
 	var loc_name := str(location.get("name", location.get("display_name", "Unknown")))
 	_location_title.text = loc_name.to_upper()
@@ -2188,7 +2017,6 @@ func _render_location(location: Dictionary) -> void:
 		_artwork_label.text = loc_name
 	_set_rich_text(_location_text, str(location.get("description", "")))
 	_render_chips(location)
-	_render_exits(location)
 
 
 func _load_texture(path: String) -> Texture2D:
@@ -2217,105 +2045,11 @@ func _load_location_texture(location_id: String) -> Texture2D:
 # --- Inventory tab: item card grid ------------------------------------------
 
 func _rarity_color(rarity: String) -> Color:
-	match rarity.to_lower():
-		"common", "":
-			return COLOR_SECONDARY_TEXT
-		"uncommon":
-			return COLOR_BODY
-		"rare":
-			return COLOR_QI
-		"epic", "exceptional":
-			return COLOR_ESSENCE
-		"legendary", "immortal":
-			return COLOR_TITLE_GOLD
-		_:
-			return COLOR_SECONDARY_TEXT
+	return UIKit.rarity_color(rarity)
 
 
 func _render_inventory(state: Dictionary) -> void:
-	var items: Array = state.get("inventory_items", [])
-	var player: Dictionary = state.get("player", {})
-	_inventory_count.text = "%d / %d" % [items.size(), INVENTORY_CAPACITY]
-	_clear_row(_inventory_grid)
-	var stones := 0
-	for item in items:
-		if typeof(item) != TYPE_DICTIONARY:
-			continue
-		if str(item.get("item_id", "")) == "spirit_stone":
-			stones = int(item.get("count", 0))
-		_inventory_grid.add_child(_make_item_card(item))
-	if items.is_empty():
-		var empty := _make_label("Your storage ring is empty.", 14, COLOR_MUTED)
-		_inventory_grid.add_child(empty)
-	_gold_label.text = "Gold %s" % player.get("gold", 0)
-	_stones_label.text = "Spirit Stones %s" % stones
-
-
-func _make_item_card(item: Dictionary) -> PanelContainer:
-	var card := PanelContainer.new()
-	var rarity := str(item.get("rarity", ""))
-	var rarity_col := _rarity_color(rarity)
-	var card_style := _make_panel_style(COLOR_PANEL_SOFT, COLOR_BORDER, 1)
-	card_style.border_width_top = 2
-	card_style.border_color = rarity_col
-	card.add_theme_stylebox_override("panel", card_style)
-	card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-
-	var box := VBoxContainer.new()
-	box.add_theme_constant_override("separation", 4)
-	card.add_child(box)
-
-	var head := HBoxContainer.new()
-	head.add_theme_constant_override("separation", 8)
-	box.add_child(head)
-	var name_label := _make_label(str(item.get("name", "Item")), 15, COLOR_PRIMARY_TEXT)
-	name_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	head.add_child(name_label)
-	var count := _format_quantity(item.get("count", 1))
-	if count != "1":
-		head.add_child(_make_label("x%s" % count, 14, COLOR_ANTIQUE_GOLD))
-
-	var meta_bits: Array[String] = []
-	var type := str(item.get("type", ""))
-	if rarity != "":
-		meta_bits.append(rarity.replace("_", " ").capitalize())
-	if type == "equipment":
-		var slots: Array = item.get("valid_slots", [])
-		if not slots.is_empty():
-			var slot_names: Array[String] = []
-			for s in slots:
-				slot_names.append(_slot_label(str(s)))
-			meta_bits.append(", ".join(slot_names))
-	if bool(item.get("usable", false)):
-		meta_bits.append("usable")
-	if not meta_bits.is_empty():
-		box.add_child(_make_label(" - ".join(meta_bits), 11, rarity_col))
-
-	var desc := str(item.get("description", ""))
-	if desc != "":
-		var desc_label := _make_label(desc, 12, COLOR_SECONDARY_TEXT)
-		desc_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		box.add_child(desc_label)
-
-	var mods := _format_item_modifiers(item)
-	if mods != "":
-		var mods_label := _make_label(mods, 12, COLOR_BODY)
-		mods_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		box.add_child(mods_label)
-
-	# Direct item actions on the card.
-	var item_id := str(item.get("item_id", ""))
-	if item_id == "":
-		return card
-	var actions := HBoxContainer.new()
-	actions.add_theme_constant_override("separation", 6)
-	box.add_child(actions)
-	if bool(item.get("usable", false)):
-		actions.add_child(_make_button("Use", func(): api.send_action({"action": "USE_ITEM", "item_id": item_id}), "Use %s." % str(item.get("name", item_id))))
-	if type == "equipment" and not item.get("valid_slots", []).is_empty():
-		actions.add_child(_make_button("Equip", func(): _equip_from_card(item_id), "Choose a slot for %s." % str(item.get("name", item_id))))
-	return card
+	_inventory_panel.render(state)
 
 
 ## Equip flow straight from an inventory card: one item, slot choice.
@@ -2341,407 +2075,41 @@ func _equip_from_card(item_id: String) -> void:
 # --- Equipment tab ------------------------------------------------------------
 
 func _render_equipment(player: Dictionary) -> void:
-	var slots: Dictionary = player.get("equipment", {})
-	var details: Dictionary = player.get("equipment_details", {})
-	var modifiers: Dictionary = player.get("equipment_modifiers", {})
-	_clear_row(_equipment_slots)
-	var worn := 0
-	for pair in EQUIPMENT_SLOT_ORDER:
-		var slot_id := str(pair[0])
-		var slot_label := str(pair[1])
-		var item_id = slots.get(slot_id, null)
-		var info: Dictionary = details.get(slot_id, {})
-		if item_id == null or str(item_id) == "":
-			_equipment_slots.add_child(_make_equipment_slot_card(slot_label, "(empty)", "", COLOR_MUTED, -1, -1, "", slot_id))
-		else:
-			worn += 1
-			var durability: Variant = info.get("durability", null)
-			var max_durability: Variant = info.get("max_durability", null)
-			var broken := bool(info.get("broken", false))
-			var name_color := COLOR_PRIMARY_TEXT if not broken else COLOR_DANGER
-			var card_mods := _format_item_modifiers(info)
-			_equipment_slots.add_child(_make_equipment_slot_card(slot_label, str(info.get("display_name", item_id)), str(info.get("rarity", "")), name_color, durability, max_durability, card_mods, slot_id))
-	_equipment_count.text = "%d / %d worn" % [worn, EQUIPMENT_SLOT_ORDER.size()]
-	_render_equipment_tally(modifiers)
-
-
-func _make_equipment_slot_card(slot_label: String, item_name: String, rarity: String, name_color: Color, durability: Variant, max_durability: Variant, modifiers: String = "", slot_id: String = "") -> PanelContainer:
-	var card := PanelContainer.new()
-	var is_empty := item_name == "(empty)"
-	var card_style := _make_panel_style(COLOR_PANEL_SOFT if not is_empty else COLOR_SECONDARY_BACKGROUND, COLOR_BORDER if not is_empty else Color("3A3225"), 1)
-	card.add_theme_stylebox_override("panel", card_style)
-	card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	var box := VBoxContainer.new()
-	box.add_theme_constant_override("separation", 3)
-	card.add_child(box)
-	box.add_child(_make_label(slot_label.to_upper(), 10, COLOR_ANTIQUE_GOLD))
-	var name_label := _make_label(item_name, 14, name_color)
-	name_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	box.add_child(name_label)
-	if rarity != "":
-		box.add_child(_make_label(rarity.replace("_", " ").capitalize(), 10, _rarity_color(rarity)))
-	if modifiers != "":
-		var mod_label := _make_label(modifiers, 10, COLOR_BODY)
-		mod_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		box.add_child(mod_label)
-	if typeof(durability) == TYPE_INT and typeof(max_durability) == TYPE_INT and int(max_durability) > 0:
-		var dur_label := _make_label("Durability %s / %s" % [durability, max_durability], 10, COLOR_WARNING if int(durability) <= 0 else COLOR_MUTED)
-		box.add_child(dur_label)
-	if is_empty and slot_id != "":
-		var empty_hint := _make_label("Nothing worn here.", 10, COLOR_MUTED)
-		empty_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		box.add_child(empty_hint)
-	return card
+	_equipment_panel.render(player)
 
 
 func _format_item_modifiers(item: Dictionary) -> String:
-	var parts := PackedStringArray()
-	for group in [item.get("stat_modifiers", {}), item.get("cultivation_modifiers", {}), item.get("utility_modifiers", {})]:
-		var line := _format_modifier_group(group)
-		if line != "":
-			parts.append(line)
-	return "  ".join(parts)
+	return UIKit.format_item_modifiers(item)
 
 
 func _format_modifier_group(group: Dictionary) -> String:
-	if typeof(group) != TYPE_DICTIONARY or group.is_empty():
-		return ""
-	var parts := PackedStringArray()
-	for key in group.keys():
-		var value = group[key]
-		var val_str := _format_modifier_value(str(key), value)
-		if val_str == "":
-			continue
-		parts.append("%s %s" % [_humanize_key(str(key)), val_str])
-	if parts.size() == 0:
-		return ""
-	return "  ".join(parts)
+	return UIKit.format_modifier_group(group)
 
 
 func _format_modifier_value(key: String, value: Variant) -> String:
-	var n := float(value)
-	if n == 0.0:
-		return ""
-	if key.ends_with("_multiplier"):
-		return "x%.2f" % n
-	if n != floor(n):
-		# Fractional values are percentage-style (e.g. +8% breakthrough chance).
-		return "%+.0f%%" % (n * 100.0)
-	return "%+.0f" % n
+	return UIKit.format_modifier_value(key, value)
 
 
 func _humanize_key(key: String) -> String:
-	match key:
-		"max_hp":
-			return "Max HP"
-		"max_qi":
-			return "Max Qi"
-		"body_strength":
-			return "Body Strength"
-		"foundation_quality":
-			return "Foundation Quality"
-		"body_cultivation_flat_bonus":
-			return "Body Cultivation"
-		"essence_cultivation_flat_bonus":
-			return "Essence Cultivation"
-		"foundation_stability_bonus":
-			return "Foundation Stability"
-		"breakthrough_chance_modifier":
-			return "Breakthrough Chance"
-		"body_breakthrough_modifier":
-			return "Body Breakthrough"
-		"essence_breakthrough_modifier":
-			return "Essence Breakthrough"
-		"comprehension_bonus":
-			return "Comprehension"
-		"body_strain_gain_multiplier":
-			return "Body Strain Gain"
-		"qi_strain_gain_multiplier":
-			return "Qi Strain Gain"
-		"travel_safety_bonus":
-			return "Travel Safety"
-		"stealth_bonus":
-			return "Stealth"
-		"ambush_avoidance_bonus":
-			return "Ambush Avoidance"
-		"spirit_stone_find_bonus":
-			return "Spirit Stone Find"
-		"corpse_qi_resistance":
-			return "Corpse Qi Resist"
-		"rare_event_chance_bonus":
-			return "Rare Event Chance"
-		"herb_gathering_bonus":
-			return "Herb Gathering"
-		"shop_discount_modifier":
-			return "Shop Discount"
-	var words := key.replace("_", " ").split(" ")
-	var out := PackedStringArray()
-	for word in words:
-		if word.length() > 0:
-			out.append(word.substr(0, 1).to_upper() + word.substr(1))
-	return " ".join(out)
-
-
-func _render_equipment_tally(modifiers: Dictionary) -> void:
-	if _equipment_bonus == null:
-		return
-	var lines := "[color=#C9A24D]TOTAL BONUSES[/color]   "
-	var parts: Array[String] = []
-	var stat_line := _format_modifier_group(modifiers.get("stat_modifiers", {}))
-	if stat_line != "":
-		parts.append("[color=#E7DDC6]Stats:[/color] %s" % stat_line)
-	var cult_line := _format_modifier_group(modifiers.get("cultivation_modifiers", {}))
-	if cult_line != "":
-		parts.append("[color=#4FA8D8]Cultivation:[/color] %s" % cult_line)
-	var util_line := _format_modifier_group(modifiers.get("utility_modifiers", {}))
-	if util_line != "":
-		parts.append("[color=#7CA558]Utility:[/color] %s" % util_line)
-	if parts.is_empty():
-		lines += "[color=#8E8471]Nothing worn grants a bonus yet.[/color]"
-	else:
-		lines += "   ".join(parts)
-	_set_rich_text(_equipment_bonus, lines)
+	return UIKit.humanize_key(key)
 
 
 # --- Journal tab: quest cards -------------------------------------------------
 
 func _render_quests(quests: Array) -> void:
-	_clear_row(_quest_list)
-	var has_active := false
-	for quest in quests:
-		if typeof(quest) != TYPE_DICTIONARY:
-			continue
-		var status := str(quest.get("status", "locked"))
-		if status == "locked" or status == "hidden":
-			continue
-		has_active = true
-		_quest_list.add_child(_make_quest_card(quest))
-	if not has_active:
-		var empty := _make_label("No active quests yet. Explore to uncover your path.", 14, COLOR_MUTED)
-		_quest_list.add_child(empty)
-
-
-func _make_quest_card(quest: Dictionary) -> PanelContainer:
-	var card := PanelContainer.new()
-	var status := str(quest.get("status", "active"))
-	var done := status == "completed"
-	var accent := COLOR_SUCCESS if done else COLOR_ANTIQUE_GOLD
-	var card_style := _make_panel_style(COLOR_PANEL_SOFT, COLOR_BORDER, 1)
-	card_style.border_width_left = 3
-	card_style.border_color = accent
-	card.add_theme_stylebox_override("panel", card_style)
-
-	var box := VBoxContainer.new()
-	box.add_theme_constant_override("separation", 5)
-	card.add_child(box)
-
-	var head := HBoxContainer.new()
-	head.add_theme_constant_override("separation", 10)
-	box.add_child(head)
-	var title := _make_label(str(quest.get("title", "Quest")), 16, COLOR_PRIMARY_TEXT)
-	head.add_child(title)
-	var spacer := Control.new()
-	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	head.add_child(spacer)
-	head.add_child(_make_label(("COMPLETED" if done else status.capitalize()).to_upper(), 11, COLOR_SUCCESS if done else COLOR_MUTED))
-
-	var desc := str(quest.get("description", ""))
-	if desc != "":
-		var desc_label := _make_label(desc, 12, COLOR_SECONDARY_TEXT)
-		desc_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		box.add_child(desc_label)
-
-	for objective in quest.get("objectives", []):
-		var cur := int(objective.get("current", 0))
-		var req := int(max(1, int(objective.get("required", 1))))
-		var complete := cur >= req
-		var row := HBoxContainer.new()
-		row.add_theme_constant_override("separation", 8)
-		box.add_child(row)
-		var mark := "x" if complete else ">"
-		var mark_col := COLOR_SUCCESS if complete else COLOR_MUTED
-		row.add_child(_make_label(mark, 11, mark_col))
-		var text := str(objective.get("text", "Objective"))
-		var obj_label := _make_label(text, 12, COLOR_PRIMARY_TEXT if not complete else COLOR_MUTED)
-		obj_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		row.add_child(obj_label)
-		row.add_child(_make_label("%d / %d" % [cur, req], 12, COLOR_SUCCESS if complete else COLOR_SECONDARY_TEXT))
-		if not complete:
-			var bar := ProgressBar.new()
-			bar.min_value = 0
-			bar.max_value = req
-			bar.value = cur
-			bar.show_percentage = false
-			bar.custom_minimum_size = Vector2(90, 8)
-			_apply_bar_style(bar, COLOR_BODY, COLOR_BODY_DARK)
-			row.add_child(bar)
-	return card
+	_journal_panel.render(quests)
 
 
 # --- Status tab: structured sheet + realm ladder ------------------------------
 
-func _add_status_row(label: String, value: String, color: Color = COLOR_PRIMARY_TEXT) -> void:
-	_status_grid.add_child(_make_label(label, 13, COLOR_MUTED))
-	_status_grid.add_child(_make_label(value, 13, color))
-
-
-func _add_ladder_step(step_name: String, reached: bool, current: bool, note: String) -> void:
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 8)
-	_status_ladder.add_child(row)
-	var mark := "=" if reached else "-"
-	row.add_child(_make_label(mark, 13, COLOR_ANTIQUE_GOLD if reached else Color("3A3225")))
-	var name_col := COLOR_TITLE_GOLD if current else (COLOR_PRIMARY_TEXT if reached else COLOR_MUTED)
-	var label := _make_label(step_name, 13, name_col)
-	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	row.add_child(label)
-	if note != "":
-		row.add_child(_make_label(note, 11, COLOR_MUTED))
-
-
 func _render_status_summary(player: Dictionary) -> void:
-	var cultivation: Dictionary = player.get("cultivation_state", {})
-	var body: Dictionary = cultivation.get("body_transformation", {})
-	var essence: Dictionary = cultivation.get("essence_gathering", {})
-	var martial_talent: Dictionary = player.get("martial_talent", {})
-	var body_talent: Dictionary = player.get("body_talent", {})
-	var lifespan: Dictionary = player.get("lifespan", {})
-	var balance: Dictionary = cultivation.get("balance", {})
-	var safety: Dictionary = cultivation.get("breakthrough_safety", {})
-	var effective: Dictionary = player.get("effective_stats", {})
-
-	_clear_row(_status_grid)
-	_add_status_row("HP", "%s / %s" % [player.get("hp", 0), player.get("max_hp", 0)], COLOR_HP)
-	_add_status_row("Qi", "%s / %s" % [player.get("qi", 0), player.get("max_qi", 0)], COLOR_QI)
-	_add_status_row("Attack", str(player.get("attack", 0)))
-	_add_status_row("Defense", str(player.get("defense", 0)))
-	if not effective.is_empty():
-		_add_status_row("Effective ATK / DEF", "%s / %s" % [effective.get("attack", player.get("attack", 0)), effective.get("defense", player.get("defense", 0))], COLOR_ANTIQUE_GOLD)
-	_add_status_row("Comprehension", str(player.get("comprehension", 0)))
-	_add_status_row("Insight", str(player.get("insight", 0)))
-	_add_status_row("Reputation", str(player.get("reputation", 0)))
-	_add_status_row("Morality", str(player.get("morality", 0)))
-	_add_status_row("EXP", str(player.get("exp", 0)))
-	_add_status_row("Martial Talent", str(martial_talent.get("display_name", "Unknown")), COLOR_ESSENCE)
-	_add_status_row("Body Talent", str(body_talent.get("display_name", "Unknown")), COLOR_BODY)
-	_add_status_row("Lifespan", str(lifespan.get("display", "Unknown")), COLOR_TITLE_GOLD)
-	_add_status_row("Body Foundation", str(body.get("foundation", 0)), COLOR_BODY)
-	_add_status_row("Cultivation Strain", "%s / 100" % body.get("cultivation_strain", 0), COLOR_WARNING)
-	_add_status_row("Foundation Stability", "%s / 100" % body.get("foundation_stability", 100), COLOR_SUCCESS)
-	_add_status_row("Soul Strength", str(player.get("soul_strength", 0)), COLOR_ESSENCE)
-	_add_status_row("Foundation Quality", str(player.get("foundation_quality", 0)))
-	_add_status_row("Balance", str(balance.get("status", "-")))
-	_add_status_row("Breakthrough Safety", "%s (%s)" % [safety.get("level", "-"), safety.get("score", 0)])
-	_add_status_row("Location", str(player.get("current_location", "unknown")), COLOR_QI)
-	_add_status_row("Ancestral Memory", str(_last_state.get("player", {}).get("max_story_tier", "-")), COLOR_ANTIQUE_GOLD)
-
-	# The realm ladder: the lifetime spine. Body realms walked so far are lit.
-	_clear_row(_status_ladder)
-	var body_realm := str(body.get("realm_id", "mortal"))
-	var ladder := [
-		["mortal", "Mortal"], ["strength_training", "Strength Training"],
-		["body_tempering", "Body Tempering"], ["pulse_condensation", "Pulse Condensation"],
-		["marrow_cleansing", "Marrow Cleansing"],
-	]
-	var reached_current := true
-	for step in ladder:
-		var step_id := str(step[0])
-		var step_name := str(step[1])
-		var is_current := step_id == body_realm
-		if is_current:
-			reached_current = true
-		_add_ladder_step(step_name, reached_current or is_current, is_current, "you stand here" if is_current else "")
-	# Essence: one rung that is either open or locked.
-	if bool(player.get("essence_unlocked", true)):
-		_add_ladder_step("Essence: %s" % essence.get("display_name", "-"), true, false, "")
-	else:
-		var req := str(essence.get("unlock_requirement", ""))
-		_add_ladder_step("Essence: locked", false, false, req)
+	_status_panel.render(player)
 
 
 # --- Techniques tab: skill cards ------------------------------------------------
 
 func _render_techniques(player: Dictionary) -> void:
-	var skills = player.get("skills", [])
-	_clear_row(_technique_list)
-	if skills.is_empty():
-		var empty := _make_label("No techniques known yet. Seek a master or join a sect.", 14, COLOR_MUTED)
-		_technique_list.add_child(empty)
-		return
-	var groups := {"Active": [], "Stats": [], "Growth": [], "Passive": []}
-	for skill in skills:
-		if typeof(skill) == TYPE_DICTIONARY:
-			var category := str(skill.get("category", ""))
-			if category == "" or category == "unknown":
-				category = "Active" if str(skill.get("type", "")) == "active" else "Passive"
-			if not groups.has(category):
-				groups[category] = []
-			groups[category].append(skill)
-		else:
-			groups["Passive"].append(str(skill))
-	for category in ["Active", "Stats", "Growth", "Passive"]:
-		if groups[category].is_empty():
-			continue
-		_technique_list.add_child(_make_label(category.to_upper(), 12, COLOR_MUTED))
-		for skill in groups[category]:
-			if typeof(skill) == TYPE_DICTIONARY:
-				_technique_list.add_child(_make_technique_card(skill, category))
-			else:
-				var simple := _make_label(_title_from_id(str(skill)), 14, COLOR_PRIMARY_TEXT)
-				_technique_list.add_child(simple)
-
-
-func _make_technique_card(skill: Dictionary, category: String) -> PanelContainer:
-	var card := PanelContainer.new()
-	var accent := COLOR_ANTIQUE_GOLD
-	match category:
-		"Stats":
-			accent = COLOR_BODY
-		"Growth":
-			accent = COLOR_QI
-		"Passive":
-			accent = COLOR_ESSENCE
-	var card_style := _make_panel_style(COLOR_PANEL_SOFT, COLOR_BORDER, 1)
-	card_style.border_width_left = 3
-	card_style.border_color = accent
-	card.add_theme_stylebox_override("panel", card_style)
-
-	var box := VBoxContainer.new()
-	box.add_theme_constant_override("separation", 4)
-	card.add_child(box)
-
-	var head := HBoxContainer.new()
-	head.add_theme_constant_override("separation", 10)
-	box.add_child(head)
-	var name_label := _make_label(str(skill.get("name", skill.get("id", "Technique"))), 15, COLOR_PRIMARY_TEXT)
-	head.add_child(name_label)
-	var spacer := Control.new()
-	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	head.add_child(spacer)
-
-	var meta_bits: Array[String] = []
-	var recovering := false
-	if category == "Active":
-		meta_bits.append("Qi %s" % skill.get("qi_cost", 0))
-		meta_bits.append("Cooldown %s" % skill.get("cooldown", 0))
-		var cd_left := int(_cooldowns.get(str(skill.get("id", "")), 0))
-		if cd_left > 0:
-			meta_bits.append("recovering - %d turn(s)" % cd_left)
-			recovering = true
-		if int(skill.get("insight_required", 0)) > 0:
-			meta_bits.append("Insight %s" % skill.get("insight_required", 0))
-	if str(skill.get("effect_label", "")) != "":
-		meta_bits.append(str(skill.get("effect_label", "")))
-	if not meta_bits.is_empty():
-		var meta_label := _make_label("  -  ".join(meta_bits), 12, COLOR_WARNING if recovering else COLOR_MUTED)
-		head.add_child(meta_label)
-
-	var desc := str(skill.get("description", ""))
-	if desc != "":
-		var desc_label := _make_label(desc, 12, COLOR_SECONDARY_TEXT)
-		desc_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		box.add_child(desc_label)
-	return card
+	_techniques_panel.render(player, _cooldowns)
 
 
 func _rebuild_combat_actions() -> void:
@@ -2918,23 +2286,15 @@ func _set_narrative(text: String) -> void:
 
 
 func _set_rich_text(control: RichTextLabel, text: String) -> void:
-	control.clear()
-	control.append_text(text)
+	UIKit.set_rich_text(control, text)
 
 
 func _title_from_id(value: String) -> String:
-	return value.replace("_", " ").capitalize()
+	return UIKit.title_from_id(value)
 
 
 func _format_quantity(value) -> String:
-	if typeof(value) == TYPE_INT:
-		return str(value)
-	if typeof(value) == TYPE_FLOAT:
-		var number := float(value)
-		if is_equal_approx(number, round(number)):
-			return str(int(round(number)))
-		return "%.1f" % number
-	return str(value)
+	return UIKit.format_quantity(value)
 
 
 func _format_price(price) -> String:
@@ -3112,7 +2472,10 @@ func _render_event(result: Dictionary) -> void:
 			_set_situation("Item Sold", str(result.get("player_message", "You sell the item.")))
 			_append("Sold %s for %s gold" % [result.get("name", "item"), result.get("total", 0)])
 		"TALENTS":
-			_set_situation("Talents", "Your Martial and Body talents, and the paths they may yet take.")
+			# The engine answers with the live upgrade table, so the arm has to open
+			# the dialog that spends it -- a caption here made the action a dead end
+			# and orphaned _show_talents().
+			_show_talents(result)
 		"TALENT_UPGRADED":
 			_set_situation("Talent Advanced", str(result.get("player_message", "Your talent advances.")))
 			_append("Talent advanced to %s" % result.get("display_name", result.get("talent_id", "")))
@@ -3172,6 +2535,40 @@ func _render_event(result: Dictionary) -> void:
 			_open_codex_popup(result)
 		"WORLD_INFO":
 			_show_world_info(result)
+		"TECHNIQUES":
+			var taught: Array = result.get("skills", [])
+			_set_situation("Techniques", "Techniques known: %s" % str(taught.size()))
+			for taught_entry in taught:
+				if typeof(taught_entry) == TYPE_DICTIONARY:
+					_append("%s - %s" % [str(taught_entry.get("name", taught_entry.get("skill_id", "?"))), str(taught_entry.get("category", ""))])
+		"DEBATE_ROUND":
+			_show_debate(result)
+			_append(str(result.get("player_message", "The exchange turns.")))
+		"HAZARD":
+			_set_situation("Hazard", "The land answers your step: %s." % str(result.get("hazard_id", "an unseen hazard")))
+		"RETIRED":
+			_set_situation("Ascension", "%s\n\n[color=#D6A84F]Ancestral Memory +%s.[/color]" % [str(result.get("player_message", "Your run is complete.")), str(result.get("reward", 0))])
+			_append("Ascended at age %s." % str(result.get("age_years", "?")))
+		"NAME_CHANGED":
+			var renamed := str(result.get("name", ""))
+			_set_situation("Identity", prose if prose != "" else "The world will know you as %s." % renamed)
+		"RUMOR_LEARNED":
+			var heard: Dictionary = result.get("rumor", {})
+			var revealed: Dictionary = result.get("reveal", {})
+			_set_situation("Rumor Learned", str(result.get("player_message", heard.get("summary", ""))))
+			_append("[color=#C9A24D]%s (%s)[/color]" % [str(heard.get("summary", "")), str(revealed.get("name", revealed.get("id", "")))])
+		"WORLD_RUMORS":
+			var stirring: Array = result.get("rumors", [])
+			_set_situation("Rumors", "Year %s - %s rumor(s) stirring." % [str(result.get("year", 0.0)), str(stirring.size())])
+			for rumor_entry in stirring:
+				if typeof(rumor_entry) == TYPE_DICTIONARY:
+					_append("%s %s" % ["[known]" if bool(rumor_entry.get("learned", false)) else "[overheard]", str(rumor_entry.get("summary", ""))])
+		"UNLOCK_TREE":
+			var legacy_tiers: Array = result.get("tiers", [])
+			_set_situation("Legacy", "Ancestral Memory: %s\n%s tier(s) of unlocks." % [str(result.get("ancestral_memory", 0)), str(legacy_tiers.size())])
+		"UNLOCK_PURCHASED":
+			_set_situation("Legacy Unlock", str(result.get("player_message", "Unlock purchased.")))
+			_append("Ancestral Memory remaining: %s" % str(result.get("ancestral_memory", 0)))
 		_:
 			if debug_mode:
 				_append(str(result))
@@ -3404,6 +2801,14 @@ func _show_status(result: Dictionary) -> void:
 	_focus_tab(3)
 
 func _translate_reason(reason: String, result: Dictionary = {}) -> String:
+	# The engine explains every refusal it can produce (game/utils/reasons.py) and
+	# ships the sentence on the result as ``message``. Show that first: the table
+	# below only knows a third of the engine's reason codes, so preferring it is
+	# how the player ended up reading "That action cannot be completed right now."
+	# for two thirds of refusals.
+	var explained := str(result.get("message", ""))
+	if explained != "":
+		return explained
 	match reason:
 		"INSUFFICIENT_PROGRESS":
 			return "Your cultivation has not yet reached the required threshold.\n\nCurrent Progress: %s / %s\nContinue training, meditating, or seeking spiritual resources before attempting again." % [result.get("progress", 0), result.get("required_progress", 100)]
@@ -3437,6 +2842,11 @@ func _translate_reason(reason: String, result: Dictionary = {}) -> String:
 			return "The game could not write the save file."
 		"ITEM_NOT_OWNED":
 			return "You do not have that item."
+		"ITEM_NOT_USABLE":
+			# The engine already explains why in ``detail`` (a refining material is
+			# spent by the action that consumes it, not by USE_ITEM) -- surface its
+			# wording rather than falling through to the generic refusal.
+			return str(result.get("detail", "That cannot be used directly; another action spends it."))
 		"NO_SHOP_AVAILABLE":
 			return "There is no market available at your current location."
 		"SHOP_NOT_AVAILABLE":

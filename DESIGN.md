@@ -77,6 +77,15 @@ license file beside it.
 - **Bars:** HP/Qi/progress use dark tinted wells (`COLOR_*_DARK`) with a
   1px `#4b3d24` border and saturated fill; text sits to the right, never
   over the fill.
+- **Portraits:** the cultivator's chosen face sits in a `#0E0C08` well with a
+  1px `#4b3d24` frame; art is cover-cropped, never letterboxed. Painted
+  portraits ship at 512px and generated placeholders at 256px — the well is
+  76px, so both read the same, and every portrait is framed as a
+  head-and-shoulders bust (`tools/import_avatar_art.py --anchor face`) because
+  a full-length figure is a smudge at that size. Selected state (the picker grid) promotes the frame to 2px
+  `#E4C87F` on a `#2A241B` ground. When no portrait art loads, the well
+  falls back to a gold monogram of the name's first letter — the identity
+  reads with or without art.
 
 ## Layout grammar
 
@@ -105,6 +114,14 @@ license file beside it.
 - **Dialogs** (`_open_dialog`): titled, hairline rule, centered content,
   explicit close. Destructive or commit actions sit visually isolated on the
   right or below a rule.
+- **Identity (`IdentityEditor.gd`, one widget in both scenes):** the top-rail
+  portrait+name cluster and the dossier portrait are one click target each;
+  both open the same picker — name field, ALL/MALE/FEMALE filter, a
+  5-column grid of every roster portrait with the chosen one's name and
+  epithet beneath, and a gold INSCRIBE on the right. In the menu the
+  picker is a popup (before a life exists); in-game it is a dialog band.
+  The portrait is the player's, the name is the engine's: INSCRIBE renders
+  both and the client sends `RENAME`.
 - **Menu (MainMenu.tscn):** the Standing Door — one 520px framed panel,
   grain texture (`assets/ink_grain.png` at 55% alpha) over ink ground, brand
   block with sigil, origin select, chronicle ledger (numbered past lives),

@@ -195,7 +195,6 @@
     "failed_breakthrough_strain_gain": 20.0,
     "failed_breakthrough_foundation_loss": 10.0,
     "failed_breakthrough_progress_ratio": 0.85,
-    "daily_cultivation_multipliers": [1.0, 0.85, 0.7, 0.5, 0.3],
     "stabilise": {
       "strain_reduction": 18.0,
       "foundation_stability_gain": 4.0,

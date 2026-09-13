@@ -559,7 +559,12 @@ class CLIInterface:
             "IMPORT_INVALID": lambda: "That save record could not be read.",
         }
         builder = messages.get(reason)
-        return builder() if builder else f"Something went wrong ({reason})."
+        if builder:
+            return builder()
+        # The engine explains its own refusals (game/utils/reasons.py) and ships the
+        # sentence on the result; this table only overrides where the CLI can name
+        # the exact command to type. Anything it does not know is the engine's.
+        return str(result.get("message") or f"Something went wrong ({reason}).")
 
     # -- prompt / chrome --------------------------------------------------
     def _build_prompt(self) -> str:

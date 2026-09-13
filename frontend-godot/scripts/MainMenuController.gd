@@ -25,6 +25,9 @@ var _chronicle_list: VBoxContainer
 var _chronicle_count: Label
 var _retained_meta: Dictionary = {}
 var _legacy_dialog: PopupPanel
+var _identity_layer: Control
+var _menu_avatar: TextureRect
+var _menu_name_label: Label
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -150,6 +153,37 @@ func _build_ui() -> void:
 	_meta_label.add_theme_font_size_override("font_size", 15)
 	_meta_label.add_theme_color_override("font_color", COLOR_GOLD)
 	column.add_child(_meta_label)
+
+	# --- Identity ----------------------------------------------------------
+	column.add_child(_make_spacer(16))
+	column.add_child(_make_section_rule("WHO WALKS THE PATH"))
+
+	var identity_row := HBoxContainer.new()
+	identity_row.add_theme_constant_override("separation", 10)
+	column.add_child(identity_row)
+
+	_menu_avatar = TextureRect.new()
+	_menu_avatar.custom_minimum_size = Vector2(52, 52)
+	_menu_avatar.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_menu_avatar.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	_menu_avatar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	identity_row.add_child(_menu_avatar)
+
+	var identity_box := VBoxContainer.new()
+	identity_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	identity_box.add_theme_constant_override("separation", 2)
+	identity_row.add_child(identity_box)
+
+	_menu_name_label = Label.new()
+	_menu_name_label.add_theme_font_size_override("font_size", 16)
+	_menu_name_label.add_theme_color_override("font_color", COLOR_TEXT)
+	identity_box.add_child(_menu_name_label)
+
+	var identity_button := _make_button("CHANGE NAME & PORTRAIT", _open_identity)
+	identity_button.custom_minimum_size = Vector2(0, 30)
+	identity_button.add_theme_font_size_override("font_size", 12)
+	identity_box.add_child(identity_button)
+	_refresh_identity_row()
 
 	# --- Origins -----------------------------------------------------------
 	column.add_child(_make_spacer(16))
@@ -353,7 +387,83 @@ func _new_game() -> void:
 	var origin_id = null
 	if _origin_ids.size() > 0 and _origin_select.selected >= 0 and _origin_select.selected < _origin_ids.size():
 		origin_id = _origin_ids[_origin_select.selected]
-	api.new_game("Daoist", null, origin_id, true)
+	# The identity chosen on this screen is the name the engine writes into the
+	# new life's save (the portrait stays client-side).
+	api.new_game(Profile.player_name, null, origin_id, true)
+
+
+# --- Identity ---------------------------------------------------------------
+
+
+func _refresh_identity_row() -> void:
+	if _menu_avatar != null:
+		_menu_avatar.texture = Profile.current_texture()
+	if _menu_name_label != null:
+		_menu_name_label.text = Profile.player_name
+
+
+## The picker wears the same anchored dialog band the in-game dialogs use: a
+## dim layer plus a framed band, so it cannot outgrow the screen the way a
+## content-sized window can.
+func _open_identity() -> void:
+	_close_identity()
+	_identity_layer = Control.new()
+	_identity_layer.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_identity_layer.mouse_filter = Control.MOUSE_FILTER_STOP
+	add_child(_identity_layer)
+
+	var dim := ColorRect.new()
+	dim.color = Color(0, 0, 0, 0.6)
+	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
+	dim.mouse_filter = Control.MOUSE_FILTER_STOP
+	dim.gui_input.connect(func(event: InputEvent):
+		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+			_close_identity())
+	_identity_layer.add_child(dim)
+
+	var band := PanelContainer.new()
+	band.add_theme_stylebox_override("panel", _identity_panel_style())
+	band.anchor_left = 0.18
+	band.anchor_right = 0.82
+	band.anchor_top = 0.06
+	band.anchor_bottom = 0.94
+	band.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	band.grow_vertical = Control.GROW_DIRECTION_BOTH
+	_identity_layer.add_child(band)
+
+	var editor := IdentityEditor.new()
+	editor.committed.connect(_on_identity_committed)
+	editor.cancelled.connect(_close_identity)
+	band.add_child(editor)
+
+
+func _identity_panel_style() -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	style.bg_color = COLOR_PANEL
+	style.border_width_left = 2
+	style.border_width_top = 2
+	style.border_width_right = 2
+	style.border_width_bottom = 2
+	style.border_color = COLOR_GOLD
+	style.content_margin_left = 24
+	style.content_margin_top = 20
+	style.content_margin_right = 24
+	style.content_margin_bottom = 20
+	style.shadow_color = Color(0, 0, 0, 0.6)
+	style.shadow_size = 30
+	return style
+
+
+func _close_identity() -> void:
+	if _identity_layer != null and is_instance_valid(_identity_layer):
+		_identity_layer.queue_free()
+	_identity_layer = null
+
+
+func _on_identity_committed(new_name: String, _avatar_id: String) -> void:
+	_close_identity()
+	_refresh_identity_row()
+	_set_status("%s walks the path." % new_name)
 
 
 func _load_slot(slot: String) -> void:

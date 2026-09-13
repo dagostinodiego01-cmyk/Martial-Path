@@ -366,7 +366,11 @@ def test_stabilise_foundation_clamps_strain_and_foundation_stability():
     assert result["comprehension_gain"] == 1
 
 
-def test_body_training_diminishing_returns_in_same_day(monkeypatch: pytest.MonkeyPatch):
+def test_body_training_reports_no_daily_counter(monkeypatch: pytest.MonkeyPatch):
+    """TM.1: the day clock is gone, so no per-day step-down survives it.
+
+    Strain is the only thing throttling back-to-back training now.
+    """
     player = Player(name="Tester")
     system = _make_system()
     monkeypatch.setattr(system._rng, "randint", lambda _low, _high: 0)
@@ -374,11 +378,28 @@ def test_body_training_diminishing_returns_in_same_day(monkeypatch: pytest.Monke
     first = system.train_body(player)
     second = system.train_body(player)
 
-    assert first["daily_cultivation_count"] == 1
-    assert first["daily_multiplier"] == 1.0
-    assert second["daily_cultivation_count"] == 2
-    assert second["daily_multiplier"] == 0.85
-    assert second["progress_gained"] < first["progress_gained"]
+    for field in ("daily_cultivation_count", "daily_multiplier", "current_day"):
+        assert field not in first, f"{field} should not survive the day clock"
+    assert second["strain_gained"] > 0
+    assert player.cultivation_state.body.cultivation_strain > 0
+
+
+def test_breakthrough_gates_publish_what_the_referee_enforces():
+    """C.2: the numbers a UI shows are the numbers that refuse the attempt."""
+    player = Player(name="Tester")
+    system = _make_system()
+    player.cultivation_state.body.cultivation_strain = 60.0
+
+    gates = system.gate_numbers(player, system.BODY_TRACK_ID)
+    assert gates["strain"] == 60.0
+    assert gates["max_allowed_strain"] == 45.0
+    assert gates["required_foundation_stability"] == 70.0
+    assert gates["foundation_stability"] == 100.0
+
+    verdict = system.breakthrough_gates(player, system.BODY_TRACK_ID)
+    assert verdict["can_attempt"] is False
+    assert "STRAIN_TOO_HIGH" in verdict["missing_requirements"]
+    assert verdict["gates"] == gates
 
 
 def test_spiritual_root_affects_essence_gain(monkeypatch: pytest.MonkeyPatch):

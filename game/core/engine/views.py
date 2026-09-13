@@ -10,6 +10,9 @@ from game.systems.skill_system import GROWTH_PASSIVE_EFFECTS
 from game.systems.stats_system import STAT_PASSIVE_EFFECTS
 
 
+#: Longest accepted display name (the Godot name field and this guard agree).
+MAX_NAME_LENGTH = 24
+
 # Human-readable labels for each skill effect, used by the Techniques tab so the
 # frontend can render what a technique actually does without its own mapping.
 EFFECT_LABELS: Dict[str, str] = {
@@ -218,6 +221,22 @@ class ViewsMixin:
         """Set the player's display name (used by character creation in the UI)."""
         if name:
             self.player.name = name
+
+    def rename_player(self, name: str) -> Dict[str, Any]:
+        """Rename the living cultivator and report the accepted name.
+
+        A display name is cosmetic -- it appears in prose and the dossier and
+        changes no rules -- but the engine still owns it, because it is written
+        into every save. The name is whitespace-normalised and capped so a
+        frontend cannot push a paragraph through the narrative templates.
+        """
+        clean = " ".join(str(name or "").split())
+        if not clean:
+            return {"event": EventType.ERROR, "reason": "NAME_EMPTY"}
+        if len(clean) > MAX_NAME_LENGTH:
+            return {"event": EventType.ERROR, "reason": "NAME_TOO_LONG", "max_length": MAX_NAME_LENGTH}
+        self.set_player_name(clean)
+        return {"event": EventType.NAME_CHANGED, "name": clean}
 
     def get_known_skills(self) -> List[Dict[str, Any]]:
         """Return UI-safe briefs for the player's skills, incl. live combat state.

@@ -66,6 +66,8 @@ class ActionRequest(BaseModel):
     rumor_id: Optional[str] = None
     payload: Optional[str] = None
     raw: Optional[str] = None
+    # RENAME: the new display name (identity is cosmetic; the engine stores it).
+    player_name: Optional[str] = None
 
 
 class NewGameRequest(BaseModel):

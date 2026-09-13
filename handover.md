@@ -4,7 +4,7 @@ A data-driven cultivation (xianxia) RPG. The authoritative game logic is a Pytho
 engine in `game/`; several frontends render its state and send commands. **All
 gameplay rules live in the engine — never in a UI.**
 
-Last updated: 2026-09-12. Test suite: **780 passing, 3 skipped** (`pytest -q`).
+Last updated: 2026-09-13. Test suite: **840 passing, 3 skipped** (`pytest -q`).
 Data validation: clean (**0 errors**, and the new dead-content sweep reports
 nothing unreachable and no trap options).
 
@@ -20,7 +20,7 @@ Use the project virtual environment at `.venv`.
 | FastAPI backend | `& ".venv\Scripts\python.exe" -m uvicorn game.api.server:app --host 127.0.0.1 --port 8001` | Required for Godot |
 | CLI | `& ".venv\Scripts\python.exe" main.py` | Text frontend (frozen — see Conventions) |
 | PySide6 desktop GUI | `& ".venv\Scripts\python.exe" gui_main.py` | Dark-fantasy dashboard (frozen — see Conventions) |
-| Tests | `& ".venv\Scripts\python.exe" -m pytest -q` | 414 tests |
+| Tests | `& ".venv\Scripts\python.exe" -m pytest -q` | 840 tests |
 | Data validation | `& ".venv\Scripts\python.exe" -c "from game.validation import validate_all_game_data as v; print(v().is_valid)"` | Cross-reference check |
 
 ### Godot (Godot 4.7)
@@ -46,6 +46,36 @@ strip** (the dim layer blocks the top-bar tab buttons). New fonts live in
 `ui/fonts/` with `OFL.txt`; the grain texture is `assets/ink_grain.png`.
 Quick parse gate after GDScript edits:
 `Godot --headless --path frontend-godot --check-only -s res://scripts/<file>.gd`.
+(**Caveat:** `--check-only -s` compiles the script *outside* autoload context, so
+any script touching an autoload -- `Backend`, `Profile` -- reports a harmless
+`Identifier not found`. Parse-only errors are still real; verify autoload wiring
+by running a scene.)
+
+**Identity note (2026-09-13):** the player chooses a name and one of 21
+portraits. The **name is the engine's** (`RENAME`, turn-free, `NAME_CHANGED`,
+24-char cap, written into the save) and the **portrait is the client's**:
+`scripts/PlayerProfile.gd` (autoload `Profile`) owns the roster, the
+`user://profile.cfg` persistence, and the texture cache; `scripts/IdentityEditor.gd`
+is the one picker widget, hosted as a dialog band in `Main.tscn` and as a popup
+in `MainMenu.tscn`. The client loads a portrait through `ResourceLoader` when
+the editor has imported it and falls back to reading the raw PNG otherwise, so
+F5 works before you re-open the project in the editor.
+
+Portraits come in two kinds, and `assets/avatars/art_manifest.json` says which:
+**painted** (eight so far, imported from artists' files at 512px) and
+**generated placeholders** (`python tools/gen_avatar_art.py`, 256px, pure stdlib)
+for the remaining slots. Never drop a painting in by hand:
+`python tools/import_avatar_art.py <id>=<file>[:zoom[:top]]` converts and crops it
+through Godot's own codecs, writes the `.import` sidecar, and records source and
+shipped hashes plus both halves of the crop (`spec` = what was asked, `crop` =
+what shipped) in the manifest. The default `--anchor face` frames a
+head-and-shoulders bust by measuring the subject — necessary because the picker's
+cells are 76px, and painted backgrounds sometimes read as skin, so check the
+result and re-run with explicit `zoom`/`top` when it misframes. The generator
+never overwrites painted slots; `--brief` rewrites `game/docs/AVATAR_BRIEF.md`
+with the live painted/placeholder split. `tests/test_player_identity.py` pins the
+roster/recipe/GDScript parity, placeholders pixel-for-pixel, and painted art by
+provenance (size, hashes, and a crop that is a bust rather than a full torso).
 
 ---
 
@@ -436,7 +466,7 @@ This session executed the full **17-priority roadmap** derived from a code revie
 ### Frontend (Godot only)
 - Full GUI restructure per `Martial_Path_GUI_Master_Prompt_Final.md`: top bar
   (Year + tabs), 3-column body, floating tab overlays, monogram portrait,
-  location chips + clickable exits, grouped actions, paper-doll equipment slot
+  location chips, grouped actions, paper-doll equipment slot
   grid.
 - The **event log was removed**; the right column is now a single **Narrative**
   panel (prose only). `_append` is a no-op kept for its call sites, and

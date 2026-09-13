@@ -106,6 +106,7 @@ EVENT_VERB: Dict[str, str] = {
     "CODEX": "status",
     "WORLD_RUMORS": "special",
     "RUMOR_LEARNED": "boon",
+    "NAME_CHANGED": "name_changed",
     "SAVE_EXPORTED": "save_exported",
     "SAVE_IMPORTED": "save_imported",
     "HELP": "help",
