@@ -2780,6 +2780,12 @@
         "price": {
           "spirit_stone": 51
         }
+      },
+      {
+        "item_id": "nine_nether_boots",
+        "price": {
+          "spirit_stone": 135
+        }
       }
     ]
   },
@@ -2919,12 +2925,6 @@
         "item_id": "jade_serpent_charm",
         "price": {
           "spirit_stone": 164
-        }
-      },
-      {
-        "item_id": "nine_nether_boots",
-        "price": {
-          "spirit_stone": 135
         }
       },
       {

@@ -22,8 +22,9 @@ breakthrough") and, where they do not, from the magnitude bands of its effect.
 Placement is deterministic, item-by-item, and spread by load (the least-stocked
 candidate market wins), so a re-run after new content lands is additive and the
 result never depends on dictionary ordering. An equipment piece is never placed
-where the rack already offers a no-more-expensive item that strictly dominates
-it -- that would create the very trap option the sweep fails on.
+where it and any offer already on that rack would dominate each other in either
+direction -- the candidate being beaten by existing stock, or the candidate
+beating it -- because both leave the shopper a trap option the sweep fails on.
 
 Run from the repo root (idempotent -- already-placed entries are skipped)::
 
@@ -40,7 +41,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from game.models.item import Item
 from game.systems.sell_system import SellSystem
-from game.validation.dead_content import build_report
+from game.validation.dead_content import build_report, domination_reason
 
 DATA = Path("game/data")
 
@@ -102,11 +103,6 @@ MATERIAL_DROP_CHANCE = 0.12
 
 #: Highest shop rank (story tier 6 markets); content ranks cap out here.
 MAX_SHOP_RANK = 5
-
-_MODIFIER_GROUPS = ("stat_modifiers", "cultivation_modifiers", "utility_modifiers")
-_STAT_KEYS = frozenset(
-    {"strength", "body_strength", "attack", "defense", "max_hp", "max_qi", "speed", "evasion", "comprehension"}
-)
 
 
 def load(name: str):
@@ -201,55 +197,32 @@ def _stock_item_ids(shop: Dict[str, Any]) -> set:
     return {entry.get("item_id") for entry in shop.get("stock", [])}
 
 
-def _price_in_gold(price: Dict[str, int]) -> int:
-    gold = int(price.get("gold", 0) or 0)
-    if gold:
-        return gold
-    return int(price.get("spirit_stone", 0) or 0) * GOLD_PER_SPIRIT_STONE
+def _would_create_trap(
+    candidate: Dict[str, Any],
+    candidate_price: Dict[str, int],
+    shop: Dict[str, Any],
+    equipment: Dict[str, Any],
+) -> bool:
+    """Would stocking ``candidate`` here leave a trap option, either way round?
 
-
-def _modifier_value(entry: Dict[str, Any], key: str) -> float:
-    for group in _MODIFIER_GROUPS:
-        group_data = entry.get(group) or {}
-        if key in group_data:
-            try:
-                return float(group_data[key])
-            except (TypeError, ValueError):
-                return 0.0
-    return 0.0
-
-
-def _higher_is_better(key: str) -> bool:
-    return key in _STAT_KEYS or key.endswith("_bonus")
-
-
-def _would_be_dominated(candidate: Dict[str, Any], candidate_price: int, shop: Dict[str, Any], equipment: Dict[str, Any]) -> bool:
-    """Would stocking ``candidate`` here offer the player a trap option?
-
-    Mirrors the sweep's domination rule: same category, a shared equip slot,
-    every comparable stat no better than an existing offer that costs no more,
-    and at least one strictly worse. Such a placement is skipped so the sweep
-    stays clean.
+    Asks the sweep's own rule (``domination_reason``) -- never a copy of it -- so
+    the tool cannot drift from what ``validate_all_game_data`` enforces. A rack
+    is refused when an existing offer already beats the candidate, and equally
+    when the candidate would beat an existing offer that stays on the rack.
     """
+    candidate_offer = {
+        "item": candidate,
+        "price": {str(currency): int(amount) for currency, amount in candidate_price.items()},
+    }
     for entry in shop.get("stock", []):
         other = equipment.get(entry.get("item_id"))
-        if other is None or str(other.get("category")) != str(candidate.get("category")):
+        if other is None:
             continue
-        if not set(other.get("valid_slots", []) or []) & set(candidate.get("valid_slots", []) or []):
-            continue
-        if _price_in_gold(entry.get("price") or {}) > candidate_price:
-            continue
-        keys = {
-            key
-            for group in _MODIFIER_GROUPS
-            for item in (other, candidate)
-            for key in (item.get(group) or {})
+        existing_offer = {
+            "item": other,
+            "price": {str(currency): int(amount) for currency, amount in (entry.get("price") or {}).items()},
         }
-        if any(not _higher_is_better(key) for key in keys):
-            return False  # ambiguous direction: not a domination we can defend
-        worse_somewhere = any(_modifier_value(other, key) < _modifier_value(candidate, key) for key in keys)
-        better_somewhere = any(_modifier_value(other, key) > _modifier_value(candidate, key) for key in keys)
-        if better_somewhere and not worse_somewhere:
+        if domination_reason(existing_offer, candidate_offer) or domination_reason(candidate_offer, existing_offer):
             return True
     return False
 
@@ -306,8 +279,8 @@ def main() -> None:
                 already_stocked = True
                 break
             price = _price(entry, shop)
-            if content_id in equipment and _would_be_dominated(entry, _price_in_gold(price), shop, equipment):
-                continue  # never stock a rack with a trap option
+            if content_id in equipment and _would_create_trap(entry, price, shop, equipment):
+                continue  # never stock a rack with a trap option, either way round
             chosen = shop
             break
         if already_stocked:

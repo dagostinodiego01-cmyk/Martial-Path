@@ -643,7 +643,7 @@ def _dominated_shop_equipment(registry: GameDataRegistry) -> List[Dict[str, str]
             for dominator in stock:
                 if dominated is dominator:
                     continue
-                reason = _domination_reason(dominator, dominated)
+                reason = domination_reason(dominator, dominated)
                 if reason is None:
                     continue
                 key = str(dominated["item"].get("id"))
@@ -663,12 +663,16 @@ def _dominated_shop_equipment(registry: GameDataRegistry) -> List[Dict[str, str]
     return flagged
 
 
-def _domination_reason(dominator: Dict[str, Any], dominated: Dict[str, Any]) -> Optional[str]:
+def domination_reason(dominator: Dict[str, Any], dominated: Dict[str, Any]) -> Optional[str]:
     """Describe how ``dominator`` strictly beats ``dominated``, or ``None``.
 
     Only equipment sharing a slot and category is compared, and only when the
     dominator is no more expensive (in gold) -- the case where a shopper has no
     reason to ever pick the other item.
+
+    Public because it is the one definition of "trap option": the content seed
+    tool asks this question both ways when it stocks a rack, so a placement can
+    never create a trap the sweep would fail on later.
     """
     a_item, b_item = dominator["item"], dominated["item"]
     a_price, b_price = dominator["price"], dominated["price"]

@@ -54,6 +54,34 @@ def test_no_trap_options():
     assert not traps, f"reachable but meaningless content: {traps}"
 
 
+def test_seed_tool_refuses_a_rack_both_ways_round():
+    """Stocking a rack must not leave a trap option in either direction.
+
+    Regression: the seeding tool only asked "is the candidate beaten by what is
+    already stocked?", so a later placement could turn an earlier one into the
+    trap (cheaper nine_nether_boots beat coiling_dragon_striders) and the sweep
+    went red on a rack its own guard had passed.
+    """
+    from tools.seed_world_content import _would_create_trap
+
+    def boots(speed: int) -> dict:
+        return {
+            "category": "boots",
+            "valid_slots": ["feet"],
+            "stat_modifiers": {"speed": speed},
+        }
+
+    rack = {"stock": [{"item_id": "stocked", "price": {"gold": 100}}]}
+    equipment = {"stocked": boots(5), "candidate": boots(5)}
+
+    # Pricier and strictly worse: a purchase no shopper should ever make.
+    assert _would_create_trap(boots(3), {"gold": 200}, rack, equipment)
+    # Cheaper and strictly better: it would make the stocked offer the trap.
+    assert _would_create_trap(boots(8), {"gold": 50}, rack, equipment)
+    # A pricier upgrade is a ladder, not a trap, so both offers stay meaningful.
+    assert not _would_create_trap(boots(8), {"gold": 200}, rack, equipment)
+
+
 def test_validator_reports_the_same_verdict():
     # The sweep is wired into the central gate, so a data wave cannot add dead
     # content without validate_all_game_data() noticing.
