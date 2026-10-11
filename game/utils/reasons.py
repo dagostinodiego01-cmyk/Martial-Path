@@ -171,6 +171,7 @@ REASONS: Dict[str, str] = {
     "SAVE_CORRUPT": "That save could not be read -- it may be damaged.",
     "SAVE_VERSION_MISMATCH": "That save was made by a different version of the game.",
     "WRITE_FAILED": "The game could not write that save.",
+    "UNSAFE_SAVE_POINT": "Not while a fight, encounter, or debate is unresolved -- finish or leave the scene first.",
     "IMPORT_EMPTY": "There is no save record to import.",
     "IMPORT_INVALID": "That save record could not be read.",
 }

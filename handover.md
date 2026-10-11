@@ -12,7 +12,7 @@ Last reviewed: 2026-09-25. The counts below are generated from the repository by
 
 | Live count | Value |
 |---|---|
-| Tests collected (`pytest --collect-only -q`) | 974 |
+| Tests collected (`pytest --collect-only -q`) | 1007 |
 | Validator errors (`validate_all_game_data`) | 0 |
 | Dead-content sweep | 0 unreachable, 0 trap options |
 | Locations | 45 (45 with artwork) |

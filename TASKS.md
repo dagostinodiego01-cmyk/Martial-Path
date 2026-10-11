@@ -5,7 +5,7 @@ systems, 5 services, 13 engine mixins and 785 tests, and (b) a play-verified
 audit — three engine runs driven through the HTTP API and the Godot client driven
 live through the godot-ai MCP bridge.
 
-**Last reviewed:** 2026-09-25.
+**Last reviewed:** 2026-10-11.
 
 **Purpose:** raise every feature from its measured score to 10/10. Each
 programme below states where it is, why it is not a 10, the rework tasks, and
@@ -22,16 +22,16 @@ this section or section 8.
 > handoff record using the template in section 9. Never reset, stage, or
 > overwrite work belonging to another chat.
 
-### Current execution baseline (2026-09-25)
+### Current execution baseline (2026-10-11)
 
 | Signal | Current review state |
 |---|---|
-| Branch / tree | `main`; 61 changed paths are currently uncommitted, including regenerated replay fixtures. Preserve all existing work; do not use broad staging or destructive Git commands. |
-| Python gate | Latest full run: 970 passed, 4 skipped, 1 strict xfail, 0 failures. |
+| Branch / tree | `main`, clean and pushed; the L1-L4 implementation wave landed as `868d6e7`. No uncommitted work is expected; inspect `git status` before any edit. |
+| Python gate | Latest full run: 1003 passed, 4 skipped, 1 strict xfail, 0 failures (33 new tests landed with M1). |
 | Data gate | Validator: 0 errors. Dead-content sweep: 0 unreachable, 0 trap options. Economy report passes. |
-| Determinism gate | 20 recorded replay logs pass, but a fresh-engine save/load continuation currently diverges because RNG state and the run seed are not persisted. |
+| Determinism gate | 20 recorded replay logs pass, and fresh-process save continuation is now identical: `tests/test_save_continuation.py` loads a v3 save in a separate process built from an unrelated seed and matches the original event sequence and state digest (two seeds, plus a negative control). |
 | Godot gate | Headless Godot 4.7 checks pass, including the 8/8 L1 render check. Display-only/manual verification is still pending. |
-| Known release debt | Counter-graph strict xfail, High/Deadly tier cliff, crash-safe persistence, API session ownership, UI refresh budget, and packaging are not release-complete. |
+| Known release debt | Counter-graph strict xfail, High/Deadly tier cliff, UI refresh budget, packaging, and fresh-machine verification are not release-complete. Crash-safe persistence, migration, and API session ownership closed with M1; the Godot side of the action contract (API.1) is an M3 item. |
 
 ### Live execution plan (active)
 
@@ -42,9 +42,9 @@ Godot panels as payloads become stable, and keeps balance serial.
 | ID | Milestone | Status | Primary owner | Exit condition |
 |---|---|---|---|---|
 | **M0** | Integrate and re-baseline | **COMPLETE (2026-09-25)** | Integrator / documentation chat | Current tree reviewed, active docs reconciled, gates recorded, no stale execution instructions |
-| **M1** | Save continuity and transport safety | **NEXT — BLOCKING** | Persistence/API chat | Fresh-process save continuation is identical; migrations, atomic writes, recovery, and session ownership are tested |
-| **M2a** | L5 narrative and prose | PENDING after M1 contract freeze | Narrative/data chat | Every render path has prose; voice/repetition/context checks pass |
-| **M2b** | L7 world, social, factions | PENDING after M1 contract freeze | World/social chat | World changes, NPC actions, sect standing, debates, and factions are surfaced and playable |
+| **M1** | Save continuity and transport safety | **COMPLETE (2026-10-11)** | Persistence/API chat | Fresh-process save continuation is identical; migrations, atomic writes, recovery, and session ownership are tested |
+| **M2a** | L5 narrative and prose | **NEXT — after M1, contract checkpoint passed** | Narrative/data chat | Every render path has prose; voice/repetition/context checks pass |
+| **M2b** | L7 world, social, factions | **NEXT — parallel to M2a only in a separate worktree** | World/social chat | World changes, NPC actions, sect standing, debates, and factions are surfaced and playable |
 | **M2c** | L9 campaign and realms | PENDING after L7 contract checkpoint | Campaign/realms chat | Campaign, three endings, secret realms, and endless transition pass end-to-end |
 | **M2d** | L10 residual meta work | PENDING after M1 | Meta/content chat | Legacy/origin/chronicle work is complete without reopening persistence ownership |
 | **M3** | L8 rolling Godot parity | **ROLLING** | One panel per Godot chat | Stable payloads are reachable, rendered, live-HTTP tested, and refresh performance is measured |
@@ -110,6 +110,39 @@ Write set: persistence, API, focused tests, and save/architecture docs only.
 Stop when: fresh-process continuation and transport safety are proven.
 Next chat: M2a/M2b contract checkpoint, then rolling L8 panels.
 -->
+
+**M1 completion record (2026-10-11):** all seven M1 tasks are closed.
+**SV.5** — the snapshot now carries the run seed, all five RNG streams' full
+internal state (new `RNG.get_state`/`set_state`), the seed-derived world
+variation, the narrative stable-prose key, cooldowns, fate, active realm, oath
+stakes and the `running` flag; `tests/test_save_continuation.py` proves a save
+loaded **in a separate Python process built from an unrelated seed** replays
+the original run's remaining ~170 actions event-for-event and lands on the
+same state digest (2 seeds + in-process variant + negative control). The one
+real gap it exposed — `render_stable` prose keyed by the narrative system's
+stored seed — is fixed and pinned. **SV.1** — `SAVE_VERSION` is 3 with a
+tested v1→v2 (talent-field rename) and v2→v3 (documented defaults) chain;
+imported old payloads are migrated on write; missing/absent/future versions
+still fail `SAVE_VERSION_MISMATCH`. **SV.6** — atomic writes (serialise →
+fsynced tmp → move-aside `.bak` → promote) with backup recovery on read;
+serialisation-failure, simulated-crash and corrupt-primary tests pass. **SV.2**
+— `at_safe_point()` + `autosave()` with one policy; explicit saves outside a
+safe point refuse with `UNSAFE_SAVE_POINT`; the API autosaves only after
+successful, non-refused turns. **API.1** — `game/api/action_contract.json`
+pins the `/action` contract, unknown fields are 422 (`extra="forbid"`).
+**API.2** — a single session lock serialises every engine-touching endpoint.
+**API.3** — `tests/test_api_live_http.py` drives a real `uvicorn` subprocess
+through state/action/save/load, 422s and concurrent mutations. Also: saves
+honour `MARTIAL_PATH_SAVE_DIR`, so the suite no longer writes into the real
+save directory. **Gate evidence:** `pytest -q` → 1003 passed, 4 skipped, 1
+strict xfail, 0 failures; validator 0 errors; dead-content clean; economy
+report OK; 20 replay logs reproduce; `refresh_docs.py --check` fresh;
+playthrough report 19/20 alive, 20/20 reach story tier 2, 0 dead actions of
+3950; `git diff --check` clean. Save/architecture docs updated
+(`SAVE_SYSTEM.md`, CHANGELOG). **Not in M1:** save/load UI (SV.3/SV.4 → M2d),
+Godot-side contract check (API.1 render half → M3), balance (M4).
+**Next chat: M2a (L5 narrative) or M2b (L7 world/social)** — separate
+worktrees if parallel; the M1 contract is frozen.
 
 #### M2a–M2d — Engine breadth after the persistence checkpoint
 
@@ -900,7 +933,7 @@ branches/worktrees with disjoint write sets; a shared checkout is single-writer.
 | Milestone | Status | Tasks | Owns (write set) | Depends on | Exit |
 |---|---|---|---|---|---|
 | **M0 Integrate/rebaseline** | COMPLETE (2026-09-25) | T.7, DOC.5 | Status/docs only; preserve the current diff | Current tree | Gate evidence and canonical tracker are current |
-| **M1 Save/transport** | NEXT | SV.1, SV.2, SV.5, SV.6, API.1-API.3 | RNG, save/meta repository, lifecycle, API, focused tests, save/architecture docs | M0 | Fresh-process continuation, migration, recovery, and session tests pass |
+| **M1 Save/transport** | COMPLETE (2026-10-11) | SV.1, SV.2, SV.5, SV.6, API.1-API.3 | RNG, save/meta repository, lifecycle, API, focused tests, save/architecture docs | M0 | Fresh-process continuation, migration, recovery, and session tests pass |
 | **M2a L5 Narrative** | PENDING | N.1, N.3, N.5, E.3 | Narrative templates/glossary/system, encounter prose, narrative tests | M1 contract freeze | Every render path is narrated and voice checks pass |
 | **M2b L7 World/social** | PENDING | W.1-W.7, SO.1-SO.4, DB.1-DB.5, SE.1-SE.4 | World/social/sect/debate systems, character/sect data, focused tests | M1 contract freeze | World, NPC, sect, and debate loops are surfaced and playable |
 | **M2c L9 Campaign/realms** | PENDING | Q.1-Q.5, R.1-R.4 | Quest/campaign/realm data and systems, focused tests | M2b contract checkpoint | Campaign, endings, realms, and endless pass end-to-end |
@@ -1042,17 +1075,20 @@ Next chat should start at:
 
 ### Current next chat
 
-- **Milestone:** M1 — save continuity and transport safety.
-- **Role:** persistence/API owner.
-- **Start condition:** read the M0 completion record above and inspect the
-  current save snapshot, RNG owners, API session lifecycle, and existing focused
-  tests before editing.
-- **Write set:** `game/utils/rng.py`, save/meta persistence and lifecycle,
-  `game/api/server.py`, focused persistence/API tests, and save/architecture
-  documentation. Do not reopen UI, balance, or content lanes.
-- **Stop condition:** fresh-process save continuation, migration, corruption
-  recovery, atomic writes, API session serialization, and live HTTP checks pass;
-  paste the M1 handoff block here.
+- **Milestone:** M2a — L5 narrative and prose (or M2b — L7 world/social, in a
+  separate worktree; the shared checkout stays single-writer).
+- **Role:** narrative/data owner (or world/social owner).
+- **Start condition:** M1 is integrated and its contract is frozen — do not
+  reopen save/API files (`game/utils/rng.py`, `save_service.py`,
+  `save_repository.py`, `lifecycle.py`, `api/server.py`) without a handoff.
+  Read the M1 completion record above and the live gate table.
+- **Write set (M2a):** `game/data/narrative_templates.json`,
+  `game/data/lore_glossary.json`, `game/systems/narrative_system.py`,
+  `game/core/engine/encounters.py` (prose only),
+  `game/validation/narrative_lint.py`, focused narrative tests.
+- **Stop condition:** every render path carries prose (N.1, N.3, N.5, E.3),
+  voice/repetition/context checks pass, the full gate stays green, and the M2a
+  handoff block is pasted here.
 
 ### M0 completed handoff (2026-09-25)
 

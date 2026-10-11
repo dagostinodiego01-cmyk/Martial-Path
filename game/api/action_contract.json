@@ -1,0 +1,108 @@
+{
+  "contract_version": 1,
+  "endpoint": "POST /action",
+  "description": "The action/state contract the engine dispatch reads (API.1). Python pins ActionRequest against this file; the Godot client must send exactly these keys. Unknown fields are rejected with 422 (extra=forbid); a missing 'action' is 422; omitted optionals must not be sent at all (the server drops nulls before dispatch).",
+  "errors": {
+    "missing_action": 422,
+    "unknown_field": 422,
+    "wrong_type": 422
+  },
+  "fields": {
+    "action": {
+      "type": "str",
+      "required": true
+    },
+    "item_id": {
+      "type": "str|null",
+      "required": false
+    },
+    "shop_id": {
+      "type": "str|null",
+      "required": false
+    },
+    "quantity": {
+      "type": "int|null",
+      "required": false
+    },
+    "skill_id": {
+      "type": "str|null",
+      "required": false
+    },
+    "method_id": {
+      "type": "str|null",
+      "required": false
+    },
+    "location_id": {
+      "type": "str|null",
+      "required": false
+    },
+    "slot": {
+      "type": "str|null",
+      "required": false
+    },
+    "character_id": {
+      "type": "str|null",
+      "required": false
+    },
+    "dialogue_choice": {
+      "type": "str|null",
+      "required": false
+    },
+    "choice_id": {
+      "type": "str|null",
+      "required": false
+    },
+    "foe_id": {
+      "type": "str|null",
+      "required": false
+    },
+    "track": {
+      "type": "str|null",
+      "required": false
+    },
+    "target_id": {
+      "type": "str|null",
+      "required": false
+    },
+    "sect_id": {
+      "type": "str|null",
+      "required": false
+    },
+    "trainer_id": {
+      "type": "str|null",
+      "required": false
+    },
+    "years": {
+      "type": "int|null",
+      "required": false
+    },
+    "recipe_id": {
+      "type": "str|null",
+      "required": false
+    },
+    "dao_id": {
+      "type": "str|null",
+      "required": false
+    },
+    "unlock_id": {
+      "type": "str|null",
+      "required": false
+    },
+    "rumor_id": {
+      "type": "str|null",
+      "required": false
+    },
+    "payload": {
+      "type": "str|null",
+      "required": false
+    },
+    "raw": {
+      "type": "str|null",
+      "required": false
+    },
+    "player_name": {
+      "type": "str|null",
+      "required": false
+    }
+  }
+}

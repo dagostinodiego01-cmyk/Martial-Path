@@ -1,12 +1,26 @@
 """Smoke tests for the HTTP API layer.
 
 These call the route functions directly (the engine returns plain dicts), so no
-running server or extra HTTP client dependency is required.
+running server or extra HTTP client dependency is required. The *live* HTTP
+path (API.3) is covered separately by ``tests/test_api_live_http.py``.
+
+Covers the M1 transport gates: the versioned action contract (API.1) and
+single-session ownership (API.2), plus the SV.2 autosave wiring.
 """
+import json
+import threading
+import time
+from pathlib import Path
+
+import pytest
+from pydantic import ValidationError
+
 from game.api import server
 from game.api.server import ActionRequest, NewGameRequest, SaveRequest
 from game.core.constants import EventType
-from game.services.save_service import SaveService
+from game.services.save_service import SAVE_VERSION, SaveService
+
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_health_ok():
@@ -170,3 +184,150 @@ def test_save_and_load_endpoints(tmp_path):
 
     listing = server.list_saves()
     assert any(s["slot"] == "apitest" for s in listing["saves"])
+
+
+# -- API.1: the versioned action contract --------------------------------
+
+
+def _type_name(annotation) -> str:
+    """Mirror of the fixture generator's type naming, kept next to the check."""
+    import typing
+
+    origin = typing.get_origin(annotation)
+    if origin is typing.Union:
+        args = [a for a in typing.get_args(annotation) if a is not type(None)]
+        return f"{_type_name(args[0]) if args else 'any'}|null"
+    return {str: "str", int: "int", float: "float", bool: "bool"}.get(annotation, "any")
+
+
+def test_action_contract_matches_the_shared_fixture():
+    """ActionRequest and game/api/action_contract.json must agree exactly.
+
+    The fixture is the contract the Godot client is checked against too: a
+    field added to the model without regenerating it (or vice versa) fails
+    here rather than silently dropping a command in transit.
+    """
+    fixture = json.loads((ROOT / "game" / "api" / "action_contract.json").read_text(encoding="utf-8"))
+    model = ActionRequest.model_fields
+
+    assert set(fixture["fields"]) == set(model)
+    for name, spec in fixture["fields"].items():
+        field = model[name]
+        assert spec["required"] == field.is_required(), name
+        assert spec["type"] == _type_name(field.annotation), name
+    assert fixture["errors"] == {"missing_action": 422, "unknown_field": 422, "wrong_type": 422}
+
+
+def test_unknown_action_field_is_rejected_not_dropped():
+    """A typo'd key (itemId vs item_id) must not silently no-op."""
+    with pytest.raises(ValidationError):
+        ActionRequest(action="STATUS", itemId="qi_pill")
+
+
+def test_missing_action_is_rejected():
+    with pytest.raises(ValidationError):
+        ActionRequest()
+
+
+# -- API.2: single-session ownership -------------------------------------
+
+
+def test_mutating_endpoint_blocks_while_the_session_lock_is_held():
+    """A second mutation cannot interleave while one is in flight."""
+    server.new_game(NewGameRequest(seed=1))
+    finished = threading.Event()
+
+    def mutate():
+        server.process_action(ActionRequest(action="TRAIN"))
+        finished.set()
+
+    with server._session_lock:
+        worker = threading.Thread(target=mutate)
+        worker.start()
+        # The worker must be parked on the lock, not racing the mutation.
+        assert not finished.wait(timeout=0.3), "the lock did not serialise a concurrent mutation"
+
+    worker.join(timeout=10)
+    assert finished.is_set(), "the queued mutation never completed after the lock was released"
+
+
+def test_concurrent_mutations_all_complete_without_interleaving_errors(tmp_path):
+    """A burst of mixed actions/saves/loads must all succeed under the lock."""
+    server.new_game(NewGameRequest(seed=1))
+    server.engine.saves = SaveService(tmp_path)
+    assert server.save_game(SaveRequest(slot="race"))["success"] is True
+
+    errors = []
+
+    def hammer(action):
+        try:
+            for _ in range(5):
+                if action == "TRAIN":
+                    result = server.process_action(ActionRequest(action="TRAIN"))
+                    if result.get("event") not in (EventType.TRAIN_RESULT, EventType.ERROR):
+                        errors.append(result)
+                elif action == "SAVE":
+                    if not server.save_game(SaveRequest(slot="race"))["success"]:
+                        errors.append("save failed")
+                else:
+                    if not server.load_game(SaveRequest(slot="race"))["success"]:
+                        errors.append("load failed")
+        except Exception as exc:  # noqa: BLE001 - the test's job is to catch races
+            errors.append(repr(exc))
+
+    threads = [
+        threading.Thread(target=hammer, args=(action,))
+        for action in ("TRAIN", "TRAIN", "SAVE", "LOAD")
+    ]
+    for thread in threads:
+        thread.start()
+    for thread in threads:
+        thread.join(timeout=30)
+
+    assert errors == []
+    assert server.get_state()["player"]["name"]
+
+
+# -- SV.2: the API's autosave wiring -------------------------------------
+
+
+def test_successful_turn_autosaves_at_the_safe_point(tmp_path):
+    server.new_game(NewGameRequest(seed=1))
+    server.engine.saves = SaveService(tmp_path)
+
+    result = server.process_action(ActionRequest(action="TRAIN"))
+
+    assert result["event"] == EventType.TRAIN_RESULT
+    autosave = tmp_path / "autosave.json"
+    assert autosave.exists(), "a successful turn at a safe point must autosave"
+    assert json.loads(autosave.read_text(encoding="utf-8"))["version"] == SAVE_VERSION
+
+
+def test_autosave_is_skipped_while_an_encounter_is_pending(tmp_path):
+    server.new_game(NewGameRequest(seed=5, hardcore=False))
+    server.engine.saves = SaveService(tmp_path)
+    autosave = tmp_path / "autosave.json"
+
+    for _ in range(60):
+        autosave.unlink(missing_ok=True)
+        result = server.process_action(ActionRequest(action="EXPLORE"))
+        if result.get("event") == EventType.ENCOUNTER:
+            # The turn that opened the scene was a successful action, but the
+            # scene makes it unsafe: no autosave may fire.
+            assert not autosave.exists(), "autosave fired mid-encounter"
+            return
+        if server.engine.at_safe_point():
+            assert autosave.exists(), "a resolved turn at a safe point must autosave"
+        else:
+            assert not autosave.exists(), "autosave fired outside a safe point"
+    raise AssertionError("no encounter rolled in 60 explores")
+
+
+def test_refused_action_does_not_autosave(tmp_path):
+    server.new_game(NewGameRequest(seed=1))
+    server.engine.saves = SaveService(tmp_path)
+
+    result = server.process_action(ActionRequest(action="BUY_ITEM"))  # refused: no shop here
+
+    assert result["event"] == EventType.ERROR
+    assert not (tmp_path / "autosave.json").exists(), "a refusal did not advance the turn"

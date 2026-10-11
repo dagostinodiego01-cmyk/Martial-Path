@@ -16,17 +16,27 @@ Starlette's ``CORSMiddleware``.
 """
 from __future__ import annotations
 
+import threading
 from typing import Any, Dict, Optional
 
 from fastapi import FastAPI
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
+from game.core.constants import EventType
 from game.core.game_engine import GameEngine
 
 app = FastAPI(title="Martial Path API")
 
 # Single in-process game session (local, single-player).
 engine = GameEngine.new_game()
+
+# API.2 -- session ownership. The engine mutates itself in place, and FastAPI
+# runs these synchronous handlers in a worker threadpool, so every endpoint
+# that touches the session holds this lock. Concurrent /action, /save, /load
+# and /new-game calls are serialised rather than interleaved; reads lock too so
+# a state snapshot can never be observed mid-mutation. This is single-session
+# ownership for a local game, not network/multiplayer safety.
+_session_lock = threading.Lock()
 
 
 class ActionRequest(BaseModel):
@@ -39,7 +49,14 @@ class ActionRequest(BaseModel):
     and its mixins) — a missing field here is silently dropped by pydantic and the
     engine then sees an empty argument (the "talent elixir won't use" bug).
     ``character_id`` / ``dialogue_choice`` are reserved for future systems.
+
+    ``extra="forbid"`` (API.1): an unknown field is a client contract bug (the
+    ``itemId``-instead-of-``item_id`` typo that silently no-ops), so it is
+    rejected with a 422 instead of being dropped on the floor. The field list
+    is pinned against ``game/api/action_contract.json`` by the contract test.
     """
+
+    model_config = ConfigDict(extra="forbid")
 
     action: str
     item_id: Optional[str] = None
@@ -96,67 +113,82 @@ def health() -> Dict[str, str]:
 @app.get("/state")
 def get_state() -> Dict[str, Any]:
     """Return the full, UI-agnostic game-state snapshot."""
-    return engine.get_game_state()
+    with _session_lock:
+        return engine.get_game_state()
 
 
 @app.get("/meta")
 def get_meta() -> Dict[str, Any]:
     """Return the cross-run meta view (memory, chronicle, origins, unlock tree)."""
-    return engine.get_meta_state()
+    with _session_lock:
+        return engine.get_meta_state()
 
 
 @app.post("/unlock")
 def purchase_unlock(request: ActionRequest) -> Dict[str, Any]:
     """Buy a legacy-tree unlock with Ancestral Memory (C.5)."""
-    return engine.process_action({"action": "UNLOCK", "unlock_id": request.item_id or request.raw or ""})
+    with _session_lock:
+        return engine.process_action({"action": "UNLOCK", "unlock_id": request.item_id or request.raw or ""})
 
 
 @app.post("/action")
 def process_action(request: ActionRequest) -> Dict[str, Any]:
     """Forward a structured command to the engine and return its result dict."""
     command = request.model_dump(exclude_none=True)
-    return engine.process_action(command)
+    with _session_lock:
+        result = engine.process_action(command)
+        # SV.2: autosave after a successful turn, at a safe point only. A
+        # refusal (ERROR) did not advance the turn, and engine.autosave()
+        # itself refuses mid-scene -- this is the single autosave policy.
+        if result.get("event") != EventType.ERROR:
+            engine.autosave()
+    return result
 
 
 @app.post("/new-game")
 def new_game(request: NewGameRequest) -> Dict[str, Any]:
     """Reset the in-process engine and return the initial state."""
     global engine
-    engine = GameEngine.new_game(
-        player_name=request.player_name,
-        seed=request.seed,
-        origin_id=request.origin_id,
-        hardcore=request.hardcore,
-        ng_plus=request.ng_plus,
-    )
-    # D.5: an endless run resumes the post-game without a fresh campaign.
-    if request.endless:
-        engine._endless = True
-    return engine.get_game_state()
+    with _session_lock:
+        engine = GameEngine.new_game(
+            player_name=request.player_name,
+            seed=request.seed,
+            origin_id=request.origin_id,
+            hardcore=request.hardcore,
+            ng_plus=request.ng_plus,
+        )
+        # D.5: an endless run resumes the post-game without a fresh campaign.
+        if request.endless:
+            engine._endless = True
+        return engine.get_game_state()
 
 
 @app.post("/retire")
 def retire() -> Dict[str, Any]:
     """Retire an ascension-threshold run and bank the legacy reward (C.7)."""
-    return engine.process_action({"action": "RETIRE_ASSENT"})
+    with _session_lock:
+        return engine.process_action({"action": "RETIRE_ASSENT"})
 
 
 @app.post("/save")
 def save_game(request: SaveRequest) -> Dict[str, Any]:
     """Persist the current session to a named slot."""
-    return engine.save_game(request.slot)
+    with _session_lock:
+        return engine.save_game(request.slot)
 
 
 @app.post("/load")
 def load_game(request: SaveRequest) -> Dict[str, Any]:
     """Restore a session from a named slot and return the result."""
-    return engine.load_game(request.slot)
+    with _session_lock:
+        return engine.load_game(request.slot)
 
 
 @app.get("/saves")
 def list_saves() -> Dict[str, Any]:
     """List available save slots with summary metadata."""
-    return {"saves": engine.saves.list_slots()}
+    with _session_lock:
+        return {"saves": engine.saves.list_slots()}
 
 
 if __name__ == "__main__":

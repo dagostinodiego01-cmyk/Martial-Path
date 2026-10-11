@@ -274,6 +274,23 @@ class LifecycleMixin:
         setattr(self.player, "equipment_modifiers", lambda: self.equipment.aggregate_modifiers(self.player))
 
     # -- persistence -----------------------------------------------------
+    def _rng_streams(self) -> Dict[str, Any]:
+        """Every gameplay RNG stream that must survive a save (SV.5).
+
+        The five named streams are: ``main`` (cultivation, combat, loot, finds,
+        encounters, fate -- the shared engine RNG), ``narrative`` (action-boundary
+        prose), ``foe_ai`` (enemy stance/ability rolls), ``debate`` (conviction
+        rolls), and ``world`` (living-world ticks). Deriving them from the engine
+        in one place keeps the snapshot and the restore from drifting apart.
+        """
+        return {
+            "main": self._rng,
+            "narrative": self.narrative._rng,
+            "foe_ai": self.foe_ai._rng,
+            "debate": self.debate._rng,
+            "world": self._world_rng,
+        }
+
     def _session_snapshot(self) -> Dict[str, Any]:
         return {
             "player": self.player.to_save_dict(),
@@ -286,10 +303,74 @@ class LifecycleMixin:
             "campaign_complete": self._campaign_complete,
             "campaign_ending_id": self._campaign_ending_id,
             "endless_depth": self._endless_depth,
+            # M1 / SV.5: deterministic continuation. The run seed and every RNG
+            # stream's internal state, so a *fresh process* that loads this save
+            # produces the same event sequence and state digest as the original
+            # run would have.
+            "seed": self._seed,
+            "rng": {name: stream.get_state() for name, stream in self._rng_streams().items()},
+            # The seed-derived world variation (dominant sects + economy band)
+            # is computed at construction, so it must travel with the save --
+            # a fresh engine may have been built from a different seed.
+            "world_seed": dict(self._world),
+            "last_world_report": dict(self._last_world_report),
+            "cooldowns": dict(self._cooldowns),
+            "encounter_seq": int(self._encounter_seq),
+            "fate": {
+                "accepted": bool(self._fate_accepted),
+                "pending": self._pending_fate,
+            },
+            "active_realm": self._realm,
+            "tournament_active": bool(self._tournament_active),
+            "oath_stakes": self._oath_stakes,
+            "running": bool(self._running),
         }
 
+    def at_safe_point(self) -> bool:
+        """True when saving cannot lose transient scene state (SV.2).
+
+        Safe points are exploration turns with no scene open: after a resolved
+        action, at camp/arrival, between encounters. Never safe: mid-combat,
+        mid-encounter (a choice is pending), mid-debate, or before the starting
+        fate has been accepted. Transient combat/encounter state is never part
+        of a snapshot, so an unsafe save would silently drop the scene on load.
+        """
+        return (
+            self._mode == MODE_EXPLORE
+            and self._current_enemy is None
+            and not self._current_foes
+            and self._pending_encounter is None
+            and self._debate is None
+            and self._fate_accepted
+        )
+
+    def autosave(self, slot: str = "autosave") -> Dict[str, Any]:
+        """Persist the run at a documented safe point (SV.2).
+
+        The one autosave policy, shared by every frontend: autosaves fire only
+        when :meth:`at_safe_point` holds *and* the run is still live, and are
+        refused (with a reason the UI can show) at any other moment. Explicit
+        :meth:`save_game` is a player-declared safe point and is likewise
+        refused mid-scene so a save can never silently drop a fight.
+        """
+        if not self._running or not self.at_safe_point():
+            return {
+                "event": EventType.SAVE_RESULT,
+                "success": False,
+                "reason": "UNSAFE_SAVE_POINT",
+                "slot": slot,
+            }
+        return self.save_game(slot)
+
     def save_game(self, slot: str = "default") -> Dict[str, Any]:
-        """Persist the current session to a named save slot."""
+        """Persist the current session to a named save slot (safe points only)."""
+        if not self.at_safe_point():
+            return {
+                "event": EventType.SAVE_RESULT,
+                "success": False,
+                "reason": "UNSAFE_SAVE_POINT",
+                "slot": slot or "default",
+            }
         try:
             self.saves.write(slot or "default", self._session_snapshot())
         except SaveError as exc:
@@ -361,9 +442,57 @@ class LifecycleMixin:
         self._origin_id = str(self.player.origin_id or DEFAULT_ORIGIN_ID)
         self._mode = MODE_EXPLORE
         self._clear_encounter_state()
+        self._debate = None  # a load replaces the session; no scene survives it
+        self._debate_foe = None
+        self._debate_character = ""
+        self._oath_stakes = None
+        self._combat_is_spar = False  # transient combat state; never persisted
         self._cooldowns = {}
         self._pending_fate = None
         self._fate_accepted = True
+        # M1 / SV.5: restore the deterministic-continuation contract. The run
+        # seed and every RNG stream come back exactly as they were, so a fresh
+        # process that loads this save replays the same event sequence and
+        # lands on the same state digest as the original run. Older saves
+        # (migrated v1/v2) simply lack these keys and keep the documented
+        # defaults installed above -- they load, but do not guarantee
+        # bit-identical continuation.
+        seed = data.get("seed")
+        if seed is not None:
+            self._seed = int(seed)
+            # render_stable prose (location/item/technique descriptions) is
+            # drawn from a local RNG keyed by the *run seed*, so the narrative
+            # system's stored seed must follow the save too.
+            self.narrative._seed = int(seed)
+        world_seed = data.get("world_seed")
+        if isinstance(world_seed, dict) and world_seed:
+            self._world = world_seed
+            # Both are derived from the seed at construction time, so a loading
+            # engine (possibly built from another seed) must re-point them at
+            # the saved world variation.
+            self.sects._dominant = [str(entry) for entry in world_seed.get("dominant_sects", []) or []]
+            try:
+                self.shops._economy_multiplier = max(0.1, float(world_seed.get("economy_multiplier", 1.0)))
+            except (TypeError, ValueError):
+                pass
+        rng_states = data.get("rng")
+        if isinstance(rng_states, dict):
+            for name, stream in self._rng_streams().items():
+                state = rng_states.get(name)
+                if state:
+                    stream.set_state(state)
+        self._last_world_report = dict(data.get("last_world_report") or {})
+        self._cooldowns = {str(key): int(value) for key, value in (data.get("cooldowns") or {}).items()}
+        self._encounter_seq = int(data.get("encounter_seq") or 0)
+        fate = data.get("fate")
+        if isinstance(fate, dict):
+            pending = fate.get("pending")
+            self._pending_fate = pending if isinstance(pending, dict) else None
+            self._fate_accepted = bool(fate.get("accepted", True))
+        self._realm = data.get("active_realm")
+        self._tournament_active = bool(data.get("tournament_active", False))
+        self._oath_stakes = data.get("oath_stakes")
+        self._running = bool(data.get("running", True))
         return {
             "event": EventType.LOAD_RESULT,
             "success": True,

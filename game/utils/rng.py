@@ -22,6 +22,22 @@ class RNG:
         """Reseed the generator (useful to reset state between tests)."""
         self._random.seed(seed)
 
+    def get_state(self) -> list:
+        """Return the generator's full internal state as JSON-safe data.
+
+        Serializing this (plus the run seed) is what lets a saved run continue
+        bit-for-bit in a *fresh process* -- see ``SV.5`` in TASKS.md and
+        ``game/docs/SAVE_SYSTEM.md``. The tuple ``random.Random.getstate()``
+        returns is flattened to lists so ``json.dumps`` accepts it.
+        """
+        version, internal, gauss = self._random.getstate()
+        return [int(version), [int(value) for value in internal], gauss]
+
+    def set_state(self, state) -> None:
+        """Restore a state produced by :meth:`get_state` (list or tuple form)."""
+        version, internal, gauss = state
+        self._random.setstate((int(version), tuple(int(value) for value in internal), gauss))
+
     def randint(self, low: int, high: int) -> int:
         """Return a random integer N such that ``low <= N <= high``."""
         return self._random.randint(low, high)
