@@ -522,6 +522,60 @@ class CultivationSystem:
         """Essence density support used by body training."""
         return player.cultivation_state.essence.true_essence_density / 10.0
 
+    def training_economy(self, player: Player, track_id: str) -> Dict[str, Any]:
+        """The strain loop as numbers: what training and stabilising would do next (C.6).
+
+        Training trades strain for progress and stabilising trades time for strain,
+        with the breakthrough gate between them. That loop is only a decision if the
+        trade is visible, so this publishes both sides of it -- what one more session
+        would cost, what a stabilise would buy back, and whether either leaves the
+        breakthrough gate open. Every figure is read from the same config the actions
+        themselves read, so the preview cannot drift from the outcome.
+        """
+        if track_id not in (self.BODY_TRACK_ID, self.ESSENCE_TRACK_ID):
+            return {}
+        is_body = track_id == self.BODY_TRACK_ID
+        state = player.cultivation_state.body if is_body else player.cultivation_state.essence
+        progression = self._config.get("body_progression" if is_body else "essence_progression", {})
+        stabilise = progression.get("stabilise", {})
+        read = self._body_progression_float if is_body else self._essence_progression_float
+        strain_gain = read("training_strain_gain", 0.0)
+        strain_cap = read("max_strain_for_breakthrough", 45.0)
+        stability_needed = read("required_foundation_stability", 70.0)
+        reduction = float(stabilise.get("strain_reduction", 18.0))
+        stability_gain = float(stabilise.get("foundation_stability_gain", 4.0))
+
+        strain = float(state.cultivation_strain)
+        stability = float(state.foundation_stability)
+        strain_after_train = self._clamp(strain + strain_gain)
+        strain_after_stabilise = self._clamp(strain - reduction)
+        stability_after_stabilise = self._clamp(stability + stability_gain)
+        return {
+            "track_id": track_id,
+            "strain": round(strain, 1),
+            "strain_cap": round(strain_cap, 1),
+            "foundation_stability": round(stability, 1),
+            "required_foundation_stability": round(stability_needed, 1),
+            "train": {
+                "strain_gain": round(strain_gain, 1),
+                "strain_after": round(strain_after_train, 1),
+                "leaves_gate_open": strain_after_train <= strain_cap,
+                "years": self._time_cost("train_body" if is_body else "train_essence"),
+            },
+            "stabilise": {
+                "strain_reduction": round(reduction, 1),
+                "strain_after": round(strain_after_stabilise, 1),
+                "foundation_stability_gain": round(stability_gain, 1),
+                "foundation_stability_after": round(stability_after_stabilise, 1),
+                "comprehension_gain": int(stabilise.get("comprehension_gain", 1)),
+                "years": self._time_cost("stabilise" if is_body else "stabilise_essence"),
+            },
+        }
+
+    def _time_cost(self, key: str) -> float:
+        """One action's share of the single clock, from the same config the engine reads."""
+        return float(self._config.get("lifespan", {}).get("time_costs", {}).get(key, 0.0))
+
     def breakthrough_gates(self, player: Player, track_id: str) -> Dict[str, Any]:
         """Why a breakthrough is refused, plus the numbers behind it (C.2).
 
@@ -685,8 +739,18 @@ class CultivationSystem:
         return missing
 
     def is_essence_unlocked(self, player: Player) -> bool:
-        """Public: has the body cleared Pulse Condensation, opening Essence Gathering?"""
+        """Public: has the body cleared the realm that opens Essence Gathering?"""
         return self._essence_is_unlocked(player)
+
+    def essence_unlock_realm_id(self) -> str:
+        """The Body realm whose completion opens Essence Gathering (C.5).
+
+        Read from ``cultivation_config.json`` so the gate is a design dial, not a
+        constant: it was hard-coded to ``body_pulse_condensation`` (realm 7), which
+        put the whole Essence track ~350 actions and 13 in-game years into a run.
+        """
+        config = self._config.get("essence_unlock", {})
+        return str(config.get("body_realm", "body_pulse_condensation"))
 
     def get_essence_unlock_requirement(self, player: Player) -> str:
         """Return a display string describing what unlocks Essence Gathering.
@@ -697,21 +761,22 @@ class CultivationSystem:
         """
         if self._essence_is_unlocked(player):
             return ""
-        pulse = self._body_by_id.get("body_pulse_condensation", {})
-        name = str(pulse.get("display_name", "Body Pulse Condensation"))
+        gate = self._body_by_id.get(self.essence_unlock_realm_id(), {})
+        name = str(gate.get("display_name", self.essence_unlock_realm_id()))
         return f"Complete {name}"
 
     def _essence_is_unlocked(self, player: Player) -> bool:
         body_state = player.cultivation_state.body
-        pulse_realm = self._body_by_id.get("body_pulse_condensation")
+        gate_id = self.essence_unlock_realm_id()
+        gate_realm = self._body_by_id.get(gate_id)
         current_realm = self._body_by_id.get(body_state.realm_id)
-        if pulse_realm is None or current_realm is None:
+        if gate_realm is None or current_realm is None:
             return False
         current_order = int(current_realm.get("order", 0))
-        pulse_order = int(pulse_realm.get("order", 0))
-        if current_order > pulse_order:
+        gate_order = int(gate_realm.get("order", 0))
+        if current_order > gate_order:
             return True
-        if body_state.realm_id != pulse_realm.get("id"):
+        if body_state.realm_id != gate_realm.get("id"):
             return False
         return self._body_missing_requirements(player) == []
 

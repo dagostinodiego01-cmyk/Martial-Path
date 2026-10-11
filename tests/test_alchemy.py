@@ -3,6 +3,55 @@ from game.core.constants import Action, EventType
 from game.core.game_engine import GameEngine
 
 
+def test_gathering_here_payload_joins_holdings_and_recipes():
+    """A.1: the state payload says what grows here, what you hold, what it brews."""
+    engine = GameEngine.new_game(seed=1)
+    engine.player.inventory = {"spirit_grass": 2}
+    state = engine.get_game_state()
+
+    table = state["gathering_here"]
+    assert table, "outer_forest has a herb table, so the payload must not be empty"
+    spirit_grass = next(e for e in table if e["item_id"] == "spirit_grass")
+    assert spirit_grass["name"]
+    assert spirit_grass["held"] == 2
+    assert spirit_grass["weight"] > 0
+    assert any(
+        entry["recipe_id"] == "brew_healing_pill" for entry in spirit_grass["used_in"]
+    )
+
+
+def test_gathering_here_empty_without_a_herb_table():
+    engine = GameEngine.new_game(seed=1)
+    engine.player.current_location = "azure_village"  # hub with no herb table
+
+    assert engine.get_game_state()["gathering_here"] == []
+
+
+def test_recipes_carry_have_need_and_brewable():
+    """A.3: every recipe entry carries the ingredient ledger and a verdict."""
+    engine = GameEngine.new_game(seed=1)
+    engine.player.inventory = {"spirit_grass": 2}
+    recipes = engine.refine.recipes(engine.player)
+
+    healing = next(r for r in recipes if r["id"] == "brew_healing_pill")
+    assert healing["brewable"] is True  # 2 of 3 spirit_grass: enough
+    assert healing["missing"] == {}
+
+    short = next(r for r in recipes if r["id"] != "brew_healing_pill" and r["inputs"])
+    assert short["brewable"] is False
+    assert isinstance(short["missing"], dict) and short["missing"]
+
+
+def test_brewable_flips_false_when_ingredients_run_short():
+    engine = GameEngine.new_game(seed=1)
+    engine.player.inventory = {"spirit_grass": 1}
+    recipes = engine.refine.recipes(engine.player)
+
+    healing = next(r for r in recipes if r["id"] == "brew_healing_pill")
+    assert healing["brewable"] is False
+    assert healing["missing"] == {"spirit_grass": 1}
+
+
 def test_gather_adds_herb_at_herb_rich_location():
     engine = GameEngine.new_game(seed=1)
     result = engine.process_action({"action": Action.GATHER})

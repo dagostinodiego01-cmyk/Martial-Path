@@ -4,7 +4,7 @@ from __future__ import annotations
 from typing import Any, Dict, List
 
 from game.core.constants import Action, EventType, MODE_COMBAT, MODE_EXPLORE
-from game.systems.combat_system import COMBO_ROLES
+from game.systems.combat_system import COMBO_BONUS_PER_STAGE, COMBO_ROLES
 
 
 class CombatMixin:
@@ -88,10 +88,15 @@ class CombatMixin:
         routed = {**press, "turn_events": events, "formation": True, "enemies": self._formation_view()}
         return self._after_player_round(routed)
 
+    def _annotate_formation(self, result: Dict[str, Any]) -> Dict[str, Any]:
+        """Attach the readable formation summary (leader / target / remaining)."""
+        result["formation_state"] = self._formation_summary()
+        return result
+
     def _after_player_round(self, result: Dict[str, Any]) -> Dict[str, Any]:
         """Let the foes the player is *not* facing take their lighter press."""
         if not self._formation_active():
-            return result
+            return self._annotate_formation(result)
         formation = self.encounters.formation_config()
         multiplier = float(formation.get("pack_press_multiplier", 0.5))
         max_presses = int(formation.get("max_pack_presses", 2))
@@ -117,11 +122,36 @@ class CombatMixin:
         result["enemies"] = self._formation_view()
         if self._current_enemy is not None:
             result["enemy"] = self._enemy_view(self._current_enemy)
-        return result
+        return self._annotate_formation(result)
 
     def _formation_view(self) -> List[Dict[str, Any]]:
-        """Public views of the foes still standing, in the order they joined."""
-        return [self._enemy_view(foe) for foe in (self._current_foes or []) if foe.is_alive()]
+        """Public views of the foes still standing, tagged for readability (CB.6).
+
+        Each entry names its slot in the line, whether it leads the pack, and
+        whether it is the foe the player is currently facing, so a frontend can
+        draw the group without re-deriving any of it.
+        """
+        views: List[Dict[str, Any]] = []
+        for slot, foe in enumerate(self._living_foes()):
+            view = self._enemy_view(foe)
+            view["slot"] = slot
+            view["is_leader"] = self._leader_foe is not None and foe is self._leader_foe
+            view["is_target"] = foe is self._current_enemy
+            views.append(view)
+        return views
+
+    def _formation_summary(self) -> Dict[str, Any]:
+        """Leader, current target, and how many foes remain (CB.6)."""
+        living = self._living_foes()
+        return {
+            "active": len(living) > 1,
+            "remaining": len(living),
+            "total": len(self._current_foes or []),
+            "defeated": len(self._defeated_foes),
+            "leader": self._leader_foe.name if self._leader_foe is not None else "",
+            "target": self._current_enemy.name if self._current_enemy is not None else "",
+            "incoming": [foe.name for foe in living if foe is not self._current_enemy],
+        }
 
     def _aggregate_loot_tables(self, defeated: List[Any]) -> List[Dict[str, Any]]:
         """Combine every foe put down in this bout into one loot table.
@@ -167,6 +197,8 @@ class CombatMixin:
                 "reason": "NOT_ENOUGH_INSIGHT",
                 "required": skill.insight_required,
                 "insight": self.player.insight,
+                "shortfall": int(skill.insight_required) - int(self.player.insight),
+                "insight_state": self.combat.insight_view(self.player),
                 "skill_id": skill_id,
             }
         # B.6 stances: an out-of-sequence stance is refused with the reason (and
@@ -175,11 +207,22 @@ class CombatMixin:
         # let the chain go -- losing the flow is the cost, not a hard block.
         next_role = self.combat.next_combo_role(self.player)
         if next_role is not None and skill.combo_role not in ("", next_role):
+            # Refuse with the whole story (D.3): which stance was moved, which
+            # one the chain wanted, and the bonus the player would leave behind.
+            stage = self.player.combo_stage
             return {
                 "event": EventType.ERROR,
                 "reason": "COMBO_OUT_OF_SEQUENCE",
                 "expected_role": next_role,
+                "used_role": skill.combo_role,
                 "combo_roles": list(COMBO_ROLES),
+                "combo_stage": stage,
+                "banked": list(COMBO_ROLES[:stage]),
+                "bonus_forfeited": round(1.0 + stage * COMBO_BONUS_PER_STAGE, 2),
+                "message": (
+                    f"{skill.name} is a {skill.combo_role or 'neutral'} technique, "
+                    f"but the chain is waiting on {next_role}. Using it now would drop the flow."
+                ),
                 "skill_id": skill_id,
             }
         qi_cost = self.stats.effective_qi_cost(skill, self.player)
@@ -228,6 +271,8 @@ class CombatMixin:
         """Resolve the consequences of a finished fight and leave combat mode."""
         outcome = result.get("outcome")
         enemy_id = self._current_enemy.id if self._current_enemy else "any"
+        # Capture the readable formation before the line is torn down (CB.6).
+        formation_state = self._formation_summary()
         defeated: List[Any] = []
         if outcome == "VICTORY":
             defeated = list(self._defeated_foes)
@@ -238,6 +283,7 @@ class CombatMixin:
             result["formation"] = True
             result["defeated"] = [foe.name for foe in defeated]
             result["enemy_name"] = f"{defeated[0].name} and {len(defeated) - 1} more"
+        result["formation_state"] = formation_state
         self._mode = MODE_EXPLORE
         self._current_enemy = None
         self._current_foes = []
@@ -305,6 +351,13 @@ class CombatMixin:
         elif outcome == "FLED":
             self._tournament_active = False
             self._realm = None
+        elif outcome == "STALEMATE":
+            # CB.5: a bout that outlived the round cap. Both sides withdraw --
+            # no loot, but no defeat penalty either, because nothing was decided.
+            self._tournament_active = False
+            self._realm = None
+            result["stalemate"] = True
+            result["text"] = "Neither fighter can break the other; both withdraw."
         return result
 
     def _apply_spar_end(self, result: Dict[str, Any]) -> None:

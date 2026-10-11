@@ -4,7 +4,7 @@ A data-driven cultivation (xianxia) RPG. The authoritative game logic is a Pytho
 engine in `game/`; several frontends render its state and send commands. **All
 gameplay rules live in the engine — never in a UI.**
 
-Last updated: 2026-09-13. The counts below are generated from the repository by
+Last reviewed: 2026-09-25. The counts below are generated from the repository by
 `python tools/refresh_docs.py` (a test fails when they drift).
 
 <!-- refresh_docs:begin -->
@@ -12,7 +12,7 @@ Last updated: 2026-09-13. The counts below are generated from the repository by
 
 | Live count | Value |
 |---|---|
-| Tests collected (`pytest --collect-only -q`) | 897 |
+| Tests collected (`pytest --collect-only -q`) | 974 |
 | Validator errors (`validate_all_game_data`) | 0 |
 | Dead-content sweep | 0 unreachable, 0 trap options |
 | Locations | 45 (45 with artwork) |
@@ -26,6 +26,25 @@ Last updated: 2026-09-13. The counts below are generated from the repository by
 | Recipes | 104 |
 | Daos / origins | 12 / 4 |
 <!-- refresh_docs:end -->
+
+## 0. Active execution status
+
+**Canonical tracker:** `TASKS.md` owns the M0–M5 milestone order, write sets,
+cross-chat handoff records, and the current next action. `ROADMAP.md` is the
+long-range product design; its checkboxes are not the integration record.
+
+**Current shared tree:** `main` has 61 changed paths, including 20 regenerated
+replay fixtures and one new Godot render-check script. The changes are not
+staged. Treat them as existing work: do not reset, delete, or broadly stage them.
+
+**Current gate snapshot:** the generated table above is the source for live
+content/test counts. The latest full-run outcome and known strict xfail are
+recorded in the M0 completion handoff in `TASKS.md`; validator, dead-content,
+economy, deterministic playthrough, and Godot event/state checks pass.
+
+**Active handoff:** M0 is the documentation/integration checkpoint currently
+being closed. M1 is the next blocking milestone: preserve RNG/seed continuity,
+migrate saves, make writes crash-safe, and serialize the local API session.
 
 ---
 
@@ -582,12 +601,93 @@ Docs: `game/docs/ARCHITECTURE.md`, `CULTIVATION_SYSTEM.md`, `DATA_SCHEMA.md`,
 | `python tools/playthrough_report.py` | Plays seeded runs with a fixed policy and reports survival, actions to the first realm and to story tier 2, income vs sinks, the per-dao win rate and the dead-action rate. `--json` for a machine, `--max-dead-rate X` to fail a build, `--dao a,b` for the balance spread, `--record <dir>` to write replay fixtures. |
 | `python tools/refresh_docs.py` | Regenerates the count table at the top of this file; `--check` fails when it is stale (this is the T.3 gate). |
 | `python tools/dead_content_report.py` | Reachability and trap-option sweep; exits non-zero on a finding. |
+| `python tools/seed_enemy_pools.py --audit` | Difficulty curve (V.4): every zone's typical/weakest/strongest foe against the danger it advertises, rolled up per story tier, flagging `over_band`, `under_band` and `no_in_band_leader`. `--strict` exits non-zero on the two that matter. Without `--audit` the tool seeds pools. |
 | `pytest tests/test_determinism_replay.py` | Replays the recorded action logs in `tests/fixtures/replay_logs/` and fails when a run stops reproducing. Regenerate them with the playthrough tool's `--record` after an intentional gameplay change. |
 | `pytest tests/test_godot_smoke.py` | Drives the Godot shell headlessly from `frontend-godot/tests/SmokeRunner.tscn`: a refresh with `enemy`/`encounter` null, every tab opened and closed, and every event payload captured from a real run. Skips (with a message) when no Godot binary is found; set `GODOT_BIN` to run it. |
 
 `.github/workflows/ci.yml` runs all of it on every push and pull request: the
 engine gate (suite, validator, sweep, docs check, playthrough budget) on a plain
 runner, and the Godot checks on a runner with Godot 4.7 installed.
+
+---
+
+### Combat & dao feel (2026-09-13, L2 — CB.2/CB.5/CB.6/CB.7, D.3/D.4/D.5/D.7)
+
+L2 made a fight explain itself and measured three things that used to be judged
+by eye. Everything below is engine-side; the Godot **render half belongs to the
+L8 panel lanes** (L2 changed no client file).
+
+- **The round payload** (`CombatSystem._turn`) now carries `round`,
+  `player_shield`, labelled `statuses`/`enemy_statuses`, `combo`,
+  `insight_state`, and `flee: {chance}`. The standing state view
+  (`get_game_state()["player"]`) carries the same `status_views`, `combo` and
+  `insight_state`, and every enemy view carries `status_views` beside the raw
+  dict.
+- **Statuses (CB.2)** are one table: `STATUS_RULES` in
+  `game/systems/combat_system.py` gives each timed effect a label, an icon, and
+  a *stacking rule* (`refresh` / `strongest` / `stack`). Stuns refresh instead
+  of chain-stunning, poisons accumulate up to `STATUS_MAX_STACKS` (3) times the
+  strongest single dose, debuffs keep the strongest cut. `status_views()` is the
+  render contract; do not re-derive labels in a UI.
+- **Fight length (CB.5)** is budgeted: 4-8 rounds for an even matchup (median 6),
+  then `STALL_ROUNDS` (12) starts a two-sided fatigue ramp (a named step in the
+  CB.1 damage breakdown) and `MAX_FIGHT_ROUNDS` (40) ends the bout as a
+  `STALEMATE` — a draw, no loot, no defeat penalty.
+- **Formations (CB.6)** are tagged, not just listed: `slot`, `is_leader`,
+  `is_target`, plus `formation_state` (`leader`, `target`, `incoming`,
+  `remaining`/`total`/`defeated`, `active`).
+- **Retreat (CB.7):** `flee_chance()` publishes the odds and rises to 0.85 at or
+  below 35% HP (cap 0.95). Measured 74% -> **96%** survival for a 30%-HP retreat.
+- **Combos (D.3) and insight (D.4)** both have a view: `combo_view()`
+  (`banked`, `next_role`, `bonus`) and `insight_view()` (sources + drip rate,
+  spend targets the cultivator knows, `next_spend`). Refusals carry the reason
+  *and* the cost: `bonus_forfeited` / `message` on
+  `COMBO_OUT_OF_SEQUENCE`, `shortfall` + the ledger on `NOT_ENOUGH_INSIGHT`.
+- **Foe AI fairness (D.5):** `GUARD_MAX_STREAK` (2) bounds consecutive guards
+  and `MAX_AGGRESSION` (2.0) bounds desperation. The audit in
+  `tests/test_foe_ai.py` measures the matchup bands and proves the High tier is
+  never a *trap* (a low-HP retreat escapes >=80% against real High-tier foes).
+- **Dao balance (D.7):** `tests/test_dao_combat.py` runs a round-robin audit
+  (same seeds, once per dao, identical foe roster) and holds every dao within
+  ±10% of the median.
+
+**Two items handed to S3 (balance runs alone; neither is a mechanics bug):**
+1. The shipped tier table with a plain attacker is **Low 100% / Moderate 78% /
+   High 0% / Deadly 0%** — no tier yields 40-70%, and the cliff is exactly at the
+   Moderate/High boundary. That is an HP-pool / `foe_power` (5x attack weight)
+   problem; `tests/test_foe_ai.py::test_the_shipped_tier_table_is_reported` pins
+   the measurement.
+2. At `COUNTER_MULTIPLIER` 1.5 / `COUNTERED_MULTIPLIER` 0.75 the counter graph
+   decides a parity fight outright: a countered player wins **0%** of seeded
+   duels even with a +20% attack edge. Softening the pair is what makes a
+   countered matchup winnable-with-an-edge; the strict `xfail`
+   `test_a_countered_player_with_an_edge_can_still_win` is the tripwire.
+
+---
+
+### Economy & alchemy (2026-09-13, L4 — EC.2/EC.4/EC.5, A.1/A.3/A.4)
+
+L4 turned the economy's acceptance criteria from tool output into enforced
+gates, and gave the alchemy loop the payload its surfaces were missing. All
+engine-side; the Godot **render half belongs to the L8 panel lanes**.
+
+- **Payload (A.1/A.3/EC.5):** `get_game_state()` gained `gathering_here` (the
+  location's herb table joined to holdings and the recipes each herb feeds,
+  gated like GATHER), recipe entries gained `missing` + `brewable` beside the
+  realm gate, and a `currency_guide` surface ships the canonical gold-vs-stones
+  explainer from `game/systems/currency.py`. No client file was changed.
+- **Validators (EC.4/EC.5/A.4):** the sweep gained `accidental_find_only`
+  (`FIND_ONLY_ALLOWLIST` is the only way a find-only entry stays green;
+  currently just `spirit_stone`) and `dominated_shop_pills` (first run found 9
+  real trap offers across 4 racks; repriced in `data/shops.json`).
+  `economy_checks.py` gained `_validate_currency_economy` (a gold sink is
+  graph-reachable by every story tier; stones have an authored sink anywhere).
+- **Band lock (EC.2):** `test_income_to_cost_band_holds` pins the live
+  income/expense ratios inside the designed shares; widening is S3's call.
+- **Regeneration note:** the repriced racks were the *only* gameplay-visible
+  change, so the T.6 replay fixtures were re-recorded in the same session
+  (`playthrough_report.py --record`); the digest covers the whole state
+  payload, so payload-only changes also require a re-record.
 
 ---
 
@@ -598,20 +698,18 @@ runner, and the Godot checks on a runner with Godot 4.7 installed.
   a `(manner: …)` line, but no generated dialogue).
 - **Untested at runtime here:** PySide6 (`gui_main.py`) and the Godot paper-doll
   render — both compile/parse clean but weren't executed against a display.
-- **New engine actions not yet surfaced as dedicated Godot widgets:** `talents`,
-  `closed_door`, `repair`, `export`, `import` work through the API/state but have
-  no bespoke Godot buttons/panels yet (Godot renders them via generic handling).
-- **`BOON` narration gap in Godot:** the "Receive Reward" button appears from the
-  backend `options`, but `MainController._render_event` has no `BOON` case, so the
-  reward result isn't logged visually (it is granted by the backend).
+- **Godot parity is rolling, not absent:** `MainController.gd` now renders
+  `BOON`, `TALENTS`, `CLOSED_DOOR_RESULT`, `REPAIR_RESULT`, `SAVE_EXPORTED`, and
+  `SAVE_IMPORTED`; dedicated action surfaces for some of those actions remain
+  M3 work. Do not report the old missing-render claim as current.
+- **`BOON` rendering is fixed:** the Receive Reward result is now narrated and
+  logged by the client. The remaining follow-up is exercising the full
+  relationship/boon path through a real Godot session.
 - **Sect contribution ranks** exist as data but there is no contribution-earning
   mechanic yet (tasks, inner/outer disciple progression, sect store).
-- **Find-only content (G.2 metric, not a failure):**
-  `tools/dead_content_report.py` reports 68 items and 137 equipment entries whose
-  only acquisition path is the rarity-weighted exploration find roll -- they have
-  no shop, loot table, pool, quest, or realm hook. Worth a seeding pass (or an
-  explicit "world find" tier) before 1.0, since the sweep measures it rather than
-  fixing it.
+- **Find-only content:** the current dead-content sweep reports 0 items and 0
+  equipment entries whose only source is the generic find roll. Keep the
+  declaration and regression test in place as content grows.
 - **Subjective map placement:** the early Sky Fortune cluster is a best-fit (no
   reference coordinates); the objective guard (no duplicate markers) is enforced.
 - **Backend `--reload`:** not enabled; restart uvicorn manually after engine edits.
@@ -631,27 +729,21 @@ runner, and the Godot checks on a runner with Godot 4.7 installed.
 - Update `ROADMAP.md` (flip checkboxes) / `handover.md` and the relevant
   `game/docs/` files alongside changes.
 
----
+---## 8. Active next steps
 
-## 8. Next steps (proposed)
+The next work is managed in `TASKS.md`; this is the short orientation view:
 
-Priority-ordered ideas to progress the game further (none started):
-
-1. **Sect contribution loop** — earn contribution via sect tasks / sparring,
-   spend it at a sect store, promote inner/outer disciple ranks that unlock
-   path-locked techniques and higher trainers.
-2. **Alchemy / gathering loop** — make `gather` a real verb at herb-rich
-   locations, then refine herbs (with the `talent_refining_elixir` as a template)
-   into pills that feed cultivation and combat.
-3. **Multi-enemy & boss-fight combat** — formations/positioning and phased boss
-   encounters to break the 1v1 monotony; tie named foes to quests.
-4. **Companion / relationship depth** — let bonded NPCs travel and fight with the
-   player, and gate more content on relationship tiers.
-5. **Sect tournament / arena ladder** — a recurring ranked sparring event as a
-   mid-game loop and a reputation/contribution sink.
-6. **Seasonal weather effects** — DONE in Phase 2 E (see §3): seasons now act
-   on gathering, travel, encounter odds, and the world's own progress.
-7. **Surface the new actions in Godot** — bespoke widgets for `talents`,
-   `closed_door`, `repair`, `export`/`import`, and the `BOON` result narration.
-8. **Cloud save + LLM dialogue** — once an external service is chosen, wire the
-   two deferred items from §6.
+1. **Close M0** — reconcile the current shared tree and leave a reviewable
+   documentation handoff without staging or resetting existing work.
+2. **Start M1** — serialize every RNG stream and the run seed, add v1/v2 save
+   migration and fresh-process continuation tests, make run/meta writes atomic,
+   and serialize the local API session.
+3. **Run M2 engine lanes** — narrative (M2a), world/social/factions (M2b),
+   campaign/realms (M2c), and residual meta work (M2d) using the write sets in
+   `TASKS.md`.
+4. **Roll M3 Godot parity** — start with combat/encounter and quest guidance;
+   each panel gets its own focused chat and handoff.
+5. **Run M4 S3 balance** — resolve the strict counter xfail and tier cliff with
+   seeded measurements, then regenerate fixtures intentionally.
+6. **Run M5 release hardening** — pin dependencies, package the backend/Godot
+   client, and verify a clean Windows install with save/reload recovery.

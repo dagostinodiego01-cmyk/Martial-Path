@@ -22,13 +22,26 @@ python -m venv .venv
 | Desktop GUI (frozen, PySide6) | `.venv/Scripts/python.exe gui_main.py` |
 | Tests | `.venv/Scripts/python.exe -m pytest -q` |
 
-The backend runs **without** `--reload`: after changing Python engine code or
-`game/data/**`, restart uvicorn for the Godot client to see it.
+## Active work
+
+The live implementation plan is maintained in [`TASKS.md`](TASKS.md). The current
+sequence is:
+
+1. **M0** — integrate and re-baseline the shared working tree.
+2. **M1** — make save/load deterministic and harden the local API/persistence boundary.
+3. **M2** — finish narrative, world/social, campaign/realm, and residual meta work.
+4. **M3** — roll out Godot panel parity against stable engine payloads.
+5. **M4/M5** — run the serial balance sweep, then package and certify a release.
+
+The repository currently contains a large uncommitted implementation wave. Do not
+infer integration state from an old roadmap checkbox; start every feature chat by
+reading `TASKS.md` and checking `git status`.
 
 ## Documentation
 
-- `handover.md` — orientation: running the game, architecture, conventions, recent work
-- `ROADMAP.md` — vision and phased development plan (single source of task tracking)
+- `handover.md` — current orientation: running the game, architecture, conventions, recent work, and handoff notes
+- `TASKS.md` — **live execution tracker**: M0–M5 milestones, dependencies, write sets, and cross-chat handoffs
+- `ROADMAP.md` — vision and long-range phased design; it is not the live task checklist
 - `game/docs/` — system docs: `ARCHITECTURE.md`, `DATA_SCHEMA.md`, `CULTIVATION_SYSTEM.md`,
   `SAVE_SYSTEM.md`, `EQUIPMENT_SYSTEM.md`, `SHOP_SYSTEM.md`, `MAP_SYSTEM.md`,
   `VOICE_GUIDE.md`, `CHANGELOG.md`

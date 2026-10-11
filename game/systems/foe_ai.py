@@ -34,6 +34,17 @@ WOUNDED_AGGRRESSION_BONUS = 0.2
 #: The player's banked chain stage at which a prudent foe guards.
 GUARD_COMBO_STAGE = 2
 
+#: D.5 fairness: a foe may guard at most this many rounds in a row. Without a
+#: ceiling a countered foe could turtle behind its guard bonus for the whole
+#: bout, which reads as an unwinnable fight rather than a careful one.
+GUARD_MAX_STREAK = 2
+#: The transient attribute the streak lives on (foes are never persisted mid-fight).
+GUARD_STREAK_ATTR = "guard_streak"
+
+#: D.5 fairness: aggression is a pressure multiplier on ability rolls, not a
+#: licence to burst. Wounds and a favourable matchup can only stack so far.
+MAX_AGGRESSION = 2.0
+
 
 class FoeAI:
     """Chooses the enemy's combat action from dao, pressure, and stance state."""
@@ -60,7 +71,16 @@ class FoeAI:
                 base = AGGRESSION_WHEN_COUNTERED
         if enemy.max_hp > 0 and enemy.hp <= enemy.max_hp * WOUNDED_HP_FRACTION:
             base += WOUNDED_AGGRRESSION_BONUS
-        return base
+        return min(MAX_AGGRESSION, base)
+
+    # -- guard discipline -----------------------------------------------------
+    def _guard_streak(self, enemy: Enemy) -> int:
+        """How many rounds in a row this foe has sheltered (0 when it has not)."""
+        return int(getattr(enemy, GUARD_STREAK_ATTR, 0) or 0)
+
+    def _note_stance_choice(self, enemy: Enemy, guarded: bool) -> None:
+        """Track consecutive guards so the AI cannot turtle forever (D.5)."""
+        setattr(enemy, GUARD_STREAK_ATTR, self._guard_streak(enemy) + 1 if guarded else 0)
 
     def _countered(self, player: Player, enemy: Enemy) -> bool:
         """True when the player's dao counters the foe's (its aggression drops)."""
@@ -79,7 +99,11 @@ class FoeAI:
         """
         if not enemy.dao_id:
             return None
-        if self._countered(player, enemy) and player.combo_stage >= GUARD_COMBO_STAGE:
+        if (
+            self._countered(player, enemy)
+            and player.combo_stage >= GUARD_COMBO_STAGE
+            and self._guard_streak(enemy) < GUARD_MAX_STREAK
+        ):
             return None  # guard: break the flow rather than feed the finisher
         stage = int(getattr(enemy, "ai_stage", 0))
         if stage < len(COMBO_ROLES):
@@ -115,16 +139,19 @@ class FoeAI:
         aggression = self.aggression(player, enemy)
         if not enemy.dao_id:
             ability = self._pick_ability(player, enemy, aggression)
+            self._note_stance_choice(enemy, False)
             if ability is not None:
                 return ability
             return {"kind": "attack", "stance": None, "aggression": aggression}
 
         stance = self.intended_stance(player, enemy)
         if stance is None:
+            self._note_stance_choice(enemy, True)
             return {"kind": "guard", "stance": None, "aggression": aggression}
 
         ability = self._pick_ability(player, enemy, aggression)
         technique = self._pick_technique(player, enemy, stance)
+        self._note_stance_choice(enemy, False)
         # A data-driven ability fires by chance; otherwise the stance technique
         # (if the foe knows one) or its basic attack.
         if ability is not None:

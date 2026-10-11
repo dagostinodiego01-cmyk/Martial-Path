@@ -80,8 +80,15 @@ func render(player: Dictionary) -> void:
 	_add_row("Body Talent", str(body_talent.get("display_name", "Unknown")), UIKit.COLOR_BODY)
 	_add_row("Lifespan", str(lifespan.get("display", "Unknown")), UIKit.COLOR_TITLE_GOLD)
 	_add_row("Body Foundation", str(body.get("foundation", 0)), UIKit.COLOR_BODY)
-	_add_row("Cultivation Strain", "%s / 100" % body.get("cultivation_strain", 0), UIKit.COLOR_WARNING)
-	_add_row("Foundation Stability", "%s / 100" % body.get("foundation_stability", 100), UIKit.COLOR_SUCCESS)
+	# C.6: both figures are measured against the gate that actually enforces them, so
+	# "43 / 100" can no longer hide that the cap is 45.
+	var gates: Dictionary = body.get("breakthrough", {}).get("gates", {})
+	_add_row("Cultivation Strain", "%s / %s" % [gates.get("strain", body.get("cultivation_strain", 0)), gates.get("max_allowed_strain", 45)], UIKit.COLOR_WARNING)
+	_add_row("Foundation Stability", "%s / %s" % [gates.get("foundation_stability", body.get("foundation_stability", 100)), gates.get("required_foundation_stability", 70)], UIKit.COLOR_SUCCESS)
+	var economy: Dictionary = body.get("economy", {})
+	if not economy.is_empty():
+		var settle: Dictionary = economy.get("stabilise", {})
+		_add_row("Stabilising Buys", "-%s strain, +%s stability" % [settle.get("strain_reduction", 0), settle.get("foundation_stability_gain", 0)], UIKit.COLOR_SUCCESS)
 	_add_row("Soul Strength", str(player.get("soul_strength", 0)), UIKit.COLOR_ESSENCE)
 	_add_row("Foundation Quality", str(player.get("foundation_quality", 0)))
 	_add_row("Balance", str(balance.get("status", "-")))

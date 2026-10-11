@@ -106,7 +106,7 @@ REASONS: Dict[str, str] = {
     "STRAIN_TOO_HIGH": "Your cultivation strain is too high for a safe breakthrough ({current_strain} / {max_allowed_strain} allowed). Stabilise your foundation first.",
     "FOUNDATION_UNSTABLE": "Your foundation is not stable enough ({foundation_stability} / {required_foundation_stability} needed). Stabilise before attempting again.",
     "FOUNDATION": "Your foundation is not stable enough yet.",
-    "ESSENCE_LOCKED_BY_BODY_PULSE": "Essence gathering has not opened yet -- reach Pulse Condensation in Body Transformation first.",
+    "ESSENCE_LOCKED_BY_BODY_PULSE": "Essence gathering has not opened yet -- advance your Body Transformation first.",
     "INVALID_CLOSED_DOOR_YEARS": "Choose one of the offered seclusion lengths.",
     "ASCENSION_NOT_REACHED": "You have not reached the realm needed to ascend.",
     "IRONMAN_MODE": "Ironman mode does not allow reloading a save.",

@@ -90,6 +90,7 @@ class RunOutcome:
     losses: int = 0
     flees: int = 0
     refusals: Counter = field(default_factory=Counter)
+    encounter_kinds: Counter = field(default_factory=Counter)
     dao_fights: Counter = field(default_factory=Counter)
     dao_wins: Counter = field(default_factory=Counter)
     actions: List[Dict[str, Any]] = field(default_factory=list)
@@ -296,6 +297,16 @@ def run_playthrough(
             outcome.survived = False
             outcome.died_at = step
 
+        # -- content variety (E.6) -----------------------------------------
+        # Every exploration outcome is bucketed by the kind it surfaced, so the
+        # report can prove a zone is not silently running on one event type.
+        if event == EventType.ENCOUNTER:
+            outcome.encounter_kinds[str(result.get("kind") or "unknown")] += 1
+        elif event == EventType.EXPLORE_RESULT:
+            outcome.encounter_kinds[str(result.get("kind") or "nothing").lower()] += 1
+        elif event == EventType.CHARACTER_ENCOUNTER:
+            outcome.encounter_kinds["character"] += 1
+
         # -- combat --------------------------------------------------------
         if event in _COMBAT_EVENTS and not in_fight:
             in_fight = True
@@ -389,8 +400,10 @@ def summarise(outcomes: List[RunOutcome]) -> Dict[str, Any]:
     tier_two = [run.story_tier_2_at for run in outcomes if run.story_tier_2_at is not None]
     actions = sum(run.actions_used for run in outcomes)
     refusals = Counter()
+    encounter_kinds: Counter = Counter()
     for run in outcomes:
         refusals.update(run.refusals)
+        encounter_kinds.update(run.encounter_kinds)
 
     dao_fights: Counter = Counter()
     dao_wins: Counter = Counter()
@@ -447,6 +460,10 @@ def summarise(outcomes: List[RunOutcome]) -> Dict[str, Any]:
             "rate": round(sum(refusals.values()) / max(1, actions), 4),
             "top_reasons": refusals.most_common(10),
         },
+        "event_mix": {
+            "distinct_kinds": len(encounter_kinds),
+            "counts": dict(sorted(encounter_kinds.items())),
+        },
     }
 
 
@@ -479,6 +496,10 @@ def format_report(summary: Dict[str, Any]) -> str:
         f" | {combat['flees']} fled | {combat['losses']} lost",
         f"  dead actions   {dead['count']}/{summary['actions']} ({dead['rate']:.1%})",
     ]
+    mix = summary.get("event_mix") or {}
+    if mix.get("counts"):
+        kinds = " | ".join(f"{kind}={count}" for kind, count in mix["counts"].items())
+        lines.append(f"  event mix      {mix['distinct_kinds']} kinds: {kinds}")
     for reason, count in dead["top_reasons"]:
         lines.append(f"                 {reason} x{count}")
     if summary["dao_spread"]:

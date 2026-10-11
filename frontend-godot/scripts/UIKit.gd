@@ -392,3 +392,18 @@ static func humanize_key(key: String) -> String:
 		if word.length() > 0:
 			out.append(word.substr(0, 1).to_upper() + word.substr(1))
 	return " ".join(out)
+
+
+static func economy_line(economy: Dictionary) -> String:
+	# C.6: the strain loop as a decision. Training buys progress with strain and
+	# stabilising buys strain back with time; showing both sides, and whether one
+	# more session would close the breakthrough gate, is what turns that from a rule
+	# the player learns from a refusal into a choice they can make.
+	if economy.is_empty():
+		return ""
+	var train: Dictionary = economy.get("train", {})
+	var settle: Dictionary = economy.get("stabilise", {})
+	if train.is_empty() or settle.is_empty():
+		return ""
+	var gate: String = "[color=#7CA558]gate stays open[/color]" if bool(train.get("leaves_gate_open", true)) else "[color=#C0393A]closes the gate[/color]"
+	return "[color=#8E8471]Train +%s strain (%s -> %s, %s) | Stabilise -%s -> %s strain, +%s stability[/color]\n" % [train.get("strain_gain", 0), economy.get("strain", 0), train.get("strain_after", 0), gate, settle.get("strain_reduction", 0), settle.get("strain_after", 0), settle.get("foundation_stability_gain", 0)]

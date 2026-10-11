@@ -670,7 +670,7 @@
       {
         "item_id": "blood_quenching_pellet_mortal",
         "price": {
-          "gold": 30
+          "gold": 28
         }
       },
       {
@@ -772,13 +772,13 @@
       {
         "item_id": "mystic_dan_mortal",
         "price": {
-          "gold": 30
+          "gold": 15
         }
       },
       {
         "item_id": "mystic_pill_mortal",
         "price": {
-          "gold": 30
+          "gold": 20
         }
       },
       {
@@ -808,7 +808,7 @@
       {
         "item_id": "profound_dan",
         "price": {
-          "gold": 15
+          "gold": 12
         }
       },
       {
@@ -1991,7 +1991,7 @@
       {
         "item_id": "profound_nectar",
         "price": {
-          "gold": 40
+          "gold": 30
         }
       },
       {
@@ -2496,13 +2496,13 @@
       {
         "item_id": "marrow_cleansing_elixir",
         "price": {
-          "spirit_stone": 3
+          "spirit_stone": 1
         }
       },
       {
         "item_id": "purple_cloud_dan",
         "price": {
-          "spirit_stone": 2
+          "spirit_stone": 1
         }
       },
       {
@@ -2551,7 +2551,7 @@
       {
         "item_id": "immortal_ascension_pellet",
         "price": {
-          "spirit_stone": 6
+          "spirit_stone": 5
         }
       },
       {
@@ -3205,7 +3205,7 @@
       {
         "item_id": "bone_forging_elixir",
         "price": {
-          "gold": 110
+          "gold": 90
         }
       },
       {

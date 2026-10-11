@@ -154,6 +154,10 @@
   "ruined_shrine": {
     "combat": [
       {
+        "enemy_id": "meadow_revenant",
+        "weight": 2
+      },
+      {
         "enemy_id": "shrine_bone_thrall",
         "weight": 4
       },

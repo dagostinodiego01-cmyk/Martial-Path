@@ -76,6 +76,25 @@ EVASION_CHANCE_PER_POINT = 0.01
 EVASION_CAP = 0.5
 # ponytail: a spar is called off once either side drops to this HP fraction.
 SPAR_END_HP_FRACTION = 0.25
+
+# Retreat (CB.7): leaving a losing fight is a real option, not a coin flip that
+# usually kills you. The base chance is a fair gamble at full health, and a
+# badly wounded cultivator scrambles harder -- measured over seeded fights,
+# fleeing at <35% HP must save the run at least four times in five.
+FLEE_BASE_CHANCE = 0.5
+FLEE_WOUNDED_HP_FRACTION = 0.35  # below this fraction the scram bonus applies
+FLEE_WOUNDED_BONUS = 0.35
+FLEE_MAX_CHANCE = 0.95
+
+# Fight-length budget (CB.5): an even matchup should land in 4-8 rounds, and no
+# fight may grind on indefinitely. Damage is always at least 1, so a bout cannot
+# truly stall -- but "slow" reads as stalled at the table. Past STALL_ROUNDS
+# both sides tire: every extra round adds FATIGUE_PER_ROUND to outgoing damage
+# until the bout resolves. MAX_FIGHT_ROUNDS is the backstop: a fight that long
+# is a mutual withdrawal (``STALEMATE``), never a silent hang.
+STALL_ROUNDS = 12
+FATIGUE_PER_ROUND = 0.15
+MAX_FIGHT_ROUNDS = 40
 # Insight (B.5): a mid-fight resource built from comprehension and successful
 # exchanges. Active skills with ``insight_required > 0`` need this much insight
 # to fire, so intent techniques unlock as a fight's exchanges accumulate.
@@ -97,6 +116,58 @@ COMBO_RESET_ROLES = frozenset({"none"})
 FOE_GUARD_DEFENSE_BONUS = 0.5  # +50% effective defense while guarding
 FOE_GUARD_MOMENTUM = 0.25      # the guarded flow banked into the next press
 
+# Statuses (CB.2). One table is the contract: what a timed effect is called,
+# which icon a frontend draws, and how a second application behaves. The rule is
+# what makes the status legible -- a re-applied stun refreshes instead of
+# stacking into a stun-lock, a re-applied poison accumulates, and a re-applied
+# debuff keeps the strongest cut. ``stacks`` is carried on the entry so the UI
+# can show how deep a stacking effect has built.
+#
+#   refresh   -- keep the longest duration and the strongest magnitude
+#   strongest -- same, but the stack count still climbs (shown, not multiplied)
+#   stack     -- magnitudes add, capped at STATUS_MAX_STACKS applications
+STATUS_RULES: Dict[str, Dict[str, Any]] = {
+    "stun": {"label": "Stunned", "icon": "stun", "stacking": "refresh", "harmful": True},
+    "dot_damage": {"label": "Afflicted", "icon": "poison", "stacking": "stack", "harmful": True},
+    "debuff_attack": {
+        "label": "Struck Weak", "icon": "attack_down", "stacking": "strongest", "harmful": True,
+    },
+    "debuff_defense": {
+        "label": "Armour Sundered", "icon": "defense_down", "stacking": "strongest", "harmful": True,
+    },
+    "counter": {"label": "Counter Stance", "icon": "counter", "stacking": "refresh", "harmful": False},
+    "guard": {"label": "Guarding", "icon": "guard", "stacking": "refresh", "harmful": False},
+}
+STATUS_MAX_STACKS = 3
+
+
+def status_views(statuses: Dict[str, Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """Turn a raw statuses dict into the ordered, labelled rows a UI renders.
+
+    Pure and read-only: the engine holds the truth (``turns``/``magnitude``),
+    and this adds only the vocabulary -- label, icon, stacking rule, harm -- so
+    both the combat payload and the standing state agree on what a status is.
+    Harmful effects sort first (they are what the player must react to).
+    """
+    views: List[Dict[str, Any]] = []
+    for effect, entry in statuses.items():
+        payload = dict(entry) if isinstance(entry, dict) else {"turns": entry, "magnitude": 0.0}
+        rule = STATUS_RULES.get(effect, {})
+        views.append(
+            {
+                "id": effect,
+                "label": str(rule.get("label", effect.replace("_", " ").title())),
+                "icon": str(rule.get("icon", effect)),
+                "stacking": str(rule.get("stacking", "refresh")),
+                "harmful": bool(rule.get("harmful", False)),
+                "turns": int(payload.get("turns", 0) or 0),
+                "magnitude": round(float(payload.get("magnitude", 0.0) or 0.0), 2),
+                "stacks": int(payload.get("stacks", 1) or 1),
+            }
+        )
+    views.sort(key=lambda view: (0 if view["harmful"] else 1, view["id"]))
+    return views
+
 
 class CombatSystem:
     """Resolves individual combat rounds between the player and an enemy."""
@@ -116,11 +187,15 @@ class CombatSystem:
         self._skills: Dict[str, Skill] = skills or {}
         # B.8: the foe-mind consulted each enemy phase (dao/pressure/stances).
         self.foe_ai = foe_ai
+        # CB.5: rounds elapsed in the current bout, driving the fatigue ramp and
+        # the hard cap. Reset by ``begin_combat``; never persisted.
+        self._rounds = 0
 
     def begin_combat(self, player: Player) -> int:
-        """Reset the player's insight pool and combo chain at the start of a fight."""
+        """Reset the player's insight pool, combo chain, and round clock."""
         player.insight = 0
         player.combo_stage = 0
+        self._rounds = 0
         return player.insight
 
     def attack(self, player: Player, enemy: Enemy, spar: bool = False) -> Dict[str, Any]:
@@ -139,6 +214,7 @@ class CombatSystem:
                 base_attack=base_attack,
                 crit_multiplier=crit_multiplier if is_crit else 0.0,
                 offense_scale=parts["offense_scale"],
+                fatigue_scale=parts["fatigue_scale"],
                 attack=parts["attack"],
                 defense_applied=parts["defense_applied"],
                 variance=parts["variance"],
@@ -178,6 +254,7 @@ class CombatSystem:
     def enemy_turn_only(self, player: Player, enemy: Enemy, spar: bool = False) -> Dict[str, Any]:
         """Resolve just the enemy's turn (used after the player uses an item)."""
         events: List[TurnEvent] = []
+        self._bump_round()
         self._enemy_phase(player, enemy, events)
         if spar:
             return self._spar_round_end(player, enemy, events)
@@ -222,6 +299,7 @@ class CombatSystem:
                 pack_press_scale=press_scale,
                 momentum_scale=momentum_scale,
                 offense_scale=parts["offense_scale"],
+                fatigue_scale=parts["fatigue_scale"],
                 attack=parts["attack"],
                 defense_applied=parts["defense_applied"],
                 variance=parts["variance"],
@@ -229,23 +307,41 @@ class CombatSystem:
             ),
         }
 
+    def flee_chance(self, player: Player, enemy: Enemy) -> float:
+        """The player's odds of disengaging this round (CB.7).
+
+        Fair at full health; a badly wounded cultivator scrambles harder, so a
+        retreat becomes a decision worth taking rather than a coin flip with
+        death as the other face. Published in the combat payload so a frontend
+        can show the odds before the player commits.
+        """
+        chance = FLEE_BASE_CHANCE
+        if player.max_hp > 0 and player.hp <= player.max_hp * FLEE_WOUNDED_HP_FRACTION:
+            chance += FLEE_WOUNDED_BONUS
+        return round(min(FLEE_MAX_CHANCE, chance), 2)
+
     def flee(self, player: Player, enemy: Enemy, spar: bool = False) -> Dict[str, Any]:
         """Attempt to escape; a failed attempt gives the enemy a free strike."""
-        if self._rng.chance(0.5):
+        chance = self.flee_chance(player, enemy)
+        if self._rng.chance(chance):
             return {
                 "event": EventType.COMBAT_END,
                 "outcome": "FLED",
                 "enemy_name": enemy.name,
-                "turn_events": [{"actor": "PLAYER", "action": "FLEE_SUCCESS"}],
+                "flee_chance": chance,
+                "turn_events": [{"actor": "PLAYER", "action": "FLEE_SUCCESS", "chance": chance}],
             }
+        self._bump_round()
         events: List[TurnEvent] = [
-            {"actor": "PLAYER", "action": "FLEE_FAILED"},
+            {"actor": "PLAYER", "action": "FLEE_FAILED", "chance": chance},
             self._enemy_act(player, enemy),
         ]
         if spar:
             return self._spar_round_end(player, enemy, events)
         if not player.is_alive():
             return self._defeat(enemy, events)
+        if self._rounds >= MAX_FIGHT_ROUNDS:
+            return self._stalemate(player, enemy, events)
         return self._turn(player, enemy, events)
 
     # -- active skill resolution ----------------------------------------
@@ -322,6 +418,7 @@ class CombatSystem:
                 crit_multiplier=crit_multiplier if is_crit else 0.0,
                 execute_multiplier=execute_multiplier,
                 offense_scale=parts["offense_scale"],
+                fatigue_scale=parts["fatigue_scale"],
                 attack=parts["attack"],
                 defense_applied=parts["defense_applied"],
                 variance=parts["variance"],
@@ -339,8 +436,47 @@ class CombatSystem:
         return events
 
     # -- round resolution ------------------------------------------------
+    def _bump_round(self) -> int:
+        """Count one resolved turn of the bout."""
+        self._rounds += 1
+        return self._rounds
+
+    def _fatigue_scale(self) -> float:
+        """Damage escalation once a bout passes the round budget (CB.5).
+
+        Applied to both sides' outgoing damage, so a fight that would grind
+        converges instead of running to the round cap.
+        """
+        over = self._rounds - STALL_ROUNDS
+        if over <= 0:
+            return 1.0
+        return 1.0 + over * FATIGUE_PER_ROUND
+
+    def _stalemate(self, player: Player, enemy: Enemy, events: List[TurnEvent]) -> Dict[str, Any]:
+        """End a bout that outlived the round cap: both sides withdraw.
+
+        A draw rather than a loss -- the run is not penalised, but neither is
+        there loot, because nothing was decided.
+        """
+        events.append(
+            {
+                "actor": "ENEMY",
+                "action": "STALEMATE",
+                "enemy_name": enemy.name,
+                "rounds": self._rounds,
+            }
+        )
+        return {
+            "event": EventType.COMBAT_END,
+            "outcome": "STALEMATE",
+            "enemy_name": enemy.name,
+            "rounds": self._rounds,
+            "turn_events": events,
+        }
+
     def _resolve_round(self, player: Player, enemy: Enemy, events: List[TurnEvent], spar: bool = False) -> Dict[str, Any]:
         """After the player's action, apply regen, run the enemy phase, resolve end."""
+        self._bump_round()
         hp_regen, qi_regen = self._regen(player)
         if hp_regen:
             player.heal(hp_regen)
@@ -358,6 +494,8 @@ class CombatSystem:
             return self._victory(player, enemy, events)
         if not player.is_alive():
             return self._defeat(enemy, events)
+        if self._rounds >= MAX_FIGHT_ROUNDS:
+            return self._stalemate(player, enemy, events)
         return self._turn(player, enemy, events)
 
     def _spar_round_end(self, player: Player, enemy: Enemy, events: List[TurnEvent]) -> Dict[str, Any]:
@@ -407,8 +545,9 @@ class CombatSystem:
             # Shelter behind defense; the respected flow banks into the foe's
             # next press as momentum. Two turns so the same-round status tick
             # (which expires it once) still leaves the shell up through the
-            # player's next attack.
-            enemy.statuses["guard"] = {"turns": 2, "magnitude": FOE_GUARD_MOMENTUM}
+            # player's next attack. Applied through the status table so a guard
+            # refreshes rather than stacking into an immovable wall.
+            self._apply_status(enemy, "guard", 2, FOE_GUARD_MOMENTUM)
             return {"actor": "ENEMY", "action": "GUARD", "enemy_name": enemy.name}
         return self._enemy_attack(player, enemy)
 
@@ -433,6 +572,7 @@ class CombatSystem:
                 skill_scaling=skill.scaling,
                 foe_chain_scale=multiplier,
                 offense_scale=parts["offense_scale"],
+                fatigue_scale=parts["fatigue_scale"],
                 attack=parts["attack"],
                 defense_applied=parts["defense_applied"],
                 variance=parts["variance"],
@@ -448,6 +588,7 @@ class CombatSystem:
         """Resolve a round where the player is stunned and must forfeit their turn."""
         events: List[TurnEvent] = [{"actor": "PLAYER", "action": "STUNNED"}]
         self._expire(player, "stun")
+        self._bump_round()
         self._enemy_phase(player, enemy, events)
         if spar:
             return self._spar_round_end(player, enemy, events)
@@ -455,6 +596,8 @@ class CombatSystem:
             return self._victory(player, enemy, events)
         if not player.is_alive():
             return self._defeat(enemy, events)
+        if self._rounds >= MAX_FIGHT_ROUNDS:
+            return self._stalemate(player, enemy, events)
         return self._turn(player, enemy, events)
 
     def _enemy_act(self, player: Player, enemy: Enemy) -> TurnEvent:
@@ -493,6 +636,7 @@ class CombatSystem:
                     base_attack=base_attack,
                     heavy_scale=1.5,
                     offense_scale=parts["offense_scale"],
+                    fatigue_scale=parts["fatigue_scale"],
                     attack=parts["attack"],
                     defense_applied=parts["defense_applied"],
                     variance=parts["variance"],
@@ -515,10 +659,11 @@ class CombatSystem:
             "enemy_name": enemy.name,
             "breakdown": self._damage_breakdown(
                 dealt,
-                base_attack=base_attack,
-                momentum_scale=momentum_scale,
-                offense_scale=parts["offense_scale"],
-                attack=parts["attack"],
+            base_attack=base_attack,
+            momentum_scale=momentum_scale,
+            offense_scale=parts["offense_scale"],
+            fatigue_scale=parts["fatigue_scale"],
+            attack=parts["attack"],
                 defense_applied=parts["defense_applied"],
                 variance=parts["variance"],
                 shield_absorbed=absorbed,
@@ -552,7 +697,37 @@ class CombatSystem:
 
     # -- status helpers --------------------------------------------------
     def _apply_status(self, target: Any, effect: str, turns: int, magnitude: float) -> None:
-        target.statuses[effect] = {"turns": turns, "magnitude": magnitude}
+        """Apply a timed effect, honouring its stacking rule (CB.2).
+
+        The first application simply lands. A repeat follows the effect's rule:
+        ``refresh`` keeps the longest duration and strongest magnitude, so a
+        second stun extends rather than stun-locks; ``strongest`` does the same
+        but keeps counting stacks for display; ``stack`` adds magnitudes, capped
+        at ``STATUS_MAX_STACKS`` times the strongest single application, so a
+        poison can be layered but not nuked into an instant kill.
+        """
+        existing = target.statuses.get(effect)
+        if not isinstance(existing, dict):
+            target.statuses[effect] = {
+                "turns": int(turns),
+                "magnitude": float(magnitude),
+                "base": float(magnitude),
+                "stacks": 1,
+            }
+            return
+        rule = STATUS_RULES.get(effect, {})
+        stacking = str(rule.get("stacking", "refresh"))
+        old_magnitude = float(existing.get("magnitude", 0.0) or 0.0)
+        # ``base`` is the strongest single application; the stacking ceiling is a
+        # multiple of that, so layering cannot ratchet the cap up with it.
+        base = max(float(existing.get("base", old_magnitude) or 0.0), float(magnitude))
+        existing["base"] = base
+        existing["turns"] = max(int(existing.get("turns", 0) or 0), int(turns))
+        if stacking == "stack":
+            existing["magnitude"] = min(old_magnitude + float(magnitude), base * STATUS_MAX_STACKS)
+        else:
+            existing["magnitude"] = max(old_magnitude, float(magnitude))
+        existing["stacks"] = min(STATUS_MAX_STACKS, int(existing.get("stacks", 1) or 1) + 1)
 
     def _expire(self, target: Any, effect: str) -> None:
         status = target.statuses.get(effect)
@@ -563,6 +738,25 @@ class CombatSystem:
             del target.statuses[effect]
 
     # -- combos (B.6) ----------------------------------------------------
+    def combo_view(self, player: Player) -> Dict[str, Any]:
+        """The stance chain as a UI can render it (D.3).
+
+        Names the roles already banked, the role the chain now expects (``None``
+        when anything goes), and the damage bonus the next technique will carry.
+        A refusal is then explainable in the same vocabulary: the moved stance,
+        the expected one, and the bonus that was forfeited.
+        """
+        stage = max(0, int(player.combo_stage))
+        next_role = self.next_combo_role(player)
+        return {
+            "stage": stage,
+            "chain": list(COMBO_ROLES),
+            "banked": list(COMBO_ROLES[:stage]),
+            "next_role": next_role,
+            "next_label": next_role or "any technique",
+            "bonus": round(1.0 + stage * COMBO_BONUS_PER_STAGE, 2),
+        }
+
     def next_combo_role(self, player: Player) -> Optional[str]:
         """Return the stance role the chain currently expects, or ``None``.
 
@@ -611,6 +805,67 @@ class CombatSystem:
         return player.combo_stage
 
     # -- insight (B.5) ---------------------------------------------------
+    def insight_view(self, player: Player) -> Dict[str, Any]:
+        """Where insight comes from, how fast, and what it buys (D.4).
+
+        The pool is opaque when it only appears as a number. This names every
+        source (comprehension per round, landed hits, crits, counter wounds),
+        publishes the drip rate, and lists the gated techniques the pool is for
+        -- which of them are ready and how much the nearest one still needs.
+        """
+        drip = max(0, player.comprehension // INSIGHT_COMPREHENSION_DIVISOR)
+        known = set(player.skills or ())
+        # Only techniques the cultivator actually knows are *spend* targets; the
+        # catalogue at large would bloat every payload with options that cannot
+        # be picked yet.
+        targets: List[Dict[str, Any]] = []
+        for skill_id, skill in sorted(self._skills.items()):
+            required = int(getattr(skill, "insight_required", 0) or 0)
+            if required <= 0 or skill_id not in known:
+                continue
+            targets.append(
+                {
+                    "skill_id": skill_id,
+                    "name": skill.name,
+                    "required": required,
+                    "ready": player.insight >= required,
+                }
+            )
+        unmet = [entry["required"] for entry in targets if not entry["ready"]]
+        return {
+            "total": int(player.insight),
+            "drip_per_round": drip,
+            "comprehension": int(player.comprehension),
+            "sources": [
+                {
+                    "id": "comprehension",
+                    "label": "Comprehension",
+                    "per_round": drip,
+                    "detail": f"{int(player.comprehension)} comprehension, one point per {INSIGHT_COMPREHENSION_DIVISOR} each round",
+                },
+                {
+                    "id": "exchange",
+                    "label": "Landed blow",
+                    "per_hit": INSIGHT_PER_HIT,
+                    "detail": "every damaging hit you land",
+                },
+                {
+                    "id": "crit",
+                    "label": "Critical blow",
+                    "per_hit": INSIGHT_PER_CRIT,
+                    "detail": "extra insight on a critical hit",
+                },
+                {
+                    "id": "counter",
+                    "label": "Counter wound",
+                    "per_hit": INSIGHT_PER_HIT,
+                    "detail": "every counter you land from a counter stance",
+                },
+            ],
+            "spend_targets": targets,
+            "next_spend": min(unmet) if unmet else None,
+        }
+
     def _gain_comprehension_insight(self, player: Player) -> int:
         """Grant the per-round insight drip derived from comprehension."""
         gained = max(0, player.comprehension // INSIGHT_COMPREHENSION_DIVISOR)
@@ -668,22 +923,32 @@ class CombatSystem:
     def _player_damage_parts(
         self, player: Player, enemy: Enemy, raw: int, ignore_defense: bool = False
     ) -> Dict[str, Any]:
-        """The arithmetic behind a player hit: scale, then defense (CB.1)."""
+        """The arithmetic behind a player hit: scale, fatigue, then defense (CB.1)."""
         offense_scale = self._offense_scale(player, enemy, True)
-        attack = int(raw * offense_scale)
+        fatigue_scale = self._fatigue_scale()
+        attack = int(raw * offense_scale * fatigue_scale)
         defense = (
             0
             if ignore_defense
             else int(self._enemy_defense_with_guard(enemy) * self._defense_scale(player, enemy, False))
         )
-        return {"offense_scale": round(offense_scale, 3), **self._damage_parts(attack, defense)}
+        return {
+            "offense_scale": round(offense_scale, 3),
+            "fatigue_scale": round(fatigue_scale, 3),
+            **self._damage_parts(attack, defense),
+        }
 
     def _enemy_damage_parts(self, player: Player, enemy: Enemy, raw: int) -> Dict[str, Any]:
-        """The arithmetic behind a foe's hit: scale, then defense (CB.1)."""
+        """The arithmetic behind a foe's hit: scale, fatigue, then defense (CB.1)."""
         offense_scale = self._offense_scale(player, enemy, False)
-        attack = int(raw * offense_scale)
+        fatigue_scale = self._fatigue_scale()
+        attack = int(raw * offense_scale * fatigue_scale)
         defense = int(self._player_defense(player) * self._defense_scale(player, enemy, True))
-        return {"offense_scale": round(offense_scale, 3), **self._damage_parts(attack, defense)}
+        return {
+            "offense_scale": round(offense_scale, 3),
+            "fatigue_scale": round(fatigue_scale, 3),
+            **self._damage_parts(attack, defense),
+        }
 
     def _player_damage(self, player: Player, enemy: Enemy, raw: int, ignore_defense: bool = False) -> int:
         """Player's attack value scaled by realm pressure and Dao matchup."""
@@ -802,16 +1067,30 @@ class CombatSystem:
         return self._damage_parts(attack, defense)["dealt"]
 
     def _turn(self, player: Player, enemy: Enemy, events: List[TurnEvent]) -> Dict[str, Any]:
+        """The per-round payload: HP, the round clock, and the state a UI explains.
+
+        Beyond the raw numbers this carries the *readable* layer CB.2/CB.7/D.3/D.4
+        ask for -- labelled statuses with their durations and stacking rule, the
+        odds of disengaging, the stance chain and what it expects next, and where
+        insight comes from and what it buys.
+        """
         return {
             "event": EventType.COMBAT_TURN,
             "turn_events": events,
+            "round": self._rounds,
             "player_hp": player.hp,
             "player_max_hp": player.max_hp,
+            "player_shield": player.shield,
             "enemy_hp": enemy.hp,
             "enemy_max_hp": enemy.max_hp,
             "enemy_name": enemy.name,
+            "statuses": status_views(player.statuses),
+            "enemy_statuses": status_views(enemy.statuses),
             "insight": player.insight,
+            "insight_state": self.insight_view(player),
             "combo_stage": player.combo_stage,
+            "combo": self.combo_view(player),
+            "flee": {"chance": self.flee_chance(player, enemy), "available": True},
             "pressure": self._pressure_view(player, enemy),
         }
 

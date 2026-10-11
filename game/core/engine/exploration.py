@@ -11,6 +11,7 @@ from game.core.results import (
     RestResult,
 )
 from game.models.enemy import Enemy
+from game.systems.combat_system import status_views
 from game.systems.encounter_system import foe_power
 
 
@@ -157,6 +158,9 @@ class ExplorationMixin:
         view["id"] = enemy.id
         view["shield"] = enemy.shield
         view["statuses"] = {k: dict(v) for k, v in enemy.statuses.items()}
+        # CB.2: the labelled rows beside the raw dict, so a UI shows "Stunned, 2
+        # turns" and not an effect key it has to interpret itself.
+        view["status_views"] = status_views(enemy.statuses)
         body_name = self._body_realm_names.get(enemy.body_realm_id, enemy.body_realm_id)
         essence_name = self._essence_realm_names.get(enemy.essence_realm_id or "", "")
         view["body_realm"] = body_name

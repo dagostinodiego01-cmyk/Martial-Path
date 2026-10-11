@@ -26,14 +26,31 @@ Encounter shapes by kind:
   it safe.
 * ``special`` -- a site of power; studying it reveals what accepting will do.
 * ``hazard``  -- the land itself; push through, read a safe path, or walk away.
+
+Two rules keep the opening fair (F.1), and both are data-tunable under
+``funnel`` in ``data/encounters.json``:
+
+* **the funnel** -- while the player is still in the opening story band, a
+  hostile scene never fields a foe heavier than the player's own fighting
+  weight: the drawn foe is swapped for something the pool offers in band, or
+  for the lightest thing the land has. The wilds still bite, but the first
+  fights are ones the player can answer;
+* **the mercy rule** -- in that same band an encounter is never an ambush and
+  never carries embedded hazard ground, borrowing the hazard rule that damage
+  never kills (it floors at 1 HP and hands the wound to the next fight).
+
+A hazard or trap that did bite the player is remembered and named in the *next*
+combat encounter's text and choice line (E.5), so the consequence of the ground
+is legible where it matters instead of only in the HP number.
 """
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 from game.core.constants import EventType
 from game.models.player import Player
 from game.utils.rng import RNG
+from game.utils.text import with_article
 
 #: Encounter kinds (also the ``kind`` field on every encounter payload).
 COMBAT = "combat"
@@ -80,6 +97,53 @@ DEFAULT_OPTIONS = {
     "move_on": {"label": "Move On", "hint": "Continue your journey."},
 }
 
+#: Threat bands, on the same scale as :func:`foe_power`. The engine's encounter
+#: view labels a foe with these; a test keeps the two tables in lockstep.
+THREAT_BANDS: Tuple[Tuple[float, str], ...] = ((0.6, "Low"), (1.0, "Moderate"), (1.5, "High"))
+
+#: What each choice stakes, as a format string over the numbers the encounter
+#: already knows (E.4): what it risks, or what it gives up. ``data/encounters.json``
+#: overrides any entry under ``stakes``. A choice that carries a ``chance`` has
+#: its percentage rendered by the frontend as its own badge, so these lines leave
+#: that number out rather than print it twice.
+STAKE_FORMATS: Dict[str, str] = {
+    "fight": "Fight - {threat} odds: {foe_power} against your {player_power}.",
+    "talk": "Talk - bring them around, or hand them the first blow.",
+    "pay": "Pay Toll - coin now rather than blood later.",
+    "sneak": "Sneak - slip past, or start the fight on their terms.",
+    "observe": "Observe - banks {insight} insight; {provoke}% it provokes them instead.",
+    "examine": "Examine - spends the turn and reads the find before your hand moves.",
+    "study": "Study - spends the turn, and sharpens the odds of whatever follows.",
+    "push": "Push Through - cross clean, or the ground takes about {damage}.",
+    "defuse": "Find a Way - read it right and it pays; misread it and lose about {damage}.",
+    "withdraw_ambush": "Withdraw - get clear, or they strike first.",
+    "take": "Take It - roughly {trap_chance}% of finds like this are warded.",
+    "take_revealed": "Take It - you have read the find; your hand is sure.",
+    "accept": "Accept - {effect}.",
+    "accept_unread": "Accept - you do not yet know what it will do.",
+    "withdraw_combat": "Withdraw - they keep the road, and you keep your blood.",
+    "leave_loot": "Leave It - the find stays where it lies, and its secret with it.",
+    "decline_special": "Decline - you walk away from what waits here.",
+    "withdraw_hazard": "Withdraw - you take the long way round and give up what this ground pays.",
+}
+
+#: The opening-band funnel (F.1). While ``player.max_story_tier`` is below
+#: ``max_story_tier``, a combat scene never leads with a foe above
+#: ``lead_ceiling`` times the player's power, pack members are drawn from the
+#: same band, and ambushes and embedded hazards are withheld.
+FUNNEL_DEFAULTS: Dict[str, Any] = {
+    "max_story_tier": 2,
+    "lead_ceiling": 1.0,
+    "pack_entry_ceiling": 0.6,
+    "no_ambush": True,
+    "no_hazard": True,
+    "note": (
+        "The first-run funnel: no hostile scene above the player's weight in the "
+        "opening story band, no ambush and no embedded hazard there. See the "
+        "module docstring; hazards and traps still never kill."
+    ),
+}
+
 # Scenario defaults, overridden wholesale by ``data/encounters.json``. Small
 # tables that only exist so a partial/missing data file still yields a sane,
 # playable encounter instead of an empty prompt.
@@ -104,6 +168,9 @@ DEFAULTS: Dict[str, Any] = {
         "chance_by_danger": [0.0, 0.1, 0.18, 0.24, 0.3, 0.34, 0.38, 0.42, 0.46, 0.5, 0.54],
         "max_extra_foes": 2, "pack_stat_scale": 0.6, "pack_exp_ratio": 0.5,
         "pack_loot_ratio": 0.35, "pack_press_multiplier": 0.5, "max_pack_presses": 2,
+        #: Per-danger ceiling on ``pack_stat_scale``: a pack in the shallow,
+        #: busy ground hits softer than one in the deep (F.1).
+        "pack_stat_scale_ceiling": [0.5, 0.5, 0.5, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6],
     },
     "encounter": {"hazard_chance_by_danger": [0.0, 0.08, 0.12, 0.16, 0.2, 0.24, 0.28, 0.32, 0.36, 0.4, 0.44], "trapped_loot_chance": 0.3},
 }
@@ -119,6 +186,21 @@ def foe_power(enemy: Any) -> float:
     attack = float(getattr(enemy, "attack", None) or _value(enemy, "attack") or 0.0)
     defense = float(getattr(enemy, "defense", None) or _value(enemy, "defense") or 0.0)
     return hp + attack * 5.0 + defense * 3.0
+
+
+def threat_tier(foe_power: float, player_power: float) -> str:
+    """Classify a foe relative to the player: Low, Moderate, High, or Deadly.
+
+    The system-layer spelling of the band the engine shows on the encounter
+    card; :meth:`game.core.engine.encounters.EncountersMixin._threat_tier`
+    renders it. A test asserts the two agree, so the odds a choice quotes and
+    the threat the preview shows can never drift apart.
+    """
+    ratio = foe_power / player_power if player_power > 0 else 1.0
+    for ceiling, name in THREAT_BANDS:
+        if ratio < ceiling:
+            return name
+    return "Deadly"
 
 
 def _value(entry: Any, key: str) -> Any:
@@ -148,6 +230,14 @@ class EncounterSystem:
         self._people = {str(enemy_id) for enemy_id in (mindless.get("people") or [])}
         self._mindless_overrides = {str(key): bool(value) for key, value in (mindless.get("overrides") or {}).items()}
         self._mindless_ids = {str(enemy_id) for enemy_id in (mindless.get("ids") or [])}
+        # The danger of the encounter most recently built. ``_spawn_formation``
+        # asks the system for its pack config with no encounter argument, so the
+        # danger that config is derived from has to be remembered rather than
+        # passed; the spawn always follows its own build in the same action.
+        self._built_danger = 10
+        # A hazard or trap that took HP from the player, held until the next
+        # fight can name it (E.5).
+        self._wound: Optional[Dict[str, Any]] = None
 
     # -- config accessors -------------------------------------------------
     def _config(self, section: str) -> Dict[str, Any]:
@@ -161,6 +251,31 @@ class EncounterSystem:
         entry = dict(DEFAULT_OPTIONS.get(choice_id, {"label": choice_id.title(), "hint": ""}))
         entry.update((self._data.get("options") or {}).get(choice_id) or {})
         return entry
+
+    def stake_line(self, key: str, **values: Any) -> str:
+        """Format a staked choice's line (E.4): what it risks, or what it gives up.
+
+        Empty when the copy for ``key`` is missing, so a partial data file
+        degrades to the plain hint rather than printing a format error.
+        """
+        template = str((self._data.get("stakes") or {}).get(key) or STAKE_FORMATS.get(key) or "")
+        if not template:
+            return ""
+        try:
+            return template.format(**values)
+        except (KeyError, IndexError):
+            return ""
+
+    def _funnel(self) -> Dict[str, Any]:
+        """Return the opening-band funnel config merged over its defaults."""
+        merged = dict(FUNNEL_DEFAULTS)
+        merged.update(self._data.get("funnel") or {})
+        return merged
+
+    def in_opening_band(self, player: Player) -> bool:
+        """True while the player is still inside the first-run funnel (F.1)."""
+        ceiling = int(self._funnel().get("max_story_tier", 2) or 2)
+        return int(getattr(player, "max_story_tier", 1) or 1) < ceiling
 
     def _chance_at_danger(self, table: List[float], danger: int) -> float:
         """Index a danger-keyed probability table, clamped to its ends."""
@@ -203,6 +318,7 @@ class EncounterSystem:
         location with nothing to fight over) and the caller should resolve it as
         it always did.
         """
+        self._built_danger = int(danger)
         kind = descriptor.get("event")
         if kind == EventType.COMBAT:
             return self._build_combat(descriptor, player, danger, player_power, pool or {})
@@ -225,6 +341,14 @@ class EncounterSystem:
         leader_id = str(descriptor.get("enemy_id", ""))
         if leader_id not in self._enemies:
             return None
+        funnel = self._funnel()
+        opening = self.in_opening_band(player)
+        text = str(descriptor.get("text", ""))
+        # F.1: in the opening band the scene is handed a foe the player can
+        # actually answer. The drawn foe is kept whenever it is already in
+        # band, so the pool's own variety survives.
+        if opening:
+            leader_id, text = self._funnel_leader(leader_id, text, pool, player_power, funnel)
         formation = self._config("formation")
         ambush = self._config("ambush")
         foes = [leader_id]
@@ -232,23 +356,38 @@ class EncounterSystem:
         # the leader so a pack is a harder fight, not three separate fights.
         if len(pool.get("combat") or []) > 0 and self._rng.chance(self._chance_at_danger(formation["chance_by_danger"], danger)):
             extra = self._roll_formation_size(int(formation.get("max_extra_foes", 2)))
-            candidates = [entry["enemy_id"] for entry in pool["combat"] if entry.get("enemy_id") in self._enemies]
+            ceiling = player_power * float(funnel.get("pack_entry_ceiling", 0.6)) if opening else None
+            candidates = [
+                entry["enemy_id"]
+                for entry in pool["combat"]
+                if entry.get("enemy_id") in self._enemies
+                and (ceiling is None or foe_power(self._enemies[str(entry["enemy_id"])]) <= ceiling)
+            ]
             for _ in range(extra):
                 if not candidates:
                     break
                 foes.append(str(self._rng.choice(candidates)))
-        is_ambush = self._rng.chance(self._chance_at_danger(ambush["chance_by_danger"], danger))
-        # Fighting in bad ground: the hazard is revealed to the observant, and
-        # only bites whoever did not take the time to read it.
+        # The mercy rule (F.1): the opening band is never ambushed, and its
+        # ground never turns on a player who has not learned to read it yet.
+        mercy = bool(opening and funnel.get("no_ambush", True))
+        is_ambush = (not mercy) and self._rng.chance(self._chance_at_danger(ambush["chance_by_danger"], danger))
         hazard = None
-        if self._rng.chance(self._chance_at_danger(self._config("encounter")["hazard_chance_by_danger"], danger)):
+        if not (opening and funnel.get("no_hazard", True)) and self._rng.chance(
+            self._chance_at_danger(self._config("encounter")["hazard_chance_by_danger"], danger)
+        ):
+            # Fighting in bad ground: the hazard is revealed to the observant, and
+            # only bites whoever did not take the time to read it.
             hazard = self._roll_hazard(danger, pool)
         leader = self._enemies[leader_id]
+        # E.5: whatever the ground already took is named where it matters.
+        wound = self._consume_wound(player)
+        if wound is not None:
+            text = f"{text} {self.wound_line(wound, player)}".strip()
         return {
             "kind": COMBAT,
             "scene_verb": "encounter_ambush" if is_ambush else "encounter_combat",
             "title": "Ambush" if is_ambush else ("Pack" if len(foes) > 1 else "Hostile Encounter"),
-            "text": str(descriptor.get("text", "")),
+            "text": text,
             "danger": int(danger),
             "ambush": is_ambush,
             "foes": foes,
@@ -257,10 +396,71 @@ class EncounterSystem:
             "special": None,
             "observed": False,
             "resolved": False,
+            "mercy": bool(opening),
+            "wound": wound,
             "context": {"enemy": str(leader.get("name", leader_id))},
             # A clean sneak past a foe can turn up their unattended cache.
             "_pool_loot": list(pool.get("loot") or []),
         }
+
+    def _funnel_leader(
+        self,
+        leader_id: str,
+        text: str,
+        pool: Dict[str, Any],
+        player_power: float,
+        funnel: Dict[str, Any],
+    ) -> Tuple[str, str]:
+        """Pick the foe an opening-band scene may field (F.1).
+
+        The drawn foe is kept when it is already at or below the player's own
+        fighting weight. Otherwise the scene draws again -- from the same
+        location pool, so the land keeps its identity -- among the entries in
+        band. If the pool offers none, the lightest thing it has is sent: the
+        player still meets what lives here, just never the worst of it first.
+        """
+        ceiling = player_power * float(funnel.get("lead_ceiling", 1.0))
+        drawn = self._enemies.get(leader_id, {})
+        if foe_power(drawn) <= ceiling:
+            return leader_id, text
+        entries = [
+            entry
+            for entry in (pool.get("combat") or [])
+            if entry.get("enemy_id") in self._enemies
+        ]
+        if not entries:
+            return leader_id, text
+        in_band = [entry for entry in entries if foe_power(self._enemies[str(entry["enemy_id"])]) <= ceiling]
+        if in_band:
+            pick = str(
+                self._rng.weighted_choice(
+                    [str(entry["enemy_id"]) for entry in in_band],
+                    [entry.get("weight", 1) for entry in in_band],
+                )
+            )
+        else:
+            pick = str(
+                min(entries, key=lambda entry: (foe_power(self._enemies[str(entry["enemy_id"])]), str(entry["enemy_id"])))["enemy_id"]
+            )
+        if pick == leader_id:
+            return leader_id, text
+        return pick, self._retarget_text(text, leader_id, pick)
+
+    def _retarget_text(self, text: str, old_id: str, new_id: str) -> str:
+        """Rewrite a combat descriptor's prose when its foe is substituted.
+
+        The descriptor is written by the event system over the foe it drew, so a
+        substituted foe needs the sentence re-pointed or the player reads the
+        wrong name. The name is swapped in place when it appears; otherwise the
+        event system's own sentence shape is appended.
+        """
+        old_name = str(self._enemies.get(old_id, {}).get("name", ""))
+        new_name = str(self._enemies.get(new_id, {}).get("name", new_id))
+        if old_name and with_article(old_name) in text:
+            return text.replace(with_article(old_name), with_article(new_name))
+        if old_name and old_name in text:
+            return text.replace(old_name, new_name)
+        return f"{text} {with_article(new_name)} lunges from the shadows!".strip()
 
     def _roll_formation_size(self, max_extra: int) -> int:
         """Pick how many extra foes join: one usually, more rarely."""
@@ -417,12 +617,29 @@ class EncounterSystem:
         # canonical vocabulary, not a display sort.
         return builder(encounter, player, player_power)
 
-    def _option(self, choice_id: str, *, available: bool = True, reason: str = "", reason_code: str = "", cost: Optional[Dict[str, int]] = None) -> Dict[str, Any]:
+    def _option(
+        self,
+        choice_id: str,
+        *,
+        available: bool = True,
+        reason: str = "",
+        reason_code: str = "",
+        cost: Optional[Dict[str, int]] = None,
+        stakes: str = "",
+        **extra: Any,
+    ) -> Dict[str, Any]:
+        """Build one choice card.
+
+        ``stakes`` (E.4) replaces the plain hint with a line carrying the odds
+        the choice actually runs on, or the price of giving it up; ``extra``
+        carries the same numbers structurally (``odds``, ``forfeit``, ...) for a
+        frontend that wants to lay them out itself.
+        """
         meta = self.option_meta(choice_id)
         entry: Dict[str, Any] = {
             "choice_id": choice_id,
             "label": meta["label"],
-            "hint": meta["hint"],
+            "hint": stakes or meta["hint"],
             "available": bool(available),
         }
         if reason:
@@ -431,6 +648,9 @@ class EncounterSystem:
             entry["reason_code"] = reason_code
         if cost:
             entry["cost"] = cost
+        for key, value in extra.items():
+            if value is not None:
+                entry[key] = value
         return entry
 
     def _combat_options(self, encounter: Dict[str, Any], player: Player, player_power: float) -> List[Dict[str, Any]]:
@@ -441,9 +661,35 @@ class EncounterSystem:
         ratio = power / player_power if player_power > 0 else 1.0
         mindless = self.is_mindless(leader_id)
         ambushed = bool(encounter.get("ambush"))
-        options = [self._option("fight")]
+        threat = threat_tier(power, player_power)
+        wound = encounter.get("wound")
+        # E.4: the fight card leads with the comparison it is actually betting on.
+        fight_stakes = self.stake_line(
+            "fight", threat=threat, foe_power=int(round(power)), player_power=int(round(player_power))
+        )
+        if wound:
+            fight_stakes = f"{fight_stakes} {self.wound_line(wound, player)}".strip()
+        options = [
+            self._option(
+                "fight",
+                stakes=fight_stakes,
+                odds={
+                    "threat": threat,
+                    "foe_power": int(round(power)),
+                    "player_power": int(round(player_power)),
+                    "ratio": round(ratio, 2),
+                },
+                wound=wound,
+                mercy=bool(encounter.get("mercy")),
+            )
+        ]
 
-        talk = self._option("talk")
+        parley_chance = self._check_chance(self._config("parley"), player, ratio)
+        talk = self._option(
+            "talk",
+            stakes=self.stake_line("talk", chance=int(round(parley_chance * 100))),
+            chance=round(parley_chance, 2),
+        )
         if mindless:
             talk = self._option("talk", available=False, reason_code="MINDLESS_FOE",
                                 reason=f"The {leader.get('name', 'thing')} has no speech in it; words will not reach it.")
@@ -458,10 +704,17 @@ class EncounterSystem:
                              reason="They are already on you -- there is no moment left to slip away." if ambushed else "")
         if not ambushed:
             sneak["chance"] = round(sneak_chance, 2)
+            sneak["hint"] = self.stake_line("sneak", chance=int(round(sneak_chance * 100)))
         options.append(sneak)
 
         toll = self.toll(leader, player_power)
-        pay = self._option("pay", cost=toll)
+        bribe_chance = self._check_chance(self._config("bribe"), player, ratio)
+        pay = self._option(
+            "pay",
+            cost=toll,
+            stakes=self.stake_line("pay", chance=int(round(bribe_chance * 100)), gold=toll.get("gold", 0)),
+            chance=round(bribe_chance, 2),
+        )
         if mindless:
             pay = self._option("pay", available=False, reason_code="MINDLESS_FOE",
                                reason="It does not know what coin is.")
@@ -473,61 +726,121 @@ class EncounterSystem:
 
         # Reading the scene is a one-time bargain: it banks insight, so letting
         # it repeat would let the patient farm the fight before it starts.
+        observe_stakes = self.stake_line(
+            "observe",
+            insight=self.observed_insight(player),
+            provoke=int(round(float(self._config("observe").get("provoke_chance", 0.22)) * 100)),
+        )
         if encounter.get("observed"):
             observe = self._option("observe", available=False, reason_code="ALREADY_OBSERVED",
                                    reason="You have already read this scene; there is nothing left to learn from watching.")
         else:
             observe = self._option("observe", available=not ambushed,
                                    reason_code="AMBUSHED" if ambushed else "",
-                                   reason="There is no time to study a scene that is already unfolding." if ambushed else "")
+                                   reason="There is no time to study a scene that is already unfolding." if ambushed else "",
+                                   stakes=observe_stakes,
+                                   insight=self.observed_insight(player))
         options.append(observe)
 
-        withdraw = self._option("withdraw")
+        # E.4: what walking away actually costs, in this scene's own terms.
+        withdraw_stakes = self.stake_line("withdraw_combat")
+        withdraw = self._option("withdraw", stakes=withdraw_stakes, forfeit="the road")
         if ambushed:
-            withdraw["chance"] = round(self._check_chance(self._config("sneak"), player, ratio), 2)
+            chance = round(self._check_chance(self._config("sneak"), player, ratio), 2)
+            withdraw["chance"] = chance
+            withdraw["hint"] = self.stake_line("withdraw_ambush", chance=int(round(chance * 100)))
         options.append(withdraw)
         return options
 
     def _loot_options(self, encounter: Dict[str, Any], player: Player, player_power: float) -> List[Dict[str, Any]]:
         loot = encounter.get("loot") or {}
         revealed = bool(loot.get("revealed"))
-        options = [self._option("take")]
+        trap = loot.get("trap")
+        if revealed:
+            take_stakes = self.stake_line("take_revealed")
+            risk: Dict[str, Any] = {"trap_chance": 0.0, "warded": trap is not None}
+        else:
+            trapped_chance = float(self._config("encounter").get("trapped_loot_chance", 0.3))
+            take_stakes = self.stake_line("take", trap_chance=int(round(trapped_chance * 100)))
+            risk = {"trap_chance": round(trapped_chance, 2), "warded": None}
+        options = [self._option("take", stakes=take_stakes, risk=risk)]
         if revealed:
             reason = ("You know what waits there now; the ward will not catch you twice."
                       if loot.get("trap") else "You have read the find; nothing about it is hidden any longer.")
             options.append(self._option("examine", available=False, reason_code="ALREADY_EXAMINED", reason=reason))
         else:
-            options.append(self._option("examine"))
-        options.append(self._option("leave"))
+            options.append(self._option("examine", stakes=self.stake_line("examine")))
+        options.append(self._option("leave", stakes=self.stake_line("leave_loot"), forfeit="the find"))
         return options
 
     def _special_options(self, encounter: Dict[str, Any], player: Player, player_power: float) -> List[Dict[str, Any]]:
         special = encounter.get("special") or {}
-        options = [self._option("accept")]
-        if special.get("revealed"):
+        revealed = bool(special.get("revealed"))
+        effect = dict(special.get("effect") or {})
+        if revealed:
+            accept = self._option(
+                "accept",
+                stakes=self.stake_line("accept", effect=self.effect_line(effect)) or self.option_meta("accept")["hint"],
+                effect=effect,
+            )
+        else:
+            accept = self._option(
+                "accept",
+                stakes=self.stake_line("accept_unread") or self.option_meta("accept")["hint"],
+            )
+        options = [accept]
+        if revealed:
             options.append(self._option("study", available=False, reason_code="ALREADY_STUDIED",
                                         reason="You have already learned what this place offers."))
         else:
-            options.append(self._option("study"))
-        options.append(self._option("decline"))
+            options.append(self._option("study", stakes=self.stake_line("study")))
+        options.append(self._option("decline", stakes=self.stake_line("decline_special"), forfeit="the place's power"))
         return options
 
     def _hazard_options(self, encounter: Dict[str, Any], player: Player, player_power: float) -> List[Dict[str, Any]]:
         hazard = encounter.get("hazard") or {}
         studied = bool(hazard.get("studied"))
-        push = self._option("push")
-        push["chance"] = round(self.hazard_push_chance(hazard), 2)
+        damage = int(hazard.get("effect", {}).get("magnitude", 0) or 0)
+        push_chance = round(self.hazard_push_chance(hazard), 2)
+        push = self._option(
+            "push",
+            stakes=self.stake_line("push", chance=int(round(push_chance * 100)), damage=damage),
+            chance=push_chance,
+            damage=damage,
+        )
         options = [push]
-        defuse = self._option("defuse")
-        defuse["chance"] = round(self.hazard_defuse_chance(hazard, player), 2)
+        defuse_chance = round(self.hazard_defuse_chance(hazard, player), 2)
+        defuse = self._option(
+            "defuse",
+            stakes=self.stake_line(
+                "defuse", chance=int(round(defuse_chance * 100)), damage=max(1, damage // 2)
+            ),
+            chance=defuse_chance,
+            damage=max(1, damage // 2),
+            reward=dict(hazard.get("defuse_reward") or {}),
+        )
         options.append(defuse)
         if studied:
             options.append(self._option("study", available=False, reason_code="ALREADY_STUDIED",
                                         reason="You have already read this ground."))
         else:
-            options.append(self._option("study"))
-        options.append(self._option("withdraw"))
+            options.append(self._option("study", stakes=self.stake_line("study")))
+        options.append(self._option("withdraw", stakes=self.stake_line("withdraw_hazard"), forfeit="what this ground pays"))
         return options
+
+    @staticmethod
+    def effect_line(effect: Dict[str, Any]) -> str:
+        """Render a site-of-power effect as the numbers it will actually apply."""
+        parts: List[str] = []
+        for key in ("heal", "restore_qi", "restore", "exp", "insight", "progress"):
+            value = int(effect.get(key, 0) or 0)
+            if value:
+                parts.append(f"+{value} {key.replace('_', ' ')}")
+        kind = str(effect.get("type", "") or "")
+        magnitude = int(effect.get("magnitude", 0) or 0)
+        if kind and kind != "none" and magnitude:
+            parts.append(f"{kind.replace('_', ' ')} {magnitude}")
+        return ", ".join(parts)
 
     # -- odds -------------------------------------------------------------
     def _check_chance(self, config: Dict[str, Any], player: Player, ratio: float) -> float:
@@ -595,7 +908,47 @@ class EncounterSystem:
         resolver = resolvers.get(encounter.get("kind"))
         if resolver is None:
             return {"outcome": "NONE", "verb": "encounter", "resolve": True}
-        return resolver(encounter, choice_id, player, player_power)
+        payload = resolver(encounter, choice_id, player, player_power)
+        self.note_wound(payload)
+        return payload
+
+    # -- the wound the ground left (E.5) ----------------------------------
+    def note_wound(self, payload: Dict[str, Any]) -> None:
+        """Remember a hazard or trap's price, to be named in the next fight.
+
+        Hazard and trap damage never kills (it floors at 1 HP in the engine), so
+        the consequence belongs to the *next* fight; this holds it there instead
+        of letting it show up only as a smaller HP number.
+        """
+        damage = int(payload.get("damage", 0) or 0)
+        if damage <= 0:
+            return
+        source = payload.get("hazard") or payload.get("trap") or {}
+        self._wound = {
+            "id": source.get("id"),
+            "name": str(source.get("name") or "the ground"),
+            "damage": damage,
+        }
+
+    def _consume_wound(self, player: Player) -> Optional[Dict[str, Any]]:
+        """Hand the pending wound to the fight now being built, once."""
+        wound = self._wound
+        self._wound = None
+        if wound is None:
+            return None
+        # Healing in between erases it: the line only ever reports a real debt.
+        if int(player.hp) >= int(player.max_hp):
+            return None
+        return wound
+
+    @staticmethod
+    def wound_line(wound: Dict[str, Any], player: Player) -> str:
+        """The plain line naming what the ground took and what is left."""
+        return (
+            f"You are still carrying the {wound.get('name', 'ground')} "
+            f"({int(wound.get('damage', 0) or 0)} damage): you meet this at "
+            f"{int(player.hp)}/{int(player.max_hp)} HP."
+        )
 
     def _resolve_combat(self, encounter: Dict[str, Any], choice_id: str, player: Player, player_power: float) -> Dict[str, Any]:
         foes = encounter.get("foes") or []
@@ -839,9 +1192,19 @@ class EncounterSystem:
             ]
         return reveal
 
-    def pack_scale(self) -> float:
-        """Return the stat multiplier applied to extra formation foes."""
-        return float(self._config("formation").get("pack_stat_scale", 0.6))
+    def pack_scale(self, danger: Optional[int] = None) -> float:
+        """Return the stat multiplier applied to extra formation foes.
+
+        Capped by the danger of the ground (F.1): a pack in the shallow, busy
+        zones hits softer than one in the deep. ``danger`` defaults to the most
+        recently built encounter -- the one being spawned -- because the spawner
+        asks for the config without the encounter to hand.
+        """
+        formation = self._config("formation")
+        scale = float(formation.get("pack_stat_scale", 0.6))
+        level = self._built_danger if danger is None else int(danger)
+        ceiling = self._chance_at_danger(list(formation.get("pack_stat_scale_ceiling") or []), level)
+        return min(scale, float(ceiling)) if ceiling else scale
 
     def formation_config(self) -> Dict[str, Any]:
         """Return the formation tuning (pack presses, reward ratios, caps)."""

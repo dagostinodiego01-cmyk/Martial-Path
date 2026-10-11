@@ -41,6 +41,7 @@ from game.validation.character_checks import (
     _validate_trainers,
 )
 from game.validation.economy_checks import (
+    _validate_currency_economy,
     _validate_dead_content,
     _validate_equipment_data,
     _validate_find_config,
@@ -94,6 +95,7 @@ def validate_all_game_data(registry: Optional[GameDataRegistry] = None) -> Valid
     _validate_talent_ladder(registry, result)
     _validate_equipment_data(registry, result)
     _validate_shop_data(registry, result)
+    _validate_currency_economy(registry, result)
     _validate_trainers(registry, result)
     _validate_sects(registry, result)
     _validate_daos(registry, result)

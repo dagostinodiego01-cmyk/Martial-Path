@@ -24,9 +24,11 @@ class ProgressionMixin:
 
         Each upgrade option is annotated with ``affordable`` (whether the player
         holds enough of every cost item, e.g. ``talent_refining_elixir``) so the
-        frontend can disable unaffordable upgrades without its own game rules.
+        frontend can disable unaffordable upgrades without its own game rules, and
+        with ``sources`` (where to buy that cost item, C.7) so an unaffordable
+        upgrade is a destination rather than a dead end.
         """
-        return TalentsResult(
+        result = TalentsResult(
             martial_talent=self.starting_fate.martial_talent_view(self.player.martial_talent_id),
             body_talent=self.starting_fate.body_talent_view(self.player.body_talent_id),
             martial_upgrades=self._annotate_upgrade_affordability(
@@ -36,6 +38,8 @@ class ProgressionMixin:
                 self.starting_fate.upgrade_options_view("body", self.player.body_talent_id)
             ),
         ).to_dict()
+        result["item_sources"] = self._cost_item_sources(result)
+        return result
 
     def _annotate_upgrade_affordability(self, options: list[Dict[str, Any]]) -> list[Dict[str, Any]]:
         """Annotate talent upgrade options with an ``affordable`` flag."""
@@ -49,6 +53,17 @@ class ProgressionMixin:
             )
             annotated.append(entry)
         return annotated
+
+    def _cost_item_sources(self, talents_result: Dict[str, Any]) -> Dict[str, list[str]]:
+        """Where to obtain every cost item the upgrade options name (C.7)."""
+        item_ids: set[str] = set()
+        for track in ("martial_upgrades", "body_upgrades"):
+            for option in talents_result.get(track, []):
+                item_ids.update(str(cost_id) for cost_id in (option.get("cost") or {}))
+        return {
+            item_id: self.shops.sources_for_item(item_id)
+            for item_id in sorted(item_ids)
+        }
 
     def _upgrade_talent(self, track: str, target_id: str) -> Dict[str, Any]:
         """Upgrade a Martial or Body talent to the next grade, spending its cost."""

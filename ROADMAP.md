@@ -1,10 +1,10 @@
 # Martial Path — Roadmap to the Best Text-Based Cultivation Game Ever
 
-**Status:** vision + phased plan. This document is the single source of task
-tracking; the closed 17-priority GROK-review backlog it superseded has been
-removed.
+**Status:** vision + long-range design. `TASKS.md` is the live execution tracker,
+milestone owner, and cross-chat handoff log; this roadmap records the long-range
+product direction and phase intent.
 
-**Last updated:** 2026-09-12.
+**Last reviewed:** 2026-09-25. See `TASKS.md` for current status and next work.
 
 ---
 
@@ -64,29 +64,35 @@ dimensions as critical:
 
 ---
 
-## 2. Current state (baseline — all DONE)
+## 2. Current state (reviewed 2026-09-25)
 
-- **Engine:** dual cultivation (Body + Essence) with strain/stability, 26 skill
-  effect types, stats/passives, talent ladders + upgrades, lifespan/seasons/
-  closed-door, morality/relationship/reputation, quests (chains), economy
-  (buy/sell, 12 shops), trainers, sects (join, path-locked techniques), equipment
-  (sets, durability, repair), combat (spar/duel, statuses, enemy abilities),
-  save/meta (ironman, NG+, export/import).
-- **Content:** 208 skills, 236 enemies, 251 equipment, 213 items, 50 NPCs, 29
-  locations, 9 quests, 12 shops, 8 trainers, 4 sects. All skills reachable.
-- **Frontend:** Godot GUI restructured (top bar + 3-column body + floating tab
-  overlays + paper-doll equipment).
-- **Quality:** **414 passing, 3 skipped** tests; validator **0 errors**.
+Martial Path is now a **feature-rich alpha**: the engine, content catalogue,
+campaign/meta systems, and Godot shell are present. The remaining work is
+primarily persistence correctness, UX parity, balance, onboarding, and release
+hardening rather than a greenfield MVP.
 
-**What this roadmap changes** (the gaps that stand between today and "best ever"):
+- **Engine:** dual cultivation, lifespan/seasons, talents, quests/campaign,
+  living world, social/faction systems, shops/economy, equipment, combat with
+  Dao/stance/insight mechanics, encounters, meta progression, and local saves.
+- **Content:** 215 skills, 236 enemies, 251 equipment, 239 items, 90 characters,
+  45 locations, 62 quests, 12 sects, 104 recipes, 9 secret realms, 12 Daos, and
+  4 origins. All locations have artwork; the dead-content sweep is clean.
+- **Frontend:** Godot 4.7 dashboard, structured overlay panels, world/map/codex
+  surfaces, identity/portrait flow, and headless scene/event checks.
+- **Quality snapshot:** 974 tests collected; latest full run was 970 passed,
+  4 skipped, 1 strict xfail; validator and economy gates pass; the deterministic
+  playthrough and Godot contract checks pass.
+- **Integration state:** `main` currently has a large uncommitted implementation
+  wave across engine/data/Godot/tests/replay fixtures. A roadmap checkbox is
+  not proof that the shared tree has been integrated.
+- **Release blockers:** save/load does not yet preserve all RNG streams and the
+  run seed; the counter-graph/tier balance xfails remain; API session ownership,
+  UI refresh performance, accessibility, packaging, and fresh-machine release
+  verification remain open.
 
-1. Prose is sparse and static → needs a real **procedural narrative engine**.
-2. Combat is HP/stat + status effects → needs a **Dao/philosophy model**.
-3. Death/restart is an afterthought → needs **roguelike permadeath + meta unlocks**.
-4. Story is 9 scattered quests → needs a **campaign arc + endless post-game**.
-5. World is static between player actions → needs **NPC/faction/economy simulation**.
-6. Content is broad but shallow → needs **depth + procedural secret realms**.
-7. Frontend shows state but not *story* → needs **prose-forward Godot rendering**.
+The active milestone order, write sets, and handoff protocol are in `TASKS.md`.
+Do not use the old baseline counts or checkboxes below as a current execution
+claim.
 
 ---
 
@@ -456,8 +462,9 @@ release docs and onboarding.
 
 ## 5. Cross-cutting concerns (do in every phase)
 
-- **Determinism:** all RNG goes through one seeded `RNG`; a run's seed reproduces it
-  exactly (test: replay a seed's action log → identical state).
+- **Determinism:** gameplay randomness uses explicit seeded RNG streams; a run's
+  seed and every stream state must survive save/load so replaying the same action
+  log produces the same state. The M1 save milestone owns this contract.
 - **Save/meta split:** run-save (per-character, permadeath-scoped) vs meta-save
   (ancestral memory, unlocks, chronicle) must be separate files; bump `SAVE_VERSION`
   on schema changes with migration tests.
@@ -502,8 +509,9 @@ release docs and onboarding.
 
 A task is **done** when all hold:
 
-1. Code/data committed to `game/` (and `frontend-godot/` for UI), following §1.
+1. The change is integrated into the agreed shared branch/worktree and follows §1.
 2. At least one test under `tests/` exercises it (unit or engine-level).
 3. `validate_all_game_data()` returns 0 errors (new data collections validated).
-4. Godot script parses clean (`--headless --check-only`).
-5. `handover.md` notes the change; the `ROADMAP.md` checkbox is flipped to `[x]`.
+4. Godot script parses clean (`--headless --check-only`) and relevant scene checks pass.
+5. `TASKS.md` records the lane's done evidence and handoff; the `ROADMAP.md`
+   checkbox is a long-range summary, not the integration record.

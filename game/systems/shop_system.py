@@ -42,6 +42,25 @@ class ShopSystem:
         """The price multiplier this world's economy band applies."""
         return self._economy_multiplier
 
+    def sources_for_item(self, item_id: str) -> List[str]:
+        """Where this item can be bought, as ``"shop display (price)"`` strings (C.7).
+
+        The talent-upgrade dialog names its cost; this names where to earn or buy it.
+        Scans every shop's stock rather than the player's location, because the point
+        is to point at a destination.
+        """
+        sources: List[str] = []
+        for shop in sorted(self._shops.values(), key=lambda entry: str(entry.get("id"))):
+            entry = self._stock_entry(shop, item_id)
+            if entry is None:
+                continue
+            price = self._price(entry)
+            price_text = ", ".join(
+                f"{amount} {currency.replace('_', ' ')}" for currency, amount in price.items()
+            )
+            sources.append(f"{shop.get('display_name', shop.get('id'))} ({price_text})")
+        return sources
+
     def shops_for_location(self, location_id: str) -> List[Dict[str, Any]]:
         """Return summary data for shops available at a location."""
         return [self._shop_summary(shop) for shop in self._shops.values() if self._is_at_location(shop, location_id)]

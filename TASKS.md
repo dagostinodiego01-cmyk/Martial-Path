@@ -5,14 +5,197 @@ systems, 5 services, 13 engine mixins and 785 tests, and (b) a play-verified
 audit — three engine runs driven through the HTTP API and the Godot client driven
 live through the godot-ai MCP bridge.
 
+**Last reviewed:** 2026-09-25.
+
 **Purpose:** raise every feature from its measured score to 10/10. Each
 programme below states where it is, why it is not a 10, the rework tasks, and
 measurable acceptance criteria. `ROADMAP.md` stays the vision/design source;
-**this file is the live tracker**.
+**this file is the live execution tracker**. Historical scorecards and landing
+notes are retained below for context, but they do not override the live plan in
+this section or section 8.
 
 ---
 
-> **Parallel work:** see section 8 for lanes, waves, single-writer files, merge order, and how many agents to run at once.
+> **Cross-chat rule:** every new chat starts by reading this file, checking
+> `git status`, selecting exactly one milestone/subtask, and declaring its write
+> set before editing. At the end, update the milestone status and paste a
+> handoff record using the template in section 9. Never reset, stage, or
+> overwrite work belonging to another chat.
+
+### Current execution baseline (2026-09-25)
+
+| Signal | Current review state |
+|---|---|
+| Branch / tree | `main`; 61 changed paths are currently uncommitted, including regenerated replay fixtures. Preserve all existing work; do not use broad staging or destructive Git commands. |
+| Python gate | Latest full run: 970 passed, 4 skipped, 1 strict xfail, 0 failures. |
+| Data gate | Validator: 0 errors. Dead-content sweep: 0 unreachable, 0 trap options. Economy report passes. |
+| Determinism gate | 20 recorded replay logs pass, but a fresh-engine save/load continuation currently diverges because RNG state and the run seed are not persisted. |
+| Godot gate | Headless Godot 4.7 checks pass, including the 8/8 L1 render check. Display-only/manual verification is still pending. |
+| Known release debt | Counter-graph strict xfail, High/Deadly tier cliff, crash-safe persistence, API session ownership, UI refresh budget, and packaging are not release-complete. |
+
+### Live execution plan (active)
+
+The order below is intentionally different from the old historical wave table.
+It adds persistence/transport correctness before broad feature work, integrates
+Godot panels as payloads become stable, and keeps balance serial.
+
+| ID | Milestone | Status | Primary owner | Exit condition |
+|---|---|---|---|---|
+| **M0** | Integrate and re-baseline | **COMPLETE (2026-09-25)** | Integrator / documentation chat | Current tree reviewed, active docs reconciled, gates recorded, no stale execution instructions |
+| **M1** | Save continuity and transport safety | **NEXT — BLOCKING** | Persistence/API chat | Fresh-process save continuation is identical; migrations, atomic writes, recovery, and session ownership are tested |
+| **M2a** | L5 narrative and prose | PENDING after M1 contract freeze | Narrative/data chat | Every render path has prose; voice/repetition/context checks pass |
+| **M2b** | L7 world, social, factions | PENDING after M1 contract freeze | World/social chat | World changes, NPC actions, sect standing, debates, and factions are surfaced and playable |
+| **M2c** | L9 campaign and realms | PENDING after L7 contract checkpoint | Campaign/realms chat | Campaign, three endings, secret realms, and endless transition pass end-to-end |
+| **M2d** | L10 residual meta work | PENDING after M1 | Meta/content chat | Legacy/origin/chronicle work is complete without reopening persistence ownership |
+| **M3** | L8 rolling Godot parity | **ROLLING** | One panel per Godot chat | Stable payloads are reachable, rendered, live-HTTP tested, and refresh performance is measured |
+| **M4** | S3 balance sweep | PENDING after M2/M1 baseline | One balance chat, serial | No unexplained xfails; target win-rate, pacing, encounter, and economy bands pass |
+| **M5** | L11 release hardening | PENDING after M1/M3/M4 | Release chat | Clean Windows package launches, saves/reloads, and passes a fresh-machine verification |
+
+#### M0 — Integrate and re-baseline
+
+- **Role:** integrator; this is a review/documentation milestone, not a feature
+  lane.
+- **Start with:** inspect the current diff and classify changes by engine/data,
+  Godot, replay fixtures, and documentation. Do not infer ownership from file
+  names alone.
+- **Write set:** `TASKS.md`, `handover.md`, `ROADMAP.md`, and `README.md` only
+  when the change is a status/documentation correction.
+- **Out of scope:** gameplay tuning, save implementation, broad UI refactoring,
+  staging, committing, resetting, or deleting another chat's work.
+- **Exit evidence:** current gate results are recorded; the archived “held
+  commit” instructions are clearly marked historical; `TASKS.md` is named the
+  live tracker; current known gaps are listed without stale “gate is red” claims
+  in the active status.
+
+<!-- CHAT-HANDOFF M0
+Start: read the Current execution baseline and inspect `git status`.
+Write set: documentation/status files only.
+Stop when: the current tree has a reviewable, non-destructive status packet.
+Next chat: M1 persistence/API owner.
+-->
+
+**M0 completion record (2026-09-25):** reviewed the shared `main` tree without
+staging, resetting, or deleting existing work. Classified 61 changed paths
+across engine/data, Godot, tests/replay fixtures, tools, and documentation;
+20 replay fixtures and the new `check_l1_render.gd` are part of the existing
+implementation wave. Reconciled `README.md`, `ROADMAP.md`, and `handover.md`;
+the live tracker now owns status and handoffs. Recorded gates: 970 passed,
+4 skipped, 1 strict xfail; validator/dead-content/economy/playthrough pass; Godot
+event/state checks pass with the available Godot 4.7 binary. No gameplay files
+were edited during M0. **M1 is now the next blocking chat.**
+
+#### M1 — Save continuity and transport safety
+
+- **Role:** persistence/API owner; this milestone blocks release and any
+  save-dependent UI work.
+- **Tasks:** SV.1, SV.2, SV.5, SV.6, API.1, API.2, API.3.
+- **Write set:** `game/utils/rng.py`, `game/core/engine/lifecycle.py`,
+  `game/services/save_service.py`, `game/persistence/save_repository.py`,
+  `game/services/meta_service.py`, `game/api/server.py`, the corresponding
+  `tests/test_save_system.py` / `tests/test_api_server.py` (or new focused test
+  files), and `game/docs/SAVE_SYSTEM.md` / `ARCHITECTURE.md` where the contract
+  changes.
+- **Required behavior:** persist all RNG streams and the run seed; migrate old
+  versions; write atomically; recover from corrupt files; autosave only at safe
+  points; serialize or explicitly guard the single API session.
+- **Out of scope:** visual panel design, balance values, new content, and broad
+  `MainController.gd` changes.
+- **Exit evidence:** a fresh process loads a save and produces the same event
+  sequence and state digest as the original continuation; v1/v2 migration,
+  corruption recovery, atomic-write, API concurrency, and live HTTP tests pass.
+
+<!-- CHAT-HANDOFF M1
+Start: confirm M0 is integrated and inspect the save snapshot/RNG ownership.
+Write set: persistence, API, focused tests, and save/architecture docs only.
+Stop when: fresh-process continuation and transport safety are proven.
+Next chat: M2a/M2b contract checkpoint, then rolling L8 panels.
+-->
+
+#### M2a–M2d — Engine breadth after the persistence checkpoint
+
+- **Role:** one system owner per chat; do not combine M2 lanes in a shared
+  checkout.
+- **M2a:** L5 owns narrative templates, glossary, narrative system, encounter
+  prose, and narrative tests.
+- **M2b:** L7 owns world simulation, relationships, morality, sects, debates,
+  character data, and their focused tests.
+- **M2c:** L9 owns quests, campaign, secret realms, endings, and endless; pause
+  for a short contract review before changing shared dispatch/view payloads.
+- **M2d:** L10 owns residual legacy/origin/chronicle work after M1 has closed
+  persistence ownership; it must not reopen save-service changes casually.
+- **Shared rule:** any proposed change to `dispatch.py`, `views.py`,
+  `constants.py`, or a shared schema is a contract checkpoint, not an implicit
+  side effect of a feature lane.
+- **Exit evidence:** each lane passes focused tests, the full Python gate,
+  validator/dead-content checks, replay checks, and an API or play verification.
+
+<!-- CHAT-HANDOFF M2
+Start: copy the exact lane ID and write set into the chat before editing.
+Stop when: the lane's done clauses and play verification are recorded.
+Next chat: name the next lane and whether it starts from a clean integrated tree.
+-->
+
+#### M3 — Rolling Godot parity
+
+- **Role:** one Godot panel/transport owner per chat; the shell owner is the only
+  writer allowed to edit `MainController.gd` for cross-panel wiring.
+- **Order:** combat/encounter first, then quest guidance, status/equipment,
+  world/codex/campaign, and meta/save surfaces.
+- **Write set:** one panel or transport file per chat, plus its focused Godot
+  test and fixture. Shared `UIKit.gd` and `MainController.gd` changes require an
+  explicit shell-owner handoff.
+- **Required behavior:** render backend numbers and refusal reasons without
+  re-deriving rules; handle nullable state safely; avoid full teardown; add live
+  HTTP smoke coverage; measure the refresh budget with 1,000 inventory items.
+- **Out of scope:** gameplay rules, balance constants, and unrelated art/data.
+- **Exit evidence:** all actions in the lane are reachable in a real client
+  session, the event/state contract remains green, and the performance result is
+  recorded rather than estimated.
+
+<!-- CHAT-HANDOFF M3
+Start: name the panel, its backend payload owner, and the exact one-file write set.
+Stop when: the panel passes headless render, live HTTP, and focused performance checks.
+Next chat: list any panels still waiting on a payload or shell decision.
+-->
+
+#### M4 — S3 balance sweep
+
+- **Role:** one balance owner, serial; no UI or content lane writes while the
+  sweep is active.
+- **Tasks:** resolve the strict counter-graph xfail, the High/Deadly tier cliff,
+  zone-band flags, economy bands, and campaign pacing.
+- **Write set:** tuning constants/data and the balance reports/tests explicitly
+  named by the balance owner. Record every intentional replay-fixture change.
+- **Out of scope:** broad feature additions, panel refactors, and opportunistic
+  cleanup.
+- **Exit evidence:** seeded simulations cover the target Dao/tier/story bands;
+  no unexplained xfail remains; dead-action, economy, retreat, and pacing
+  budgets pass; the report is attached to the handoff.
+
+<!-- CHAT-HANDOFF M4
+Start: verify M1 and the M2 baseline are integrated and freeze non-tuning writes.
+Stop when: the balance report meets the written bands and fixtures are current.
+Next chat: M5 release owner.
+-->
+
+#### M5 — L11 release hardening
+
+- **Role:** release owner; split infrastructure work from final certification.
+- **L11a (early):** choose the first supported platform, pin dependencies,
+  create the backend package/export path, and define install/run behavior.
+- **L11b (final):** produce the Godot/backend artifacts, test clean startup and
+  shutdown, verify save migration on a clean machine, and finalize docs.
+- **Write set:** packaging/config files, release scripts, README, handover,
+  roadmap, and release notes. Gameplay and balance files are read-only.
+- **Exit evidence:** a fresh Windows x64 machine can launch the packaged game,
+  start the local backend, create a run, save, reload, and reach the first
+  campaign milestone without a source checkout.
+
+<!-- CHAT-HANDOFF M5
+Start: require M1, M3, and M4 exit evidence.
+Stop when: the release checklist and fresh-machine result are recorded.
+Next chat: post-1.0 roadmap work only after the 1.0 candidate is accepted.
+-->
 
 ### Spine status (2026-09-13)
 
@@ -66,7 +249,11 @@ Two notes for whoever commits this:
   refreshes `.godot/global_script_class_cache.cfg`). Otherwise the GDScript gate
   reports `Identifier "UIKit" not declared` and cascading false errors.
 
-#### The S1 + S2 spine commit — held, and exactly how to land it
+#### Historical S1 + S2 landing note — archived; do not execute
+
+> The staging instructions below describe an old shared-tree state. They are
+> retained as historical context only. The current tree has moved on; use the
+> active milestone plan above and inspect the live diff before any Git action.
 
 Everything is written, wired and green in the working tree (840 passed / 3 skipped,
 0 failed; validator `is_valid: True`, 0 errors; panel check 6/6 OK). It is **held**
@@ -137,7 +324,10 @@ A feature is 10/10 only when **all eight** hold:
 8. **Documented** — counts generated, not typed; behaviour described where a
    future author will look for it.
 
-## 2. Scoreboard (current → target 10)
+## 2. Scoreboard (2026-09-13 baseline → target 10)
+
+> The table below is the historical review baseline. It is not the current
+> execution status; use the live milestone table near the top of this file.
 
 | Programme | Now | Target | Phase | Blocking gap |
 |---|---|---|---|---|
@@ -170,6 +360,8 @@ A feature is 10/10 only when **all eight** hold:
 ## 3. Phases
 
 - **P0 Gate & truth** — green the gate, generate docs, build the two harnesses.
+- **P0b Persistence & transport** — deterministic save continuation, migrations,
+  crash-safe writes, session ownership, and a versioned command/state contract.
 - **P1 The first 30 minutes** — survivable opening, legible fight, taught loop,
   coherent verb set.
 - **P2 Core loop** — cultivation correctness, pacing, one clock, dao legibility.
@@ -178,11 +370,17 @@ A feature is 10/10 only when **all eight** hold:
 - **P5 Narrative & campaign** — prose polish, campaign pacing, endless.
 - **P6 Frontend parity & accessibility** — every event rendered, every panel
   reachable, keyboard/contrast/font.
-- **P7 Release** — save migration, docs, onboarding help, 1.0 tag (REL.1, REL.2).
+- **P7 Release** — persistence migration, packaging, docs, onboarding help, and
+  the 1.0 tag (`REL.1-REL.4`).
 
 ---
 
 ## 4. Programmes
+
+> The individual programme gap lines and scores below preserve the original
+> 2026-09-13 review context. For active status, use the M0-M5 plan at the top;
+> do not infer that a historical gap is still open without checking the current
+> gate evidence.
 
 ### T — Truth & tooling (8 → 10)
 
@@ -223,16 +421,28 @@ test coverage, which is how a crash-on-startup shipped.
   negative control: a tampered log must fail to reproduce. `done:` 20 logs, each
   replaying bit-for-bit.
 
+- **T.7** Rebaseline the live tracker after the current implementation wave:
+  reconcile the active status with the working tree, archive obsolete landing
+  instructions, and make generated evidence and known gaps unambiguous.
+  `done:` `TASKS.md` names the current milestone and no active section claims
+  that a green gate is red or that a fixed UI gap is still open.
+
 ### F — First-run experience (3 → 10)
 
 Gap: hardcore seed 12345 died in **3 combat presses on day 2**; the chronicle is
 100/100 identical "fell in battle at 12 yrs"; nothing explains strain, the daily
 limit, or why a fight went badly.
 
-- **F.1** Survivable opening: no formation above the player's power in
-  `story_tier 1`, cap `pack_stat_scale` at `danger_level <= 2`, and a documented
-  first-run mercy rule (hazards already leave the player at 1 HP — reuse the
-  pattern). `done:` 200 sim runs, ≥90% reach story tier 2.
+- **F.1 — ✅ DONE** Survivable opening. While `max_story_tier < 2` the encounter
+  layer runs a **funnel** (`data/encounters.json` → `funnel`): a hostile scene
+  never fields a foe above the player's own fighting weight (the drawn foe is
+  swapped for one the pool offers in band; if the pool has none, the lightest
+  thing it has is sent), pack members are drawn from the same band, ambushes and
+  embedded hazard ground are withheld, and `pack_stat_scale` is capped by
+  danger (0.5 at `danger_level <= 2`, unchanged above). `ruined_shrine` gained
+  an in-band foe so every story-tier-1 zone has something to send.
+  `done:` **200 sim runs, 192/200 (96%) reach story tier 2**, 183/200 alive at
+  the cap (was 3/20 alive, 6/20 reaching tier 2).
 - **F.2** Combat legibility: per-turn damage dealt/taken with its components
   (attack, skill scaling, dao multiplier, combo bank, crit). `done:` the numbers
   are visible in the client without opening the Debugger.
@@ -252,23 +462,31 @@ Gap: not reached first realm in 80 competent actions; naive run took 242 actions
 and 58 in-game years; the daily-limit fields are stale; the strain/foundation
 thresholds are absent from `/state`.
 
-- **C.1** Live daily-limit state: update (or derive) `daily_cultivation_count` /
-  `last_cultivation_day` when the day advances, not only when training.
-  `done:` rest → state shows a fresh counter; test pins it.
+- **C.1 — ✅ DONE (closed as obsolete)** The TM.1 clock decision removed the day
+  clock this task tuned, so there is no daily counter left to keep live; strain is
+  the throttle now. `test_body_training_reports_no_daily_counter` pins that.
 - **C.2** Expose the gate: `max_allowed_strain`, `required_foundation_stability`
   and `missing_requirements` in the state view; render "Strain 27/45 ·
   Foundation 100/70" in the Body/Essence panels. `done:` no refusal lacks a reason.
-- **C.3** Retune pacing: `base_gain`, the daily multiplier ladder, strain gain vs
-  stabilise, and `required_progress` so `F.6` budgets hold. `done:` sim proves it.
+- **C.3 — ✅ DONE** Retuned to data + code: the starting talent roll narrowed to a
+  0.5x-2.0x band (was 0.25x-10x), strain/stabilise economy rebalanced, first-realm
+  `required_progress` lowered, failed openings recoverable. Median opening fell
+  19 → 10 actions / 0.54 years, 97% inside F.6's budget over 200 seeds.
+  `test_the_first_body_realm_lands_inside_the_opening_budget` pins it.
 - **C.4** One clock: make the day the primary clock or drop it from the UI; pin
   the day↔year relationship. `done:` test asserts the invariant.
-- **C.5** Essence track: re-measure unlock and pacing after C.3; verify the
-  Pulse Condensation gate is clear and reachable. `done:` sim reaches essence in
-  ≤X actions after the body unlock.
-- **C.6** Strain/stability economy shown as numbers with the stabilise tradeoff,
-  so the loop is a decision rather than a mystery. `done:` both panels show it.
-- **C.7** Talent upgrades: surface elixir sources and the upgrade ladder in the
-  UI. `done:` every upgrade lists its cost and where to get it.
+- **C.5 — ✅ DONE** The essence gate is config-driven (`essence_unlock.gate_body_realm`,
+  was hard-coded Pulse Condensation) and now sits on the *first* body realm, so the
+  whole track unlocks around action ~10 instead of ~350.
+- **C.6 — ✅ DONE** `CultivationSystem.training_economy` publishes both sides of the
+  strain loop from the same config the actions read; the character sheet and status
+  panel show strain against the real gate cap (was a fictional /100) plus the
+  stabilise trade and whether one more session closes the gate.
+  Pinned by `training_economy_matches_the_referee` and the L1 render check.
+- **C.7 — ✅ DONE** Every talent upgrade in the `TALENTS` dialog lists its elixir cost
+  and where to buy one at the live market price (`item_sources`, built by
+  `shop_system`); the dead Talents button was fixed earlier in the same lane.
+  Pinned by `test_talent_dialog_publishes_elixir_sources` + the L1 render check.
 
 ### TM — Time model (4 → 10)
 
@@ -277,10 +495,12 @@ years while training does not consume days.
 
 - **TM.1** Define the authoritative clock and make every time-consuming action
   advance it consistently. `done:` one table in the docs, enforced by a test.
-- **TM.2** Show one time readout in the client that matches the engine.
-  `done:` top bar and save agree.
-- **TM.3** Verify lifespan death is reachable and fair (age cap vs progression
-  speed). `done:` sim: a normal run only ages out long after the campaign ends.
+- **TM.2 — ✅ DONE** The top bar renders YEAR/SEASON/AGE from the engine's lifespan
+  view (the save-agreement half was already pinned by `test_time_model.py`); the
+  L1 render check asserts the labels match the engine's numbers verbatim.
+- **TM.3 — ✅ DONE** Sim: a 300-action focused opening burns ~14.6 of 100 mortal
+  years (budget derived from the configured time cost), no seed dies mid-opening;
+  the death mechanism itself is pinned by `test_reaching_lifespan_cap_ends_the_run`.
 
 ### CB — Combat core (7 → 10)
 
@@ -337,11 +557,20 @@ refusals use one generic prose line; the re-rendered encounter has no narrative.
 - **E.2** Every refusal carries a plain-language reason (the option-level reasons
   are already excellent — extend that standard to actions).
 - **E.3** Prose on every encounter render path. `done:` no blank Chronicle panel.
-- **E.4** Lead with stakes: odds, threat preview, and what withdrawing costs.
-- **E.5** Hazards/traps never kill (already true) and always hand a legible
-  consequence into the next fight.
-- **E.6** Variety: measure the event mix over 100 explores; at least five kinds
-  surface. `done:` sim reports the mix.
+- **E.4 — ✅ DONE** Lead with stakes. Every choice card now carries the odds it
+  runs on and the price of walking away: `odds` (threat band + foe/player power)
+  and `chance` on the checks, `cost` on a toll, `forfeit` plus a stakes line on
+  withdraw/leave/decline, and a trap-risk estimate on an unread find. Copy lives
+  in `data/encounters.json` → `stakes`; a number the client already badges (the
+  `chance` percentage) is never repeated in the line.
+- **E.5 — ✅ DONE** The ground's consequence is carried into the next fight. A
+  hazard or trap that took HP is remembered and named in the next combat
+  encounter's body text and fight card (`wound`), once — healing in between
+  clears it. Hazards still floor at 1 HP (`HAZARD_HP_FLOOR`), unchanged.
+- **E.6 — ✅ DONE** Variety is measured, not assumed: 100 explores in a zone must
+  surface at least five kinds (test), and `tools/playthrough_report.py` now
+  prints the run-wide `event mix` — currently 6 kinds
+  (character/combat/hazard/loot/nothing/special).
 
 ### W — World simulation (6.5 → 10)
 
@@ -363,23 +592,53 @@ Gap: needed two rescue passes; 68 items + 137 equipment had no acquisition path;
 the rescue introduced a trap; pricing is layered in a way only the tooling knows.
 
 - **EC.1** One displayed-price source of truth (displayed == charged), pinned.
-- **EC.2** Income/sink ledger inside the tool target band (income ≈1.3x the
-  costliest hall). `done:` `tools/economy_report.py` verdict passes.
+- **EC.2 — ✅ DONE** `tools/economy_report.py` verdict passes (priciest technique
+  180 vs 294.5 budget; costliest hall 930 vs 1060.1), and the target band is
+  locked: `test_income_to_cost_band_holds` pins the live income/expenses ratios
+  inside the designed shares (0.10-0.35 for the priciest technique, 0.60-0.95
+  for the costliest hall) so a content wave that quietly halves income trips a
+  balance alarm, not just a reachability one. Share-band widening is S3's call.
 - **EC.3** Zero dominated shop offers, enforced by the validator.
-- **EC.4** Every item/equipment entry has a deliberate acquisition path;
-  find-only becomes an explicit design tier, never an accident.
-- **EC.5** Currency clarity: gold vs spirit stones explained, with sinks for
-  excess gold in the mid game.
+- **EC.4 — ✅ DONE** Every entry has an authored path (the sweep has reported
+  zero unreachable items/equipment since the rescue pass), and find-only is now
+  an explicit data tier: `FIND_ONLY_ALLOWLIST` in
+  `game/validation/dead_content.py` is the only way a find-only entry stays
+  green, `accidental_find_only` fails the sweep for anything else, and
+  `test_find_only_items_are_declared` keeps the allowlist short (≤10), fully
+  declared, and free of stale ids.
+- **EC.5 — ✅ DONE** Two halves. Payload: `get_game_state()` now carries
+  `currency_guide` — the canonical gold-vs-stones explainer rendered verbatim
+  from `game/systems/currency.py`, the same module that enforces the rules it
+  describes, pinned by `test_currency_guide_exists_and_is_renderable`. Data
+  gate: `_validate_currency_economy` (wired into the central validator) proves
+  spirit stones have an authored sink anywhere in the world and that a gold
+  sink is graph-reachable from the start by every story tier, so mid-game gold
+  always has an answer — `test_currency_economy_validator_passes` holds it.
 
 ### A — Alchemy & gathering (6.5 → 10)
 
 Gap: the loop was never confirmed end-to-end in play; recipes are visible but
 their ingredients are ungatherable there; no gathering UI.
 
-- **A.1** Show what grows here, what you hold, and what you can brew.
+- **A.1 — ✅ DONE** `get_game_state()` now carries `gathering_here`: the
+  current location's weighted herb table joined to the player's holdings and
+  every recipe each herb feeds (`held`, `weight`, `used_in`), gated by the same
+  rule as the GATHER action so it never advertises a table the ground will not
+  pay. The brew side was already live (`refining_recipes`); pinned in
+  `tests/test_alchemy.py`.
 - **A.2** Gathering panel with seasonal/realm yields explained.
-- **A.3** Refining UX: requirements per recipe plus a missing-ingredient reason.
-- **A.4** Every rarity band of pill has a real use in the loop (no dead pills).
+- **A.3 — ✅ DONE** Every recipe entry now carries the ingredient ledger:
+  `missing` (shortfall per input), and `brewable` (realm met *and* nothing
+  missing) beside the existing realm gate — the frontend's have/need rows and
+  lock reasons render from engine numbers instead of re-deriving them.
+  Pinned in `tests/test_alchemy.py`.
+- **A.4 — ✅ DONE** No dead pills, proven rather than assumed: the sweep grew a
+  pill-domination check (`dominated_shop_pills`) mirroring the equipment rule —
+  a consumable offer strictly beaten by a same-effect shelf-mate is a trap.
+  First run found 9 real traps across 4 racks (flat generator pricing hid real
+  potency ladders); repriced in `game/data/shops.json` so each same-effect
+  shelf is a strictly rising ladder. Zero now, and the sweep stays in
+  `validate_all_game_data()`.
 - **A.5** Teach the loop in Act 1 (a gather → refine → use beat).
   `done:` the first pill is brewed inside the tutorial arc.
 
@@ -451,10 +710,49 @@ Gap: a fresh Mortal wielded a legacy-taught 1058% execute; the menu shows a
 
 ### SV — Saves & persistence (7.5 → 10)
 
-- **SV.1** Migration from v1 with a test per version; bump policy documented.
-- **SV.2** Autosave at safe points so a crash cannot cost a run.
+- **SV.1** Migrate every supported run-save version (currently v1 and v2) with
+  a test per version; bump the save policy only after the migration path is
+  green. `done:` old saves load with documented defaults and stable player/world
+  state.
+- **SV.2** Define and implement autosave only at documented safe points (after
+  a successful turn, camp/arrival, or explicit save), with a clear policy for
+  what is never auto-saved. `done:` a crash cannot silently corrupt the current
+  run and the autosave policy is covered by tests.
 - **SV.3** Save/load UI in Godot (slot list, summaries, delete).
 - **SV.4** Export/import surfaced in the UI.
+- **SV.5 — M1 BLOCKING** Preserve deterministic continuation across a fresh
+  process: serialize every gameplay RNG stream and the run seed, and add a
+  cross-engine continuation test. `done:` the same saved state produces the
+  same event sequence and state digest after load/export/import.
+- **SV.6 — M1 BLOCKING** Make run-save and meta-save persistence crash-safe:
+  atomic writes, a backup/recovery policy, and explicit corrupt-file handling.
+  `done:` interrupted writes leave the previous valid file recoverable and
+  tests cover the recovery path.
+
+### API — Transport & session contract
+
+- **API.1** Publish a versioned action/state contract fixture for the fields the
+  engine dispatch actually reads. `done:` malformed, missing, and unknown
+  command fields have stable error behavior; the Godot and Python contracts are
+  checked from the same fixture.
+- **API.2** Define and enforce ownership of the single local game session. The
+  current global `GameEngine` must either be serialized behind a session lock or
+  explicitly reject concurrent clients. `done:` concurrent `/action`, `/save`,
+  `/load`, and `/new-game` calls cannot interleave mutations.
+- **API.3** Add a live HTTP smoke path for the Godot transport, separate from
+  synthetic payload tests. `done:` a real local server accepts state, action,
+  save, and load requests through the client-facing contract.
+
+### REL — Release hardening
+
+- **REL.1** Declare the first supported distribution target and pin the Python
+  dependency set. Working assumption: Windows x64 first; record any change here.
+- **REL.2** Package the FastAPI backend as a reproducible executable with a
+  documented startup/shutdown contract and a clear port-conflict message.
+- **REL.3** Maintain a Godot export preset that includes required assets and
+  excludes development-only tooling; verify a clean export imports and starts.
+- **REL.4** Perform fresh-machine release verification and finalize the run,
+  save, recovery, and troubleshooting documentation.
 
 ### N — Narrative engine (8 → 10)
 
@@ -493,8 +791,15 @@ rebuilt per refresh, 100-row ledger, `BOON` unrendered.
 - **V.2** Reachability graph test per content type (largely built — keep it honest
   as content grows).
 - **V.3** Zero trap classes; find-only is a declared tier.
-- **V.4** Difficulty curve checks: enemy power vs zone danger per story tier.
-  `done:` sim flags any zone outside band.
+- **V.4 — ✅ DONE** Difficulty-curve audit: `tools/seed_enemy_pools.py --audit`
+  reports every zone's typical/weakest/strongest foe against the danger it
+  advertises, rolls the table up per story tier, and flags `over_band`,
+  `under_band` and `no_in_band_leader` (`--strict` exits non-zero on the two
+  that matter). The seeder's placement band was tightened from 3.5 to 2.0.
+  Current flags, assigned to **S3** to tune (not silent data edits):
+  `over_band` — `nine_furnace_kingdom`, `southern_wilderness`,
+  `planetary_gate_array`; `under_band` — six zones that advertise more danger
+  than they deal (`ruined_shrine`, `misty_gorge`, `beast_mountain`, ...).
 
 ### DOC — Docs (6 → 10)
 
@@ -503,27 +808,45 @@ rebuilt per refresh, 100-row ledger, `BOON` unrendered.
   content" recipe.
 - **DOC.3** `TASKS.md` is the tracker; `ROADMAP.md` is vision-only (T.4).
 - **DOC.4** `handover.md` becomes a one-page orientation that links here.
+- **DOC.5 — M0** Rebaseline the live status: mark historical scorecards and
+  landing notes as historical, identify the canonical tracker, and list current
+  gate evidence and unresolved release blockers. `done:` a new chat can identify
+  the next milestone without relying on stale prose.
 
 ---
 
 ## 5. Global acceptance gates (apply to every task)
 
 1. `pytest -q` → 0 failures; `validate_all_game_data()` → 0 errors.
-2. Play-verify: the change is exercised in the running game (API or MCP) and the
-   observation is recorded in the commit body.
-3. Determinism preserved (T.6).
-4. Performance budgets: world tick <1s/100y; suite <60s; UI refresh <16ms.
-5. Docs counts regenerated, not hand-edited.
+2. Twenty recorded replay logs still reproduce, and any intentional gameplay
+   contract change regenerates them in the same change.
+3. Save-dependent work also passes a fresh-process continuation test; a release
+   candidate has no unexplained strict xfail.
+4. Engine/API work is exercised through the real local HTTP path; Godot work
+   passes headless scene checks and a live transport smoke.
+5. Play-verify the change in the running game (API or Godot/MCP) and record the
+   observed result in the handoff.
+6. Performance budgets: world tick <1s/100y; suite <60s where practical; UI
+   refresh <16ms with 1,000 inventory items.
+7. Docs counts are generated, active status is current, and historical sections
+   are clearly labelled rather than presented as live claims.
+8. No lane stages, resets, deletes, or overwrites files outside its declared
+   write set.
 
 ## 6. Open decisions
 
-1. **CLI freeze:** B.9 modified the frozen CLI — revert, or legalise the numbered
-   menu?
-2. **F.1 approach:** data tuning, a first-run mercy rule, or both?
-3. **M.1:** scale legacy arts by realm, or gate them behind story tier?
-4. **TM.1:** is the in-game day the primary clock, or the year?
-5. **C.5:** keep Pulse Condensation as the essence gate, or open essence earlier
-   with a weaker start?
+1. **Release target:** Windows x64 is the working assumption for L11a. Confirm or
+   replace it before packaging; do not leave the backend/export target implicit.
+2. **Save migration:** M1 will move the run-save policy to the next version and
+   provide tested v1/v2 migration. The current exact-version rejection behavior
+   is not the final release policy.
+3. **Session ownership:** choose serialized single-session access for the local
+   API; do not imply multiplayer/network safety.
+4. **Panel order:** combat/encounter and quest guidance are the first L8 parity
+   targets; stable inventory/equipment/journal work may proceed in parallel.
+5. **Resolved historical decisions:** F.1 uses both data and rule fixes; TM.1
+   uses `Player.age_years` as the one clock; C.5 is config-driven and already
+   implemented. Do not reopen them without a new measurement or design note.
 
 ## 7. Evidence index (2026-09-13)
 
@@ -531,7 +854,13 @@ rebuilt per refresh, 100-row ledger, `BOON` unrendered.
   an engine `null`; fixed and play-verified (23 action cards, Train Body, prose
   plus Body Progress 0.0 → 23.2).
 - Lethality: hardcore seed 12345 → dead in 3 presses on day 2; chronicle 100/100
-  "fell in battle at 12 yrs".
+  "fell in battle at 12 yrs". **After L3 (2026-09-13):** the same seeds give
+  200 runs → 183 alive at the action cap, 192 (96%) reaching story tier 2, 0 dead
+  actions; measured with `tools/playthrough_report.py --runs 200`.
+- L3 zone audit: before the fix a fresh Mortal (power 193) met a 952-power foe in
+  `ruined_shrine` (a story-tier-1 zone, no travel gate) and a 262-power foe in the
+  starting woods; `tools/seed_enemy_pools.py --audit` now reports the per-zone
+  band, and 3 zones remain `over_band` for S3 to tune.
 - Pacing: 80 competent actions → still Mortal; 242 actions / age 70.3 → Strength
   Training.
 - Stale limit fields: `cultivation_system.py:908-912`; 37 rests left the view at
@@ -548,35 +877,62 @@ rebuilt per refresh, 100-row ledger, `BOON` unrendered.
 
 ## 8. Parallel workstreams (multi-agent plan)
 
-### 8.1 The three rules
+### 8.1 The active rules
 
-1. **One writer per file, per wave.** JSON data and the Godot controller merge
-   line-by-line, so two lanes in the same file means lost work. Every lane below
-   therefore owns an explicit, disjoint write-set.
-2. **Contract before parallelism.** Everything that touches `dispatch.py`,
-   `constants.py`, `views.py` or a shared data schema lands in the serial spine
-   (Wave 0) and is frozen. Lanes branch from that frozen point.
-3. **Balance runs alone.** The sim-driven tuning sweep (Wave 3) changes numbers
-   across every system at once and must be a single agent.
+1. **One writer per file, per milestone.** JSON data, generated replay logs,
+   and the Godot controller are shared integration surfaces. Every chat declares
+   a disjoint write set before editing.
+2. **Contract before parallelism.** M0 and M1 establish the baseline, save
+   continuity, and transport/session fields. Changes to `dispatch.py`, `views.py`,
+   `constants.py`, or a shared schema require an explicit contract checkpoint.
+3. **Balance runs alone.** M4/S3 changes numbers across combat, encounters,
+   economy, and pacing; it is always a single-owner milestone.
+4. **A shared checkout is single-writer.** Separate branches/worktrees are
+   required for real parallel work; a second chat must wait for a handoff rather
+   than edit the same tree concurrently.
 
-### 8.2 Waves
+### 8.2 Current execution waves
+
+The active order is M0 → M1 → M2a/M2b → M2c/M2d, with M3 rolling alongside
+stable payloads, then M4 → M5. Lanes may run in parallel only in separate
+branches/worktrees with disjoint write sets; a shared checkout is single-writer.
+
+| Milestone | Status | Tasks | Owns (write set) | Depends on | Exit |
+|---|---|---|---|---|---|
+| **M0 Integrate/rebaseline** | COMPLETE (2026-09-25) | T.7, DOC.5 | Status/docs only; preserve the current diff | Current tree | Gate evidence and canonical tracker are current |
+| **M1 Save/transport** | NEXT | SV.1, SV.2, SV.5, SV.6, API.1-API.3 | RNG, save/meta repository, lifecycle, API, focused tests, save/architecture docs | M0 | Fresh-process continuation, migration, recovery, and session tests pass |
+| **M2a L5 Narrative** | PENDING | N.1, N.3, N.5, E.3 | Narrative templates/glossary/system, encounter prose, narrative tests | M1 contract freeze | Every render path is narrated and voice checks pass |
+| **M2b L7 World/social** | PENDING | W.1-W.7, SO.1-SO.4, DB.1-DB.5, SE.1-SE.4 | World/social/sect/debate systems, character/sect data, focused tests | M1 contract freeze | World, NPC, sect, and debate loops are surfaced and playable |
+| **M2c L9 Campaign/realms** | PENDING | Q.1-Q.5, R.1-R.4 | Quest/campaign/realm data and systems, focused tests | M2b contract checkpoint | Campaign, endings, realms, and endless pass end-to-end |
+| **M2d L10 Meta residual** | PENDING | M.1-M.5, SV.3-SV.4 | Legacy/origin/chronicle and save UI after M1; no persistence rewrite | M1 | Meta progression and save surfaces are complete |
+| **M3 L8 rolling panels** | ROLLING | U.1-U.8 and render halves of delivered payloads | One Godot panel/transport file per chat; shell owner for `MainController.gd` | Payload owner identified per panel | Live render, transport, accessibility, and refresh checks pass |
+| **M4 S3 balance** | PENDING | CB.5, CB.7, D.7, EC.2, S.3, V.4, Q.3, known tier/counter findings | Tuning values/data and balance reports only | M1 + M2 baseline | No unexplained xfail; all target bands pass |
+| **M5 L11 release** | PENDING | DOC.1-DOC.5, REL.1-REL.4 | Packaging, dependency/config, release docs and fresh-machine checks | M1 + M3 + M4 | Clean packaged install launches and saves/reloads |
+
+### 8.2a Historical lane map (reference only)
+
+The older S0/S1/S2 and L1-L11 ordering below is retained to explain the existing
+implementation history. It is superseded by the active milestone table above;
+do not use it to schedule new chats without applying the M0-M5 gates. In
+particular, the old L10/L11 save-migration overlap is resolved by M1 → M2d →
+M5.
 
 | Wave | Lane | Tasks | Owns (writes only these) | Depends on |
 |---|---|---|---|---|
 | 0 | **S0 Green the gate — ✅ DONE** | T.1, T.2 | `data/shops.json`, `data/enemies/random_enemies.json`, `tools/seed_world_content.py`, `frontend-godot/scripts/MainController.gd` (guard only), `tests/test_godot_state_contract.py` | — |
 | 0 | **S1 Interface freeze — ✅ DONE** | C.2 (state fields), E.1 (info dispatch), CB.1 + F.2 (payload components), TM.1 (clock decision), U.2 (event-coverage test) | `game/core/engine/{dispatch,views,combat,encounters}.py`, `game/core/constants.py`, `game/docs/*` | S0 |
 | 0 | **S2 Split for parallelism — ✅ DONE** | U.0 (moved the palette + five overlay tabs out of `MainController.gd`), V.5 (split `data_validator.py` per collection) | landed: `frontend-godot/scripts/{UIKit,InventoryPanel,EquipmentPanel,JournalPanel,StatusPanel,TechniquesPanel}.gd`, `game/validation/{support,economy_checks,progression_checks,world_checks,character_checks}.py` | S1 |
-| 1 | **L1 Cultivation & time** | C.1, C.3, C.5, C.6, C.7, TM.2, TM.3 | `game/systems/cultivation_system.py`, `game/models/cultivation.py`, `game/core/engine/progression.py`, `game/data/cultivation/*.json`, `tests/test_cultivation_system.py`, `tests/test_lifespan_system.py` | S2 |
-| 1 | **L2 Combat & dao feel** | CB.2, CB.5, CB.6, CB.7, D.3, D.4, D.5, D.7 | `game/systems/combat_system.py`, `game/systems/foe_ai.py`, `game/core/engine/combat.py`, `tests/test_combat_system.py`, `tests/test_combo_combat.py`, `tests/test_foe_ai.py`, `tests/test_dao_combat.py` | S2 |
-| 1 | **L3 Funnel & encounters** | F.1, E.4, E.5, E.6, V.4 | `game/data/encounters.json`, `game/data/encounter_pools.json`, `game/data/enemies/random_enemies.json`, `game/data/events.json`, `game/systems/encounter_system.py`, `tools/seed_enemy_pools.py`, `tests/test_encounters.py` | S2 |
-| 1 | **L4 Economy & alchemy** | EC.2, EC.4, EC.5, A.1, A.3, A.4 | `game/data/{shops,items,gathering}.json`, `game/systems/{shop,sell,alchemy}_system.py`, `game/utils/economy_balance.py`, `tools/economy_*.py`, `tools/seed_world_content.py`, `tests/test_shop_system.py`, `tests/test_sell_system.py`, `tests/test_alchemy.py`, `tests/test_economy_balance.py` | S2 |
+| 1 | **L1 Cultivation & time — ✅ DONE** | C.1 (closed: TM.1 removed the day clock it tuned), C.3, C.5, C.6, C.7, TM.2, TM.3 | `game/systems/cultivation_system.py`, `game/models/cultivation.py`, `game/core/engine/progression.py`, `game/data/cultivation/*.json`, `tests/test_cultivation_system.py`, `tests/test_lifespan_system.py` | S2 |
+| 1 | **L2 Combat & dao feel — ✅ DONE (engine payload + measured audit; the Godot render half is L8)** | CB.2, CB.5, CB.6, CB.7, D.3, D.4, D.5, D.7 | `game/systems/combat_system.py`, `game/systems/foe_ai.py`, `game/core/engine/combat.py`, `tests/test_combat_system.py`, `tests/test_combo_combat.py`, `tests/test_foe_ai.py`, `tests/test_dao_combat.py` | S2 |
+| 1 | **L3 Funnel & encounters — ✅ DONE** | F.1, E.4, E.5, E.6, V.4 | `game/data/encounters.json`, `game/data/encounter_pools.json`, `game/data/enemies/random_enemies.json`, `game/data/events.json`, `game/systems/encounter_system.py`, `tools/seed_enemy_pools.py`, `tests/test_encounters.py` | S2 |
+| 1 | **L4 Economy & alchemy — ✅ DONE (engine payload + data gates; the Godot render half is L8)** | EC.2, EC.4, EC.5, A.1, A.3, A.4 | `game/data/{shops,items,gathering}.json`, `game/systems/{shop,sell,alchemy}_system.py`, `game/utils/economy_balance.py`, `tools/economy_*.py`, `tools/seed_world_content.py`, `tests/test_shop_system.py`, `tests/test_sell_system.py`, `tests/test_alchemy.py`, `tests/test_economy_balance.py` | S2 |
 | 1 | **L5 Narrative & prose** | N.1, N.3, N.5, E.3 | `game/data/narrative_templates.json`, `game/data/lore_glossary.json`, `game/systems/narrative_system.py`, `game/core/engine/encounters.py` (prose only), `game/validation/narrative_lint.py`, `tests/test_narrative_*.py` | S2 |
 | 1 | **L6 Harness & CI — ✅ DONE** | T.3, T.4, T.5, T.6, V.1 | `tools/*` (new files), `frontend-godot/tests/*`, `.github/workflows/*`, `tests/test_godot_state_contract.py` | S0 for T.3/T.5, S1 for payload shape |
 | 1 | **L7 World, social, factions** | W.1-W.6, SO.1-SO.4, DB.1-DB.5, SE.1-SE.4 | `game/systems/{world_simulation,relationship,morality,sect,debate}_system.py`, `game/core/engine/{world,social,debate}.py`, `game/data/characters/*.json`, `game/data/sects.json`, `game/data/dialogue*`, `tests/test_world_simulation.py`, `tests/test_sect_system.py`, `tests/test_dao_debate.py` | S2 |
 | 2 | **L8a…L8f Godot panels** (one lane per panel file — S2 is done, so these can start) | U.1, U.3, U.4, U.5, U.6, U.7, U.8, plus the render halves of F.2, F.4, CB.1, CB.3, CB.4, Q.1, Q.2, A.1, A.3, EQ.1-EQ.4, SV.3, SV.4, M.2, W.1-W.6 | one file each — today: `InventoryPanel.gd`, `EquipmentPanel.gd`, `JournalPanel.gd`, `StatusPanel.gd`, `TechniquesPanel.gd`, `UIKit.gd`; still to extract: the dashboard/combat/codex/world panels, plus `MainMenuController.gd` | S2 **and** the Wave-1 lane that supplies the payload |
 | 2 | **L9 Campaign & realms** | Q.1 (engine), Q.3, Q.4, Q.5, R.1-R.4 | `game/data/quests.json`, `game/data/secret_realms*.json`, `game/systems/quest_system.py`, `game/systems/secret_realm_system.py`, `game/core/engine/campaign.py`, `tests/test_campaign.py`, `tests/test_secret_realm.py` | S2 |
 | 2 | **L10 Meta & saves** | M.1, M.3, M.4, M.5, SV.1, SV.2 | `game/systems/legacy_system.py`, `game/systems/origin_system.py`, `game/services/save_service.py`, `game/core/engine/lifecycle.py`, `game/data/legacy_tree.json`, `game/data/origins.json`, `tests/test_meta_depth.py`, `tests/test_save_system.py` | S2 |
-| 3 | **S3 Balance sweep** (serial, one agent, no other lane writing) | CB.5/CB.7 tuning, D.7, EC.2 tuning, S.3, V.4 thresholds, Q.3 pacing | tuning values only, via `tools/playthrough_report.py` + `tools/economy_*.py` | L1, L2, L3, L4, L9, L10 |
+| 3 | **S3 Balance sweep** (serial, one agent, no other lane writing) | CB.5/CB.7 tuning, D.7, EC.2 tuning, S.3, V.4 thresholds, Q.3 pacing; plus the two L2 findings — the High-tier win-rate cliff and the 1.5x/0.75x counter-graph severity (see `handover.md` §5) | tuning values only, via `tools/playthrough_report.py` + `tools/economy_*.py` | L1, L2, L3, L4, L9, L10 |
 | 4 | **L11 Docs & release** (parallel with S3) | DOC.1-DOC.4, REL.1 (save migration + version bump), REL.2 (README, run instructions, in-game help) | `handover.md`, `ROADMAP.md`, `README.md`, `TASKS.md`, `game/docs/*`, `backend.spec` | S1 (stable contracts) |
 
 ### 8.3 Single-writer files (never two lanes at once)
@@ -590,57 +946,127 @@ rebuilt per refresh, 100-row ledger, `BOON` unrendered.
 | `game/data/characters/*.json`, `game/data/sects.json` | L7 alone |
 | `frontend-godot/scripts/MainController.gd` | One writer: the shell (top bar, dossier, location, chronicle, actions, dialogs). The five overlay tabs are now their own files, so a panel lane never has to touch this. |
 | `game/validation/data_validator.py` | Now a thin facade. Edit the per-collection module that owns the rule (`economy_checks.py`, `world_checks.py`, `character_checks.py`, `progression_checks.py`). |
-| `tests/` | Each lane owns its own test files; never edit another lane's |
+| `tests/` | Each lane owns its own focused test files; never edit another lane's tests to make a gate pass. |
+| `game/utils/rng.py`, `game/services/save_service.py`, `game/persistence/save_repository.py`, `game/services/meta_service.py`, `game/core/engine/lifecycle.py`, `game/api/server.py` | **M1 only.** L10 waits for M1 to integrate; no parallel save/API edits. |
+| `TASKS.md`, `handover.md`, `ROADMAP.md`, `README.md` | **M0/DOC owner only.** Feature chats record handoff notes here but do not rewrite status or historical sections. |
 
-### 8.4 Lane protocol
+### 8.4 Cross-chat lane protocol
 
-1. Branch `lane/<id>` from the last integrated spine commit; rebase before merge.
-2. A lane is done only when **all** of these pass on its own branch:
-   ```bash
-   .venv/Scripts/python.exe -m pytest -q                      # no new failures
-   .venv/Scripts/python.exe -c "from game.validation import validate_all_game_data as v; print(v().is_valid)"
-   ```
-   plus that lane's own play-verify (API harness for engine lanes, MCP run for
-   any lane that changes what the client renders), recorded in the commit body.
-3. Merge order inside a wave: **S2 → L6 → L1/L2 → L3/L4/L5 → L7 → L9/L10**.
-   A conflict is resolved by the lane that owns the file, never by hand-merging
-   data JSON.
-4. After a wave integrates: re-tag the spine (`spine-w1`, `spine-w2`, …) and
-   branch the next wave from it.
+1. **Start:** read the live milestone table, inspect `git status`, and announce
+   the milestone, role, write set, and read-only dependencies before editing.
+2. **Claim one unit:** a chat owns one milestone or one panel/lane at a time. If
+   the work requires a file outside the declared write set, stop and record a
+   handoff request instead of editing it opportunistically.
+3. **Work safely:** preserve other chats' changes; do not use broad staging,
+   resets, rebases, deletes, or formatting sweeps. JSON and GDScript conflicts
+   are resolved by the lane that owns the file, never by hand-merging data.
+4. **Verify:** run the focused tests plus the full Python gate, validator,
+   dead-content/replay checks, and the relevant Godot/HTTP check. A lane is not
+   done because its local test passes; its done clauses and play verification
+   must be recorded.
+5. **Integrate in dependency order:** M0 → M1 → M2a/M2b → M2c/M2d; M3 rolls
+   alongside stable payloads; M4 is serial; M5 is last. Re-tag or rebase only
+   when the repository owner explicitly requests it.
+6. **End:** update the milestone status and paste a section 9 handoff block with
+   changed files, commands, results, open questions, and the exact next starting
+   point. Never leave only a prose claim in chat.
+
+The old branch/rebase protocol is historical guidance; the active protocol is
+the one above and the write sets in section 8.3.
 
 ### 8.5 Do NOT parallelise
 
-- **S0, S1, S2** — the gate fix, the interface freeze and the two splits. They
-  touch shared schemas; run them one at a time, in order.
-- **S3** — balance tuning. Numbers interact; parallel tuning produces a game
-  that is locally tuned and globally wrong.
-- **A validator change while other lanes are mid-write** — integrate validator
-  rules in the wave's merge window, not during lane work.
+- **M0, M1, and the contract checkpoint** — these establish the baseline,
+  persistence behavior, and shared transport/view fields. Run them serially.
+- **M4/S3 balance** — tuning values interact across combat, encounters, economy,
+  and pacing; one owner only.
+- **A validator or shared-schema change while another lane is writing** — land
+  it in an integration window, not during unrelated feature work.
+- **Two chats in one shared checkout** — even with nominally disjoint tasks,
+  generated files, replay fixtures, and status documents can collide. Use
+  separate branches/worktrees for real parallelism.
 
 ### 8.6 Dependency map
 
 ```
-S0 ── S1 ── S2 ─┬─ L1 ─────────────┐
-                ├─ L2 ─────────────┤
-                ├─ L3 ─────────────┤
-                ├─ L4 ─────────────┼─ L8a..L8f (one panel each) ─┐
-                ├─ L5 ─────────────┤                            ├─ S3 (serial) ─┐
-                ├─ L6 (early) ─────┤                            │               ├─ L11 docs/release
-                ├─ L7 ─────────────┤                            │               │
-                └─ L9, L10 ────────┘                            └───────────────┘
+M0 integrate/rebaseline
+  ↓
+M1 save continuity + transport contract
+  ├─→ M2a L5 narrative ───────────────┐
+  ├─→ M2b L7 world/social ──→ M2c L9  │
+  │                                  ├─→ M3 rolling Godot parity
+  └─→ M2d L10 residual meta ──────────┘
+                    │
+                    └──────────────→ M4 S3 balance (serial)
+                                      ↓
+                              M5 L11 release
 ```
+
+M3 may begin for a panel as soon as its backend payload owner is named; it does
+not wait for unrelated engine lanes. M4 waits for the M1 baseline and the M2
+gameplay contracts, not for cosmetic UI polish.
 
 ### 8.7 How many agents to run
 
-| Agents | Plan |
+| Agents | Safe plan |
 |---|---|
-| 1 | Walk the spine, then lanes in the order L1 → L3 → L2 → L4 → L5 → L7 → L9 → L10 → UI |
-| 2 | Spine on one; L6 (harness/CI) on the other from S0 — it unblocks every later measurement |
-| 4 | Spine (1) + L6 (1); then L1, L3, L4 in parallel, L2 next |
-| 6 | Spine + L6 early; then L1, L2, L3, L4, L5 in parallel (L7 starts as one finishes) |
-| 8+ | All Wave-1 lanes at once, then split L8 into one lane per panel file |
+| 1 | M0 → M1 → M2a → M2b → M2c → M3 → M4 → M5, with one panel at a time |
+| 2 | One chat owns M0/M1; the second performs read-only review or prepares a separate M2 branch after the contract freeze |
+| 3–4 | After M1, M2a and M2b may run in separate branches; one M3 panel chat may run only when its payload owner is fixed |
+| 5+ | Separate branches/worktrees only: M2 lanes, one-panel M3 lanes, and documentation can proceed; M4 remains single-owner |
+| Shared checkout | One writer at a time; additional agents should wait for an explicit handoff rather than edit concurrently |
 
-**Expected wall-clock shape:** the spine is the critical path (it is small and
-serial); Wave 1 parallelises almost perfectly because the write-sets are
-disjoint; Wave 2 is bounded by the panel-file split, not by agent count; Wave 3
-is deliberately serial and short.
+**Expected wall-clock shape:** M0/M1 are short but blocking; M2a/M2b are the
+first genuinely parallel engine work; M3 is bounded by panel ownership and
+payload readiness; M4 is deliberately serial; M5 is a final integration and
+certification pass.
+
+## 9. Cross-chat handoff record
+
+Paste one completed block at the end of every feature chat. This is the minimum
+context the next chat needs; do not rely on conversational memory.
+
+<!-- CROSS-CHAT-HANDOFF TEMPLATE
+Milestone: M0 | M1 | M2a | M2b | M2c | M2d | M3 | M4 | M5
+Role:
+Start condition:
+Write set:
+Files changed:
+Commands run:
+Results:
+Play/API/Godot verification:
+Decisions or assumptions:
+Open questions / blocked work:
+Next chat should start at:
+-->
+
+### Current next chat
+
+- **Milestone:** M1 — save continuity and transport safety.
+- **Role:** persistence/API owner.
+- **Start condition:** read the M0 completion record above and inspect the
+  current save snapshot, RNG owners, API session lifecycle, and existing focused
+  tests before editing.
+- **Write set:** `game/utils/rng.py`, save/meta persistence and lifecycle,
+  `game/api/server.py`, focused persistence/API tests, and save/architecture
+  documentation. Do not reopen UI, balance, or content lanes.
+- **Stop condition:** fresh-process save continuation, migration, corruption
+  recovery, atomic writes, API session serialization, and live HTTP checks pass;
+  paste the M1 handoff block here.
+
+### M0 completed handoff (2026-09-25)
+
+- **Milestone:** M0 — integrate and re-baseline.
+- **Files changed:** `README.md`, `ROADMAP.md`, `handover.md`, and `TASKS.md`.
+- **Files deliberately untouched:** all existing engine/data/Godot/test/tool
+  changes, replay fixtures, and the untracked Godot render-check script.
+- **Commands run:** `pytest -q -rs`; validator; dead-content report; economy
+  report; deterministic playthrough; Godot event/state/panel/smoke checks with
+  the available Godot 4.7 binary; `refresh_docs.py --check`; `git diff --check`.
+- **Results:** 970 passed, 4 skipped, 1 strict xfail; validator/dead-content/
+  economy/playthrough pass; Godot focused checks pass; documentation freshness
+  passes.
+- **Next chat:** M1 persistence/API owner. Start from the write set in the live
+  milestone table and do not broaden scope without a handoff.
+
+---

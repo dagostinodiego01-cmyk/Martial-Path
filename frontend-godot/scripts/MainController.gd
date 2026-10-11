@@ -1412,6 +1412,17 @@ func _show_talents(result: Dictionary) -> void:
 
 	if _talent_choices.is_empty():
 		_add_dialog_empty("No upgrades are offered right now.")
+	# C.7: an unaffordable upgrade must be a destination, not a dead end -- name
+	# where the cost item can be earned or bought.
+	var sources: Dictionary = result.get("item_sources", {})
+	for item_id in sources.keys():
+		var places: Array = sources.get(item_id, [])
+		var line := "%s can be bought at:" % str(item_id).replace("_", " ").capitalize()
+		_add_dialog_caption(line)
+		if places.is_empty():
+			_add_dialog_caption("  nowhere right now -- it is found in the wild and in secret realms.")
+		for place in places:
+			_add_dialog_caption("  - %s" % str(place))
 	_close_dialog_footer()
 	_set_situation("Talents", "Martial: %s  -  Body: %s" % [str(martial.get("display_name", "?")), str(body.get("display_name", "?"))])
 
@@ -1977,10 +1988,16 @@ func _render_character(player: Dictionary) -> void:
 	var lines := ""
 	lines += "[color=#C9A24D]CULTIVATION[/color]\n"
 	lines += "[color=#BFB298]Body[/color] [color=#7CA558][b]%s[/b][/color]  [color=#8E8471]%.0f / %.0f (%.0f%%)[/color]\n" % [body.get("display_name", player.get("realm", "-")), body_progress, body_required, body_percent]
-	lines += "[color=#BFB298]Strain[/color] [color=#D9A441]%s / 100[/color]   [color=#BFB298]Stability[/color] [color=#7CA558]%s / 100[/color]\n" % [body.get("cultivation_strain", 0), body.get("foundation_stability", 100)]
+	# C.6: strain is judged against the breakthrough cap, not against 100. A player
+	# reading "80 / 100" had no way to know a breakthrough was already refused.
+	var body_gates: Dictionary = body.get("breakthrough", {}).get("gates", {})
+	lines += "[color=#BFB298]Strain[/color] [color=#D9A441]%s / %s[/color]   [color=#BFB298]Stability[/color] [color=#7CA558]%s / %s[/color]\n" % [body_gates.get("strain", body.get("cultivation_strain", 0)), body_gates.get("max_allowed_strain", 45), body_gates.get("foundation_stability", body.get("foundation_stability", 100)), body_gates.get("required_foundation_stability", 70)]
+	lines += _economy_line(body.get("economy", {}))
 	if bool(player.get("essence_unlocked", true)):
 		lines += "[color=#BFB298]Essence[/color] [color=#A87ED8][b]%s[/b][/color]  [color=#8E8471]%.0f / %.0f (%.0f%%)[/color]\n" % [essence.get("display_name", player.get("essence_cultivation", "-")), essence_progress, essence_required, essence_percent]
-		lines += "[color=#BFB298]Essence strain[/color] [color=#D9A441]%s / 100[/color]\n" % essence.get("cultivation_strain", 0)
+		var essence_gates: Dictionary = essence.get("breakthrough", {}).get("gates", {})
+		lines += "[color=#BFB298]Essence strain[/color] [color=#D9A441]%s / %s[/color]\n" % [essence_gates.get("strain", essence.get("cultivation_strain", 0)), essence_gates.get("max_allowed_strain", 45)]
+		lines += _economy_line(essence.get("economy", {}))
 	else:
 		lines += "[color=#BFB298]Essence[/color] [color=#A87ED8][b]Locked[/b][/color]\n"
 		var req := str(essence.get("unlock_requirement", ""))
@@ -1994,6 +2011,10 @@ func _render_character(player: Dictionary) -> void:
 	_body_progress_bar.max_value = 100
 	_body_progress_bar.value = body_percent
 	_body_progress_text.text = "Body Progress %.1f / %.1f" % [body_progress, body_required]
+
+
+func _economy_line(economy: Dictionary) -> String:
+	return UIKit.economy_line(economy)
 
 
 func _render_location(location: Dictionary) -> void:

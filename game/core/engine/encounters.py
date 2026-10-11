@@ -402,7 +402,10 @@ class EncountersMixin:
             "ambush": self._combat_ambush,
             "formation": len(foes) > 1,
             "enemy": self._enemy_view(self._current_enemy),
-            "enemies": [self._enemy_view(foe) for foe in foes],
+            # CB.6: the line, tagged with slots plus leader/target flags, and the
+            # leadership summary, so the fight opens legibly.
+            "enemies": self._formation_view(),
+            "formation_state": self._formation_summary(),
             "turn_events": turn_events,
             "text": self._encounter_combat_text(encounter, foes),
         }
@@ -450,11 +453,11 @@ class EncountersMixin:
         for foe in self._living_foes():
             if foe.id == foe_id:
                 self._current_enemy = foe
-                return {
+                return self._annotate_formation({
                     "event": EventType.COMBAT_TURN,
                     "retargeted": foe.id,
                     "enemy": self._enemy_view(foe),
-                    "enemies": [self._enemy_view(entry) for entry in self._living_foes()],
+                    "enemies": self._formation_view(),
                     "turn_events": [{"actor": "PLAYER", "action": "RETARGET", "enemy_name": foe.name}],
-                }
+                })
         return {"event": EventType.ERROR, "reason": "FOE_NOT_PRESENT", "foe_id": foe_id}

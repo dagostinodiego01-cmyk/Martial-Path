@@ -150,6 +150,65 @@ def test_next_combo_role_expectations():
     assert combat.next_combo_role(player) == "finisher"
 
 
+# -- D.3 legibility: banked stage, expected role, refusal reason ------------
+def test_combo_view_names_the_banked_chain_and_the_next_bonus():
+    combat = _combat()
+    player = _player()
+
+    assert combat.combo_view(player) == {
+        "stage": 0,
+        "chain": list(COMBO_ROLES),
+        "banked": [],
+        "next_role": None,
+        "next_label": "any technique",
+        "bonus": 1.0,
+    }
+
+    player.combo_stage = 2
+    view = combat.combo_view(player)
+    assert view["banked"] == ["opening", "response"]
+    assert view["next_role"] == "finisher"
+    assert view["bonus"] == pytest.approx(1.0 + 2 * COMBO_BONUS_PER_STAGE)
+
+
+def test_combo_view_after_the_chain_completes_starts_a_fresh_bank():
+    combat = _combat()
+    player = _player()
+    combat.use_skill(player, _enemy(), _skill(id="a", combo_role="opening"))
+
+    view = combat.combo_view(player)
+    assert view["stage"] == 1
+    assert view["banked"] == ["opening"]
+    assert view["next_label"] == "response"
+
+
+def test_turn_payload_carries_the_chain_state_readably():
+    combat = _combat()
+    player = _player()
+    result = combat.use_skill(player, _enemy(), _skill(id="a", combo_role="opening"))
+
+    assert result["combo"]["stage"] == 1
+    assert result["combo"]["next_role"] == "response"
+    assert result["combo_stage"] == 1
+
+
+# -- D.4 legibility: the insight gate explains itself -----------------------
+def test_insight_refusal_reports_the_shortfall_and_the_ledger():
+    engine = GameEngine.new_game(seed=1)
+    _start_combat_with(engine, "roaring_tide_fist_intent")  # costs 2 insight
+    engine.player.insight = 0
+
+    result = engine.process_action({"action": Action.USE_SKILL, "skill_id": "roaring_tide_fist_intent"})
+
+    assert result["event"] == EventType.ERROR
+    assert result["reason"] == "NOT_ENOUGH_INSIGHT"
+    assert result["required"] == 2
+    assert result["shortfall"] == 2
+    ledger = result["insight_state"]
+    assert ledger["total"] == 0
+    assert {source["id"] for source in ledger["sources"]} >= {"comprehension", "exchange"}
+
+
 # -- engine gating and surfacing -----------------------------------------
 def _start_combat_with(engine: GameEngine, *skill_ids: str) -> None:
     for skill_id in skill_ids:
@@ -176,6 +235,21 @@ def test_engine_refuses_out_of_sequence_stance():
     assert result["reason"] == "COMBO_OUT_OF_SEQUENCE"
     assert result["expected_role"] == "response"
     assert engine.player.combo_stage == 1  # the banked chain is untouched
+
+
+def test_out_of_sequence_refusal_explains_what_the_move_would_forfeit():
+    engine = GameEngine.new_game(seed=1)
+    _start_combat_with(engine, "white_tiger_palm", "white_tiger_seal")
+    engine.process_action({"action": Action.USE_SKILL, "skill_id": "white_tiger_palm"})
+
+    result = engine.process_action({"action": Action.USE_SKILL, "skill_id": "white_tiger_seal"})
+
+    assert result["used_role"] == "finisher"
+    assert result["combo_stage"] == 1
+    assert result["banked"] == ["opening"]
+    assert result["bonus_forfeited"] == pytest.approx(1.0 + COMBO_BONUS_PER_STAGE)
+    assert "waiting on response" in result["message"]
+    assert result["combo_roles"] == list(COMBO_ROLES)
 
 
 def test_engine_allows_neutral_technique_mid_chain():

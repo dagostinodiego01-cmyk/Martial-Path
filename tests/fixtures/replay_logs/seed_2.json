@@ -281,6 +281,26 @@
       "action": "EXPLORE"
     },
     {
+      "action": "ENCOUNTER_CHOICE",
+      "choice_id": "fight"
+    },
+    {
+      "action": "USE_SKILL",
+      "skill_id": "iron_fist"
+    },
+    {
+      "action": "ATTACK"
+    },
+    {
+      "action": "ATTACK"
+    },
+    {
+      "action": "FLEE"
+    },
+    {
+      "action": "REST"
+    },
+    {
       "action": "TRAIN_BODY"
     },
     {
@@ -304,17 +324,6 @@
     },
     {
       "action": "EXPLORE"
-    },
-    {
-      "action": "ENCOUNTER_CHOICE",
-      "choice_id": "fight"
-    },
-    {
-      "action": "USE_SKILL",
-      "skill_id": "iron_fist"
-    },
-    {
-      "action": "ATTACK"
     },
     {
       "action": "TRAIN_BODY"
@@ -642,15 +651,6 @@
     },
     {
       "action": "ATTACK"
-    },
-    {
-      "action": "ATTACK"
-    },
-    {
-      "action": "ATTACK"
-    },
-    {
-      "action": "FLEE"
     }
   ],
   "events": [
@@ -738,7 +738,13 @@
     "TRAIN_RESULT",
     "TRAVEL_RESULT",
     "TRAIN_RESULT",
-    "CHARACTER_ENCOUNTER",
+    "ENCOUNTER",
+    "COMBAT",
+    "COMBAT_TURN",
+    "COMBAT_TURN",
+    "COMBAT_TURN",
+    "COMBAT_END",
+    "REST_RESULT",
     "TRAIN_RESULT",
     "STABILISE_RESULT",
     "TRAIN_RESULT",
@@ -746,10 +752,7 @@
     "TRAVEL_RESULT",
     "TRAIN_RESULT",
     "STABILISE_RESULT",
-    "ENCOUNTER",
-    "COMBAT",
-    "COMBAT_TURN",
-    "COMBAT_END",
+    "EXPLORE_RESULT",
     "TRAIN_RESULT",
     "GATHER_RESULT",
     "TRAIN_RESULT",
@@ -850,11 +853,8 @@
     "STABILISE_RESULT",
     "ENCOUNTER",
     "COMBAT",
-    "COMBAT_TURN",
-    "COMBAT_TURN",
-    "COMBAT_TURN",
-    "COMBAT_END"
+    "COMBAT_TURN"
   ],
   "actions_used": 200,
-  "final_state_sha256": "0b389916bf898bd788a91a88e2b10847b99fd03292e47f776fa2e11d7075c2b8"
+  "final_state_sha256": "435624a3ff407bfe5e64b5639b0437f7355d015ccaa3a336c23a9148aa21d122"
 }

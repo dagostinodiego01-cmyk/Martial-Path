@@ -59,3 +59,36 @@ def spend(player: Player, price: Dict[str, int]) -> None:
 def wallet_view(player: Player) -> Dict[str, int]:
     """Return a UI-safe snapshot of the player's spendable currencies."""
     return {"gold": int(player.gold), "spirit_stone": int(player.inventory.get("spirit_stone", 0))}
+
+
+# -- EC.5: one authoritative explanation of the two currencies ---------------
+# Lives beside the spend/afford rules so the prose cannot drift from the
+# systems that enforce them. Frontends render this verbatim; the engine owns
+# every gameplay claim inside it.
+CURRENCY_GUIDE = {
+    "currencies": [
+        {
+            "id": "gold",
+            "name": "Gold",
+            "description": "The day-to-day coin of markets and mortal traders. Earned by selling finds and quest rewards; spent at shops, on trainers, repairs, and paying your way past roadside tolls.",
+            "wallet_key": "gold",
+            "sinks": ["shop purchases", "trainer tuition", "sect technique halls", "equipment repair", "toll payments"],
+        },
+        {
+            "id": "spirit_stone",
+            "name": "Spirit Stones",
+            "description": "Crystallised qi, the currency of cultivators. Rare outside wild places and endgame lands. Sect technique halls price their deepest arts in stones, so every stone spent there is cultivation bought.",
+            "wallet_key": "spirit_stone",
+            "sinks": ["sect technique halls (tier 5-6 arts)", "high-tier trainers", "black-market stalls"],
+        },
+    ],
+    "notes": [
+        "Gold buys the road; spirit stones buy the Dao.",
+        "Stones are carried as an inventory item, so they can be found as loot, dropped by foes, and sold for gold if you would rather eat than cultivate.",
+    ],
+}
+
+
+def currency_guide() -> Dict[str, Any]:
+    """Return the canonical gold-vs-stones explainer for UI surfaces (EC.5)."""
+    return {"currencies": [dict(entry) for entry in CURRENCY_GUIDE["currencies"]], "notes": list(CURRENCY_GUIDE["notes"])}

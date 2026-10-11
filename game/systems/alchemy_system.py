@@ -74,8 +74,11 @@ class RefineSystem:
     def recipes(self, player: Any = None) -> List[Dict[str, Any]]:
         """Return every recipe for the UI, annotated with its realm gate.
 
-        When ``player`` is supplied each entry also carries ``available`` so the
-        UI can grey out recipes the cultivator is not yet strong enough to brew.
+        When ``player`` is supplied each entry also carries ``available`` (the
+        realm gate), plus the A.3 ingredient ledger: ``have``/``need`` counts
+        per input, ``missing`` shortfalls for anything short, and a single
+        ``brewable`` verdict (realm met *and* nothing missing) so every
+        frontend can render "what you can brew" without its own arithmetic.
         """
         entries: List[Dict[str, Any]] = []
         for recipe in self._recipes.values():
@@ -89,9 +92,24 @@ class RefineSystem:
                 "minimum_essence_realm": recipe.get("minimum_essence_realm"),
             }
             if player is not None:
-                entry["available"] = not self._realm_failure(player, recipe)
+                realm_ok = not self._realm_failure(player, recipe)
+                missing = self._missing_inputs(player, recipe)
+                entry["available"] = realm_ok
+                entry["missing"] = missing
+                entry["brewable"] = realm_ok and not missing
             entries.append(entry)
         return entries
+
+    def _missing_inputs(self, player: Any, recipe: Dict[str, Any]) -> Dict[str, int]:
+        """Return ``{item_id: shortfall}`` for recipe inputs the player lacks."""
+        inventory = getattr(player, "inventory", {}) or {}
+        missing: Dict[str, int] = {}
+        for item_id, quantity in (recipe.get("inputs", {}) or {}).items():
+            have = int(inventory.get(str(item_id), 0))
+            needed = int(quantity)
+            if have < needed:
+                missing[str(item_id)] = needed - have
+        return missing
 
     def get(self, recipe_id: str) -> Optional[Dict[str, Any]]:
         """Return a raw recipe definition, or ``None`` if unknown."""

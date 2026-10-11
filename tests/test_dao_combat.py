@@ -1,12 +1,20 @@
-"""Tests for the Dao layer: realm pressure, the counter-graph, and combat wiring."""
+"""Tests for the Dao layer: realm pressure, the counter-graph, and combat wiring.
+
+The last block is the D.7 audit: the same seeds played once per dao against an
+identical foe roster, so the only variable is the player's dao. A dao must not
+sit more than 10% away from the median win rate.
+"""
+import statistics
+
 import pytest
 
 from game.core.game_engine import GameEngine
 from game.data.registry import GameDataRegistry
 from game.models.enemy import Enemy
 from game.models.player import Player
-from game.systems.combat_system import CombatSystem
+from game.systems.combat_system import MAX_FIGHT_ROUNDS, CombatSystem
 from game.systems.dao_system import DaoSystem, YIELD_GAP
+from game.systems.foe_ai import FoeAI
 from game.systems.stats_system import StatsSystem
 from game.utils.rng import RNG
 
@@ -167,6 +175,73 @@ def test_player_dao_round_trips_through_save():
     player = Player(name="X", dao_id="time_dao")
     restored = Player.from_save_dict(player.to_save_dict())
     assert restored.dao_id == "time_dao"
+
+
+# -- D.7 dao balance audit --------------------------------------------------
+def _dao_win_rates(seeds=range(3), attack=30, defense=8, hp=200):
+    """Win rate per dao over an identical dao-vs-dao foe roster.
+
+    Parity stats and one foe per dao in the catalogue mean the only thing that
+    varies between runs is the player's own dao -- exactly what the balance
+    question asks. Plain attacks: no techniques, no items, no luck beyond the
+    roll.
+    """
+    dao = _dao_system()
+    rates = {}
+    for player_dao in dao.dao_ids():
+        wins = 0
+        fights = 0
+        for foe_dao in dao.dao_ids():
+            for seed in seeds:
+                combat = CombatSystem(RNG(seed), None, dao, foe_ai=FoeAI(dao=dao, rng=RNG(seed)))
+                player = _player(dao_id=player_dao, attack=attack, defense=defense, hp=hp)
+                enemy = _enemy(dao_id=foe_dao, attack=attack, defense=defense, hp=hp)
+                fights += 1
+                for _ in range(MAX_FIGHT_ROUNDS + 2):
+                    result = combat.attack(player, enemy)
+                    if result["event"] == "COMBAT_END":
+                        if result.get("outcome") == "VICTORY":
+                            wins += 1
+                        break
+        rates[player_dao] = wins / fights
+    return rates
+
+
+def test_no_dao_lands_outside_ten_percent_of_the_median_win_rate():
+    """D.7: the same seeds, once per dao, spread no wider than +/-10%."""
+    rates = _dao_win_rates()
+    median = statistics.median(rates.values())
+
+    outliers = {
+        dao_id: round(rate, 3)
+        for dao_id, rate in rates.items()
+        if abs(rate - median) > 0.10 * median + 1e-9
+    }
+    assert not outliers, f"dao win rates drift outside +/-10% of {median:.3f}: {outliers}"
+    assert 0.0 < median < 1.0, "the audit is vacuous unless fights are genuinely undecided"
+
+
+def test_non_void_daos_are_structurally_interchangeable():
+    """Every non-void dao counters exactly one and is countered by one, so in a
+    round-robin they must all post the identical win rate. A drift here means the
+    counter graph has stopped being a single cycle."""
+    rates = _dao_win_rates(seeds=range(2))
+    non_void = [rate for dao_id, rate in rates.items() if dao_id != "void_dao"]
+
+    assert len(set(round(rate, 6) for rate in non_void)) == 1
+
+
+def test_void_daos_neutrality_is_the_measured_edge_to_price():
+    """Audit note (D.7): ``void_dao`` never gains a counter bonus but is never
+    countered either, so it wins every mirror in the round-robin -- measured at
+    the top of the +/-10% band and nowhere near the bottom. The band holds, and
+    this test is what will fail if a future dao change pushes it out.
+    """
+    rates = _dao_win_rates(seeds=range(3))
+    median = statistics.median(rates.values())
+
+    assert rates["void_dao"] == max(rates.values())
+    assert rates["void_dao"] - median <= 0.10 * median + 1e-9
 
 
 def test_yielded_enemy_resolves_as_victory():

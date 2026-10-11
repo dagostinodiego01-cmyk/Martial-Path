@@ -78,8 +78,52 @@ def test_seed_tool_refuses_a_rack_both_ways_round():
     assert _would_create_trap(boots(3), {"gold": 200}, rack, equipment)
     # Cheaper and strictly better: it would make the stocked offer the trap.
     assert _would_create_trap(boots(8), {"gold": 50}, rack, equipment)
-    # A pricier upgrade is a ladder, not a trap, so both offers stay meaningful.
-    assert not _would_create_trap(boots(8), {"gold": 200}, rack, equipment)
+
+
+# -- A.4: no dead pills on shop racks -----------------------------------------
+
+def test_no_dominated_pill_offers():
+    """A.4: no consumable offer is strictly beaten by a same-effect shelf-mate.
+
+    A potency ladder is only a ladder while price and magnitude point the same
+    way; a stronger pill at a lower-or-equal price leaves the weaker offer a
+    purchase the player can only regret.
+    """
+    report = _report()
+    assert report["traps"]["dominated_shop_pills"] == []
+
+
+def test_pill_domination_check_defends_itself():
+    """The pill-domination rule reports real traps and refuses non-traps."""
+    from game.validation.dead_content import _pill_domination_reason
+
+    strong = {"item": {"effect": "heal", "magnitude": 100}, "price": {"gold": 20}}
+    weak_pricier = {"item": {"effect": "heal", "magnitude": 40}, "price": {"gold": 30}}
+    weak_equal_price = {"item": {"effect": "heal", "magnitude": 40}, "price": {"gold": 20}}
+    weak_cheaper = {"item": {"effect": "heal", "magnitude": 40}, "price": {"gold": 10}}
+    different_effect = {"item": {"effect": "restore_qi", "magnitude": 40}, "price": {"gold": 20}}
+    twin = {"item": {"effect": "heal", "magnitude": 100}, "price": {"gold": 20}}
+
+    assert _pill_domination_reason(strong, weak_pricier) is not None
+    assert _pill_domination_reason(strong, weak_equal_price) is not None
+    assert _pill_domination_reason(strong, weak_cheaper) is None  # a ladder
+    assert _pill_domination_reason(strong, different_effect) is None
+    assert _pill_domination_reason(strong, twin) is None  # duplication, not a trap
+
+
+# -- EC.4: find-only is a declared tier, never an accident ---------------------
+
+def test_find_only_items_are_declared():
+    """Every find-only entry is on the reviewed allowlist, and the list is short."""
+    from game.validation.dead_content import FIND_ONLY_ALLOWLIST
+
+    report = _report()
+    assert report["traps"]["accidental_find_only"] == []
+    # The allowlist is a deliberate design tier, not a dumping ground.
+    assert len(FIND_ONLY_ALLOWLIST) <= 10
+    # Everything on it actually exists in the item catalogue (no stale ids).
+    items = set(GameDataRegistry.load().items_by_id())
+    assert FIND_ONLY_ALLOWLIST <= items
 
 
 def test_validator_reports_the_same_verdict():

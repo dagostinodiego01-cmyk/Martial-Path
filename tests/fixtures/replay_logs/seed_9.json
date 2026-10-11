@@ -151,13 +151,17 @@
       "choice_id": "fight"
     },
     {
-      "action": "FLEE"
+      "action": "USE_SKILL",
+      "skill_id": "iron_fist"
     },
     {
-      "action": "FLEE"
+      "action": "ATTACK"
     },
     {
-      "action": "REST"
+      "action": "ATTACK"
+    },
+    {
+      "action": "ATTACK"
     },
     {
       "action": "TRAIN_BODY"
@@ -186,12 +190,7 @@
       "choice_id": "fight"
     },
     {
-      "action": "USE_SKILL",
-      "skill_id": "iron_fist"
-    },
-    {
-      "action": "USE_SKILL",
-      "skill_id": "nine_yang_domain"
+      "action": "ATTACK"
     },
     {
       "action": "FLEE"
@@ -223,7 +222,23 @@
     },
     {
       "action": "ENCOUNTER_CHOICE",
-      "choice_id": "push"
+      "choice_id": "fight"
+    },
+    {
+      "action": "USE_SKILL",
+      "skill_id": "iron_fist"
+    },
+    {
+      "action": "ATTACK"
+    },
+    {
+      "action": "ATTACK"
+    },
+    {
+      "action": "FLEE"
+    },
+    {
+      "action": "REST"
     },
     {
       "action": "TRAIN_BODY"
@@ -264,6 +279,9 @@
       "action": "TRAIN_BODY"
     },
     {
+      "action": "BODY_BREAKTHROUGH"
+    },
+    {
       "action": "TRAVEL",
       "location_id": "misty_gorge"
     },
@@ -271,14 +289,22 @@
       "action": "TRAIN_BODY"
     },
     {
-      "action": "BODY_BREAKTHROUGH"
-    },
-    {
       "action": "EXPLORE"
     },
     {
       "action": "ENCOUNTER_CHOICE",
-      "choice_id": "take"
+      "choice_id": "fight"
+    },
+    {
+      "action": "USE_SKILL",
+      "skill_id": "iron_fist"
+    },
+    {
+      "action": "USE_SKILL",
+      "skill_id": "nine_yang_domain"
+    },
+    {
+      "action": "ATTACK"
     },
     {
       "action": "TRAIN_BODY"
@@ -301,10 +327,6 @@
     },
     {
       "action": "EXPLORE"
-    },
-    {
-      "action": "ENCOUNTER_CHOICE",
-      "choice_id": "push"
     },
     {
       "action": "TRAIN_BODY"
@@ -359,7 +381,7 @@
     },
     {
       "action": "ENCOUNTER_CHOICE",
-      "choice_id": "accept"
+      "choice_id": "push"
     },
     {
       "action": "TRAIN_BODY"
@@ -385,7 +407,17 @@
     },
     {
       "action": "ENCOUNTER_CHOICE",
-      "choice_id": "accept"
+      "choice_id": "fight"
+    },
+    {
+      "action": "USE_SKILL",
+      "skill_id": "iron_fist"
+    },
+    {
+      "action": "ATTACK"
+    },
+    {
+      "action": "ATTACK"
     },
     {
       "action": "TRAIN_BODY"
@@ -433,15 +465,7 @@
     },
     {
       "action": "ENCOUNTER_CHOICE",
-      "choice_id": "fight"
-    },
-    {
-      "action": "USE_SKILL",
-      "skill_id": "iron_fist"
-    },
-    {
-      "action": "USE_SKILL",
-      "skill_id": "nine_yang_domain"
+      "choice_id": "accept"
     },
     {
       "action": "TRAIN_BODY"
@@ -478,6 +502,9 @@
       "action": "TRAIN_BODY"
     },
     {
+      "action": "BODY_BREAKTHROUGH"
+    },
+    {
       "action": "TRAVEL",
       "location_id": "lin_academy"
     },
@@ -488,36 +515,13 @@
       "action": "EXPLORE"
     },
     {
-      "action": "ENCOUNTER_CHOICE",
-      "choice_id": "fight"
-    },
-    {
-      "action": "USE_SKILL",
-      "skill_id": "iron_fist"
-    },
-    {
-      "action": "ATTACK"
-    },
-    {
-      "action": "ATTACK"
-    },
-    {
-      "action": "ATTACK"
-    },
-    {
-      "action": "FLEE"
-    },
-    {
-      "action": "REST"
+      "action": "TRAIN_BODY"
     },
     {
       "action": "TRAIN_BODY"
     },
     {
       "action": "STABILISE_FOUNDATION"
-    },
-    {
-      "action": "TRAIN_BODY"
     },
     {
       "action": "TRAIN_BODY"
@@ -530,29 +534,7 @@
       "action": "TRAIN_BODY"
     },
     {
-      "action": "BODY_BREAKTHROUGH"
-    },
-    {
       "action": "EXPLORE"
-    },
-    {
-      "action": "ENCOUNTER_CHOICE",
-      "choice_id": "fight"
-    },
-    {
-      "action": "USE_SKILL",
-      "skill_id": "iron_fist"
-    },
-    {
-      "action": "USE_SKILL",
-      "skill_id": "nine_yang_domain"
-    },
-    {
-      "action": "ATTACK"
-    },
-    {
-      "action": "USE_SKILL",
-      "skill_id": "iron_fist"
     },
     {
       "action": "TRAIN_BODY"
@@ -577,29 +559,95 @@
       "action": "EXPLORE"
     },
     {
+      "action": "TRAIN_BODY"
+    },
+    {
+      "action": "STABILISE_FOUNDATION"
+    },
+    {
+      "action": "TRAIN_BODY"
+    },
+    {
+      "action": "TRAIN_BODY"
+    },
+    {
+      "action": "TRAVEL",
+      "location_id": "sky_fortune_capital"
+    },
+    {
+      "action": "TRAIN_BODY"
+    },
+    {
+      "action": "STABILISE_FOUNDATION"
+    },
+    {
+      "action": "EXPLORE"
+    },
+    {
+      "action": "TRAIN_BODY"
+    },
+    {
+      "action": "TRAIN_BODY"
+    },
+    {
+      "action": "TRAIN_BODY"
+    },
+    {
+      "action": "STABILISE_FOUNDATION"
+    },
+    {
+      "action": "TRAVEL",
+      "location_id": "sky_fortune_outskirts"
+    },
+    {
+      "action": "TRAIN_BODY"
+    },
+    {
+      "action": "EXPLORE"
+    },
+    {
+      "action": "TRAIN_BODY"
+    },
+    {
+      "action": "TRAIN_BODY"
+    },
+    {
+      "action": "STABILISE_FOUNDATION"
+    },
+    {
+      "action": "TRAIN_BODY"
+    },
+    {
+      "action": "TRAVEL",
+      "location_id": "sky_fortune_capital"
+    },
+    {
+      "action": "TRAIN_BODY"
+    },
+    {
+      "action": "EXPLORE"
+    },
+    {
       "action": "ENCOUNTER_CHOICE",
       "choice_id": "fight"
     },
     {
-      "action": "ATTACK"
+      "action": "USE_SKILL",
+      "skill_id": "iron_fist"
+    },
+    {
+      "action": "USE_SKILL",
+      "skill_id": "nine_yang_domain"
     },
     {
       "action": "ATTACK"
     },
     {
-      "action": "ATTACK"
+      "action": "USE_SKILL",
+      "skill_id": "iron_fist"
     },
     {
       "action": "ATTACK"
-    },
-    {
-      "action": "ATTACK"
-    },
-    {
-      "action": "FLEE"
-    },
-    {
-      "action": "FLEE"
     }
   ],
   "events": [
@@ -649,6 +697,18 @@
     "ENCOUNTER",
     "COMBAT",
     "COMBAT_TURN",
+    "COMBAT_TURN",
+    "COMBAT_TURN",
+    "COMBAT_END",
+    "TRAIN_RESULT",
+    "STABILISE_RESULT",
+    "GATHER_RESULT",
+    "TRAIN_RESULT",
+    "TRAVEL_RESULT",
+    "TRAIN_RESULT",
+    "ENCOUNTER",
+    "COMBAT",
+    "COMBAT_TURN",
     "COMBAT_END",
     "REST_RESULT",
     "TRAIN_RESULT",
@@ -661,6 +721,7 @@
     "COMBAT",
     "COMBAT_TURN",
     "COMBAT_TURN",
+    "COMBAT_TURN",
     "COMBAT_END",
     "REST_RESULT",
     "TRAIN_RESULT",
@@ -674,68 +735,13 @@
     "TRAIN_RESULT",
     "STABILISE_RESULT",
     "GATHER_RESULT",
-    "TRAIN_RESULT",
-    "TRAVEL_RESULT",
-    "TRAIN_RESULT",
-    "ENCOUNTER",
-    "ENCOUNTER_RESULT",
-    "TRAIN_RESULT",
-    "STABILISE_RESULT",
-    "GATHER_RESULT",
-    "TRAIN_RESULT",
-    "TRAVEL_RESULT",
     "TRAIN_RESULT",
     "BREAKTHROUGH_RESULT",
-    "ENCOUNTER",
-    "ENCOUNTER_RESULT",
-    "TRAIN_RESULT",
-    "STABILISE_RESULT",
-    "GATHER_RESULT",
-    "TRAIN_RESULT",
-    "TRAVEL_RESULT",
-    "TRAIN_RESULT",
-    "ENCOUNTER",
-    "ENCOUNTER_RESULT",
-    "TRAIN_RESULT",
-    "STABILISE_RESULT",
-    "TRAIN_RESULT",
-    "TRAIN_RESULT",
-    "TRAVEL_RESULT",
-    "TRAIN_RESULT",
-    "STABILISE_RESULT",
-    "ENCOUNTER",
-    "ENCOUNTER_RESULT",
-    "TRAIN_RESULT",
-    "GATHER_RESULT",
-    "TRAIN_RESULT",
-    "TRAVEL_RESULT",
-    "TRAIN_RESULT",
-    "STABILISE_RESULT",
-    "ENCOUNTER",
-    "ENCOUNTER_RESULT",
-    "TRAIN_RESULT",
-    "TRAIN_RESULT",
-    "TRAIN_RESULT",
-    "STABILISE_RESULT",
-    "TRAVEL_RESULT",
-    "TRAIN_RESULT",
-    "ENCOUNTER",
-    "ENCOUNTER_RESULT",
-    "TRAIN_RESULT",
-    "GATHER_RESULT",
-    "TRAIN_RESULT",
-    "STABILISE_RESULT",
-    "TRAVEL_RESULT",
-    "TRAIN_RESULT",
-    "EXPLORE_RESULT",
-    "TRAIN_RESULT",
-    "TRAIN_RESULT",
-    "STABILISE_RESULT",
-    "TRAIN_RESULT",
     "TRAVEL_RESULT",
     "TRAIN_RESULT",
     "ENCOUNTER",
     "COMBAT",
+    "COMBAT_TURN",
     "COMBAT_TURN",
     "COMBAT_END",
     "TRAIN_RESULT",
@@ -747,34 +753,94 @@
     "CHARACTER_ENCOUNTER",
     "TRAIN_RESULT",
     "STABILISE_RESULT",
+    "TRAIN_RESULT",
+    "TRAIN_RESULT",
+    "TRAVEL_RESULT",
+    "TRAIN_RESULT",
+    "STABILISE_RESULT",
+    "ENCOUNTER",
+    "ENCOUNTER_RESULT",
+    "TRAIN_RESULT",
     "GATHER_RESULT",
     "TRAIN_RESULT",
+    "TRAVEL_RESULT",
+    "TRAIN_RESULT",
+    "STABILISE_RESULT",
+    "ENCOUNTER",
+    "ENCOUNTER_RESULT",
+    "TRAIN_RESULT",
+    "TRAIN_RESULT",
+    "TRAIN_RESULT",
+    "STABILISE_RESULT",
     "TRAVEL_RESULT",
     "TRAIN_RESULT",
     "ENCOUNTER",
     "COMBAT",
     "COMBAT_TURN",
     "COMBAT_TURN",
-    "COMBAT_TURN",
-    "COMBAT_TURN",
     "COMBAT_END",
-    "REST_RESULT",
+    "TRAIN_RESULT",
+    "GATHER_RESULT",
+    "TRAIN_RESULT",
+    "STABILISE_RESULT",
+    "TRAVEL_RESULT",
+    "TRAIN_RESULT",
+    "CHARACTER_ENCOUNTER",
+    "TRAIN_RESULT",
     "TRAIN_RESULT",
     "STABILISE_RESULT",
     "TRAIN_RESULT",
+    "TRAVEL_RESULT",
+    "TRAIN_RESULT",
+    "ENCOUNTER",
+    "ENCOUNTER_RESULT",
+    "TRAIN_RESULT",
+    "STABILISE_RESULT",
+    "GATHER_RESULT",
     "TRAIN_RESULT",
     "TRAVEL_RESULT",
+    "TRAIN_RESULT",
+    "CHARACTER_ENCOUNTER",
+    "TRAIN_RESULT",
+    "STABILISE_RESULT",
+    "GATHER_RESULT",
     "TRAIN_RESULT",
     "BREAKTHROUGH_RESULT",
-    "ENCOUNTER",
-    "COMBAT",
-    "COMBAT_TURN",
-    "COMBAT_TURN",
-    "COMBAT_TURN",
-    "COMBAT_END",
+    "TRAVEL_RESULT",
+    "TRAIN_RESULT",
+    "CHARACTER_ENCOUNTER",
+    "TRAIN_RESULT",
+    "TRAIN_RESULT",
+    "STABILISE_RESULT",
+    "TRAIN_RESULT",
+    "TRAVEL_RESULT",
+    "TRAIN_RESULT",
+    "CHARACTER_ENCOUNTER",
     "TRAIN_RESULT",
     "STABILISE_RESULT",
     "GATHER_RESULT",
+    "TRAIN_RESULT",
+    "TRAVEL_RESULT",
+    "TRAIN_RESULT",
+    "CHARACTER_ENCOUNTER",
+    "TRAIN_RESULT",
+    "STABILISE_RESULT",
+    "TRAIN_RESULT",
+    "TRAIN_RESULT",
+    "TRAVEL_RESULT",
+    "TRAIN_RESULT",
+    "STABILISE_RESULT",
+    "CHARACTER_ENCOUNTER",
+    "TRAIN_RESULT",
+    "TRAIN_RESULT",
+    "TRAIN_RESULT",
+    "STABILISE_RESULT",
+    "TRAVEL_RESULT",
+    "TRAIN_RESULT",
+    "CHARACTER_ENCOUNTER",
+    "TRAIN_RESULT",
+    "TRAIN_RESULT",
+    "STABILISE_RESULT",
     "TRAIN_RESULT",
     "TRAVEL_RESULT",
     "TRAIN_RESULT",
@@ -784,10 +850,8 @@
     "COMBAT_TURN",
     "COMBAT_TURN",
     "COMBAT_TURN",
-    "COMBAT_TURN",
-    "COMBAT_TURN",
-    "PLAYER_DIED"
+    "COMBAT_TURN"
   ],
-  "actions_used": 184,
-  "final_state_sha256": "e6c81d727e719d5c5544caeb2fb27290cb0fad7725fdef012e0cf06c476bf33d"
+  "actions_used": 200,
+  "final_state_sha256": "c53998e76b3d6cc9a419f89dd1843de0a8603705d5752ae25509da3286e5a992"
 }

@@ -1,6 +1,9 @@
 """Smoke tests for the game engine's UI-agnostic contract."""
+import pytest
+
 from game.core.constants import Action, EventType
 from game.core.game_engine import MODE_COMBAT, GameEngine
+from game.utils.data_loader import load_json
 
 
 def _accept_fate(engine: GameEngine):
@@ -167,6 +170,8 @@ def test_rest_recovers_hp_and_qi():
 
 def test_stabilise_foundation_action_updates_state_and_advances_the_clock():
     engine = GameEngine.new_game(seed=1)
+    config = load_json("cultivation/cultivation_config.json")
+    stabilise = config["body_progression"]["stabilise"]
     body = engine.player.cultivation_state.body
     body.cultivation_strain = 30.0
     body.foundation_stability = 80.0
@@ -175,14 +180,20 @@ def test_stabilise_foundation_action_updates_state_and_advances_the_clock():
     result = engine.process_action({"action": Action.STABILISE_FOUNDATION})
     state = engine.get_game_state()
 
+    # Every number is read from the tuning the system reads (C.3), so a retune
+    # cannot leave this test asserting a value the game no longer uses.
     assert result["event"] == EventType.STABILISE_RESULT
-    assert result["current_strain"] == 12.0
-    assert result["foundation_stability"] == 84.0
-    # Stabilising costs 0.1 years and is the only clock that moves.
-    assert engine.player.age_years == round(before_age + 0.1, 4)
+    assert result["current_strain"] == pytest.approx(max(0.0, 30.0 - stabilise["strain_reduction"]))
+    assert result["foundation_stability"] == pytest.approx(
+        80.0 + stabilise["foundation_stability_gain"]
+    )
+    # Stabilising spends its configured cost, and is the only clock that moves.
+    cost = config["lifespan"]["time_costs"]["stabilise"]
+    assert engine.player.age_years == round(before_age + cost, 4)
     assert "current_day" not in state["player"]
-    assert state["player"]["cultivation_state"]["body_transformation"]["required_progress"] == 100.0
-    assert state["player"]["cultivation_state"]["essence_gathering"]["required_progress"] == 100.0
+    view = state["player"]["cultivation_state"]
+    assert view["body_transformation"]["required_progress"] == engine.cultivation.get_body_required_progress(engine.player)
+    assert view["essence_gathering"]["required_progress"] == engine.cultivation.get_essence_required_progress(engine.player)
 
 
 def test_meditate_returns_meditate_result():

@@ -167,3 +167,65 @@ def test_reaching_lifespan_cap_ends_the_run():
     assert result["event"] == EventType.PLAYER_DIED
     assert result["cause"] == "old_age"
     assert engine.is_running() is False
+
+
+#: TM.3: a normal opening must spend a small share of the mortal lifespan. The
+#: year budget is derived from the configured action cost (every focused action
+#: costs ``train_body`` years at worst), so retuning the clock re-derives the
+#: budget instead of silently breaking the test.
+_CAMPAIGN_ACTION_BUDGET = 300
+_CAMPAIGN_YEAR_BUDGET = round(
+    _CAMPAIGN_ACTION_BUDGET
+    * load_json("cultivation/cultivation_config.json")["lifespan"]["time_costs"]["train_body"]
+    * 1.15,  # + breakthrough/stabilise overhead
+    1,
+)
+
+
+def _focused_run(seed: int, max_actions: int = _CAMPAIGN_ACTION_BUDGET) -> tuple[int, float, bool]:
+    """Play a focused opening on a fresh run; return ``(actions, years, died)``.
+
+    Same competent-player policy as the C.3 opening sim: train while the strain
+    gate allows it, stabilise when it does not, and break through the moment the
+    gate opens.
+    """
+    lifespan = load_json("cultivation/cultivation_config.json")["lifespan"]
+    progression = load_json("cultivation/cultivation_config.json")["body_progression"]
+    strain_gain = progression["training_strain_gain"]
+    strain_cap = progression["max_strain_for_breakthrough"]
+    start_age = lifespan["starting_age_years"]
+
+    engine = GameEngine.new_game(seed=seed)
+    player = engine.player
+    body = player.cultivation_state.body
+    died = False
+    actions = 0
+    while actions < max_actions:
+        if not engine.cultivation._body_missing_requirements(player):
+            engine.process_action({"action": Action.BREAKTHROUGH})
+        elif body.cultivation_strain + strain_gain <= strain_cap:
+            engine.process_action({"action": Action.TRAIN_BODY})
+        else:
+            engine.process_action({"action": Action.STABILISE_FOUNDATION})
+        actions += 1
+        if not engine.is_running():  # old-age death ends the sim like it ends a run
+            died = True
+            break
+    return actions, round(player.age_years - float(start_age), 3), died
+
+
+def test_a_focused_run_ages_out_long_after_the_opening_budget():
+    """TM.3: death by old age must be reachable but never inside a normal opening.
+
+    F.6's opening budget is 15 actions / 1 year, so 300 focused actions of climbing
+    must burn at most 10 years -- well inside the 100-year mortal cap. A run dying
+    of old age mid-opening would make the lifespan a race the player cannot see.
+    The mechanism itself is pinned by test_reaching_lifespan_cap_ends_the_run.
+    """
+    seeds = range(1, 21)
+    runs = [_focused_run(seed) for seed in seeds]
+
+    died = [(seed, run) for seed, run in zip(seeds, runs) if run[2]]
+    assert died == [], f"these runs died of old age inside the opening: {died}"
+    over = [(seed, run[:2]) for seed, run in zip(seeds, runs) if run[1] > _CAMPAIGN_YEAR_BUDGET]
+    assert over == [], f"these runs burned more than {_CAMPAIGN_YEAR_BUDGET}y: {over}"

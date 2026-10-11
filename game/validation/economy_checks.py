@@ -330,6 +330,88 @@ def _validate_find_config(registry: GameDataRegistry, result: ValidationResult) 
             result.add("bad_find_config", f"find_config.danger_max_rarity_index['{danger}'] must be between 0 and {max_index}")
 
 
+# -- currency economy (EC.5) ---------------------------------------------
+def _validate_currency_economy(registry: GameDataRegistry, result: ValidationResult) -> None:
+    """EC.5: each currency has a sink, and gold has one in reach at every tier.
+
+    Currency clarity is not only prose: a wallet the player cannot spend is a
+    dead mechanic. Two guarantees are checked here --
+
+    * spirit stones have at least one authored sink anywhere in the world
+      (their sink curve itself is the economy ledger's job);
+    * gold has at least one sink location reachable (over the location graph,
+      from the starting location) at or before every story tier, so excess
+      gold always has an answer from the mid game onward.
+    """
+    location_ids = _id_set(registry.locations)
+    gold_sink_locations: Set[str] = set()
+    stone_sink_locations: Set[str] = set()
+    for shop in registry.shops:
+        for entry in shop.get("stock", []) or []:
+            if not isinstance(entry, dict):
+                continue
+            price = entry.get("price", {}) if isinstance(entry.get("price"), dict) else {}
+            for location_id in shop.get("location_ids", []) or []:
+                if location_id not in location_ids:
+                    continue
+                if int(price.get("gold", 0)) > 0:
+                    gold_sink_locations.add(location_id)
+                if int(price.get("spirit_stone", 0)) > 0:
+                    stone_sink_locations.add(location_id)
+
+    if not stone_sink_locations:
+        result.add("bad_currency", "spirit stones have no sink anywhere in the world")
+
+    neighbours = _location_adjacency(registry)
+    reachable = _reachable_from_start("outer_forest", neighbours) & location_ids
+    tiers = {
+        str(location.get("id")): int(location.get("story_tier", 0))
+        for location in registry.locations
+        if isinstance(location, dict) and location.get("id")
+    }
+
+    from game.core.constants import MAX_STORY_TIER
+
+    seen_tiers = {tier for tier in tiers.values() if 0 < tier <= MAX_STORY_TIER}
+    for tier in sorted(seen_tiers):
+        reached_by_tier = {loc for loc, loc_tier in tiers.items() if loc_tier <= tier}
+        if not (gold_sink_locations & reachable & reached_by_tier):
+            result.add(
+                "bad_currency",
+                f"no gold sink is reachable by story tier {tier} (mid-game gold would pile up unspent)",
+            )
+            break
+
+
+def _location_adjacency(registry: GameDataRegistry) -> dict:
+    """Undirected adjacency over ``connected_locations`` (string or object entries)."""
+    neighbours: dict = {}
+    for location in registry.locations:
+        if not isinstance(location, dict) or not location.get("id"):
+            continue
+        location_id = str(location.get("id"))
+        links = neighbours.setdefault(location_id, set())
+        for connection in location.get("connected_locations", []) or []:
+            other = connection if isinstance(connection, str) else (connection or {}).get("location_id") or (connection or {}).get("id")
+            if isinstance(other, str) and other:
+                links.add(other)
+                neighbours.setdefault(other, set()).add(location_id)
+    return neighbours
+
+
+def _reachable_from_start(start: str, neighbours: dict) -> set:
+    """BFS over the location graph from the player's starting location."""
+    seen = {start} if start in neighbours else set()
+    frontier = list(seen)
+    while frontier:
+        current = frontier.pop()
+        for other in neighbours.get(current, set()):
+            if other not in seen:
+                seen.add(other)
+                frontier.append(other)
+    return seen
+
+
 # -- reachability (ROADMAP G.2) ------------------------------------------
 def _validate_dead_content(registry: GameDataRegistry, result: ValidationResult) -> None:
     """ROADMAP G.2: nothing shipped may be unreachable or a trap option.

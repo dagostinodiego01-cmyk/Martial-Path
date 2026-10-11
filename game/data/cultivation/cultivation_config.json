@@ -34,6 +34,10 @@
       { "years": 10, "progress_gain": 250.0 }
     ]
   },
+  "essence_unlock": {
+    "body_realm": "strength_training",
+    "note": "Essence Gathering opens once this Body Transformation realm's breakthrough requirements are met. Was body_pulse_condensation (realm 7), which put half the cultivation system ~350 actions and 13 in-game years away (C.5)."
+  },
   "body_training_methods": {
     "train_body": {
       "action_id": "train_body",
@@ -192,9 +196,9 @@
     "max_strain_for_breakthrough": 45.0,
     "required_foundation_stability": 70.0,
     "successful_breakthrough_strain_reduction": 8.0,
-    "failed_breakthrough_strain_gain": 12.0,
+    "failed_breakthrough_strain_gain": 8.0,
     "failed_breakthrough_foundation_loss": 10.0,
-    "failed_breakthrough_progress_ratio": 0.9,
+    "failed_breakthrough_progress_ratio": 0.92,
     "stabilise": {
       "strain_reduction": 25.0,
       "foundation_stability_gain": 4.0,
@@ -249,7 +253,7 @@
     "STRAIN_TOO_HIGH": "Cultivation strain is too high. Stabilise your foundation before attempting a breakthrough.",
     "FOUNDATION_UNSTABLE": "Your foundation stability is too low. Stabilise before attempting a breakthrough.",
     "BODY_TOO_WEAK": "Your body cannot withstand the strain of this breakthrough.",
-    "ESSENCE_LOCKED_BY_BODY_PULSE": "Your body must complete Pulse Condensation before Essence Gathering can begin.",
+    "ESSENCE_LOCKED_BY_BODY_PULSE": "Your body must advance further before Essence Gathering can begin.",
     "ESSENCE_UNSTABLE": "Your true essence is unstable. Circulate your qi and stabilise your dantian first.",
     "INJURY_TOO_SEVERE": "Your injuries are too severe for a safe breakthrough.",
     "FATIGUE_TOO_HIGH": "Fatigue clouds your control. Rest before attempting this breakthrough.",

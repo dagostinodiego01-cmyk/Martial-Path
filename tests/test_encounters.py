@@ -4,6 +4,11 @@ Covers the contract the encounter layer promises: every roll that carries a
 decision becomes a prompt with explained options; ambushes strike first;
 hazards and traps hurt but never kill; observing reveals and banks an edge;
 and a formation fight only ends when the whole group is down.
+
+The L3 additions have their own sections at the end: the **funnel** that keeps
+the opening band survivable (F.1), the **stakes** every choice leads with (E.4),
+the **wound** the ground hands to the next fight (E.5), the **event mix** a zone
+actually surfaces (E.6), and the **difficulty-curve audit** (V.4).
 """
 from __future__ import annotations
 
@@ -14,6 +19,8 @@ import pytest
 
 from game.core.constants import MODE_COMBAT, MODE_ENCOUNTER, MODE_EXPLORE, Action, EventType
 from game.core.game_engine import GameEngine
+from replay_harness import load_tool
+
 from game.systems.encounter_system import (
     CHOICE_ORDER,
     COMBAT,
@@ -22,6 +29,7 @@ from game.systems.encounter_system import (
     SPECIAL,
     EncounterSystem,
     foe_power,
+    threat_tier,
 )
 from game.utils.text import with_article
 
@@ -531,3 +539,329 @@ def test_exploration_rolls_land_on_known_events_for_a_long_run():
             break
     assert "ENCOUNTER" in seen
     assert engine._pending_encounter is None or engine._mode == MODE_ENCOUNTER
+
+
+# -- F.1 the opening-band funnel -----------------------------------------
+def _build_combat(engine: GameEngine, pool: dict, leader: str = "test_tough", danger: int = 2) -> dict:
+    """Build a combat encounter through the real construction path."""
+    name = engine.encounters._enemies[leader]["name"]
+    return engine.encounters.build(
+        {"event": EventType.COMBAT, "enemy_id": leader, "text": f"{with_article(name)} lunges from the shadows!"},
+        engine.player,
+        danger=danger,
+        player_power=engine._player_power(),
+        pool=pool,
+    )
+
+
+HEAVY_POOL = {"combat": [{"enemy_id": "test_tough", "weight": 5}, {"enemy_id": "test_mook", "weight": 1}]}
+
+
+def test_opening_band_swaps_a_foe_heavier_than_the_player_for_one_in_band():
+    engine = _engine()
+    assert engine.player.max_story_tier == 1
+    encounter = _build_combat(engine, HEAVY_POOL)
+
+    assert encounter["foes"][0] == "test_mook"
+    assert encounter["mercy"] is True
+    # The descriptor named the foe that was drawn; the swap has to re-point it.
+    assert "Test Mook" in encounter["text"] and "Test Tough" not in encounter["text"]
+
+
+def test_opening_band_hands_ambush_and_embedded_hazard_to_the_deeper_wilds():
+    scripted = StubRNG(default=True)  # every roll says yes
+    engine = _engine(rng=scripted)
+    mild = _build_combat(engine, {"combat": [{"enemy_id": "test_mook", "weight": 1}]})
+    assert mild["ambush"] is False
+    assert mild["hazard"] is None
+
+    engine.player.max_story_tier = 2  # the funnel lifts once the player has moved on
+    opened = _build_combat(engine, {"combat": [{"enemy_id": "test_mook", "weight": 1}]})
+    assert opened["ambush"] is True
+    assert opened["hazard"] is not None
+    assert opened["mercy"] is False
+
+
+def test_opening_band_keeps_the_drawn_foe_when_the_pool_has_nothing_light():
+    """The last resort is the lightest thing the land has, never a silent swallow."""
+    engine = _engine()
+    encounter = _build_combat(engine, {"combat": [{"enemy_id": "test_tough", "weight": 1}]})
+
+    assert encounter["foes"][0] == "test_tough"
+    assert encounter["mercy"] is True
+
+
+def test_opening_band_packs_only_add_in_band_foes():
+    engine = _engine(rng=StubRNG(default=True))  # formation fires, size rolls high
+    encounter = _build_combat(engine, HEAVY_POOL)
+    ceiling = engine._player_power() * 0.6
+
+    assert len(encounter["foes"]) > 1
+    for foe_id in encounter["foes"][1:]:
+        assert foe_power(engine.encounters._enemies[foe_id]) <= ceiling
+
+
+def test_pack_stat_scale_is_capped_in_the_shallow_ground():
+    engine = _engine()
+    assert engine.encounters.pack_scale(0) == 0.5
+    assert engine.encounters.pack_scale(2) == 0.5
+    assert engine.encounters.pack_scale(3) == 0.6
+    assert engine.encounters.pack_scale(10) == 0.6
+    # With no encounter built yet, the configured scale stands.
+    assert engine.encounters.pack_scale() == 0.6
+    # The spawner asks for the scale without an encounter to hand, so the danger
+    # of the encounter most recently built is the one that must apply.
+    _build_combat(engine, HEAVY_POOL, danger=1)
+    assert engine.encounters.pack_scale() == 0.5
+
+
+def test_threat_tier_agrees_with_the_engine_preview():
+    """The odds a choice quotes and the tier the preview shows share one table."""
+    engine = _engine()
+    for foe, player in ((10, 100), (59, 100), (60, 100), (99, 100), (100, 100), (149, 100), (150, 100), (900, 100)):
+        assert threat_tier(foe, player) == engine._threat_tier(foe, player), (foe, player)
+
+
+def test_the_opening_band_carries_a_run_sample_to_story_tier_two():
+    """F.1's acceptance run: a blunt policy must still get out of the woods.
+
+    The full measurement is ``tools/playthrough_report.py --runs 200``; this is
+    the same gate on a sample small enough to live in the suite.
+    """
+    report = load_tool("playthrough_report", "tools/playthrough_report.py")
+    runs = [report.run_playthrough(seed=seed, max_actions=120) for seed in range(1, 31)]
+    reached = sum(1 for run in runs if run.story_tier_2_at is not None)
+
+    assert reached / len(runs) >= 0.9, f"only {reached}/{len(runs)} reached story tier 2"
+
+
+# -- E.4 leading with stakes ---------------------------------------------
+def test_every_combat_choice_leads_with_what_it_stakes():
+    # A person, not wildlife: parley and toll only exist against someone who can
+    # hear an offer, so the odds have to be quoted on a foe that offers them.
+    engine = _engine(gold=500)
+    _install(engine, foes=["rogue_cultivator"])
+    prompt = engine._encounter_prompt(engine._pending_encounter)
+
+    fight = _option(prompt, "fight")
+    assert fight["odds"]["threat"] in {"Low", "Moderate", "High", "Deadly"}
+    assert fight["odds"]["foe_power"] > 0 and fight["odds"]["player_power"] > 0
+    assert str(fight["odds"]["foe_power"]) in fight["hint"]
+
+    talk, sneak, pay = _option(prompt, "talk"), _option(prompt, "sneak"), _option(prompt, "pay")
+    for option in (talk, sneak, pay):
+        assert 0 < option["chance"] <= 1
+        assert option["hint"], option
+        # The client renders the percentage as its own badge, so the line
+        # states the consequence and never repeats the number.
+        assert f"{int(round(option['chance'] * 100))}%" not in option["hint"], option
+    assert pay["cost"]["gold"] > 0
+
+    observe = _option(prompt, "observe")
+    assert observe["insight"] > 0 and "insight" in observe["hint"]
+
+    withdraw = _option(prompt, "withdraw")
+    assert withdraw["forfeit"] == "the road" and withdraw["hint"]
+
+
+def test_walking_away_names_what_is_given_up_in_every_kind():
+    engine = _engine()
+    _install(engine, kind=LOOT, loot={"item_id": "beast_core", "count": 1, "trap": None, "revealed": False})
+    leave = _option(engine._encounter_prompt(engine._pending_encounter), "leave")
+    assert leave["forfeit"] == "the find" and "find stays" in leave["hint"]
+
+    engine = _engine()
+    _install(engine, kind=SPECIAL, special={"special_id": "spirit_spring", "text": "", "effect": {"type": "heal", "magnitude": 25}, "revealed": False})
+    decline = _option(engine._encounter_prompt(engine._pending_encounter), "decline")
+    assert decline["forfeit"] and decline["hint"]
+
+    engine = _engine()
+    _install(engine, kind=HAZARD, hazard=_hazard(magnitude=40))
+    prompt = engine._encounter_prompt(engine._pending_encounter)
+    withdraw = _option(prompt, "withdraw")
+    assert withdraw["forfeit"] == "what this ground pays" and withdraw["hint"]
+    push = _option(prompt, "push")
+    assert push["damage"] == 40 and "40" in push["hint"]
+
+
+def test_an_ambushed_withdrawal_quotes_its_odds_once():
+    engine = _engine()
+    _install(engine, foes=["test_mook"], ambush=True)
+    withdraw = _option(engine._encounter_prompt(engine._pending_encounter), "withdraw")
+
+    assert 0 < withdraw["chance"] <= 1
+    assert f"{int(round(withdraw['chance'] * 100))}%" not in withdraw["hint"]
+    assert "strike first" in withdraw["hint"]
+
+
+def test_an_unread_find_states_its_trap_risk_and_a_read_one_does_not():
+    engine = _engine()
+    _install(engine, kind=LOOT, loot={"item_id": "beast_core", "count": 1, "trap": None, "revealed": False})
+    take = _option(engine._encounter_prompt(engine._pending_encounter), "take")
+    assert take["risk"]["trap_chance"] > 0 and "%" in take["hint"]
+
+    engine = _engine()
+    trap = {"id": "needle_ward", "name": "Needle Ward", "text": "x", "effect": {"type": "damage", "magnitude": 10}, "revealed": False}
+    _install(engine, kind=LOOT, loot={"item_id": "beast_core", "count": 1, "trap": trap, "revealed": True})
+    read = _option(engine._encounter_prompt(engine._pending_encounter), "take")
+    assert read["risk"] == {"trap_chance": 0.0, "warded": True}
+    assert "sure" in read["hint"]
+
+
+def test_a_studied_place_of_power_states_the_effect_it_will_apply():
+    engine = _engine()
+    special = {"special_id": "spirit_spring", "text": "", "effect": {"type": "heal", "magnitude": 25}, "revealed": True}
+    _install(engine, kind=SPECIAL, special=special)
+    accept = _option(engine._encounter_prompt(engine._pending_encounter), "accept")
+
+    assert accept["effect"] == {"type": "heal", "magnitude": 25}
+    assert "heal 25" in accept["hint"]
+
+
+# -- E.5 the ground's consequence, carried into the fight ----------------
+def test_a_hazard_that_bit_is_named_in_the_next_fight():
+    engine = _engine(rng=StubRNG(default=False))  # every roll fails: the ground catches
+    engine.player.hp = 80
+    _install(engine, kind=HAZARD, hazard=_hazard(magnitude=40))
+    bit = engine.process_action({"action": Action.ENCOUNTER_CHOICE, "choice_id": "push"})
+    assert bit["outcome"] == "CAUGHT" and engine.player.hp == 40
+
+    encounter = _build_combat(engine, {"combat": [{"enemy_id": "test_mook", "weight": 1}]})
+    assert "Unstable Ground" in encounter["text"]
+    assert "40 damage" in encounter["text"]
+    assert "40/100 HP" in encounter["text"]  # what is left, not only what was lost
+    assert encounter["wound"] == {"id": "unstable_ground", "name": "Unstable Ground", "damage": 40}
+
+    options = engine.encounters.options(encounter, engine.player, engine._player_power())
+    fight = next(option for option in options if option["choice_id"] == "fight")
+    assert fight["wound"]["damage"] == 40
+    assert "Unstable Ground" in fight["hint"]
+
+    # It is handed over once; the fight after that is nobody's business.
+    again = _build_combat(engine, {"combat": [{"enemy_id": "test_mook", "weight": 1}]})
+    assert again["wound"] is None and "Unstable Ground" not in again["text"]
+
+
+def test_a_trap_that_bit_is_named_in_the_next_fight():
+    engine = _engine()
+    trap = {"id": "needle_ward", "name": "Needle Ward", "text": "x", "effect": {"type": "damage", "magnitude": 15}, "revealed": False}
+    _install(engine, kind=LOOT, loot={"item_id": "beast_core", "count": 1, "trap": trap, "revealed": False})
+    engine.player.hp = 90
+    taken = engine.process_action({"action": Action.ENCOUNTER_CHOICE, "choice_id": "take"})
+    assert taken["damage"] == 15
+
+    encounter = _build_combat(engine, {"combat": [{"enemy_id": "test_mook", "weight": 1}]})
+    assert "Needle Ward" in encounter["text"]
+    assert encounter["wound"]["damage"] == 15
+
+
+def test_a_wound_is_forgotten_once_the_player_heals():
+    engine = _engine(rng=StubRNG(default=False))
+    engine.player.hp = 80
+    _install(engine, kind=HAZARD, hazard=_hazard(magnitude=40))
+    engine.process_action({"action": Action.ENCOUNTER_CHOICE, "choice_id": "push"})
+    engine.player.hp = engine.player.max_hp
+
+    encounter = _build_combat(engine, {"combat": [{"enemy_id": "test_mook", "weight": 1}]})
+    assert encounter["wound"] is None
+
+
+# -- E.6 variety ---------------------------------------------------------
+def test_event_mix_over_a_hundred_explores_surfaces_at_least_five_kinds():
+    engine = _engine(seed=11)
+    engine.player.current_location = "outer_forest"
+    kinds: dict = {}
+    safe = {COMBAT: "withdraw", LOOT: "leave", SPECIAL: "decline", HAZARD: "withdraw"}
+    for _ in range(100):
+        engine.player.hp = engine.player.max_hp
+        result = engine.process_action({"action": Action.EXPLORE})
+        event = str(result.get("event"))
+        if event == EventType.ENCOUNTER:
+            kinds[f"encounter:{result.get('kind')}"] = kinds.get(f"encounter:{result.get('kind')}", 0) + 1
+            choice = safe.get(str(result.get("kind")), "withdraw")
+            engine.process_action({"action": Action.ENCOUNTER_CHOICE, "choice_id": choice})
+        else:
+            kinds[event] = kinds.get(event, 0) + 1
+
+    assert len(kinds) >= 5, kinds
+    for expected in ("encounter:combat", "encounter:loot", "encounter:special", "encounter:hazard"):
+        assert expected in kinds, kinds
+
+
+# -- V.4 difficulty curve ------------------------------------------------
+def _seeder():
+    return load_tool("seed_enemy_pools", "tools/seed_enemy_pools.py")
+
+
+def test_the_zone_audit_flags_a_zone_that_deals_more_than_it_advertises(monkeypatch):
+    seeder = _seeder()
+    weak = {"id": "weak", "hp": 10, "attack": 1, "defense": 0, "body_realm_id": "mortal"}
+    heavy = {"id": "heavy", "hp": 3000, "attack": 40, "defense": 20, "body_realm_id": "tempering_marrow"}
+    tables = {
+        "locations.json": [
+            {"id": "soft_zone", "name": "Soft", "story_tier": 1, "danger_level": 1},
+            {"id": "brutal_zone", "name": "Brutal", "story_tier": 1, "danger_level": 1},
+        ],
+        "enemies/random_enemies.json": [weak, heavy],
+        "encounter_pools.json": {
+            "soft_zone": {"combat": [{"enemy_id": "weak", "weight": 3}]},
+            "brutal_zone": {"combat": [{"enemy_id": "heavy", "weight": 5}, {"enemy_id": "weak", "weight": 1}]},
+        },
+    }
+    monkeypatch.setattr(seeder, "load", lambda name: tables[name])
+    monkeypatch.setattr(
+        seeder,
+        "realm_orders",
+        lambda: (["mortal", "flesh_training", "viscera_training", "altering_muscle", "tempering_marrow"], []),
+    )
+
+    audit = {zone.location_id: zone for zone in seeder.audit_zones(reference_power=100.0)}
+    table = seeder.format_audit(list(audit.values()), 100.0)
+
+    assert audit["soft_zone"].flags == []
+    assert audit["brutal_zone"].over_band is True
+    assert "over_band" in table and "brutal_zone" in table
+
+
+def test_the_zone_audit_flags_a_zone_with_no_foe_a_fresh_player_can_answer(monkeypatch):
+    seeder = _seeder()
+    heavy = {"id": "heavy", "hp": 3000, "attack": 40, "defense": 20, "body_realm_id": "tempering_marrow"}
+    tables = {
+        "locations.json": [{"id": "gate", "name": "Gate", "story_tier": 1, "danger_level": 6}],
+        "enemies/random_enemies.json": [heavy],
+        "encounter_pools.json": {"gate": {"combat": [{"enemy_id": "heavy", "weight": 1}]}},
+    }
+    monkeypatch.setattr(seeder, "load", lambda name: tables[name])
+    monkeypatch.setattr(seeder, "realm_orders", lambda: (["mortal", "flesh_training", "tempering_marrow"], []))
+
+    zone = seeder.audit_zones(reference_power=100.0)[0]
+
+    assert zone.no_in_band_leader is True
+    assert zone.in_band_leader is False
+
+
+def test_every_story_tier_one_zone_offers_the_funnel_a_foe_in_band():
+    """The data half of the funnel: a tier-1 zone must have something to send."""
+    audit = _seeder().audit_zones()
+    tier_one = [zone for zone in audit if zone.story_tier <= 1]
+
+    assert tier_one
+    assert [zone.location_id for zone in tier_one if zone.no_in_band_leader] == []
+
+
+def test_the_shipped_pools_are_reported_without_crashing_on_real_data():
+    seeder = _seeder()
+    reference = seeder.reference_player_power()
+    audit = seeder.audit_zones(reference)
+    text = seeder.format_audit(audit, reference)
+
+    assert len(audit) == 45
+    assert "Difficulty curve" in text and "reference player power" in text
+    for zone in audit:
+        if zone.flags:
+            assert zone.location_id in text and zone.flags[0] in text
+    # Every zone knows its own danger band, and none of them names an entry the
+    # pool does not actually hold.
+    for zone in audit:
+        assert zone.weakest <= zone.strongest
+        assert zone.entries > 0

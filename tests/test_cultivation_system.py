@@ -1,7 +1,8 @@
 """Tests for the cultivation system's training and breakthrough rules."""
 import pytest
 
-from game.core.constants import EventType
+from game.core.constants import Action, EventType
+from game.core.game_engine import GameEngine
 from game.models.cultivation import CultivationState
 from game.models.player import Player
 from game.models.skill import Skill
@@ -91,7 +92,7 @@ def test_training_essence_increases_only_essence_progress():
     assert player.cultivation_state.body.progress == 0.0
 
 
-def test_essence_training_requires_completed_body_pulse_condensation():
+def test_essence_training_is_locked_from_a_fresh_start():
     player = Player(name="Tester")
     system = _make_system()
 
@@ -102,11 +103,25 @@ def test_essence_training_requires_completed_body_pulse_condensation():
     assert player.cultivation_state.essence.progress == 0.0
 
 
-def test_essence_training_still_locked_until_body_pulse_requirements_are_met():
-    player = Player(name="Tester")
-    player.cultivation_state.body.realm_id = "body_pulse_condensation"
-    player.cultivation_state.body.progress = 100.0
+def test_essence_gate_is_reachable_early_and_read_from_config():
+    """C.5: the gate is a design dial in the data, and it opens early in a run."""
     system = _make_system()
+    config = load_json("cultivation/cultivation_config.json")
+    gate_id = config["essence_unlock"]["body_realm"]
+
+    assert system.essence_unlock_realm_id() == gate_id
+    gate = system._body_by_id[gate_id]
+    # The gate must leave the Essence track reachable in the opening, not at realm 7
+    # where it used to sit ~350 actions and 13 in-game years in.
+    assert int(gate.get("order", 99)) <= 2, gate_id
+
+
+def test_essence_training_stays_locked_until_the_gate_realm_is_complete():
+    player = Player(name="Tester")
+    system = _make_system()
+    # Standing in the gate realm with its requirements unmet is not enough.
+    player.cultivation_state.body.realm_id = system.essence_unlock_realm_id()
+    player.cultivation_state.body.progress = 0.0
 
     result = system.train_essence(player)
 
@@ -115,12 +130,15 @@ def test_essence_training_still_locked_until_body_pulse_requirements_are_met():
     assert player.cultivation_state.essence.progress == 0.0
 
 
-def test_essence_training_unlocks_when_body_pulse_requirements_are_met():
+def test_essence_training_unlocks_once_the_gate_realm_is_complete():
     player = Player(name="Tester")
-    player.cultivation_state.body.realm_id = "body_pulse_condensation"
-    player.cultivation_state.body.progress = 960.0
-    player.cultivation_state.body.foundation = 45.0
     system = _make_system()
+    body = player.cultivation_state.body
+    body.realm_id = system.essence_unlock_realm_id()
+    body.progress = system.get_body_required_progress(player)
+    body.foundation = 45.0
+    body.foundation_stability = 100.0
+    body.cultivation_strain = 0.0
 
     result = system.train_essence(player)
 
@@ -537,6 +555,177 @@ def test_physique_multiplies_successful_body_breakthrough_stats(monkeypatch: pyt
     assert result["gains"]["max_hp"] == 26
     assert result["gains"]["attack"] == 4
     assert result["gains"]["body_strength"] == 10
+
+
+#: The opening budget (TASKS.md F.6): a focused run reaches its first realm inside
+#: this many actions and this many in-game years.
+OPENING_ACTION_BUDGET = 15
+OPENING_YEAR_BUDGET = 1.0
+
+
+def _opening_run(seed: int, max_actions: int = 200) -> tuple[int, float]:
+    """Play a focused opening on a fresh run; return ``(actions, in-game years)``.
+
+    The policy is what a competent player does once they know the loop: train while
+    the strain gate allows it, stabilise when it does not, and break through the
+    moment the gate opens.
+    """
+    engine = GameEngine.new_game(seed=seed)
+    player = engine.player
+    body = player.cultivation_state.body
+    strain_gain = _body_progression()["training_strain_gain"]
+    cap = _body_progression()["max_strain_for_breakthrough"]
+    start_age = load_json("cultivation/cultivation_config.json")["lifespan"]["starting_age_years"]
+
+    actions = 0
+    while body.realm_id == "mortal" and actions < max_actions:
+        if not engine.cultivation._body_missing_requirements(player):
+            engine.process_action({"action": Action.BREAKTHROUGH})
+        elif body.cultivation_strain + strain_gain <= cap:
+            engine.process_action({"action": Action.TRAIN_BODY})
+        else:
+            engine.process_action({"action": Action.STABILISE_FOUNDATION})
+        actions += 1
+    return actions, round(player.age_years - float(start_age), 3)
+
+
+def test_the_first_body_realm_lands_inside_the_opening_budget():
+    """C.3: the opening is a fixed cost, not a lottery decided at character creation.
+
+    Before the retune this took a median of 19 actions and 2.5 in-game years, and up
+    to 111 actions when the starting roll was unlucky -- more than seven times the
+    F.6 budget for a run that had barely begun.
+    """
+    runs = [_opening_run(seed) for seed in range(1, 41)]
+
+    stalled = [run for run in runs if run[0] >= 200]
+    assert stalled == [], f"a run never reached its first realm: {stalled}"
+
+    inside = [
+        run for run in runs
+        if run[0] <= OPENING_ACTION_BUDGET and run[1] <= OPENING_YEAR_BUDGET
+    ]
+    share = len(inside) / len(runs)
+    assert share >= 0.90, (
+        f"only {share:.0%} of openings reached the first realm inside "
+        f"{OPENING_ACTION_BUDGET} actions / {OPENING_YEAR_BUDGET}y; "
+        f"slowest five: {sorted(runs, reverse=True)[:5]}"
+    )
+
+
+def test_the_starting_body_talent_roll_is_a_bounded_band():
+    """The roll sets a run's pace, so it must not span the whole upgrade ladder.
+
+    It used to roll multipliers from 0.25x to 10x -- a 40x spread that put two seeds
+    111 actions apart on the same opening. The high tiers stay in the data for the
+    upgrade ladder; only the character-creation roll is narrowed.
+    """
+    entries = load_json("cultivation/body_talents.json")
+    rollable = [entry for entry in entries if float(entry.get("roll_weight", 0)) > 0]
+
+    assert rollable, "nothing is rollable at character creation"
+    multipliers = [float(entry["body_cultivation_multiplier"]) for entry in rollable]
+    assert min(multipliers) >= 0.5, f"a starting body can be crippled: {min(multipliers)}x"
+    assert max(multipliers) <= 2.0, f"a starting body can be a jackpot: {max(multipliers)}x"
+    assert max(multipliers) / min(multipliers) <= 4.0, (
+        f"the starting band is too wide: {min(multipliers)}x to {max(multipliers)}x"
+    )
+    ladder = [float(entry["body_cultivation_multiplier"]) for entry in entries]
+    assert max(ladder) > max(multipliers), "the upgrade ladder lost its ceiling"
+
+
+def test_the_starting_martial_talent_roll_is_a_bounded_band():
+    """The essence side of the same defect: the commonest roll was the worst one.
+
+    ``no_talent`` held 350 of 910 weight while giving 0.1x essence gain and a -0.3
+    breakthrough penalty, so the *typical* fresh character was the slowest one, with
+    an essence breakthrough that mostly failed.
+    """
+    entries = load_json("cultivation/martial_talents.json")
+    rollable = [entry for entry in entries if float(entry.get("roll_weight", 0)) > 0]
+
+    assert rollable, "nothing is rollable at character creation"
+    multipliers = [float(entry["essence_cultivation_multiplier"]) for entry in rollable]
+    assert min(multipliers) >= 0.5, f"a starting root is nearly dead: {min(multipliers)}x"
+    assert max(multipliers) <= 2.0, f"a starting root is a jackpot: {max(multipliers)}x"
+    modifiers = [float(entry["essence_breakthrough_modifier"]) for entry in rollable]
+    assert min(modifiers) >= -0.1, (
+        f"a starting root is punished on breakthrough: {min(modifiers)}"
+    )
+    ladder = [float(entry["essence_cultivation_multiplier"]) for entry in entries]
+    assert max(ladder) > max(multipliers), "the upgrade ladder lost its ceiling"
+
+
+def test_the_training_economy_publishes_what_the_actions_would_do():
+    """C.6: the trade preview and the actions that execute it agree, by construction.
+
+    Every figure is read from the same config the actions read, so this test drives
+    the real actions and checks the preview predicted them.
+    """
+    engine = GameEngine.new_game(seed=1)
+    player = engine.player
+    config = load_json("cultivation/cultivation_config.json")
+    body_config = config["body_progression"]
+
+    economy = engine.cultivation.training_economy(player, engine.cultivation.BODY_TRACK_ID)
+    assert economy["track_id"] == "body_transformation"
+    assert economy["train"]["strain_gain"] == body_config["training_strain_gain"]
+    assert economy["strain_cap"] == body_config["max_strain_for_breakthrough"]
+    assert economy["stabilise"]["strain_reduction"] == body_config["stabilise"]["strain_reduction"]
+    assert economy["stabilise"]["foundation_stability_gain"] == body_config["stabilise"]["foundation_stability_gain"]
+    assert economy["train"]["years"] == config["lifespan"]["time_costs"]["train_body"]
+    assert economy["stabilise"]["years"] == config["lifespan"]["time_costs"]["stabilise"]
+
+    # The preview predicted this session; the session must deliver it.
+    predicted = economy["train"]["strain_after"]
+    engine.process_action({"action": Action.TRAIN_BODY})
+    assert player.cultivation_state.body.cultivation_strain == pytest.approx(predicted)
+
+    # Train to the brink: the preview must say the gate closes, and it must close.
+    player.cultivation_state.body.cultivation_strain = 40.0
+    economy = engine.cultivation.training_economy(player, engine.cultivation.BODY_TRACK_ID)
+    assert economy["train"]["leaves_gate_open"] is False
+    assert economy["stabilise"]["strain_after"] == pytest.approx(
+        max(0.0, 40.0 - body_config["stabilise"]["strain_reduction"])
+    )
+    engine.process_action({"action": Action.TRAIN_BODY})
+    assert "STRAIN_TOO_HIGH" in engine.cultivation._body_missing_requirements(player)
+
+
+def test_the_state_view_publishes_the_economy_for_both_tracks():
+    """C.6: the client gets the trade without asking; it cannot render what it lacks."""
+    engine = GameEngine.new_game(seed=1)
+    state = engine.cultivation_service.get_cultivation_state("player")
+
+    for track in ("body_transformation", "essence_gathering"):
+        economy = state[track]["economy"]
+        assert economy, f"{track} has no economy block"
+        assert economy["track_id"] == state[track]["breakthrough"]["track_id"]
+        assert "train" in economy and "stabilise" in economy
+
+
+def test_talent_upgrades_name_where_their_cost_is_sold():
+    """C.7: an unaffordable upgrade is a destination, not a dead end.
+
+    The elixir is not consumable on its own -- its only sink is UPGRADE_TALENT -- so
+    the Talents view has to carry the acquisition path or the loop is unlearnable.
+    """
+    engine = GameEngine.new_game(seed=1)
+    result = engine.process_action({"action": Action.TALENTS})
+
+    sources = result.get("item_sources", {})
+    assert sources, "talents view carries no cost-item sources"
+    assert "talent_refining_elixir" in sources
+    places = sources["talent_refining_elixir"]
+    assert places, "no shop sells the talent elixir anywhere in the world"
+    # Every source names a shop and a price, so the player can plan the trip.
+    assert all("(" in place and ")" in place for place in places), places
+
+    # Every cost item named by any upgrade option is covered by the map.
+    for track in ("martial_upgrades", "body_upgrades"):
+        for option in result.get(track, []):
+            for cost_id in (option.get("cost") or {}):
+                assert cost_id in sources, f"{cost_id} has no listed source"
 
 
 def test_traits_do_not_bypass_body_hard_requirements():

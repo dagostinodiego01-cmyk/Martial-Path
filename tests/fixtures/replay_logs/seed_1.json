@@ -203,7 +203,7 @@
     },
     {
       "action": "ENCOUNTER_CHOICE",
-      "choice_id": "take"
+      "choice_id": "accept"
     },
     {
       "action": "TRAIN_BODY"
@@ -226,6 +226,10 @@
     },
     {
       "action": "EXPLORE"
+    },
+    {
+      "action": "ENCOUNTER_CHOICE",
+      "choice_id": "take"
     },
     {
       "action": "TRAIN_BODY"
@@ -251,7 +255,7 @@
     },
     {
       "action": "ENCOUNTER_CHOICE",
-      "choice_id": "push"
+      "choice_id": "accept"
     },
     {
       "action": "TRAIN_BODY"
@@ -277,7 +281,16 @@
     },
     {
       "action": "ENCOUNTER_CHOICE",
-      "choice_id": "accept"
+      "choice_id": "fight"
+    },
+    {
+      "action": "ATTACK"
+    },
+    {
+      "action": "ATTACK"
+    },
+    {
+      "action": "ATTACK"
     },
     {
       "action": "TRAIN_BODY"
@@ -303,7 +316,16 @@
     },
     {
       "action": "ENCOUNTER_CHOICE",
-      "choice_id": "push"
+      "choice_id": "fight"
+    },
+    {
+      "action": "ATTACK"
+    },
+    {
+      "action": "ATTACK"
+    },
+    {
+      "action": "ATTACK"
     },
     {
       "action": "TRAIN_BODY"
@@ -328,6 +350,22 @@
       "action": "EXPLORE"
     },
     {
+      "action": "ENCOUNTER_CHOICE",
+      "choice_id": "fight"
+    },
+    {
+      "action": "ATTACK"
+    },
+    {
+      "action": "ATTACK"
+    },
+    {
+      "action": "ATTACK"
+    },
+    {
+      "action": "REST"
+    },
+    {
       "action": "TRAIN_BODY"
     },
     {
@@ -350,9 +388,6 @@
       "action": "BODY_BREAKTHROUGH"
     },
     {
-      "action": "STABILISE_FOUNDATION"
-    },
-    {
       "action": "EXPLORE"
     },
     {
@@ -363,13 +398,13 @@
       "action": "TRAIN_BODY"
     },
     {
+      "action": "STABILISE_FOUNDATION"
+    },
+    {
       "action": "GATHER"
     },
     {
       "action": "TRAIN_BODY"
-    },
-    {
-      "action": "STABILISE_FOUNDATION"
     },
     {
       "action": "TRAVEL",
@@ -379,9 +414,6 @@
       "action": "TRAIN_BODY"
     },
     {
-      "action": "BODY_BREAKTHROUGH"
-    },
-    {
       "action": "EXPLORE"
     },
     {
@@ -394,6 +426,9 @@
       "action": "TRAIN_BODY"
     },
     {
+      "action": "STABILISE_FOUNDATION"
+    },
+    {
       "action": "TRAVEL",
       "location_id": "lin_academy"
     },
@@ -401,13 +436,19 @@
       "action": "TRAIN_BODY"
     },
     {
-      "action": "STABILISE_FOUNDATION"
-    },
-    {
       "action": "EXPLORE"
     },
     {
-      "action": "TRAIN_BODY"
+      "action": "ENCOUNTER_CHOICE",
+      "choice_id": "fight"
+    },
+    {
+      "action": "USE_SKILL",
+      "skill_id": "iron_fist"
+    },
+    {
+      "action": "USE_SKILL",
+      "skill_id": "nine_yang_domain"
     },
     {
       "action": "TRAIN_BODY"
@@ -417,6 +458,9 @@
     },
     {
       "action": "STABILISE_FOUNDATION"
+    },
+    {
+      "action": "TRAIN_BODY"
     },
     {
       "action": "TRAVEL",
@@ -429,16 +473,30 @@
       "action": "EXPLORE"
     },
     {
-      "action": "TRAIN_BODY"
+      "action": "ENCOUNTER_CHOICE",
+      "choice_id": "fight"
     },
     {
-      "action": "GATHER"
+      "action": "USE_SKILL",
+      "skill_id": "iron_fist"
+    },
+    {
+      "action": "ATTACK"
+    },
+    {
+      "action": "ATTACK"
     },
     {
       "action": "TRAIN_BODY"
     },
     {
       "action": "STABILISE_FOUNDATION"
+    },
+    {
+      "action": "GATHER"
+    },
+    {
+      "action": "TRAIN_BODY"
     },
     {
       "action": "TRAVEL",
@@ -451,85 +509,6 @@
       "action": "EXPLORE"
     },
     {
-      "action": "ENCOUNTER_CHOICE",
-      "choice_id": "fight"
-    },
-    {
-      "action": "USE_SKILL",
-      "skill_id": "iron_fist"
-    },
-    {
-      "action": "USE_SKILL",
-      "skill_id": "nine_yang_domain"
-    },
-    {
-      "action": "ATTACK"
-    },
-    {
-      "action": "USE_SKILL",
-      "skill_id": "iron_fist"
-    },
-    {
-      "action": "TRAIN_BODY"
-    },
-    {
-      "action": "TRAIN_BODY"
-    },
-    {
-      "action": "TRAIN_BODY"
-    },
-    {
-      "action": "STABILISE_FOUNDATION"
-    },
-    {
-      "action": "TRAVEL",
-      "location_id": "sky_fortune_capital"
-    },
-    {
-      "action": "TRAIN_BODY"
-    },
-    {
-      "action": "EXPLORE"
-    },
-    {
-      "action": "TRAIN_BODY"
-    },
-    {
-      "action": "TRAIN_BODY"
-    },
-    {
-      "action": "STABILISE_FOUNDATION"
-    },
-    {
-      "action": "TRAIN_BODY"
-    },
-    {
-      "action": "TRAVEL",
-      "location_id": "sky_fortune_outskirts"
-    },
-    {
-      "action": "TRAIN_BODY"
-    },
-    {
-      "action": "EXPLORE"
-    },
-    {
-      "action": "ENCOUNTER_CHOICE",
-      "choice_id": "fight"
-    },
-    {
-      "action": "ATTACK"
-    },
-    {
-      "action": "ATTACK"
-    },
-    {
-      "action": "ATTACK"
-    },
-    {
-      "action": "ATTACK"
-    },
-    {
       "action": "TRAIN_BODY"
     },
     {
@@ -599,6 +578,28 @@
       "action": "EXPLORE"
     },
     {
+      "action": "ENCOUNTER_CHOICE",
+      "choice_id": "fight"
+    },
+    {
+      "action": "ATTACK"
+    },
+    {
+      "action": "ATTACK"
+    },
+    {
+      "action": "ATTACK"
+    },
+    {
+      "action": "ATTACK"
+    },
+    {
+      "action": "FLEE"
+    },
+    {
+      "action": "REST"
+    },
+    {
       "action": "TRAIN_BODY"
     },
     {
@@ -606,6 +607,35 @@
     },
     {
       "action": "TRAIN_BODY"
+    },
+    {
+      "action": "TRAIN_BODY"
+    },
+    {
+      "action": "TRAVEL",
+      "location_id": "sky_fortune_outskirts"
+    },
+    {
+      "action": "TRAIN_BODY"
+    },
+    {
+      "action": "EXPLORE"
+    },
+    {
+      "action": "TRAIN_BODY"
+    },
+    {
+      "action": "STABILISE_FOUNDATION"
+    },
+    {
+      "action": "TRAIN_BODY"
+    },
+    {
+      "action": "TRAIN_BODY"
+    },
+    {
+      "action": "TRAVEL",
+      "location_id": "sky_fortune_capital"
     },
     {
       "action": "TRAIN_BODY"
@@ -614,39 +644,7 @@
       "action": "BODY_BREAKTHROUGH"
     },
     {
-      "action": "TRAVEL",
-      "location_id": "seven_profound_valleys_gate"
-    },
-    {
-      "action": "TRAIN_BODY"
-    },
-    {
       "action": "EXPLORE"
-    },
-    {
-      "action": "ENCOUNTER_CHOICE",
-      "choice_id": "fight"
-    },
-    {
-      "action": "USE_SKILL",
-      "skill_id": "iron_fist"
-    },
-    {
-      "action": "USE_SKILL",
-      "skill_id": "nine_yang_domain"
-    },
-    {
-      "action": "ATTACK"
-    },
-    {
-      "action": "USE_SKILL",
-      "skill_id": "iron_fist"
-    },
-    {
-      "action": "TRAIN_BODY"
-    },
-    {
-      "action": "STABILISE_FOUNDATION"
     }
   ],
   "events": [
@@ -718,7 +716,8 @@
     "TRAVEL_RESULT",
     "TRAIN_RESULT",
     "STABILISE_RESULT",
-    "EXPLORE_RESULT",
+    "ENCOUNTER",
+    "ENCOUNTER_RESULT",
     "TRAIN_RESULT",
     "TRAIN_RESULT",
     "TRAIN_RESULT",
@@ -734,7 +733,10 @@
     "TRAVEL_RESULT",
     "TRAIN_RESULT",
     "ENCOUNTER",
-    "ENCOUNTER_RESULT",
+    "COMBAT",
+    "COMBAT_TURN",
+    "COMBAT_TURN",
+    "COMBAT_END",
     "TRAIN_RESULT",
     "TRAIN_RESULT",
     "STABILISE_RESULT",
@@ -742,10 +744,98 @@
     "TRAVEL_RESULT",
     "TRAIN_RESULT",
     "ENCOUNTER",
+    "COMBAT",
+    "COMBAT_TURN",
+    "COMBAT_TURN",
+    "COMBAT_END",
+    "TRAIN_RESULT",
+    "STABILISE_RESULT",
+    "GATHER_RESULT",
+    "TRAIN_RESULT",
+    "TRAVEL_RESULT",
+    "TRAIN_RESULT",
+    "ENCOUNTER",
+    "COMBAT",
+    "COMBAT_TURN",
+    "COMBAT_TURN",
+    "COMBAT_END",
+    "REST_RESULT",
+    "TRAIN_RESULT",
+    "STABILISE_RESULT",
+    "TRAIN_RESULT",
+    "TRAIN_RESULT",
+    "TRAVEL_RESULT",
+    "TRAIN_RESULT",
+    "BREAKTHROUGH_RESULT",
+    "ENCOUNTER",
     "ENCOUNTER_RESULT",
     "TRAIN_RESULT",
     "STABILISE_RESULT",
     "GATHER_RESULT",
+    "TRAIN_RESULT",
+    "TRAVEL_RESULT",
+    "TRAIN_RESULT",
+    "CHARACTER_ENCOUNTER",
+    "TRAIN_RESULT",
+    "GATHER_RESULT",
+    "TRAIN_RESULT",
+    "STABILISE_RESULT",
+    "TRAVEL_RESULT",
+    "TRAIN_RESULT",
+    "ENCOUNTER",
+    "COMBAT",
+    "COMBAT_TURN",
+    "COMBAT_END",
+    "TRAIN_RESULT",
+    "TRAIN_RESULT",
+    "STABILISE_RESULT",
+    "TRAIN_RESULT",
+    "TRAVEL_RESULT",
+    "TRAIN_RESULT",
+    "ENCOUNTER",
+    "COMBAT",
+    "COMBAT_TURN",
+    "COMBAT_TURN",
+    "COMBAT_END",
+    "TRAIN_RESULT",
+    "STABILISE_RESULT",
+    "GATHER_RESULT",
+    "TRAIN_RESULT",
+    "TRAVEL_RESULT",
+    "TRAIN_RESULT",
+    "CHARACTER_ENCOUNTER",
+    "TRAIN_RESULT",
+    "STABILISE_RESULT",
+    "TRAIN_RESULT",
+    "TRAIN_RESULT",
+    "TRAVEL_RESULT",
+    "TRAIN_RESULT",
+    "STABILISE_RESULT",
+    "CHARACTER_ENCOUNTER",
+    "TRAIN_RESULT",
+    "TRAIN_RESULT",
+    "TRAIN_RESULT",
+    "STABILISE_RESULT",
+    "TRAVEL_RESULT",
+    "TRAIN_RESULT",
+    "CHARACTER_ENCOUNTER",
+    "TRAIN_RESULT",
+    "TRAIN_RESULT",
+    "STABILISE_RESULT",
+    "TRAIN_RESULT",
+    "TRAVEL_RESULT",
+    "TRAIN_RESULT",
+    "ENCOUNTER",
+    "COMBAT",
+    "COMBAT_TURN",
+    "COMBAT_TURN",
+    "COMBAT_TURN",
+    "COMBAT_TURN",
+    "COMBAT_END",
+    "REST_RESULT",
+    "TRAIN_RESULT",
+    "STABILISE_RESULT",
+    "TRAIN_RESULT",
     "TRAIN_RESULT",
     "TRAVEL_RESULT",
     "TRAIN_RESULT",
@@ -757,100 +847,8 @@
     "TRAVEL_RESULT",
     "TRAIN_RESULT",
     "BREAKTHROUGH_RESULT",
-    "STABILISE_RESULT",
-    "ENCOUNTER",
-    "ENCOUNTER_RESULT",
-    "TRAIN_RESULT",
-    "GATHER_RESULT",
-    "TRAIN_RESULT",
-    "STABILISE_RESULT",
-    "TRAVEL_RESULT",
-    "TRAIN_RESULT",
-    "BREAKTHROUGH_RESULT",
-    "CHARACTER_ENCOUNTER",
-    "TRAIN_RESULT",
-    "GATHER_RESULT",
-    "TRAIN_RESULT",
-    "TRAVEL_RESULT",
-    "TRAIN_RESULT",
-    "STABILISE_RESULT",
-    "CHARACTER_ENCOUNTER",
-    "TRAIN_RESULT",
-    "TRAIN_RESULT",
-    "TRAIN_RESULT",
-    "STABILISE_RESULT",
-    "TRAVEL_RESULT",
-    "TRAIN_RESULT",
-    "EXPLORE_RESULT",
-    "TRAIN_RESULT",
-    "GATHER_RESULT",
-    "TRAIN_RESULT",
-    "STABILISE_RESULT",
-    "TRAVEL_RESULT",
-    "TRAIN_RESULT",
-    "ENCOUNTER",
-    "COMBAT",
-    "COMBAT_TURN",
-    "COMBAT_TURN",
-    "COMBAT_TURN",
-    "COMBAT_END",
-    "TRAIN_RESULT",
-    "TRAIN_RESULT",
-    "TRAIN_RESULT",
-    "STABILISE_RESULT",
-    "TRAVEL_RESULT",
-    "TRAIN_RESULT",
-    "CHARACTER_ENCOUNTER",
-    "TRAIN_RESULT",
-    "TRAIN_RESULT",
-    "STABILISE_RESULT",
-    "TRAIN_RESULT",
-    "TRAVEL_RESULT",
-    "TRAIN_RESULT",
-    "ENCOUNTER",
-    "COMBAT",
-    "COMBAT_TURN",
-    "COMBAT_TURN",
-    "COMBAT_TURN",
-    "COMBAT_END",
-    "TRAIN_RESULT",
-    "STABILISE_RESULT",
-    "TRAIN_RESULT",
-    "TRAIN_RESULT",
-    "TRAVEL_RESULT",
-    "TRAIN_RESULT",
-    "STABILISE_RESULT",
-    "CHARACTER_ENCOUNTER",
-    "TRAIN_RESULT",
-    "TRAIN_RESULT",
-    "TRAIN_RESULT",
-    "STABILISE_RESULT",
-    "TRAVEL_RESULT",
-    "TRAIN_RESULT",
-    "CHARACTER_ENCOUNTER",
-    "TRAIN_RESULT",
-    "TRAIN_RESULT",
-    "STABILISE_RESULT",
-    "TRAIN_RESULT",
-    "TRAVEL_RESULT",
-    "TRAIN_RESULT",
-    "CHARACTER_ENCOUNTER",
-    "TRAIN_RESULT",
-    "STABILISE_RESULT",
-    "TRAIN_RESULT",
-    "TRAIN_RESULT",
-    "BREAKTHROUGH_RESULT",
-    "TRAVEL_RESULT",
-    "TRAIN_RESULT",
-    "ENCOUNTER",
-    "COMBAT",
-    "COMBAT_TURN",
-    "COMBAT_TURN",
-    "COMBAT_TURN",
-    "COMBAT_END",
-    "TRAIN_RESULT",
-    "STABILISE_RESULT"
+    "CHARACTER_ENCOUNTER"
   ],
   "actions_used": 200,
-  "final_state_sha256": "de16a46054ae0d9cabb641c93e6ff9c6c265bb97243b81bd55152ce2b21533bc"
+  "final_state_sha256": "3cab5c757f991dd144b234a4619037e0f22cf9fa33c48dc1474c81dfe8d4bbd8"
 }

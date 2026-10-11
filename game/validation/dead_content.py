@@ -54,6 +54,18 @@ _ENGINE_HANDLED_ITEM_EFFECTS = frozenset({"learn_skill"})
 # an item is refused with ITEM_NOT_USABLE rather than silently wasted.
 _INERT_EFFECTS = frozenset({"", "none"})
 
+# EC.4: the exploration find roll draws from the whole catalogue, so *every*
+# item is technically findable. An entry whose only acquisition path is that
+# generic roll is a deliberate design tier only when it is listed here by id;
+# anything else find-only is an accident of content drift and fails the sweep.
+# Keep this list short and reviewed: each entry is a promise that "loot drop is
+# the intended way to get this".
+FIND_ONLY_ALLOWLIST: frozenset = frozenset(
+    {
+        "spirit_stone",  # the premium currency circulates as loot by design
+    }
+)
+
 
 class _Sources:
     """Index of content ids to the acquisition paths that produce them.
@@ -156,6 +168,11 @@ def build_report(registry: Optional[GameDataRegistry] = None) -> Dict[str, Any]:
             "dead_recipes": sorted(recipe_report["traps"]),
             "unsatisfiable_character_gates": _unsatisfiable_character_gates(registry),
             "dominated_shop_equipment": _dominated_shop_equipment(registry),
+            "dominated_shop_pills": _dominated_shop_pills(registry),
+            "accidental_find_only": _accidental_find_only(
+                item_ids,
+                [i for i in item_ids if not item_sources.is_authored(i) and item_sources.has(i)],
+            ),
         },
         "info": {
             # Content whose only acquisition path is the generic find roll: it
@@ -171,6 +188,99 @@ def build_report(registry: Optional[GameDataRegistry] = None) -> Dict[str, Any]:
             "quests": quest_report,
         },
     }
+
+
+def _dominated_shop_pills(registry: GameDataRegistry) -> List[Dict[str, str]]:
+    """Consumable offers strictly beaten by a no-more-expensive pill in the same rack (A.4).
+
+    Two consumables sharing an effect are a potency ladder only while price and
+    magnitude point the same way; the moment a stronger pill costs no more than
+    a weaker one on the same shelf, the weaker offer is a purchase the player
+    can only regret -- the same trap the equipment sweep hunts, applied to the
+    alchemy loop's output instead of gear.
+    """
+    items = _items_by_id(registry)
+    flagged: List[Dict[str, str]] = []
+    seen: Set[str] = set()
+    for shop in registry.shops:
+        stock: List[Dict[str, Any]] = []
+        for entry in shop.get("stock", []) or []:
+            if not isinstance(entry, dict):
+                continue
+            item = items.get(str(entry.get("item_id")))
+            if item is None or str(item.get("type", "")) != "consumable":
+                continue
+            effect = str(item.get("effect", "") or "")
+            if effect in _INERT_EFFECTS or effect not in SUPPORTED_ITEM_EFFECTS:
+                continue  # materials and engine-handled effects have no potency ladder
+            price = entry.get("price", {}) if isinstance(entry.get("price"), dict) else {}
+            stock.append({"item": item, "price": {str(k): int(v) for k, v in price.items()}})
+        for dominated in stock:
+            for dominator in stock:
+                if dominated is dominator:
+                    continue
+                reason = _pill_domination_reason(dominator, dominated)
+                if reason is None:
+                    continue
+                key = str(dominated["item"].get("id"))
+                if key in seen:
+                    continue
+                seen.add(key)
+                flagged.append(
+                    {
+                        "id": key,
+                        "reason": (
+                            f"beaten by '{dominator['item'].get('id')}' "
+                            f"({_price_text(dominator['price'])} vs {_price_text(dominated['price'])}: {reason})"
+                        ),
+                    }
+                )
+                break
+    return flagged
+
+
+def _pill_domination_reason(dominator: Dict[str, Any], dominated: Dict[str, Any]) -> Optional[str]:
+    """Describe how one consumable offer strictly beats another, or ``None``.
+
+    Mirrors :func:`domination_reason` for pills: the dominator must share the
+    dominated item's effect, be no more expensive in *every* currency it is
+    priced in, and be strictly better on at least one axis (higher magnitude,
+    or equal magnitude at a strictly lower price). Equal magnitude at an equal
+    price is duplication, not a trap, so it is not reported.
+    """
+    a_item, b_item = dominator["item"], dominated["item"]
+    a_price, b_price = dominator["price"], dominated["price"]
+    for currency in set(a_price) | set(b_price):
+        if a_price.get(currency, 0) > b_price.get(currency, 0):
+            return None  # a pricier pill is a ladder, not a trap
+    if str(a_item.get("effect", "")) != str(b_item.get("effect", "")):
+        return None
+    try:
+        a_mag = float(a_item.get("magnitude") or 0)
+        b_mag = float(b_item.get("magnitude") or 0)
+    except (TypeError, ValueError):
+        return None  # unreadable magnitude: refuse to call it
+    if a_mag < b_mag:
+        return None
+    if a_mag == b_mag:
+        if not b_price or a_price == b_price:
+            return None  # identical twins: redundant stocking, not a trap
+        return "equal magnitude at a lower price"
+    return "stronger at a lower or equal price"
+
+
+def _accidental_find_only(item_ids: Set[str], find_only: List[str]) -> List[Dict[str, str]]:
+    """Find-only entries not on the EC.4 allowlist (accidental design tier)."""
+    return [
+        {
+            "id": content_id,
+            "reason": (
+                "only acquisition path is the generic find roll; add an authored "
+                "source or list it in FIND_ONLY_ALLOWLIST if loot-only is intended"
+            ),
+        }
+        for content_id in sorted(i for i in find_only if i not in FIND_ONLY_ALLOWLIST)
+    ]
 
 
 def collect_issues(report: Dict[str, Any]) -> List[tuple]:

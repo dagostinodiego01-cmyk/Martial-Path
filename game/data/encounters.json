@@ -64,7 +64,37 @@
     "pack_exp_ratio": 0.5,
     "pack_loot_ratio": 0.35,
     "pack_press_multiplier": 0.5,
-    "max_pack_presses": 2
+    "max_pack_presses": 2,
+    "pack_stat_scale_ceiling": [0.5, 0.5, 0.5, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6]
+  },
+  "funnel": {
+    "max_story_tier": 2,
+    "lead_ceiling": 1.0,
+    "pack_entry_ceiling": 0.6,
+    "no_ambush": true,
+    "no_hazard": true,
+    "note": "The first-run funnel (F.1): while max_story_tier is below 2, a hostile scene never fields a foe heavier than the player's own fighting weight, pack members come from the same band, and the opening is never an ambush and never carries embedded hazard. Data-tunable; the hazard/trap 'damage never kills' floor lives in the engine (HAZARD_HP_FLOOR)."
+  },
+  "stakes": {
+    "note": "What each choice risks or gives up. A choice that carries a 'chance' has its percentage rendered as a badge by the frontend, so these lines never repeat that number.",
+    "fight": "Fight - {threat} odds: {foe_power} against your {player_power}.",
+    "talk": "Talk - bring them around, or hand them the first blow.",
+    "pay": "Pay Toll - coin now rather than blood later.",
+    "sneak": "Sneak - slip past, or start the fight on their terms.",
+    "observe": "Observe - banks {insight} insight; {provoke}% it provokes them instead.",
+    "examine": "Examine - spends the turn and reads the find before your hand moves.",
+    "study": "Study - spends the turn, and sharpens the odds of whatever follows.",
+    "push": "Push Through - cross clean, or the ground takes about {damage}.",
+    "defuse": "Find a Way - read it right and it pays; misread it and lose about {damage}.",
+    "take": "Take It - roughly {trap_chance}% of finds like this are warded.",
+    "take_revealed": "Take It - you have read the find; your hand is sure.",
+    "accept": "Accept - {effect}.",
+    "accept_unread": "Accept - you do not yet know what it will do.",
+    "withdraw_combat": "Withdraw - they keep the road, and you keep your blood.",
+    "withdraw_ambush": "Withdraw - get clear, or they strike first.",
+    "leave_loot": "Leave It - the find stays where it lies, and its secret with it.",
+    "decline_special": "Decline - you walk away from what waits here.",
+    "withdraw_hazard": "Withdraw - you take the long way round and give up what this ground pays."
   },
   "encounter": {
     "hazard_chance_by_danger": [0.0, 0.08, 0.12, 0.16, 0.2, 0.24, 0.28, 0.32, 0.36, 0.4, 0.44],

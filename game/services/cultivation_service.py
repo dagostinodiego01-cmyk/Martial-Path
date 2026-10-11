@@ -46,6 +46,14 @@ class CultivationService:
         state["essence_gathering"]["breakthrough"] = self._system.breakthrough_gates(
             player, self._system.ESSENCE_TRACK_ID
         )
+        # C.6: the strain/stabilise trade as numbers, so the loop is an informed
+        # decision rather than a rule the player learns from a refusal.
+        state["body_transformation"]["economy"] = self._system.training_economy(
+            player, self._system.BODY_TRACK_ID
+        )
+        state["essence_gathering"]["economy"] = self._system.training_economy(
+            player, self._system.ESSENCE_TRACK_ID
+        )
         state["essence_gathering"]["unlock_requirement"] = self._system.get_essence_unlock_requirement(player)
         state["essence_unlocked"] = self._system.is_essence_unlocked(player)
         state["balance"] = self._system.calculate_body_essence_balance(player)

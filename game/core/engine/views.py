@@ -5,7 +5,8 @@ from typing import Any, Dict, List, Optional
 
 from game.core.constants import EventType, MODE_COMBAT, MODE_ENCOUNTER
 
-from game.systems.combat_system import COMBO_ROLES
+from game.systems import currency as currency_helpers
+from game.systems.combat_system import COMBO_ROLES, status_views
 from game.systems.skill_system import GROWTH_PASSIVE_EFFECTS
 from game.systems.stats_system import STAT_PASSIVE_EFFECTS
 
@@ -79,7 +80,13 @@ class ViewsMixin:
             "trainers": self.trainers.trainers_for_location(self.player.current_location),
             "sects": self.sects.sects_for_location(self.player.current_location),
             "gathering_available": self.gathering.has_gathering(self.player.current_location),
+            # A.1: what grows here (with the player's holdings joined), so the
+            # gathering surface can say "this ground pays X, you hold n".
+            "gathering_here": self._gathering_here(),
             "refining_recipes": self.refine.recipes(self.player),
+            # EC.5: the canonical gold-vs-stones explainer, straight from the
+            # currency helpers that enforce the rules it describes.
+            "currency_guide": currency_helpers.currency_guide(),
             "realm_available": self.secret_realm.realm_available_at(self.player.current_location),
             "realm": self._realm_view(),
             "tournament_available": self._has_tournament(),
@@ -96,6 +103,45 @@ class ViewsMixin:
             "campaign": self._campaign_view(),
             "running": self._running,
         }
+
+    def _gathering_here(self) -> List[Dict[str, Any]]:
+        """The current location's weighted herb table, joined to holdings (A.1).
+
+        Each entry carries the herb's id/name, what it is used for (every
+        recipe it feeds), and ``held``/``weight`` so a frontend can render
+        "what grows here, what you hold, what it brews into" without doing
+        its own joins. Read-only composition; no gameplay rules.
+        """
+        location_id = self.player.current_location
+        # Mirror the GATHER gate: locations without their own table refuse the
+        # action, so the payload must not advertise the default fallback table
+        # as if it were gatherable here.
+        if not self.gathering.has_gathering(location_id):
+            return []
+        inventory = getattr(self.player, "inventory", {}) or {}
+        recipes_by_input: Dict[str, List[Dict[str, Any]]] = {}
+        for recipe in self.refine.recipes():
+            for item_id in (recipe.get("inputs", {}) or {}):
+                recipes_by_input.setdefault(str(item_id), []).append(
+                    {"recipe_id": recipe.get("id"), "display_name": recipe.get("display_name", recipe.get("id"))}
+                )
+        entries: List[Dict[str, Any]] = []
+        for table_entry in self.gathering.table_for(location_id):
+            item_id = str(table_entry.get("item_id", ""))
+            if not item_id:
+                continue
+            item = self._items.get(item_id)
+            entries.append(
+                {
+                    "item_id": item_id,
+                    "name": item.name if item is not None else item_id,
+                    "description": item.description if item is not None else "",
+                    "held": int(inventory.get(item_id, 0)),
+                    "weight": table_entry.get("weight", 1),
+                    "used_in": recipes_by_input.get(item_id, []),
+                }
+            )
+        return entries
 
     def _codex(self) -> Dict[str, Any]:
         """The wanderer's codex: secret realms, sects, and faction arcs.
@@ -293,8 +339,13 @@ class ViewsMixin:
         data["effective_stats"] = self.stats.effective_stats(self.player)
         data["shield"] = self.player.shield
         data["statuses"] = {k: dict(v) for k, v in self.player.statuses.items()}
+        # CB.2/D.3/D.4: the readable layer beside the raw numbers, so the panels
+        # need no game vocabulary of their own.
+        data["status_views"] = status_views(self.player.statuses)
         data["insight"] = self.player.insight
+        data["insight_state"] = self.combat.insight_view(self.player)
         data["combo_stage"] = self.player.combo_stage
+        data["combo"] = self.combat.combo_view(self.player)
         data["title"] = self._legacy_title_view()
         data["can_retire"] = self._can_retire()
         # Sect membership brief (tier + technique hall) for UIs that surface
